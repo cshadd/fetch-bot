@@ -1,0 +1,18 @@
+{
+    "author": {
+        "name": "cshadd <christian.v.t.shadd@gmail.com>"
+    },
+    "bugs": {
+        "url": "https://github.com/cshadd/fetch-bot/issues"
+    },
+    "dependencies": {},
+    "description": "",
+    "homepage": "https://github.com/cshadd/fetch-bot",
+    "license": "MIT",
+    "name": "fetch-bot",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/cshadd/fetch-bot.git"
+    },
+    "version": "0.1.0"
+}
