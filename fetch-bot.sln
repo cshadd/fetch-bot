@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6082E4AE-8549-4C62-9A27-DA0CC34A16DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft Visual Studio_Config", "Microsoft Visual Studio_Config", "{3D8194ED-68FA-499F-ADA0-70C4CA0405F2}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bash_Config", "Bash_Config", "{E0899823-C839-4935-B11B-BAF073B0BE4F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Git_Config", "Git_Config", "{793C9952-564A-493C-8956-47B8D90F1879}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		CONTRIBUTING.md = CONTRIBUTING.md
+		LICENSE = LICENSE
+		package.json = package.json
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3D8194ED-68FA-499F-ADA0-70C4CA0405F2} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{E0899823-C839-4935-B11B-BAF073B0BE4F} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{793C9952-564A-493C-8956-47B8D90F1879} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E8F99668-DE84-4451-95F0-312B7F0E1A3C}
+	EndGlobalSection
+EndGlobal
