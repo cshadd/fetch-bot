@@ -18,6 +18,7 @@ This repository may be used for your own robot.
 ### Prerequisites
 * Recommended:
     - Raspbian OS
+    - Bash
     - Midori browser
 	- Java Development Kit 1.8 or higher
 	- Java SE Runtime Environment 1.8 or higher
@@ -34,7 +35,7 @@ Clone/fork this repository and save it. Then use ``./bash-install.sh`` to instal
 ## Deployment
 
 ### Recommended Deployment
-``./bin/StartFetchBot.sh`` is the launcher that you use to deploy the application and run it. ``/var/www/html/FetchBot/`` is the server that you can access at [http://127.0.0.1/FetchBot].
+``./bin/StartFetchBot.sh`` (Bash) is the launcher that you use to deploy the application and run it. ``/var/www/html/FetchBot/`` is the server that you can access at [http://localhost/FetchBot]. You may need to disable the cache temporarily if you are going off your localhost.
 
 ### Visual Studio Deployment (Optional)
 You may use Visual Studio 2017 or higher as an editor. ``fetch-bot.sln`` is the solution file.
@@ -47,7 +48,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions avalible, s
 
 ## Authors
 * [Christian Shadd](https://github.com/cshadd)
-* ...
+* []
 * ...
 * ...
 * ...
