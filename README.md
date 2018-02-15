@@ -29,7 +29,7 @@ This repository may be used for your own robot.
 	- Visual Studio 2017 or higher
 
 ### Installing
-Clone/fork this repository and save it. Then use ``bash-install.sh`` to install to your system (Bash).
+Clone/fork this repository and save it. Then use ``./bash-install.sh`` to install to your system (Bash).
 
 ## Deployment
 
