@@ -1,5 +1,0 @@
-Name: io/github/cshadd/fetch_bot
-Specification-Title: FetchBot
-Specification-Version: 0.1.0
-Implementation-Title: io.github.cshadd.fetch_bot
-Main-Class: io.github.cshadd.fetch_bot.FetchBot
