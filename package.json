@@ -6,9 +6,9 @@
         "url": "https://github.com/cshadd/fetch-bot/issues"
     },
     "contributors": [],
-    "dependencies": { },
+    "dependencies": {},
     "devDependencies": {
-        "cshadd-java-data-structures": "^0.5.0"
+        "cshadd-java-data-structures": "~0.5.0"
     },
     "description": "",
     "homepage": "https://github.com/cshadd/fetch-bot",
