@@ -1,0 +1,18 @@
+{
+	"coordinates": {
+		"x": 0,
+		"y": 0,
+		"xmax": 0,
+		"ymax": 0
+	},
+	"emotion": "Happy",
+	"mode": "Manual",
+	"rot": 0,
+	"sensors": {
+		"back": 0,
+		"front": 0,
+		"left": 0,
+		"right": 0
+	},
+	"verbose": "..."
+}
