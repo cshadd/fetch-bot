@@ -5,7 +5,9 @@
     "bugs": {
         "url": "https://github.com/cshadd/fetch-bot/issues"
     },
-    "dependencies": {},
+    "dependencies": {
+        "cshadd-java-data-structures": "0.5.0"
+    },
     "description": "",
     "homepage": "https://github.com/cshadd/fetch-bot",
     "license": "MIT",

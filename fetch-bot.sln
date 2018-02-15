@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6082E4AE-8549-4C62-9A27-DA0CC34A16DB}"
+	ProjectSection(SolutionItems) = preProject
+		MANIFEST.txt = MANIFEST.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft Visual Studio_Config", "Microsoft Visual Studio_Config", "{3D8194ED-68FA-499F-ADA0-70C4CA0405F2}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,6 +14,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft Visual Studio_Con
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bash_Config", "Bash_Config", "{E0899823-C839-4935-B11B-BAF073B0BE4F}"
+	ProjectSection(SolutionItems) = preProject
+		build.sh = build.sh
+		clean.sh = clean.sh
+		install.sh = install.sh
+		setup-bash.sh = setup-bash.sh
+		uninstall.sh = uninstall.sh
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Git_Config", "Git_Config", "{793C9952-564A-493C-8956-47B8D90F1879}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,6 +32,38 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Git_Config", "Git_Config", 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5EEBD627-B341-4886-AACA-63966B6153F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch-bot", "fetch-bot", "{1B3A315A-A423-4C8A-AA7B-D9770D2E83CC}"
+	ProjectSection(SolutionItems) = preProject
+		src\io\github\cshadd\fetch_bot\FetchBot.java = src\io\github\cshadd\fetch_bot\FetchBot.java
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "www", "www", "{02363110-681E-43A5-97B8-091F67393A6A}"
+	ProjectSection(SolutionItems) = preProject
+		www\face.html = www\face.html
+		www\index.html = www\index.html
+		www\processFromRobot.js = www\processFromRobot.js
+		www\processToRobot.php = www\processToRobot.php
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "comms", "comms", "{ED0D80B0-76CB-4F5F-857F-19F4E67A0905}"
+	ProjectSection(SolutionItems) = preProject
+		www\comms\toInterface.json = www\comms\toInterface.json
+		www\comms\toRobot.json = www\comms\toRobot.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "includes", "includes", "{D0E4C96A-7D47-4314-8005-F49BD335F4E4}"
+	ProjectSection(SolutionItems) = preProject
+		www\includes\common.css = www\includes\common.css
+		www\includes\face.css = www\includes\face.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{D26D951F-4FE6-4FC0-8336-6471C9446B37}"
+	ProjectSection(SolutionItems) = preProject
+		www\images\raspberry-pi-powered.png = www\images\raspberry-pi-powered.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +72,12 @@ Global
 		{3D8194ED-68FA-499F-ADA0-70C4CA0405F2} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{E0899823-C839-4935-B11B-BAF073B0BE4F} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{793C9952-564A-493C-8956-47B8D90F1879} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{5EEBD627-B341-4886-AACA-63966B6153F4} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{1B3A315A-A423-4C8A-AA7B-D9770D2E83CC} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{02363110-681E-43A5-97B8-091F67393A6A} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{ED0D80B0-76CB-4F5F-857F-19F4E67A0905} = {02363110-681E-43A5-97B8-091F67393A6A}
+		{D0E4C96A-7D47-4314-8005-F49BD335F4E4} = {02363110-681E-43A5-97B8-091F67393A6A}
+		{D26D951F-4FE6-4FC0-8336-6471C9446B37} = {02363110-681E-43A5-97B8-091F67393A6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8F99668-DE84-4451-95F0-312B7F0E1A3C}
