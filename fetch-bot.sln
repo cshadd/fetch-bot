@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6082E4AE-8549-4C62-9A27-DA0CC34A16DB}"
+	ProjectSection(SolutionItems) = preProject
+		install.sh = install.sh
+		src\start.sh = src\start.sh
+		uninstall.sh = uninstall.sh
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft Visual Studio_Config", "Microsoft Visual Studio_Config", "{3D8194ED-68FA-499F-ADA0-70C4CA0405F2}"
 	ProjectSection(SolutionItems) = preProject
@@ -31,27 +36,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot", "fetch_bot", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "www", "www", "{02363110-681E-43A5-97B8-091F67393A6A}"
 	ProjectSection(SolutionItems) = preProject
-		www\face.html = www\face.html
-		www\index.html = www\index.html
-		www\processFromRobot.js = www\processFromRobot.js
-		www\processToRobot.php = www\processToRobot.php
+		src\www\face.html = src\www\face.html
+		src\www\index.html = src\www\index.html
+		src\www\processFromRobot.js = src\www\processFromRobot.js
+		src\www\processToRobot.php = src\www\processToRobot.php
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "comms", "comms", "{ED0D80B0-76CB-4F5F-857F-19F4E67A0905}"
 	ProjectSection(SolutionItems) = preProject
-		www\comms\toInterface.json = www\comms\toInterface.json
-		www\comms\toRobot.json = www\comms\toRobot.json
+		src\www\comms\toInterface.json = src\www\comms\toInterface.json
+		src\www\comms\toRobot.json = src\www\comms\toRobot.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "includes", "includes", "{D0E4C96A-7D47-4314-8005-F49BD335F4E4}"
 	ProjectSection(SolutionItems) = preProject
-		www\includes\common.css = www\includes\common.css
-		www\includes\face.css = www\includes\face.css
+		src\www\includes\common.css = src\www\includes\common.css
+		src\www\includes\face.css = src\www\includes\face.css
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{D26D951F-4FE6-4FC0-8336-6471C9446B37}"
 	ProjectSection(SolutionItems) = preProject
-		www\images\raspberry-pi-powered.png = www\images\raspberry-pi-powered.png
+		src\www\images\raspberry-pi-powered.png = src\www\images\raspberry-pi-powered.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Maven_Config", "Maven_Config", "{16872667-586C-46D4-B3ED-AB88806933FA}"
