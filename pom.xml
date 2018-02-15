@@ -43,7 +43,7 @@
         <dependency>
             <groupId>com.github.cshadd</groupId>
             <artifactId>cshadd-java-data-structures</artifactId>
-            <version>0.6.0</version>
+            <version>v0.6.0</version>
         </dependency>
     </dependencies>
 </project>
