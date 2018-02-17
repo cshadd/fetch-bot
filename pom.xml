@@ -29,6 +29,23 @@
                 <role>Developer</role>
             </roles>
         </developer>
+        <developer>
+            <name>Maria Verna Aquino</name>
+            <email>christian.v.t.shadd@gmail.com</email>
+            <url>https://github.com/anrev09</url>
+            <roles>
+                <role>Author</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Thanh Vu</name>
+            <url>https://github.com/Vu-Thanh</url>
+            <roles>
+                <role>Author</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
     </developers>
 
     <!-- SOURCE CONTROL -->
