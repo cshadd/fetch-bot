@@ -3,15 +3,27 @@ import io.github.cshadd.cshadd_java_data_structures.util.*;
 
 // Main
 public class Pathfinding
-implements FetchBot {
+implements FetchBot, Runnable {
+    // Private Constant Instance/Property Fields
+    private static final int DIV = 10;
+
     // Private Final Instance/Property Fields
-    private final Graph<Coordinate> paths;
     private final Stack<Coordinate> backTrackStack;
+    private final int maxX;
+    private final int maxY;
+    private final DirectedGraph<Coordinate> paths;
 
     // Public Constructors
     public Pathfinding() {
-        paths = new UndirectedGraph<Coordinate>();
+        this(0, 0);
+    }
+    public Pathfinding(int maxX, int maxY) {
         backTrackStack = new Stack<Coordinate>();
+        this.maxX = maxX/DIV;
+        this.maxY = maxY/DIV;
+        paths = new DirectedGraph<Coordinate>();
+        Thread t = new Thread(this);
+        t.start();
     }
 
     // Protected Static Final Nested Classes
@@ -94,5 +106,33 @@ implements FetchBot {
         public String toString() {
             return "(" + x + ", " + y + ")";
         }
+    }
+
+    // Public Methods
+    @Override
+    public void run() {
+        try {
+            for (int i = -maxX; i < maxX; i++) {
+                for (int i2 = -maxY; i2 < maxY; i2++) {
+                    final Coordinate coord = new Coordinate(i, i2);
+                    paths.addEdge(coord, coord.coordinateDown());
+                    paths.addEdge(coord, coord.coordinateLeft());
+                    paths.addEdge(coord, coord.coordinateRight());
+                    paths.addEdge(coord, coord.coordinateUp());
+                }
+            }
+        }
+        catch (OutOfMemoryError e) {
+            System.err.println("Error: Out of memory.");
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            System.err.println("Error: Unspecified.");
+            e.printStackTrace();
+        }
+        finally {
+            System.out.println(paths.toStringFull());
+        }
+
     }
 }
