@@ -89,7 +89,7 @@
     <properties>
         <!-- DEPENDENCY VERSIONS -->
         <junit.version>4.12</junit.version>
-        <cshadd-java-data-structures.version>v0.3.0</cshadd-java-data-structures.version>
+        <cshadd-java-data-structures.version>v0.1.0</cshadd-java-data-structures.version>
 
         <!-- MAVEN COMPILER PROPERTIES -->
         <maven.compiler.target>1.8</maven.compiler.target>
