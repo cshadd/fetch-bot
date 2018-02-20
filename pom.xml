@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.cshadd</groupId>
     <artifactId>fetch-bot</artifactId>
-    <version>0.0.0</version>
+    <version>0.1.0</version>
     <name>Fetch Bot</name>
     <description>AI based robot with image processing.</description>
     <url>https://www.github.com/cshadd/fetch-bot</url>
@@ -29,6 +29,39 @@
                 <role>Developer</role>
             </roles>
         </developer>
+        <developer>
+            <name>Maria Verna Aquino</name>
+            <email>verna.aquino09@gmail.com </email>
+            <url>https://github.com/anrev09</url>
+            <roles>
+                <role>Author</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Thanh Vu</name>
+            <url>https://github.com/Vu-Thanh</url>
+            <roles>
+                <role>Author</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>walterk4</name>
+            <url>https://github.com/walterk4</url>
+            <roles>
+                <role>Author</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>gio-oro</name>
+            <url>https://github.com/gio-oro</url>
+            <roles>
+                <role>Author</role>
+                <role>Developer</role>
+            </roles>
+        </developer>    
     </developers>
 
     <!-- SOURCE CONTROL -->
@@ -58,9 +91,6 @@
         <junit.version>4.12</junit.version>
         <cshadd-java-data-structures.version>v0.1.0</cshadd-java-data-structures.version>
 
-        <!-- GITHUB PROPERTIES -->
-        <github.global.server>github</github.global.server>
-
         <!-- MAVEN COMPILER PROPERTIES -->
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -78,8 +108,6 @@
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
         <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-        <maven-site-plugin.version>3.6</maven-site-plugin.version>
-        <site-maven-plugin.version>0.12</site-maven-plugin.version>
 
         <!-- REPORTS VERSIONS -->
         <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
@@ -156,33 +184,6 @@
                 </plugins>
             </reporting>
         </profile>
-
-        <profile>
-            <id>deploy-site</id>
-            <build>
-                <plugins>
-                    <!-- DEPLOY GITHUB SITE DOCUMENTATION -->
-                    <plugin>
-                        <groupId>com.github.github</groupId>
-                        <artifactId>site-maven-plugin</artifactId>
-                        <inherited>false</inherited>
-                        <configuration>
-                            <message>Generating site content for ${project.version}</message>
-                            <repositoryOwner>cshadd</repositoryOwner>
-                            <repositoryName>fetch-bot</repositoryName>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>site</goal>
-                                </goals>
-                                <phase>site</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
 
     <!-- BUILD INSTRUCTIONS -->
@@ -240,20 +241,6 @@
                         </execution>
                     </executions>
                 </plugin>
-
-                <!-- GENERATE SITE DOCUMENTATION -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>${maven-site-plugin.version}</version>
-                </plugin>
-
-                <!-- DEPLOY GITHUB SITE PLUGIN -->
-                <plugin>
-                    <groupId>com.github.github</groupId>
-                    <artifactId>site-maven-plugin</artifactId>
-                    <version>${site-maven-plugin.version}</version>
-                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -273,18 +260,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!-- GENERATE SITE DOCUMENTATION -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <inherited>false</inherited>
-                <configuration>
-                    <generateProjectInfo>true</generateProjectInfo>
-                    <generateReports>true</generateReports>
-                    <generateSitemap>true</generateSitemap>
-                </configuration>
             </plugin>
         </plugins>
     </build>
