@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.cshadd</groupId>
     <artifactId>fetch-bot</artifactId>
-    <version>0.2.0</version>
+    <version>v0.3.0</version>
     <name>Fetch Bot</name>
     <description>AI based robot with image processing.</description>
     <url>https://www.github.com/cshadd/fetch-bot</url>
@@ -89,7 +89,7 @@
     <properties>
         <!-- DEPENDENCY VERSIONS -->
         <junit.version>4.12</junit.version>
-        <cshadd-java-data-structures.version>0.1.0</cshadd-java-data-structures.version>
+        <cshadd-java-data-structures.version>v0.3.0</cshadd-java-data-structures.version>
 
         <!-- MAVEN COMPILER PROPERTIES -->
         <maven.compiler.target>1.8</maven.compiler.target>
