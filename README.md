@@ -19,7 +19,9 @@ This repository may be used for your own robot.
 * Recommended:
     - Raspbian OS
     - Bash
-    - Midori browser
+    - Chromium Browser
+    - Unclutter
+    - x11-xserver-utils
 	- Java Development Kit 1.8 or higher
 	- Java SE Runtime Environment 1.8 or higher
 	- Apache Maven 3.5.2 or higher
@@ -35,7 +37,7 @@ Clone/fork this repository and save it. Then use ``./bash-install.sh`` to instal
 ## Deployment
 
 ### Recommended Deployment
-``~/bin/StartFetchBot.sh`` (Bash) is the launcher that you use to deploy the application and run it. ``/var/www/html/FetchBot/`` is the server that you can access at [http://localhost/FetchBot]. You may need to disable the cache temporarily if you are going off your localhost.
+``~/bin/StartFetchBot.sh`` (Bash) is the launcher that you use to deploy the application and run it. ``/var/www/html/FetchBot/`` is the server that you can access at http://localhost/FetchBot. You may need to disable the cache temporarily if you are going off your localhost. We suggest you deploy this on a Raspberry PI with Apache server and a static/set ip address.
 
 ### Visual Studio Deployment (Optional)
 You may use Visual Studio 2017 or higher as an editor. ``fetch-bot.sln`` is the solution file.

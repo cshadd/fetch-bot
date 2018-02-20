@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6082E4AE-8549-4C62-9A27-DA0CC34A16DB}"
 	ProjectSection(SolutionItems) = preProject
-		install.sh = install.sh
-		src\start.sh = src\start.sh
-		uninstall.sh = uninstall.sh
+		bash-install.sh = bash-install.sh
+		src\bash-start.sh = src\bash-start.sh
+		bash-uninstall.sh = bash-uninstall.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft Visual Studio_Config", "Microsoft Visual Studio_Config", "{3D8194ED-68FA-499F-ADA0-70C4CA0405F2}"
