@@ -61,7 +61,7 @@
                 <role>Author</role>
                 <role>Developer</role>
             </roles>
-        </developer>    
+        </developer>
     </developers>
 
     <!-- SOURCE CONTROL -->
@@ -94,7 +94,7 @@
         <!-- MAVEN COMPILER PROPERTIES -->
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        
+
         <!-- JAVA COMPILER VERSIONS -->
         <jdk.source.version>1.8</jdk.source.version>
         <jdk.target.version>1.8</jdk.target.version>
@@ -158,7 +158,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>io.github.cshadd.fetch_bot.FetchBot</mainClass>
+                                    <mainClass>io.github.cshadd.fetch_bot.Core</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
