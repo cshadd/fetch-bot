@@ -1,6 +1,4 @@
-import io.github.cshadd.cshadd_java_data_structures.*;
-import io.github.cshadd.cshadd_java_data_structures.lang.*;
-import io.github.cshadd.cshadd_java_data_structures.util.*;
+import io.github.cshadd.fetch_bot.*;
 
 import org.junit.Test;
 
