@@ -22,14 +22,14 @@ This repository may be used for your own robot.
     - Chromium Browser
     - Unclutter
     - x11-xserver-utils
-	- Java Development Kit 1.8 or higher
-	- Java SE Runtime Environment 1.8 or higher
-	- Apache Maven 3.5.2 or higher
+    - Java SE Development Kit 8.0 or higher
+    - Java SE Runtime Environment 8.0 or higher
+    - Apache Maven 3.5.2 or higher
     - Apache Server 2.4.18 or higher
     - PHP 7.0 or higher
-	- Text Editor/IDE
+    - Text Editor/IDE
 * Optional:
-	- Visual Studio 2017 or higher
+    - Visual Studio 2017 or higher
 
 ### Installing
 Clone/fork this repository and save it. Then use ``./bash-install.sh`` to install to your system (Bash).
