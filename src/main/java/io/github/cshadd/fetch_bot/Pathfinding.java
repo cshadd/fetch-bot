@@ -5,8 +5,14 @@ import io.github.cshadd.cshadd_java_data_structures.util.*;
 public class Pathfinding
 implements FetchBot {
     // Private Final Instance/Property Fields
-    private final Graph<Coordinate> paths = new UndirectedGraph<Coordinate>();
-    private final Stack<Coordinate> backTrackStack = new Stack<Coordinate>();
+    private final Graph<Coordinate> paths;
+    private final Stack<Coordinate> backTrackStack;
+
+    // Public Constructors
+    public Pathfinding() {
+        paths = new UndirectedGraph<Coordinate>();
+        backTrackStack = new Stack<Coordinate>();
+    }
 
     // Protected Static Final Nested Classes
     protected static final class Coordinate
@@ -70,6 +76,7 @@ implements FetchBot {
         }
 
         // Public Methods (Overrided)
+        @Override
         public int compareTo(Coordinate other) {
             float l = length();
             float l2 = other.length();
@@ -83,6 +90,7 @@ implements FetchBot {
                 return 0;
             }
         }
+        @Override
         public String toString() {
             return "(" + x + ", " + y + ")";
         }
