@@ -2,7 +2,7 @@
 
 mkdir -p ~/bin
 mvn package
-cp ./target/fetch-bot-v0.4.0.jar ~/bin/fetch-bot-v0.4.0.jar
+cp ./target/fetch-bot-v0.4.1.jar ~/bin/fetch-bot-v0.4.1.jar
 cp ./src/bash-start.sh ~/bin/StartFetchBot.sh
 cp ./src/bash-stop.sh ~/bin/StopFetchBot.sh
 sudo chmod 764 ~/bin/StartFetchBot.sh
