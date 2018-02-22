@@ -89,7 +89,8 @@
     <properties>
         <!-- DEPENDENCY VERSIONS -->
         <junit.version>4.12</junit.version>
-        <cshadd-java-data-structures.version>v0.1.0</cshadd-java-data-structures.version>
+        <cshadd-java-data-structures.version>v0.1.1</cshadd-java-data-structures.version>
+        <pi4j-core.version>1.1</pi4j-core.version>
 
         <!-- MAVEN COMPILER PROPERTIES -->
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -127,6 +128,11 @@
                 <artifactId>cshadd-java-data-structures</artifactId>
                 <version>${cshadd-java-data-structures.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.pi4j</groupId>
+                <artifactId>pi4j-core</artifactId>
+                <version>${pi4j-core.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -139,6 +145,10 @@
         <dependency>
             <groupId>com.github.cshadd</groupId>
             <artifactId>cshadd-java-data-structures</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-core</artifactId>
         </dependency>
     </dependencies>
 

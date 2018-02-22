@@ -1,5 +1,7 @@
 package io.github.cshadd.fetch_bot;
 
+import com.pi4j.io.gpio.*;
+
 // Main
 public class Core
 implements FetchBot {

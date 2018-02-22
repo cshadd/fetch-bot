@@ -3,15 +3,16 @@ import io.github.cshadd.cshadd_java_data_structures.util.*;
 
 // Main
 public class Pathfinding
-implements FetchBot, Runnable {
-    // Private Constant Instance/Property Fields
-    private static final int DIV = 10;
-
+implements FetchBot {
     // Private Final Instance/Property Fields
     private final Stack<Coordinate> backTrackStack;
     private final int maxX;
     private final int maxY;
-    private final DirectedGraph<Coordinate> paths;
+    private final PathGraph paths;
+
+    // Private Instance/Property Fields
+    private Coordinate currentCoordinate;
+    private int direction;
 
     // Public Constructors
     public Pathfinding() {
@@ -19,19 +20,19 @@ implements FetchBot, Runnable {
     }
     public Pathfinding(int maxX, int maxY) {
         backTrackStack = new Stack<Coordinate>();
-        this.maxX = maxX/DIV;
-        this.maxY = maxY/DIV;
-        paths = new DirectedGraph<Coordinate>();
-        Thread t = new Thread(this);
-        t.start();
+        this.maxX = maxX;
+        this.maxY = maxY;
+        paths = new PathGraph();
+        currentCoordinate = new Coordinate(0, 0);
+        direction = 90;
     }
 
     // Protected Static Final Nested Classes
     protected static final class Coordinate
     implements Comparable<Coordinate> {
         // Private Instance/Property Fields
-        private int x = 0;
-        private int y = 0;
+        private int x;
+        private int y;
 
         // Public Constructors
         public Coordinate() {
@@ -107,32 +108,54 @@ implements FetchBot, Runnable {
             return "(" + x + ", " + y + ")";
         }
     }
-
-    // Public Methods
-    @Override
-    public void run() {
-        try {
-            for (int i = -maxX; i < maxX; i++) {
-                for (int i2 = -maxY; i2 < maxY; i2++) {
-                    final Coordinate coord = new Coordinate(i, i2);
-                    paths.addEdge(coord, coord.coordinateDown());
-                    paths.addEdge(coord, coord.coordinateLeft());
-                    paths.addEdge(coord, coord.coordinateRight());
-                    paths.addEdge(coord, coord.coordinateUp());
-                }
-            }
-        }
-        catch (OutOfMemoryError e) {
-            System.err.println("Error: Out of memory.");
-            e.printStackTrace();
-        }
-        catch (Exception e) {
-            System.err.println("Error: Unspecified.");
-            e.printStackTrace();
-        }
-        finally {
-            System.out.println(paths.toStringFull());
+    protected final class PathGraph
+    extends UndirectedGraph<Coordinate> {
+        // Public Constructors
+        public PathGraph() {
+            super();
+            setRoot(vertex(currentCoordinate));
         }
 
+        // Public Methods
+        public Coordinate next() {
+            /*final Coordinate down = currentCoordinate.coordinateDown();
+            final Coordinate left = currentCoordinate.coordinateLeft();
+            final Coordinate right = currentCoordinate.coordinateRight();
+            final Coordinate up = currentCoordinate.coordinateUp();*/
+
+            // Become neutral...
+
+            // if down is not blocked...
+                // paths.addEdge(currentCoordinate, down);
+            // else if 180 direction become angry cause facing direction...
+
+            // if left is not blocked...
+                // paths.addEdge(currentCoordinate, left);
+            // else if 270 direction become angry cause facing direction...
+
+            // if right is not blocked...
+                // paths.addEdge(currentCoordinate, right);
+            // else if 90 direction become angry cause facing direction...
+
+            // if up is not blocked...
+                // paths.addEdge(currentCoordinate, up);
+            // else if 0 direction become angry cause facing direction...
+
+            // if all are blocked become sad and stop and cleanup...
+            // else if one or more not blocked and not visited...
+                // rotate 360 just to get a view (or just face direction of node)...
+                // if find object at direction (stop rotation at 90 multiple), and next node in that direction is -
+                    // an avalible node (not blocked) become happy and stop and cleanup...
+                // else if find object at direction (stop rotation at 90 multiple), and next node in that direction is -
+                    // an avalible node (blocked) become sad and stop and cleanup...
+                // else if choose (random) one that is not visited and change direction -
+                    // and go there, pushing the opposite into stack...
+            // else if all are visited and stack not empty then pop one from stack to move...
+            // else if everything is visited and the stack is empty become sad and stop and cleanup...
+            // else error!?
+                // Become sad and stop and cleanup...
+
+            return null; // Not sure what to return yet...
+        }
     }
 }
