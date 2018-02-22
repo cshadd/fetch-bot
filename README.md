@@ -37,7 +37,7 @@ Clone/fork this repository and save it. Then use ``./bash-install.sh`` to instal
 ## Deployment
 
 ### Recommended Deployment
-``~/bin/StartFetchBot.sh`` (Bash) is the launcher that you use to deploy the application and run it. ``/var/www/html/FetchBot/`` is the server that you can access at http://localhost/FetchBot. You may need to disable the cache temporarily if you are going off your localhost. We suggest you deploy this on a Raspberry PI with Apache server and a static/set ip address.
+``~/bin/StartFetchBot.sh`` (Bash) is the launcher that you use to deploy the application and run it. ``~/bin/StopFetchBot.sh`` (Bash) is how you will terminate the application. ``/var/www/html/FetchBot/`` is the server that you can access at http://localhost/FetchBot. You may need to disable the cache temporarily if you are going off your localhost and you can edit the launcher itself to change the location. We suggest you deploy this on a Raspberry PI with Apache server and a static/set ip address.
 
 ### Visual Studio Deployment (Optional)
 You may use Visual Studio 2017 or higher as an editor. ``fetch-bot.sln`` is the solution file.
@@ -63,3 +63,4 @@ This project is licensed under the MIT License. Please check the [LICENSE](LICEN
 ## Acknowledgements
 * [Oracle](https://www.oracle.com/)
 * [Apache](https://www.apache.org/)
+* [The Pi4J Project](http://pi4j.com/)
