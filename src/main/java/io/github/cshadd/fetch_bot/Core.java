@@ -8,6 +8,7 @@ implements FetchBot {
 
     // Entry Point
     public static void main(String[] args) {
-
+        System.out.println("Fetch Bot Core starting!");
+        System.out.println("Fetch Bot Core terminating!");
     }
 }
