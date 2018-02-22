@@ -25,65 +25,7 @@
     });
   }
 
-  function eyeMove(position) {
-    var $eyes = $(".eyes");
-    var margins = ["20%", "0", "0", "20%"];
-    // Bottom, Left, Right, Top
-    if (position == 0) { // Top-Left
-      margins[0] = "30%";
-      margins[1] = "0";
-      margins[2] = "20%";
-      margins[3] = "10%";
-    }
-    else if (position == 1) { // Top
-      margins[0] = "30%";
-      margins[1] = "0";
-      margins[2] = "0";
-      margins[3] = "10%";
-    }
-    else if (position == 2) { // Top-Right
-      margins[0] = "30%";
-      margins[1] = "20%";
-      margins[2] = "0";
-      margins[3] = "10%";
-    }
-    else if (position == 3) { // Right
-      margins[0] = "20%";
-      margins[1] = "20%";
-      margins[2] = "0";
-      margins[3] = "20%";
-    }
-    else if (position == 4) { // Bottom-Right
-      margins[0] = "10%";
-      margins[1] = "20%";
-      margins[2] = "0";
-      margins[3] = "30%";
-    }
-    else if (position == 5) { // Bottom
-      margins[0] = "10%";
-      margins[1] = "0";
-      margins[2] = "0";
-      margins[3] = "30%";
-    }
-    else if (position == 6) { // Bottom-Left
-      margins[0] = "10%";
-      margins[1] = "0";
-      margins[2] = "20%";
-      margins[3] = "30%";
-    }
-    else if (position == 7) { // Left
-      margins[0] = "20%";
-      margins[1] = "0";
-      margins[2] = "20%";
-      margins[3] = "20%";
-    }
-    $eyes.animate({
-      marginBottom: "" + margins[0],
-      marginLeft: "" + margins[1],
-      marginRight: "" + margins[2],
-      marginTop: "" + margins[3],
-    }, Math.random()*500);
-  }
+
 
   function setEyeEmotion(color, height, rot) {
     var $eye = $(".eye");
