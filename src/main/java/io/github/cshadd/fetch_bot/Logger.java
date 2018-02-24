@@ -1,11 +1,8 @@
 package io.github.cshadd.fetch_bot;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
-import org.apache.commons.io.FileUtils;
+import java.io.*;
+import java.text.*;
+import java.util.*;
+import org.apache.commons.io.*;
 
 // Main
 public class Logger
