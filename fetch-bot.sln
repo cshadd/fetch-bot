@@ -31,8 +31,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5EEBD627-B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot", "fetch_bot", "{1B3A315A-A423-4C8A-AA7B-D9770D2E83CC}"
 	ProjectSection(SolutionItems) = preProject
+		src\main\java\io\github\cshadd\fetch_bot\Communication.java = src\main\java\io\github\cshadd\fetch_bot\Communication.java
 		src\main\java\io\github\cshadd\fetch_bot\Core.java = src\main\java\io\github\cshadd\fetch_bot\Core.java
 		src\main\java\io\github\cshadd\fetch_bot\FetchBot.java = src\main\java\io\github\cshadd\fetch_bot\FetchBot.java
+		src\main\java\io\github\cshadd\fetch_bot\Logger.java = src\main\java\io\github\cshadd\fetch_bot\Logger.java
 		src\main\java\io\github\cshadd\fetch_bot\Pathfinding.java = src\main\java\io\github\cshadd\fetch_bot\Pathfinding.java
 	EndProjectSection
 EndProject
