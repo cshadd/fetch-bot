@@ -26,7 +26,7 @@ This repository may be used for your own robot.
     - Java SE Runtime Environment 8.0 or higher
     - Apache Maven 3.5.2 or higher
     - Apache Server 2.4.10 or higher
-    - PHP 7.0 or higher
+    - PHP 5.0 or higher
     - Text Editor/IDE
 * Optional:
     - Visual Studio 2017 or higher
