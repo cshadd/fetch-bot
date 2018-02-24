@@ -26,7 +26,7 @@ This repository may be used for your own robot.
     - Java SE Runtime Environment 8.0 or higher
     - Apache Maven 3.5.2 or higher
     - Apache Server 2.4.10 or higher
-    - PHP 7.0 or higher
+    - PHP 5.0 or higher
     - Text Editor/IDE
 * Optional:
     - Visual Studio 2017 or higher
@@ -37,7 +37,7 @@ Clone/fork this repository and save it. Then use ``./bash-install.sh`` to instal
 ## Deployment
 
 ### Recommended Deployment
-``~/bin/StartFetchBot.sh`` (Bash) is the launcher that you use to deploy the application and run it. ``~/bin/StopFetchBot.sh`` (Bash) is how you will terminate the application. ``/var/www/html/FetchBot/`` is the server that you can access at http://localhost/FetchBot. You may need to disable the cache temporarily if you are going off your localhost and you can edit the launcher itself to change the location. We suggest you deploy this on a Raspberry PI with Apache server and a static/set ip address.
+``~/bin/StartFetchBot.sh`` (Bash) is the launcher that you use to deploy the application and run it. ``~/bin/StopFetchBot.sh`` (Bash) is how you will terminate the application. ``/var/www/html/FetchBot/`` is the server that you can access at http://localhost/FetchBot. You may need to disable the cache. We suggest you deploy this on a Raspberry PI with Apache server and a static/set ip address.
 
 ### Visual Studio Deployment (Optional)
 You may use Visual Studio 2017 or higher as an editor. ``fetch-bot.sln`` is the solution file.

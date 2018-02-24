@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.cshadd</groupId>
     <artifactId>fetch-bot</artifactId>
-    <version>v0.4.1</version>
+    <version>v0.5.0</version>
     <name>Fetch Bot</name>
     <description>AI based robot with image processing.</description>
     <url>https://www.github.com/cshadd/fetch-bot</url>
@@ -90,6 +90,8 @@
         <!-- DEPENDENCY VERSIONS -->
         <junit.version>4.12</junit.version>
         <cshadd-java-data-structures.version>v0.1.1</cshadd-java-data-structures.version>
+        <commons-io.version>2.6</commons-io.version>
+        <json.version>20180130</json.version>
         <pi4j-core.version>1.1</pi4j-core.version>
 
         <!-- MAVEN COMPILER PROPERTIES -->
@@ -112,7 +114,8 @@
 
         <!-- REPORTS VERSIONS -->
         <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
-    </properties>
+    
+</properties>
 
     <!-- PROJECT DEPENDENCIES -->
     <dependencyManagement>
@@ -127,6 +130,16 @@
                 <groupId>com.github.cshadd</groupId>
                 <artifactId>cshadd-java-data-structures</artifactId>
                 <version>${cshadd-java-data-structures.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${json.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.pi4j</groupId>
@@ -145,6 +158,14 @@
         <dependency>
             <groupId>com.github.cshadd</groupId>
             <artifactId>cshadd-java-data-structures</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
