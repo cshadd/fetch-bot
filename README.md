@@ -42,7 +42,7 @@ Clone/fork this repository and save it. Then use ``./bash-install.sh`` to instal
 ### Visual Studio Deployment (Optional)
 You may use Visual Studio 2017 or higher as an editor. ``fetch-bot.sln`` is the solution file.
 
-## Contributng
+## Contributing
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
