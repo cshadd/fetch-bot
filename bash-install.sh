@@ -3,6 +3,7 @@
 ./bash-uninstall.sh
 mkdir -p ~/bin
 mvn package
+cp -r ./target/libs ~/bin
 cp ./target/fetch-bot-v0.5.0.jar ~/bin/fetch-bot-v0.5.0.jar
 cp ./src/bash-start.sh ~/bin/StartFetchBot.sh
 cp ./src/bash-stop.sh ~/bin/StopFetchBot.sh

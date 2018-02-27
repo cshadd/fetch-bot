@@ -1,7 +1,6 @@
 package io.github.cshadd.fetch_bot;
 import java.io.*;
 import org.apache.commons.io.*;
-import com.pi4j.io.gpio.*;
 
 // Main
 public class Core
