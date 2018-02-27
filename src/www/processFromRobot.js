@@ -2,20 +2,21 @@ var data = null;
 var processing = false;
 
 setInterval(function() {
-   if (processing != true) {
-      processing = true;
-      $.ajax({
-            url: "comms/toInterface.json",
+    if (processing != true) {
+        processing = true;
+        $.ajax({
+            url: "comms/toInterface.json?=" + Math.random(),
             dataType: "json",
             async: false,
             data: null,
             success: function(json) {
-               data = json;
-               processing = false;
+                data = json;
+                processing = false;
             }
-         }).fail(function() {
+        })
+        .fail(function() {
             data = null;
             processing = false;
-      });
-   }
+        });
+    }
 }, 2000);
