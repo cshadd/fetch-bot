@@ -33,13 +33,52 @@ This repository may be used for your own robot.
 
 ### Installing
 Clone/fork this repository and save it. Then use ``./bash-install.sh`` to install to your system (Bash).
+``~/bin/fetch-bot-x.x.x.jar`` is the compiled JAR.
+
+### Maven Dependency
+In your pom.xml file, add thiese elements:
+```xml
+[...]
+<repositories>
+    [...]
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+    [...]
+</repositories>
+[...]
+<dependencyManagement>
+    [...]
+    <dependencies>
+        [...]
+        <dependency>
+            <groupId>com.github.cshadd</groupId>
+            <artifactId>fetch-bot</artifactId>
+            <version>VERSION NUMBER HERE (ex. v1.0.0)</version>
+        </dependency>
+        [...]
+    </dependencies>
+    [...]
+</dependencyManagement>
+[...]
+<dependencies>
+    [...]
+    <dependency>
+        <groupId>com.github.cshadd</groupId>
+        <artifactId>fetch-bot</artifactId>
+    </dependency>
+    [...]
+</dependencies>
+[...]
+```
 
 ## Deployment
 
 ### Recommended Deployment
-``~/bin/StartFetchBot.sh`` (Bash) is the launcher that you use to deploy the application and run it. ``~/bin/StopFetchBot.sh`` (Bash) is how you will terminate the application. ``/var/www/html/FetchBot/`` is the server that you can access at http://localhost/FetchBot. You may need to disable the cache temporarily if you are going off your localhost and you can edit the launcher itself to change the location. We suggest you deploy this on a Raspberry PI with Apache server and a static/set ip address.
+``~/bin/StartFetchBot.sh`` (Bash) is the launcher that you use to deploy the application and run it. ``~/bin/StopFetchBot.sh`` (Bash) is how you will terminate the application. ``/var/www/html/FetchBot/`` is the server that you can access at http://localhost/FetchBot. You may need to disable the cache. We suggest you deploy this on a Raspberry PI with Apache server and a static/set ip address.
 
-### Visual Studio Deployment (Optional)
+### Visual Studio Solution (Optional)
 You may use Visual Studio 2017 or higher as an editor. ``fetch-bot.sln`` is the solution file.
 
 ## Contributing

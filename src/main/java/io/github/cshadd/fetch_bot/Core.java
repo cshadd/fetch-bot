@@ -1,6 +1,6 @@
 package io.github.cshadd.fetch_bot;
-
-import com.pi4j.io.gpio.*;
+import java.io.*;
+import org.apache.commons.io.*;
 
 // Main
 public class Core
@@ -10,7 +10,8 @@ implements FetchBot {
 
     // Entry Point
     public static void main(String[] args) {
-        System.out.println("Fetch Bot Core starting!");
-        System.out.println("Fetch Bot Core terminating!");
+        FileUtils.deleteQuietly(new File("FetchBot.log"));
+        Logger.info("Fetch Bot starting!");
+        Logger.info("Fetch Bot terminating!");
     }
 }
