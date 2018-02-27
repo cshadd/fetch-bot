@@ -1,11 +1,9 @@
 package io.github.cshadd.fetch_bot;
-
-import java.io.InputStream;
+import java.io.*;
 import java.io.IOException;
-import java.net.URL;
-import org.apache.commons.io.IOUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.net.*;
+import org.apache.commons.io.*;
+import org.json.*;
 
 // Main
 public class Communication

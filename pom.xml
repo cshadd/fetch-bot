@@ -89,7 +89,7 @@
     <properties>
         <!-- DEPENDENCY VERSIONS -->
         <junit.version>4.12</junit.version>
-        <cshadd-java-data-structures.version>v0.1.1</cshadd-java-data-structures.version>
+        <cshadd-java-data-structures.version>v0.1.2</cshadd-java-data-structures.version>
         <commons-io.version>2.6</commons-io.version>
         <json.version>20180130</json.version>
         <pi4j-core.version>1.1</pi4j-core.version>
@@ -114,8 +114,7 @@
 
         <!-- REPORTS VERSIONS -->
         <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
-    
-</properties>
+    </properties>
 
     <!-- PROJECT DEPENDENCIES -->
     <dependencyManagement>
@@ -189,6 +188,8 @@
                         <configuration>
                             <archive>
                                 <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <classpathPrefix>libs/fetch-bot</classpathPrefix>
                                     <mainClass>io.github.cshadd.fetch_bot.Core</mainClass>
                                 </manifest>
                             </archive>
@@ -275,7 +276,6 @@
             </plugins>
         </pluginManagement>
 
-
         <!-- GLOBAL BUILD PLUGINS (used when building all modules) -->
         <plugins>
             <!-- REMOVE TRAILING WHITESPACE AUTOMATICALLY -->
@@ -289,6 +289,28 @@
                         <goals>
                             <goal>trim</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- COPY DEPENDENCIES -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/libs/fetch-bot</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <useBaseVersion>false</useBaseVersion>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -340,5 +362,5 @@
                 </reportSets>
             </plugin>
         </plugins>
-</reporting>
+    </reporting>
 </project>
