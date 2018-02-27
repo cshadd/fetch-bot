@@ -81,7 +81,7 @@ In your pom.xml file, add thiese elements:
 ### Visual Studio Solution (Optional)
 You may use Visual Studio 2017 or higher as an editor. ``fetch-bot.sln`` is the solution file.
 
-## Contributng
+## Contributing
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
