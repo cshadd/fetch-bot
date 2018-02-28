@@ -19,8 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Git_Config", "Git_Config", 
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		CONTRIBUTING.md = CONTRIBUTING.md
+		ISSUE_TEMPLATE.md = ISSUE_TEMPLATE.md
 		LICENSE = LICENSE
+		PULL_REQUEST_TEMPLATE.md = PULL_REQUEST_TEMPLATE.md
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -42,8 +45,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "www", "www", "{02363110-681
 	ProjectSection(SolutionItems) = preProject
 		src\www\face.html = src\www\face.html
 		src\www\index.html = src\www\index.html
-		src\www\processFromRobot.js = src\www\processFromRobot.js
-		src\www\processToRobot.php = src\www\processToRobot.php
+		src\www\processInterface.js = src\www\processInterface.js
+		src\www\processRobot.php = src\www\processRobot.php
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "comms", "comms", "{ED0D80B0-76CB-4F5F-857F-19F4E67A0905}"

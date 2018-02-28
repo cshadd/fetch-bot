@@ -5,7 +5,7 @@ setInterval(function() {
     if (processing != true) {
         processing = true;
         $.ajax({
-            url: "comms/toInterface.json?=" + Math.random(),
+            url: "comms/toInterface.json?refresh=" + new Date().getTime(),
             dataType: "json",
             async: false,
             data: null,
