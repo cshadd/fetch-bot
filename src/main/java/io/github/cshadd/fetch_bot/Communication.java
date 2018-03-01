@@ -85,28 +85,6 @@ implements FetchBot {
     }
 
     // Public Methods
-    public void clearToInterface() {
-        File input = null;
-        try {
-            input = new File(TO_INTERFACE_JSON_PATH);
-            FileUtils.deleteQuietly(new File(TO_INTERFACE_JSON_PATH));
-        }
-        catch (Exception e) {
-            Logger.fatalError(e + "\nThere was an unknown issue!");
-        }
-        finally { }
-    }
-    public void clearToRobot() {
-        File input = null;
-        try {
-            input = new File(TO_ROBOT_JSON_PATH);
-            FileUtils.deleteQuietly(new File(TO_ROBOT_JSON_PATH));
-        }
-        catch (Exception e) {
-            Logger.fatalError(e + "\nThere was an unknown issue!");
-        }
-        finally { }
-    }
     /*public String readToInterface(String key) {
         String returnData = null;
         try {

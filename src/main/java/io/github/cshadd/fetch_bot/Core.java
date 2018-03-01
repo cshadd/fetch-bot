@@ -15,8 +15,6 @@ implements FetchBot {
         path = new Pathfinding();
 
         Logger.clear();
-        comm.clearToInterface();
-        comm.clearToRobot();
         comm.resetToRobot();
         comm.resetToInterface();
 
@@ -33,15 +31,9 @@ implements FetchBot {
             // send toInterface.json
             // clear toRobot.json accessed var
             // end loop...
-            try {
-                int a = 1/0;
-            }
-            catch (Exception e) {
-                Logger.error(e + "\nwtf");
-            }
         Logger.info("Fetch Bot terminating!");
 
-        comm.clearToInterface();
-        comm.clearToRobot();
+        comm.resetToRobot();
+        comm.resetToInterface();
     }
 }
