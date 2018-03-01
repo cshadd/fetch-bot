@@ -19,11 +19,11 @@
             if (data != null) {
                 $("#connection-offline").hide();
                 $("#status-curr-mode").text("Current Mode: " + data.mode);
-                $("#status-max-coord").text("Max Coordinates: ([-" + data.coordinates.xmax + "],[" + data.coordinates.xmax + "], [-" + data.coordinates.ymax + "],[" + data.coordinates.ymax + "])");
-                $("#status-curr-coord").text("Current Coordinates: (" + data.coordinates.x + ", " + data.coordinates.y + ")");
+                $("#status-max-coord").text("Max Coordinates: ([-" + data.xmax + "],[" + data.xmax + "], [-" + data.ymax + "],[" + data.ymax + "])");
+                $("#status-curr-coord").text("Current Coordinates: (" + data.x + ", " + data.y + ")");
                 $("#status-curr-rot").text("Current Rotation: " + data.rot + " Degrees");
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
-                $("#status-sensors").text("Sensors (0 = Open, 1 = Blocked): {B:" + data.sensors.back + "; F:" + data.sensors.front + "; L:" + data.sensors.left + "; R:" + data.sensors.right + "}");
+                $("#status-sensors").text("Sensors (0 = Open, 1 = Blocked): {B:" + data.sensorback + "; F:" + data.sensorfront + "; L:" + data.sensorleft + "; R:" + data.sensorright + "}");
                 $("#status-verbose").text(data.verbose);
 
                 if (data.mode == "Auto") {
@@ -124,7 +124,7 @@
                             <p id="status-curr-emotion">Current Emotion:</p>
                             <p id="status-sensors">Sensors (0 = Open, 1 = Blocked):</p>
                             <input data-toggle="collapse" data-target="#status-verbose" class="btn btn-primary" type="button" value="Show/Hide Verbose" />
-                            <p id="status-verbose" class="collapse">...</p>
+                            <textarea id="status-verbose" class="collapse" readonly="readonly"></textarea>
                         </div>
                     </div>
                     <div class="panel panel-primary">
