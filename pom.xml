@@ -280,8 +280,8 @@
         <plugins>
             <!-- REMOVE TRAILING WHITESPACE AUTOMATICALLY -->
             <plugin>
-                <artifactId>whitespace-maven-plugin</artifactId>
                 <groupId>com.github.dantwining.whitespace-maven-plugin</groupId>
+                <artifactId>whitespace-maven-plugin</artifactId>
                 <version>1.0.4</version>
                 <executions>
                     <execution>
