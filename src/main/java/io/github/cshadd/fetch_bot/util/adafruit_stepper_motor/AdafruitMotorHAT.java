@@ -4,7 +4,7 @@ import com.pi4j.io.i2c.I2CFactory;
 
 import java.io.IOException;
 
-import static utils.TimeUtil.delay;
+import static io.github.cshadd.fetch_bot.utils.TimeUtil.delay;
 
 /**
  * Adapted from the python code at https://github.com/adafruit/Adafruit-Motor-HAT-Python-Library.git

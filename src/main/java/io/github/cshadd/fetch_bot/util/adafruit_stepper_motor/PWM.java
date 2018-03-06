@@ -6,7 +6,7 @@ import com.pi4j.io.i2c.I2CFactory;
 
 import java.io.IOException;
 
-import static utils.TimeUtil.delay;
+import static io.github.cshadd.fetch_bot.utils.TimeUtil.delay;
 
 /**
  * Also see {@link i2c.servo.pwm.PCA9685}
