@@ -4,24 +4,17 @@ import org.apache.commons.io.*;
 import org.json.*;
 
 // Main
-public class Communication
+public final class Communication
 implements FetchBot {
     // Private Constant Instance/Property Fields
     private static final String TO_INTERFACE_JSON_PATH = "/var/www/html/FetchBot/comms/toInterface.json";
     private static final String TO_ROBOT_JSON_PATH = "/var/www/html/FetchBot/comms/toRobot.json";
 
-    // Private Instance/Property Fields
-    private JSONObject toInterface;
-    private JSONObject toRobot;
-
     // Public Constructors
-    public Communication() {
-        toInterface = null;
-        toRobot = null;
-    }
+    public Communication() { }
 
-    // Private Methods
-    /*private JSONObject read(String filePath) {
+    // Private Final Methods
+    private final JSONObject read(String filePath) {
         File input = null;
         JSONObject returnData = null;
         Logger.info("Reading JSON of " + filePath + ".");
@@ -40,8 +33,8 @@ implements FetchBot {
         }
         finally { }
         return returnData;
-    }*/
-    private JSONObject readSafeLog(String filePath) {
+    }
+    private final JSONObject readSafeLog(String filePath) {
         File input = null;
         JSONObject returnData = null;
         try {
@@ -54,7 +47,7 @@ implements FetchBot {
         finally { }
         return returnData;
     }
-    /*private void write(JSONObject json, String filePath) {
+    private final void write(JSONObject json, String filePath) {
         File input = null;
         Logger.info("Writing JSON to " + filePath + ".");
         try {
@@ -71,8 +64,8 @@ implements FetchBot {
             Logger.error(e + "\nThere was an unknown issue!");
         }
         finally { }
-    }*/
-    private void writeSafeLog(JSONObject json, String filePath) {
+    }
+    private final void writeSafeLog(JSONObject json, String filePath) {
         File input = null;
         try {
             input = new File(filePath);
@@ -84,8 +77,8 @@ implements FetchBot {
         finally { }
     }
 
-    // Public Methods
-    /*public String readToInterface(String key) {
+    // Public Final Methods
+    public final String readToInterface(String key) {
         String returnData = null;
         try {
             returnData = read(TO_INTERFACE_JSON_PATH).getString(key);
@@ -98,8 +91,8 @@ implements FetchBot {
         }
         finally { }
         return returnData;
-    }*/
-    /*public String readToInterfaceSafeLog(String key) {
+    }
+    public final String readToInterfaceSafeLog(String key) {
         String returnData = null;
         try {
             returnData = readSafeLog(TO_INTERFACE_JSON_PATH).getString(key);
@@ -109,8 +102,8 @@ implements FetchBot {
         }
         finally { }
         return returnData;
-    }*/
-    /*public String readToRobot(String key) {
+    }
+    public final String readToRobot(String key) {
         String returnData = null;
         try {
             returnData = read(TO_ROBOT_JSON_PATH).getString(key);
@@ -123,8 +116,8 @@ implements FetchBot {
         }
         finally { }
         return returnData;
-    }*/
-    /*public String readToRobotSafeLog(String key) {
+    }
+    public final String readToRobotSafeLog(String key) {
         String returnData = null;
         try {
             returnData = readSafeLog(TO_ROBOT_JSON_PATH).getString(key);
@@ -134,8 +127,8 @@ implements FetchBot {
         }
         finally { }
         return returnData;
-    }*/
-    public void resetToInterface() {
+    }
+    public final void resetToInterface() {
         try {
             FileUtils.writeStringToFile(new File(TO_INTERFACE_JSON_PATH), "{}", "UTF-8", true);
         }
@@ -143,8 +136,8 @@ implements FetchBot {
             Logger.fatalError(e + "\nThere was an unknown issue!");
         }
         finally { }
-        toInterface = new JSONObject();
-        toInterface.put("emotion", "Boot")
+        JSONObject data = new JSONObject();
+        data.put("emotion", "Boot")
                     .put("mode", "Off")
                     .put("rot", "0")
                     .put("sensorback", "0")
@@ -156,9 +149,9 @@ implements FetchBot {
                     .put("xmax", "0")
                     .put("y", "0")
                     .put("ymax", "0");
-        writeSafeLog(toInterface, TO_INTERFACE_JSON_PATH);
+        writeSafeLog(data, TO_INTERFACE_JSON_PATH);
     }
-    public void resetToRobot() {
+    public final void resetToRobot() {
         try {
             FileUtils.writeStringToFile(new File(TO_ROBOT_JSON_PATH), "{}", "UTF-8", true);
         }
@@ -166,12 +159,14 @@ implements FetchBot {
             Logger.fatalError(e + "\nThere was an unknown issue!");
         }
         finally { }
-        toRobot = new JSONObject();
-        writeSafeLog(toRobot, TO_ROBOT_JSON_PATH);
+        JSONObject data = new JSONObject();
+        data.put("Stop", "0");
+        writeSafeLog(data, TO_ROBOT_JSON_PATH);
     }
-    /*public void writeToInterface(String key, String value) {
+    public final void writeToInterface(String key, String value) {
+        JSONObject data = null;
         try {
-            JSONObject data = readToInterface().put(key, value);
+            data = read(TO_INTERFACE_JSON_PATH).put(key, value);
             write(data, TO_INTERFACE_JSON_PATH);
         }
         catch (JSONException e) {
@@ -181,8 +176,8 @@ implements FetchBot {
             Logger.error(e + "\nThere was an unknown issue!");
         }
         finally { }
-    }*/
-    public void writeToInterfaceSafeLog(String key, String value) {
+    }
+    public final void writeToInterfaceSafeLog(String key, String value) {
         JSONObject data = null;
         try {
             data = readSafeLog(TO_INTERFACE_JSON_PATH).put(key, value);
@@ -193,10 +188,10 @@ implements FetchBot {
         }
         finally { }
     }
-    /*public void writeToRobot(String key, String value) {
+    public final void writeToRobot(String key, String value) {
         JSONObject data = null;
         try {
-            data = readToRobot().put(key, value);
+            data = read(TO_ROBOT_JSON_PATH).put(key, value);
             write(data, TO_ROBOT_JSON_PATH);
         }
         catch (JSONException e) {
@@ -206,8 +201,8 @@ implements FetchBot {
             Logger.error(e + "\nThere was an unknown issue!");
         }
         finally { }
-    }*/
-    /*public void writeToRobotSafeLog(String key, String value) {
+    }
+    public final void writeToRobotSafeLog(String key, String value) {
         JSONObject data = null;
         try {
             data = readSafeLog(TO_ROBOT_JSON_PATH).put(key, value);
@@ -217,5 +212,5 @@ implements FetchBot {
             Logger.fatalError(e + "\nThere was an unknown issue!");
         }
         finally { }
-    }*/
+    }
 }

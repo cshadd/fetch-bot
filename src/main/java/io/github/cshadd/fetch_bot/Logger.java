@@ -5,14 +5,17 @@ import java.util.*;
 import org.apache.commons.io.*;
 
 // Main
-public class Logger
+public final class Logger
 implements FetchBot {
     // Private Constant Instance/Property Fields
     private static final String LOG_PATH = "FetchBot.log";
     private static final String TAG = "[FETCH BOT]";
 
-    // Private Static Instance/Property Fields
+    // Private Instance/Property Fields
     private static Communication comm = new Communication();
+
+    // Private Constructors
+    private Logger() { }
 
     // Private Static Final Methods
     private static final void write(String msg, boolean append) {
@@ -74,7 +77,7 @@ implements FetchBot {
             returnData = FileUtils.readFileToString(input, "UTF-8");
         }
         catch (Exception e) {
-            Logger.fatalError(e + "\nThere was an unknown issue!");
+            fatalError(e + "\nThere was an unknown issue!");
         }
         finally { }
         return returnData;

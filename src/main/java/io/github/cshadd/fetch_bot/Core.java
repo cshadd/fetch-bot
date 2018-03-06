@@ -5,20 +5,26 @@ package io.github.cshadd.fetch_bot;
 // Main
 public class Core
 implements FetchBot {
-    // Private Final Static Instance/Property Fields
+    // Private Static Instance/Property Fields
     private static Communication comm;
     private static Pathfinding path;
 
     // Entry Point
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    throws InterruptedException {
         comm = new Communication();
-        path = new Pathfinding();
+
+        // path = new Pathfinding();
 
         Logger.clear();
         comm.resetToRobot();
         comm.resetToInterface();
 
         Logger.info("Fetch Bot starting!");
+            while (comm.readToRobot("Stop").equals("0")) {
+                Thread.sleep(1000);
+                Logger.info("Stepped!");
+            }
             // loop...
             // import toRobot.json
             // store toRobot.json vars
