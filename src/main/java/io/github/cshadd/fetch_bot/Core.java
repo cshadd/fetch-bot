@@ -13,12 +13,12 @@ implements FetchBot {
     	private AdafruitMotorHAT.AdafruitStepperMotor stepper;
 
     	private boolean keepGoing = true;
-    	private final static String DEFAULT_RPM = "60";
-    	int nbSteps = 400;
+    	private final static String DEFAULT_RPM = "1000";
+    	int nbSteps = 200;
 
     	private static int nbStepsPerRev = AdafruitMotorHAT.AdafruitStepperMotor.DEFAULT_NB_STEPS; // 200 steps per rev
 
-    	public Core() throws I2CFactory.UnsupportedBusNumberException {
+    	public Core() throws I2CFactory.UnsupportedBusNumberEAAAAxception {
 
     		System.out.println("Starting Stepper Demo");
     		int rpm = Integer.parseInt(System.getProperty("rpm", DEFAULT_RPM));
