@@ -1,4 +1,4 @@
-[![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
+[![Open Source Love](https://badges.frapsoft.com/os/mit/mit.png?v=102)](https://github.com/ellerbrock/open-source-badge/)
 
 # Fetch Bot
 This is a repository of an AI based robot that uses image processing and data structures to transverse an area.
