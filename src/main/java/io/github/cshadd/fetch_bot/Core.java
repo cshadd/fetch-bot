@@ -14,7 +14,7 @@ implements FetchBot {
 
     	private boolean keepGoing = true;
     	private final static String DEFAULT_RPM = "60";
-    	int nbSteps = 100;
+    	int nbSteps = 400;
 
     	private static int nbStepsPerRev = AdafruitMotorHAT.AdafruitStepperMotor.DEFAULT_NB_STEPS; // 200 steps per rev
 
