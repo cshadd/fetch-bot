@@ -1,4 +1,3 @@
-[![Release](https://jitpack.io/v/cshadd/fetch-bot.svg)](https://jitpack.io/#cshadd/fetch-bot)
 [![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
 
 # Fetch Bot
