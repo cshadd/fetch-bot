@@ -18,7 +18,7 @@ implements FetchBot {
 
     	private static int nbStepsPerRev = AdafruitMotorHAT.AdafruitStepperMotor.DEFAULT_NB_STEPS; // 200 steps per rev
 
-    	public Core() throws I2CFactory.UnsupportedBusNumberEAAAAxception {
+    	public Core() throws I2CFactory.UnsupportedBusNumberException {
 
     		System.out.println("Starting Stepper Demo");
     		int rpm = Integer.parseInt(System.getProperty("rpm", DEFAULT_RPM));
