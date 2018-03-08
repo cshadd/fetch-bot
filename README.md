@@ -19,8 +19,9 @@ This repository may be used for your own robot.
     - KUNCAN DC 5V to DC 12V Converter Step Up Voltage Converter 5ft Am to DC 5.5 x 2.1mm
     - "12V to Port Connector"
     - 12V wires
-    - "Stepper Motors"
-    - "Omni Wheels"
+    - Adafruit Stepper Motor NEMA17 12V 350mA
+    - 48mm Omniwheel for LEGO NXT, Servo 
+    - 5mm Aluminum Mounting Hub  
     - "Omni Wheel Headers"
     - Arduino Uno
     - Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO Mega R3 Mega2560 Nano Duemilanove Nano Raspberry Pi 3 Robot
@@ -30,17 +31,18 @@ This repository may be used for your own robot.
     - Robot Chassis
 * Optional:
     - Raspberry Pi Case
-    - Raspberry Pi Heat Sink
-    - _V 2 Port USB Battery Pack
+    - Raspberry Pi Heat Sink
+    - _V 2 Port USB Battery Pack
+    - 2x20-pin Extra Tall Female Stacking Header 0.1"
 
 ### Assembly
 Great care is needed to assemble this robot.
-We specifically choosen these parts for our robot but it is up to you to decide which ones you will use.
+We specifically chose these parts for our robot but it is up to you to decide which ones you will use.
 
 ### Why Raspberry Pi?
-Lets face it. In our day and age of the 21st century, we want lightweight mobile systems for robots. The Raspberry Pi is perfect for it.
+Let's face it. In our day and age of the 21st century, we want lightweight mobile systems for robots. The Raspberry Pi is perfect for it.
 We cannot stress enough about the power of the Pi, and the features it contains that come preinstalled such as ``git``.
-It is easy to setup and use as virtually its own computer.
+It is easy to setup and use as it is virtually a computer itself.
 We built this robot specifically on the Pi but made it as modular as possible to accomodate other systems.
 If you want to use a full tower as a robot brain, go ahead. But the Raspberry Pi is much simpler.
 Proceeding forward, we will be specifically talking about the Raspberry Pi unless otherwise. The system and Bash command lines will rely on the Raspberry Pi.
