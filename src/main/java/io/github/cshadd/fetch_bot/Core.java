@@ -46,7 +46,10 @@ implements FetchBot {
 
 		movement.move();
 
-        while (comm.readToRobot("Stop").equals("0")) { }
+        while (comm.readToRobot("Stop").equals("0")) {
+            delay(1000);
+            System.out.println("test");
+        }
 
         movement.stop();
 
