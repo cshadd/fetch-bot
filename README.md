@@ -100,10 +100,11 @@ And the [contributers](https://github.com/cshadd/fetch-bot/graphs/contributors).
 This project is licensed under the MIT License. Please check the [LICENSE](LICENSE).
 
 ## Acknowledgements
-* [Oracle](https://www.oracle.com/)
 * [Raspberry Pi](https://www.raspberrypi.org/)
+* [Arduino](https://www.arduino.cc/)
+* [Adafruit](https://www.adafruit.com/)
+* [Oracle](https://www.oracle.com/)
 * [Apache](https://www.apache.org/)
-* [Adafryut](https://www.adafruit.com/)
 * [The Pi4J Project](http://pi4j.com/)
 * [Pi4J Samples by OlivierLD](https://github.com/OlivierLD/raspberry-pi4j-samples)
 
