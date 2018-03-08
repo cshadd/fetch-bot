@@ -1,4 +1,5 @@
 package io.github.cshadd.fetch_bot.util;
+import io.github.cshadd.fetch_bot.FetchBot;
 import java.io.*;
 import org.apache.commons.io.*;
 import org.json.*;

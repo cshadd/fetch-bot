@@ -33,15 +33,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5EEBD627-B
 		src\test\java\ProgramTest.java = src\test\java\ProgramTest.java
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot", "fetch_bot", "{1B3A315A-A423-4C8A-AA7B-D9770D2E83CC}"
-	ProjectSection(SolutionItems) = preProject
-		src\main\java\io\github\cshadd\fetch_bot\Communication.java = src\main\java\io\github\cshadd\fetch_bot\Communication.java
-		src\main\java\io\github\cshadd\fetch_bot\Core.java = src\main\java\io\github\cshadd\fetch_bot\Core.java
-		src\main\java\io\github\cshadd\fetch_bot\FetchBot.java = src\main\java\io\github\cshadd\fetch_bot\FetchBot.java
-		src\main\java\io\github\cshadd\fetch_bot\Logger.java = src\main\java\io\github\cshadd\fetch_bot\Logger.java
-		src\main\java\io\github\cshadd\fetch_bot\Pathfinding.java = src\main\java\io\github\cshadd\fetch_bot\Pathfinding.java
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "www", "www", "{02363110-681E-43A5-97B8-091F67393A6A}"
 	ProjectSection(SolutionItems) = preProject
 		src\www\face.html = src\www\face.html
@@ -62,14 +53,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "includes", "includes", "{D0
 		src\www\includes\face.css = src\www\includes\face.css
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{D26D951F-4FE6-4FC0-8336-6471C9446B37}"
-	ProjectSection(SolutionItems) = preProject
-		src\www\images\raspberry-pi-powered.png = src\www\images\raspberry-pi-powered.png
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Maven_Config", "Maven_Config", "{16872667-586C-46D4-B3ED-AB88806933FA}"
 	ProjectSection(SolutionItems) = preProject
 		pom.xml = pom.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot", "fetch_bot", "{BDA2E018-42A9-4ADF-B5EA-919D6CF25D1C}"
+	ProjectSection(SolutionItems) = preProject
+		src\main\java\io\github\cshadd\fetch_bot\Core.java = src\main\java\io\github\cshadd\fetch_bot\Core.java
+		src\main\java\io\github\cshadd\fetch_bot\FetchBot.java = src\main\java\io\github\cshadd\fetch_bot\FetchBot.java
+		src\main\java\io\github\cshadd\fetch_bot\Pathfinding.java = src\main\java\io\github\cshadd\fetch_bot\Pathfinding.java
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.util", "fetch_bot.util", "{42F06F5E-3498-4C15-B013-B2CAFB48F39C}"
+	ProjectSection(SolutionItems) = preProject
+		src\main\java\io\github\cshadd\fetch_bot\util\Communication.java = src\main\java\io\github\cshadd\fetch_bot\util\Communication.java
+		src\main\java\io\github\cshadd\fetch_bot\util\Logger.java = src\main\java\io\github\cshadd\fetch_bot\util\Logger.java
+		src\main\java\io\github\cshadd\fetch_bot\util\TimeUtil.java = src\main\java\io\github\cshadd\fetch_bot\util\TimeUtil.java
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "adafruit", "adafruit", "{418EBF20-1144-4943-A0CE-F2F8B07E26C7}"
+	ProjectSection(SolutionItems) = preProject
+		src\main\java\io\github\cshadd\fetch_bot\util\adafruit\Adafruit.java = src\main\java\io\github\cshadd\fetch_bot\util\adafruit\Adafruit.java
+		src\main\java\io\github\cshadd\fetch_bot\util\adafruit\StepperMotorHAT.java = src\main\java\io\github\cshadd\fetch_bot\util\adafruit\StepperMotorHAT.java
+		src\main\java\io\github\cshadd\fetch_bot\util\adafruit\StepperMotorPWM.java = src\main\java\io\github\cshadd\fetch_bot\util\adafruit\StepperMotorPWM.java
 	EndProjectSection
 EndProject
 Global
@@ -80,12 +87,13 @@ Global
 		{3D8194ED-68FA-499F-ADA0-70C4CA0405F2} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{793C9952-564A-493C-8956-47B8D90F1879} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{5EEBD627-B341-4886-AACA-63966B6153F4} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
-		{1B3A315A-A423-4C8A-AA7B-D9770D2E83CC} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{02363110-681E-43A5-97B8-091F67393A6A} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{ED0D80B0-76CB-4F5F-857F-19F4E67A0905} = {02363110-681E-43A5-97B8-091F67393A6A}
 		{D0E4C96A-7D47-4314-8005-F49BD335F4E4} = {02363110-681E-43A5-97B8-091F67393A6A}
-		{D26D951F-4FE6-4FC0-8336-6471C9446B37} = {02363110-681E-43A5-97B8-091F67393A6A}
 		{16872667-586C-46D4-B3ED-AB88806933FA} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{BDA2E018-42A9-4ADF-B5EA-919D6CF25D1C} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{42F06F5E-3498-4C15-B013-B2CAFB48F39C} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{418EBF20-1144-4943-A0CE-F2F8B07E26C7} = {42F06F5E-3498-4C15-B013-B2CAFB48F39C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8F99668-DE84-4451-95F0-312B7F0E1A3C}

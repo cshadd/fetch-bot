@@ -1,8 +1,10 @@
-package io.github.cshadd.fetch_bot.Logger;
-import java.io.*;
-import java.text.*;
-import java.util.*;
-import org.apache.commons.io.*;
+package io.github.cshadd.fetch_bot.util;
+import io.github.cshadd.fetch_bot.FetchBot;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+import org.apache.commons.io.FileUtils;
 
 // Main
 public final class Logger
