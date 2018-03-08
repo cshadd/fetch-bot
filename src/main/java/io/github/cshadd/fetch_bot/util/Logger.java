@@ -66,7 +66,7 @@ implements FetchBot {
     public static final void error(String msg) {
         error(msg, true);
     }
-    public static final void error(Exception e, String msg) {
+    public static final void error(Throwable e, String msg) {
         final StringWriter errors = new StringWriter();
         e.printStackTrace(new PrintWriter(errors));
         error(errors + "\n" + msg);
@@ -79,7 +79,7 @@ implements FetchBot {
     public static final void fatalError(String msg) {
         fatalError(msg, true);
     }
-    public static final void fatalError(Exception e, String msg) {
+    public static final void fatalError(Throwable e, String msg) {
         final StringWriter errors = new StringWriter();
         e.printStackTrace(new PrintWriter(errors));
         fatalError(errors + "\n" + msg);

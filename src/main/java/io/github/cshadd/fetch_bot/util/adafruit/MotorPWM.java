@@ -54,7 +54,7 @@ implements Adafruit {
             Logger.info("MotorPWM - Connected to device ok.");
         }
         catch(UnsatisfiedLinkError e) {
-            Logger.fatalError("There was an unknown issue with Linking!");
+            Logger.error(e, "There was an issue with Linking!");
             throw e;
         }
         catch (IOException e) {
