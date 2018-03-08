@@ -15,65 +15,56 @@ implements FetchBot {
     public Communication() { }
 
     // Private Final Methods
-    private final JSONObject read(String filePath) {
-        File input = null;
-        JSONObject returnData = null;
-        Logger.info("Communication - Reading JSON of " + filePath + ".");
-        try {
-            input = new File(filePath);
-            returnData = new JSONObject(FileUtils.readFileToString(input, "UTF-8"));
-        }
-        catch (IOException e) {
-            Logger.error(e + "\nThere was an issue with IO!");
-        }
-        catch (JSONException e) {
-            Logger.error(e + "\nThere was an issue with JSON!");
-        }
-        catch (Exception e) {
-            Logger.error(e + "\nThere was an unknown issue!");
-        }
-        finally { }
+    private final JSONObject read(String filePath)
+    throws IOException, JSONException {
+        File input = new File(filePath);
+        JSONObject returnData = new JSONObject(FileUtils.readFileToString(input, "UTF-8"));
         return returnData;
+    }
+    private final JSONObject readLog(String filePath)
+    throws IOException, JSONException {
+        Logger.info("Communication - Reading JSON of " + filePath + ".");
+        return read(filePath);
     }
     private final JSONObject readSafeLog(String filePath) {
-        File input = null;
         JSONObject returnData = null;
         try {
-            input = new File(filePath);
-            returnData = new JSONObject(FileUtils.readFileToString(input, "UTF-8"));
+            returnData = read(filePath);
+        }
+        catch (IOException e) {
+            Logger.fatalError(e, "There was an issue with IO!");
+        }
+        catch (JSONException e) {
+            Logger.fatalError(e, "There was an issue with JSON!");
         }
         catch (Exception e) {
-            Logger.fatalError(e + "\nThere was an unknown issue!");
+            Logger.fatalError(e, "There was an unknown issue!");
         }
         finally { }
         return returnData;
     }
-    private final void write(JSONObject json, String filePath) {
-        File input = null;
+    private final void write(JSONObject json, String filePath)
+    throws IOException, JSONException {
+        File input = new File(filePath);
+        FileUtils.writeStringToFile(input, "" + json, "UTF-8");
+    }
+    private final void writeLog(JSONObject json, String filePath)
+    throws IOException, JSONException {
         Logger.info("Communication - Writing JSON to " + filePath + ".");
-        try {
-            input = new File(filePath);
-            FileUtils.writeStringToFile(input, "" + json, "UTF-8");
-        }
-        catch (IOException e) {
-            Logger.error(e + "\nThere was an issue with IO!");
-        }
-        catch (JSONException e) {
-            Logger.error(e + "\nThere was an issue with JSON!");
-        }
-        catch (Exception e) {
-            Logger.error(e + "\nThere was an unknown issue!");
-        }
-        finally { }
+        write(json, filePath);
     }
     private final void writeSafeLog(JSONObject json, String filePath) {
-        File input = null;
         try {
-            input = new File(filePath);
-            FileUtils.writeStringToFile(input, "" + json, "UTF-8");
+            write(json, filePath);
+        }
+        catch (IOException e) {
+            Logger.fatalError(e, "There was an issue with IO!");
+        }
+        catch (JSONException e) {
+            Logger.fatalError(e, "There was an issue with JSON!");
         }
         catch (Exception e) {
-            Logger.fatalError(e + "\nThere was an unknown issue!");
+            Logger.fatalError(e, "There was an unknown issue!");
         }
         finally { }
     }
@@ -82,62 +73,46 @@ implements FetchBot {
     public final String readToInterface(String key) {
         String returnData = null;
         try {
-            returnData = read(TO_INTERFACE_JSON_PATH).getString(key);
+            returnData = readLog(TO_INTERFACE_JSON_PATH).getString(key);
+        }
+        catch (IOException e) {
+            Logger.error(e, "There was an issue with IO!");
         }
         catch (JSONException e) {
-            Logger.error(e + "\nThere was an issue with JSON!");
+            Logger.error(e, "There was an issue with JSON!");
         }
         catch (Exception e) {
-            Logger.error(e + "\nThere was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
         finally { }
         return returnData;
     }
     public final String readToInterfaceSafeLog(String key) {
-        String returnData = null;
-        try {
-            returnData = readSafeLog(TO_INTERFACE_JSON_PATH).getString(key);
-        }
-        catch (Exception e) {
-            Logger.fatalError(e + "\nThere was an unknown issue!");
-        }
-        finally { }
-        return returnData;
+        return readSafeLog(TO_INTERFACE_JSON_PATH).getString(key);
     }
     public final String readToRobot(String key) {
         String returnData = null;
         try {
-            returnData = read(TO_ROBOT_JSON_PATH).getString(key);
+            returnData = readLog(TO_ROBOT_JSON_PATH).getString(key);
+        }
+        catch (IOException e) {
+            Logger.error(e, "There was an issue with IO!");
         }
         catch (JSONException e) {
-            Logger.error(e + "\nThere was an issue with JSON!");
+            Logger.error(e, "There was an issue with JSON!");
         }
         catch (Exception e) {
-            Logger.error(e + "\nThere was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
         finally { }
         return returnData;
     }
     public final String readToRobotSafeLog(String key) {
-        String returnData = null;
-        try {
-            returnData = readSafeLog(TO_ROBOT_JSON_PATH).getString(key);
-        }
-        catch (Exception e) {
-            Logger.fatalError(e + "\nThere was an unknown issue!");
-        }
-        finally { }
-        return returnData;
+        return readSafeLog(TO_ROBOT_JSON_PATH).getString(key);
     }
     public final void resetToInterface() {
-        try {
-            FileUtils.writeStringToFile(new File(TO_INTERFACE_JSON_PATH), "{}", "UTF-8", true);
-        }
-        catch (Exception e) {
-            Logger.fatalError(e + "\nThere was an unknown issue!");
-        }
-        finally { }
         JSONObject data = new JSONObject();
+        writeSafeLog(data, TO_INTERFACE_JSON_PATH);
         data.put("emotion", "Boot")
                     .put("mode", "Off")
                     .put("rot", "0")
@@ -153,65 +128,51 @@ implements FetchBot {
         writeSafeLog(data, TO_INTERFACE_JSON_PATH);
     }
     public final void resetToRobot() {
-        try {
-            FileUtils.writeStringToFile(new File(TO_ROBOT_JSON_PATH), "{}", "UTF-8", true);
-        }
-        catch (Exception e) {
-            Logger.fatalError(e + "\nThere was an unknown issue!");
-        }
-        finally { }
         JSONObject data = new JSONObject();
+        writeSafeLog(data, TO_ROBOT_JSON_PATH);
         data.put("Stop", "0");
         writeSafeLog(data, TO_ROBOT_JSON_PATH);
     }
     public final void writeToInterface(String key, String value) {
         JSONObject data = null;
         try {
-            data = read(TO_INTERFACE_JSON_PATH).put(key, value);
-            write(data, TO_INTERFACE_JSON_PATH);
+            data = readLog(TO_INTERFACE_JSON_PATH).put(key, value);
+            writeLog(data, TO_INTERFACE_JSON_PATH);
+        }
+        catch (IOException e) {
+            Logger.error(e, "There was an issue with IO!");
         }
         catch (JSONException e) {
-            Logger.error(e + "\nThere was an issue with JSON!");
+            Logger.error(e, "There was an issue with JSON!");
         }
         catch (Exception e) {
-            Logger.error(e + "\nThere was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
         finally { }
     }
     public final void writeToInterfaceSafeLog(String key, String value) {
-        JSONObject data = null;
-        try {
-            data = readSafeLog(TO_INTERFACE_JSON_PATH).put(key, value);
-            writeSafeLog(data, TO_INTERFACE_JSON_PATH);
-        }
-        catch (Exception e) {
-            Logger.fatalError(e + "\nThere was an unknown issue!");
-        }
-        finally { }
+        JSONObject data = readSafeLog(TO_INTERFACE_JSON_PATH).put(key, value);
+        writeSafeLog(data, TO_INTERFACE_JSON_PATH);
     }
     public final void writeToRobot(String key, String value) {
         JSONObject data = null;
         try {
-            data = read(TO_ROBOT_JSON_PATH).put(key, value);
-            write(data, TO_ROBOT_JSON_PATH);
+            data = readLog(TO_ROBOT_JSON_PATH).put(key, value);
+            writeLog(data, TO_ROBOT_JSON_PATH);
+        }
+        catch (IOException e) {
+            Logger.error(e, "There was an issue with IO!");
         }
         catch (JSONException e) {
-            Logger.error(e + "\nThere was an issue with JSON!");
+            Logger.error(e, "There was an issue with JSON!");
         }
         catch (Exception e) {
-            Logger.error(e + "\nThere was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
         finally { }
     }
     public final void writeToRobotSafeLog(String key, String value) {
-        JSONObject data = null;
-        try {
-            data = readSafeLog(TO_ROBOT_JSON_PATH).put(key, value);
-            writeSafeLog(data, TO_ROBOT_JSON_PATH);
-        }
-        catch (Exception e) {
-            Logger.fatalError(e + "\nThere was an unknown issue!");
-        }
-        finally { }
+        JSONObject data = readSafeLog(TO_ROBOT_JSON_PATH).put(key, value);
+        writeSafeLog(data, TO_ROBOT_JSON_PATH);
     }
 }

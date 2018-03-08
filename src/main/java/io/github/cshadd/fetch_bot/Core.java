@@ -16,24 +16,23 @@ implements FetchBot {
             Thread.sleep(length);
         }
         catch (InterruptedException e) {
-            Logger.error(e + "\nThere was an issue with Interrupt!");
+            Logger.error(e, "There was an issue with Interrupt!");
         }
         catch (Exception e) {
-            Logger.error(e + "\nThere was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
     }
 
     // Entry Point
     public static void main(String[] args) {
         comm = new Communication();
-        movement = new Movement();
-        // path = new Pathfinding();
-
-        Logger.clear();
         comm.resetToRobot();
         comm.resetToInterface();
-
+        Logger.clear();
         Logger.info("Fetch Bot starting!");
+
+        movement = new Movement();
+        // path = new Pathfinding();
 
         while (comm.readToRobot("Stop").equals("0")) {
             delay(1000);

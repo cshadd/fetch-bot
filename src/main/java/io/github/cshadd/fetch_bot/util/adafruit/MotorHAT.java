@@ -60,10 +60,10 @@ public class MotorHAT {
             pwm.setMotorPWMFreq(freq);
         }
         catch (IOException e) {
-            Logger.error(e + "\nThere was an issue with IO!");
+            Logger.error(e, "There was an issue with IO!");
         }
         catch (Exception e) {
-            Logger.error(e + "\nThere was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
     }
 
@@ -429,19 +429,19 @@ public class MotorHAT {
         // Public Constructors
         public MotorHATExceptionHandler() {
             super();
-            Logger.error("There was an issue with MotorHAT!");
+            Logger.error(this, "There was an issue with MotorHAT!");
         }
         public MotorHATExceptionHandler(String s) {
             super(s);
-            Logger.error(s + "\nThere was an issue with MotorHAT!");
+            Logger.error(this, "There was an issue with MotorHAT!");
         }
         public MotorHATExceptionHandler(String s, Throwable throwable) {
             super(s, throwable);
-            Logger.error(s + "\nThere was an issue with MotorHAT!");
+            Logger.error(this, "There was an issue with MotorHAT!");
         }
         public MotorHATExceptionHandler(Throwable throwable) {
             super(throwable);
-            Logger.error("There was an issue with MotorHAT!");
+            Logger.error(this, "There was an issue with MotorHAT!");
         }
     }
 

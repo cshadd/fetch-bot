@@ -33,19 +33,12 @@ implements FetchBot {
 
         try {
             mh = new MotorHAT(nbStepsPerRev); // Default addr
-            Logger.info("Movement - Accessing Motor L.");
-            stepperL = mh.getStepper(MotorHAT.AdafruitStepperMotor.PORT_M1_M2);
-            stepperL.setSpeed(rpm); // Default 30 RPM
-
-            Logger.info("Movement - Accessing Motor R.");
-            stepperR = mh.getStepper(MotorHAT.AdafruitStepperMotor.PORT_M3_M4);
-            stepperR.setSpeed(rpm); // Default 30 RPM
         }
         catch (I2CFactory.UnsupportedBusNumberException e) {
-            Logger.error(e + "\nThere was an issue with I2CFactory!");
+            Logger.error(e, "There was an issue with I2CFactory!");
         }
         catch (Exception e) {
-            Logger.error(e + "\nThere was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
     }
 
@@ -57,10 +50,10 @@ implements FetchBot {
             stepperR.step(nbSteps, command, MotorHAT.Style.SINGLE);
         }
         catch (IOException e) {
-            Logger.error(e + "\nThere was an issue with IO!");
+            Logger.error(e, "There was an issue with IO!");
         }
         catch (Exception e) {
-            Logger.error(e + "\nThere was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
     }
 
@@ -79,10 +72,10 @@ implements FetchBot {
                     mh.getMotor(MotorHAT.Motor.M4).run(MotorHAT.ServoCommand.RELEASE);
                 }
                 catch (IOException e) {
-                    Logger.error(e + "\nThere was an issue with IO!");
+                    Logger.error(e, "There was an issue with IO!");
     			}
                 catch (Exception e) {
-                    Logger.error(e + "\nThere was an unknown issue!");
+                    Logger.error(e, "There was an unknown issue!");
                 }
             }
         }

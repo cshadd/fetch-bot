@@ -53,11 +53,15 @@ implements Adafruit {
             servoDriver = bus.getDevice(address); // Get device itself
             Logger.info("MotorPWM - Connected to device ok.");
         }
+        catch(UnsatisfiedLinkError e) {
+            Logger.fatalError("There was an unknown issue with Linking!");
+            throw e;
+        }
         catch (IOException e) {
-            Logger.error(e + "\nThere was an issue with IO!");
+            Logger.error(e, "There was an issue with IO!");
         }
         catch (Exception e) {
-            Logger.error(e + "\nThere was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
 
         try {
@@ -79,10 +83,10 @@ implements Adafruit {
             delay(5); // Wait for oscillator
         }
         catch (IOException e) {
-            Logger.error(e + "\nThere was an issue with IO!");
+            Logger.error(e, "There was an issue with IO!");
         }
         catch (Exception e) {
-            Logger.error(e + "\nThere was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
     }
 
