@@ -2,7 +2,6 @@ package io.github.cshadd.fetch_bot;
 import static io.github.cshadd.fetch_bot.Core.delay;
 import com.pi4j.io.i2c.I2CFactory;
 import io.github.cshadd.fetch_bot.util.adafruit.MotorHAT;
-import io.github.cshadd.fetch_bot.util.Communication;
 import io.github.cshadd.fetch_bot.util.Logger;
 import java.io.IOException;
 
@@ -14,10 +13,10 @@ implements FetchBot {
     private static final String DEFAULT_RPM = "30";
 
     // Private Static Instance/Property Fields
-    private static Communication comm = new Communication();
     private static int nbStepsPerRev = MotorHAT.AdafruitStepperMotor.DEFAULT_NB_STEPS; // 200 steps per rev
 
     // Private Instance/Property Fields
+    private boolean keepGoing;
     private MotorHAT mh;
     private int nbSteps = 100;
     private MotorHAT.AdafruitStepperMotor stepper;
@@ -29,7 +28,8 @@ implements FetchBot {
 
     // Public Constructors
     public Movement(int motorNumber) {
-        final int rpm = Integer.parseInt(System.getProperty("rpm", DEFAULT_RPM));
+        keepGoing = false;
+        final int rpm = 60; // Integer.parseInt(System.getProperty("rpm", DEFAULT_RPM));
         Logger.info("Movement - RPM set to " + rpm + ".");
         nbSteps = Integer.parseInt(System.getProperty("steps", "100"));
 
@@ -48,8 +48,10 @@ implements FetchBot {
 
     // Public Methods
     public void move() {
+        keepGoing = true;
+
         final Thread moveThread = new Thread(() -> {
-            while (comm.readToRobot("Stop").equals("0")) {
+            while (keepGoing) {
                 try {
                     stepper.step(nbSteps, MotorHAT.ServoCommand.FORWARD, MotorHAT.Style.SINGLE);
                 }
@@ -65,6 +67,7 @@ implements FetchBot {
         moveThread.start();
     }
     public void stop() {
+        keepGoing = false;
         if (mh != null) {
             try { // Release all
                 mh.getMotor(MotorHAT.Motor.M1).run(MotorHAT.ServoCommand.RELEASE);

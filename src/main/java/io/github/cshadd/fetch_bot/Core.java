@@ -45,6 +45,11 @@ implements FetchBot {
 		}));
 
 		movement.move();
+
+        while (comm.readToRobot("Stop").equals("0")) { }
+
+        movement.stop();
+
         // loop...
         // import toRobot.json
         // store toRobot.json vars
