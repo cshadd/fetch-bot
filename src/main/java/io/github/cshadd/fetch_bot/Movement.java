@@ -50,7 +50,6 @@ implements FetchBot {
     public void move() {
         final Thread moveThread = new Thread(() -> {
             while (comm.readToRobot("Stop").equals("0")) {
-                delay(5_000);
                 try {
                     stepper.step(nbSteps, MotorHAT.ServoCommand.FORWARD, MotorHAT.Style.SINGLE);
                 }
