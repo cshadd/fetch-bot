@@ -32,8 +32,8 @@ This repository may be used for your own robot.
 * Optional:
     - Raspberry Pi Case
     - Raspberry Pi Heat Sink
-    - _V 2 Port USB Battery Pack
-    - 2x20-pin Extra Tall Female Stacking Header 0.1"
+    - _V 2 Port USB Battery Pack
+    - 2x20-pin Extra Tall Female Stacking Header 0.1"
 
 ### Assembly
 Great care is needed to assemble this robot.
