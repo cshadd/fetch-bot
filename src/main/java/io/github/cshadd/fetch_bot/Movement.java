@@ -27,12 +27,16 @@ implements FetchBot {
 
     // Public Constructors
     public Movement() {
-        int rpm = Integer.parseInt(System.getProperty("rpm", DEFAULT_RPM));
+        final int rpm = Integer.parseInt(System.getProperty("rpm", DEFAULT_RPM));
         Logger.info("Movement - RPM set to " + rpm + ".");
         nbSteps = Integer.parseInt(System.getProperty("steps", "100"));
 
         try {
             mh = new MotorHAT(nbStepsPerRev); // Default addr
+            stepperL = mh.getStepper(MotorHAT.AdafruitStepperMotor.PORT_M1_M2);
+            stepperL.setSpeed(rpm);
+            stepperR = mh.getStepper(MotorHAT.AdafruitStepperMotor.PORT_M3_M4);
+            stepperR.setSpeed(rpm);
         }
         catch (I2CFactory.UnsupportedBusNumberException e) {
             Logger.error(e, "There was an issue with I2CFactory!");
