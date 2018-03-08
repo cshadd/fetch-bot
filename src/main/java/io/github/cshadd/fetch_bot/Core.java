@@ -30,9 +30,9 @@ implements FetchBot {
 
         I2CBus i2CBus = I2CFactory.getInstance(1);
         AdafruitMotorHat hat = new AdafruitMotorHat(i2CBus);
-        StepperMotor dcMotor = hat.getStepper(1);
-        dcMotor.setSpeed(50);
-dcMotor.doSteps(200, MotorCommand.FORWARD, StepStyle.SINGLE);
+        StepperMotor dcMotor = new StepperMotor(hat, 2, 200);
+        dcMotor.setSpeed(30);
+dcMotor.doSteps(100, MotorCommand.FORWARD, StepStyle.SINGLE);
 //        while (comm.readToRobot("Stop").equals("0")) {
   //          delay(2000);
     //        Logger.info("Stepped");
