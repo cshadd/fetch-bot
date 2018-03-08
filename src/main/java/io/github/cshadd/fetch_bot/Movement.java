@@ -1,4 +1,5 @@
 package io.github.cshadd.fetch_bot;
+import static io.github.cshadd.fetch_bot.Core.delay;
 import com.pi4j.io.i2c.I2CFactory;
 import io.github.cshadd.fetch_bot.util.adafruit.MotorHAT;
 import io.github.cshadd.fetch_bot.util.Communication;
@@ -19,26 +20,23 @@ implements FetchBot {
     // Private Instance/Property Fields
     private MotorHAT mh;
     private int nbSteps = 100;
-    private MotorHAT.AdafruitStepperMotor stepperL;
-    private MotorHAT.AdafruitStepperMotor stepperR;
+    private MotorHAT.AdafruitStepperMotor stepper;
 
-    // Public Instance/Property Fields
-    public enum Direction {
-        BACK, FORWARD, LEFT, RIGHT
-    };
+    // Private Constructors
+    private Movement() {
+        this(0);
+    }
 
     // Public Constructors
-    public Movement() {
+    public Movement(int motorNumber) {
         final int rpm = Integer.parseInt(System.getProperty("rpm", DEFAULT_RPM));
         Logger.info("Movement - RPM set to " + rpm + ".");
         nbSteps = Integer.parseInt(System.getProperty("steps", "100"));
 
         try {
             mh = new MotorHAT(nbStepsPerRev); // Default addr
-            stepperL = mh.getStepper(MotorHAT.AdafruitStepperMotor.PORT_M1_M2);
-            stepperL.setSpeed(rpm);
-            stepperR = mh.getStepper(MotorHAT.AdafruitStepperMotor.PORT_M3_M4);
-            stepperR.setSpeed(rpm);
+            stepper = mh.getStepper(motorNumber);
+            stepper.setSpeed(rpm);
         }
         catch (I2CFactory.UnsupportedBusNumberException e) {
             Logger.error(e, "There was an issue with I2CFactory!");
@@ -48,37 +46,28 @@ implements FetchBot {
         }
     }
 
-    // Private Methods
-    private void moveCommand(int nbSteps, MotorHAT.ServoCommand command) {
-        try { // Release all
-            Logger.info("Movement - " + command + ".");
-            stepperL.step(nbSteps, command, MotorHAT.Style.SINGLE);
-            stepperR.step(nbSteps, command, MotorHAT.Style.SINGLE);
-        }
-        catch (IOException e) {
-            Logger.error(e, "There was an issue with IO!");
-        }
-        catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
-        }
-    }
-
     // Public Methods
-    public void move(Direction direction) {
-        Thread demoThread = new Thread(() -> {
+    public void move() {
+        final Thread moveThread = new Thread(() -> {
             while (comm.readToRobot("Stop").equals("0")) {
-                if (direction == Direction.FORWARD) {
-                    moveCommand(nbSteps, MotorHAT.ServoCommand.FORWARD);
+                delay(5_000);
+                try {
+                    stepper.step(nbSteps, MotorHAT.ServoCommand.FORWARD, MotorHAT.Style.SINGLE);
+                }
+                catch (IOException e) {
+                    Logger.error(e, "There was an issue with IO!");
+                }
+                catch (Exception e) {
+                    Logger.error(e, "There was an unknown issue!");
                 }
             }
         });
 
-        demoThread.start();
+        moveThread.start();
     }
     public void stop() {
         if (mh != null) {
             try { // Release all
-                Logger.info("Movement - Stopping.");
                 mh.getMotor(MotorHAT.Motor.M1).run(MotorHAT.ServoCommand.RELEASE);
                 mh.getMotor(MotorHAT.Motor.M2).run(MotorHAT.ServoCommand.RELEASE);
                 mh.getMotor(MotorHAT.Motor.M3).run(MotorHAT.ServoCommand.RELEASE);

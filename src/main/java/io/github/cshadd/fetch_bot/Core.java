@@ -1,4 +1,5 @@
 package io.github.cshadd.fetch_bot;
+import io.github.cshadd.fetch_bot.util.adafruit.MotorHAT;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.Communication;
 
@@ -30,8 +31,7 @@ implements FetchBot {
         comm.resetToInterface();
         Logger.clear();
         Logger.info("Fetch Bot starting!");
-
-        movement = new Movement();
+        movement = new Movement(MotorHAT.AdafruitStepperMotor.PORT_M1_M2);
         // path = new Pathfinding();
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -39,12 +39,12 @@ implements FetchBot {
 				movement.stop();
 			}
 			try {
-				Thread.sleep(5_000);
+                delay(5_000);
 			}
             catch (Exception e) { } // Ignore
 		}));
 
-		movement.move(Movement.Direction.FORWARD);
+		movement.move();
         // loop...
         // import toRobot.json
         // store toRobot.json vars
