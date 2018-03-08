@@ -9,7 +9,7 @@ import java.io.IOException;
 public class Movement
 implements FetchBot {
     // Private Constant Instance/Property Fields
-    private static final String DEFAULT_RPM = "30";
+    private static final String DEFAULT_RPM = "375";
 
     // Private Static Instance/Property Fields
     private static int nbStepsPerRev = MotorHAT.AdafruitStepperMotor.DEFAULT_NB_STEPS; // 200 steps per rev
@@ -26,9 +26,9 @@ implements FetchBot {
 
     // Public Constructors
     public Movement() {
-        final int rpm = 50;//Integer.parseInt(System.getProperty("rpm", DEFAULT_RPM));
+        final int rpm = Integer.parseInt(System.getProperty("rpm", DEFAULT_RPM));
         Logger.info("Movement - RPM set to " + rpm + ".");
-        nbSteps = 1;//Integer.parseInt(System.getProperty("steps", "100"));
+        nbSteps = Integer.parseInt(System.getProperty("steps", "100"));
 
         try {
             mh = new MotorHAT(nbStepsPerRev); // Default addr
