@@ -34,7 +34,7 @@ implements FetchBot {
 
     // Entry Point
     public static void main(String[] args)
-    throws IOException, MotorException, UnsupportedBusNumberException {
+    throws IOException, MotorException, UnsupportedBusNumberException, InterruptedException {
         comm = new Communication();
         comm.resetToRobot();
         comm.resetToInterface();
@@ -44,13 +44,13 @@ implements FetchBot {
         I2CBus i2CBus = I2CFactory.getInstance(1);
         AdafruitMotorHat hat = new AdafruitMotorHat(i2CBus);
         StepperMotor dcMotor = hat.getStepper(1);
-        dcMotor.setSpeed(100);
+        dcMotor.setSpeed(50);
+dcMotor.doSteps(200, MotorCommand.FORWARD, StepStyle.SINGLE);
+//        while (comm.readToRobot("Stop").equals("0")) {
+  //          delay(2000);
+    //        Logger.info("Stepped");
 
-        while (comm.readToRobot("Stop").equals("0")) {
-            delay(2000);
-            Logger.info("Stepped");
-            dcMotor.doOneStep(MotorCommand.FORWARD, StepStyle.SINGLE);
-        }
+      //  }
 
         dcMotor.setSpeed(0);
 
