@@ -20,9 +20,8 @@ This repository may be used for your own robot.
     - "12V to Port Connector"
     - 12V wires
     - Adafruit Stepper Motor NEMA17 12V 350mA
-    - 48mm Omniwheel for LEGO NXT, Servo 
-    - 5mm Aluminum Mounting Hub  
-    - "Omni Wheel Headers"
+    - 48mm Omniwheels for LEGO NXT, Servo 
+    - 5mm Aluminum Mounting Hubs  
     - Arduino Uno
     - Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO Mega R3 Mega2560 Nano Duemilanove Nano Raspberry Pi 3 Robot
     - Breadboard
