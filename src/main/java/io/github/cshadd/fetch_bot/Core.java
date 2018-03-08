@@ -35,9 +35,11 @@ implements FetchBot {
         // path = new Pathfinding();
 
         while (comm.readToRobot("Stop").equals("0")) {
-            movement.move(Movement.Direction.FORWARD);
+            delay(1000);
+            System.out.println("Stepped");
+            //movement.move(Movement.Direction.FORWARD);
         }
-        movement.move(Movement.Direction.STOP);
+        //movement.move(Movement.Direction.STOP);
 
         // loop...
         // import toRobot.json
