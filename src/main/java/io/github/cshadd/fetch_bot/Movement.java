@@ -72,6 +72,8 @@ implements FetchBot {
                 }
             }
         });
+
+        demoThread.start();
     }
     public void stop() {
         if (mh != null) {

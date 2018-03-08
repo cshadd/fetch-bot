@@ -45,7 +45,6 @@ implements FetchBot {
 		}));
 
 		movement.move(Movement.Direction.FORWARD);
-
         // loop...
         // import toRobot.json
         // store toRobot.json vars
