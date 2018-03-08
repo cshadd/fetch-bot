@@ -2,6 +2,16 @@ package io.github.cshadd.fetch_bot;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.Communication;
 
+import com.bb8log.raspberrypi.adafruitmotorhat.AdafruitMotorHat;
+import com.bb8log.raspberrypi.adafruitmotorhat.exception.MotorException;
+import com.bb8log.raspberrypi.adafruitmotorhat.motor.MotorCommand;
+import com.bb8log.raspberrypi.adafruitmotorhat.motor.stepper.StepStyle;
+import com.bb8log.raspberrypi.adafruitmotorhat.motor.stepper.StepperMotor;
+import com.pi4j.io.i2c.I2CBus;
+import com.pi4j.io.i2c.I2CFactory;
+import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
+import java.io.IOException;
+
 // Main
 public class Core
 implements FetchBot {
@@ -23,17 +33,26 @@ implements FetchBot {
     }
 
     // Entry Point
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    throws IOException, MotorException, UnsupportedBusNumberException {
         comm = new Communication();
         comm.resetToRobot();
         comm.resetToInterface();
         Logger.clear();
         Logger.info("Fetch Bot starting!");
 
+        I2CBus i2CBus = I2CFactory.getInstance(1);
+        AdafruitMotorHat hat = new AdafruitMotorHat(i2CBus);
+        StepperMotor dcMotor = hat.getStepper(1);
+        dcMotor.setSpeed(100);
+
         while (comm.readToRobot("Stop").equals("0")) {
-            delay(1000);
+            delay(2000);
             Logger.info("Stepped");
+            dcMotor.doOneStep(MotorCommand.FORWARD, StepStyle.SINGLE);
         }
+
+        dcMotor.setSpeed(0);
 
         // loop...
         // import toRobot.json
