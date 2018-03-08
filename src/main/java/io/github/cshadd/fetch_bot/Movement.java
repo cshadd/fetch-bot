@@ -1,6 +1,7 @@
 package io.github.cshadd.fetch_bot;
 import com.pi4j.io.i2c.I2CFactory;
 import io.github.cshadd.fetch_bot.util.adafruit.MotorHAT;
+import io.github.cshadd.fetch_bot.util.Communication;
 import io.github.cshadd.fetch_bot.util.Logger;
 import java.io.IOException;
 
@@ -12,6 +13,7 @@ implements FetchBot {
     private static final String DEFAULT_RPM = "30";
 
     // Private Static Instance/Property Fields
+    private static Communication comm = new Communication();
     private static int nbStepsPerRev = MotorHAT.AdafruitStepperMotor.DEFAULT_NB_STEPS; // 200 steps per rev
 
     // Private Instance/Property Fields
@@ -22,7 +24,7 @@ implements FetchBot {
 
     // Public Instance/Property Fields
     public enum Direction {
-        BACK, FORWARD, LEFT, RIGHT, STOP
+        BACK, FORWARD, LEFT, RIGHT
     };
 
     // Public Constructors
@@ -63,24 +65,28 @@ implements FetchBot {
 
     // Public Methods
     public void move(Direction direction) {
-        if (direction == Direction.FORWARD) {
-            moveCommand(nbSteps, MotorHAT.ServoCommand.FORWARD);
-        }
-        else if (direction == Direction.STOP) {
-            if (mh != null) {
-                try { // Release all
-                    Logger.info("Movement - Stopping.");
-                    mh.getMotor(MotorHAT.Motor.M1).run(MotorHAT.ServoCommand.RELEASE);
-                    mh.getMotor(MotorHAT.Motor.M2).run(MotorHAT.ServoCommand.RELEASE);
-                    mh.getMotor(MotorHAT.Motor.M3).run(MotorHAT.ServoCommand.RELEASE);
-                    mh.getMotor(MotorHAT.Motor.M4).run(MotorHAT.ServoCommand.RELEASE);
+        Thread demoThread = new Thread(() -> {
+            while (comm.readToRobot("Stop").equals("0")) {
+                if (direction == Direction.FORWARD) {
+                    moveCommand(nbSteps, MotorHAT.ServoCommand.FORWARD);
                 }
-                catch (IOException e) {
-                    Logger.error(e, "There was an issue with IO!");
-    			}
-                catch (Exception e) {
-                    Logger.error(e, "There was an unknown issue!");
-                }
+            }
+        });
+    }
+    public void stop() {
+        if (mh != null) {
+            try { // Release all
+                Logger.info("Movement - Stopping.");
+                mh.getMotor(MotorHAT.Motor.M1).run(MotorHAT.ServoCommand.RELEASE);
+                mh.getMotor(MotorHAT.Motor.M2).run(MotorHAT.ServoCommand.RELEASE);
+                mh.getMotor(MotorHAT.Motor.M3).run(MotorHAT.ServoCommand.RELEASE);
+                mh.getMotor(MotorHAT.Motor.M4).run(MotorHAT.ServoCommand.RELEASE);
+            }
+            catch (IOException e) {
+                Logger.error(e, "There was an issue with IO!");
+            }
+            catch (Exception e) {
+                Logger.error(e, "There was an unknown issue!");
             }
         }
     }

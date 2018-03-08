@@ -16,7 +16,7 @@ implements FetchBot {
     private static final String LOG_PATH = "FetchBot.log";
     private static final String TAG = "[FETCH BOT]";
 
-    // Private Instance/Property Fields
+    // Private Static Instance/Property Fields
     private static Communication comm = new Communication();
 
     // Private Constructors

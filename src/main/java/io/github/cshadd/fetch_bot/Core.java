@@ -34,12 +34,17 @@ implements FetchBot {
         movement = new Movement();
         // path = new Pathfinding();
 
-        while (comm.readToRobot("Stop").equals("0")) {
-            delay(1000);
-            System.out.println("Stepped");
-            //movement.move(Movement.Direction.FORWARD);
-        }
-        //movement.move(Movement.Direction.STOP);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			if (movement != null) {
+				movement.stop();
+			}
+			try {
+				Thread.sleep(5_000);
+			}
+            catch (Exception e) { } // Ignore
+		}));
+
+		movement.move(Movement.Direction.FORWARD);
 
         // loop...
         // import toRobot.json
