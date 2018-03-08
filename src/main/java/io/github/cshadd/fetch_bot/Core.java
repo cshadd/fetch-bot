@@ -1,5 +1,4 @@
 package io.github.cshadd.fetch_bot;
-import io.github.cshadd.fetch_bot.util.adafruit.MotorHAT;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.Communication;
 
@@ -8,7 +7,6 @@ public class Core
 implements FetchBot {
     // Private Static Instance/Property Fields
     private static Communication comm;
-    private static Movement movement;
     private static Pathfinding path;
 
     // Public Static Methods
@@ -31,27 +29,11 @@ implements FetchBot {
         comm.resetToInterface();
         Logger.clear();
         Logger.info("Fetch Bot starting!");
-        movement = new Movement(MotorHAT.AdafruitStepperMotor.PORT_M1_M2);
-        // path = new Pathfinding();
-
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			if (movement != null) {
-				movement.stop();
-			}
-			try {
-                delay(5_000);
-			}
-            catch (Exception e) { } // Ignore
-		}));
-
-		movement.move();
 
         while (comm.readToRobot("Stop").equals("0")) {
             delay(1000);
-            System.out.println("test");
+            Logger.info("Stepped");
         }
-
-        movement.stop();
 
         // loop...
         // import toRobot.json

@@ -106,6 +106,5 @@ This project is licensed under the MIT License. Please check the [LICENSE](LICEN
 * [Oracle](https://www.oracle.com/)
 * [Apache](https://www.apache.org/)
 * [The Pi4J Project](http://pi4j.com/)
-* [Pi4J Samples by OlivierLD](https://github.com/OlivierLD/raspberry-pi4j-samples)
 
 [![<3 Raspberry Pi](https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png)](https://www.raspberrypi.org/)
