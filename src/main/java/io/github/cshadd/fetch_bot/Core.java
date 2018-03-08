@@ -1,9 +1,11 @@
 package io.github.cshadd.fetch_bot;
-import java.io.*;
+import io.github.cshadd.fetch_bot.util.Logger;
+import io.github.cshadd.fetch_bot.util.Communication;
+//import java.io.*;
 // import org.apache.commons.io.*;
 
-import com.pi4j.io.i2c.I2CFactory;
-import io.github.cshadd.fetch_bot.utils.adafruit_stepper_motor.AdafruitMotorHAT;
+//import com.pi4j.io.i2c.I2CFactory;
+//import io.github.cshadd.fetch_bot.util.adafruit_stepper_motor.AdafruitMotorHAT;
 
 // Main
 public class Core

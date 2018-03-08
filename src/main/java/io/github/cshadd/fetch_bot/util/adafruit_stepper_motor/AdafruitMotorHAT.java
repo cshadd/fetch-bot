@@ -1,10 +1,10 @@
-package io.github.cshadd.fetch_bot.utils.adafruit_stepper_motor;
+package io.github.cshadd.fetch_bot.util.adafruit_stepper_motor;
 
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.io.IOException;
 
-import static io.github.cshadd.fetch_bot.utils.TimeUtil.delay;
+import static io.github.cshadd.fetch_bot.util.TimeUtil.delay;
 
 /**
  * Adapted from the python code at https://github.com/adafruit/Adafruit-Motor-HAT-Python-Library.git

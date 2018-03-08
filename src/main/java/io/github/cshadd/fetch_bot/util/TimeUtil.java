@@ -1,4 +1,4 @@
-package io.github.cshadd.fetch_bot.utils;
+package io.github.cshadd.fetch_bot.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
