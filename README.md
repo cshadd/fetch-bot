@@ -1,4 +1,5 @@
-[![Open Source Love](https://badges.frapsoft.com/os/mit/mit.png?v=102)](https://github.com/ellerbrock/open-source-badge/)
+[![Release](https://img.shields.io/github/release/cshadd/fetch-bot/all.svg)](https://github.com/cshadd/fetch-bot/releases)
+[![License](https://img.shields.io/github/license/cshadd/fetch-bot.svg)](LICENSE)
 
 # Fetch Bot
 This is a repository of an AI based robot that uses image processing and data structures to transverse an area.
@@ -11,27 +12,27 @@ This repository may be used for your own robot.
     - Raspberry Pi 3 Model B ()
     - JBtek Raspberry Pi Micro USB Cable with ON / OFF Switch - Easy Start / Reboot
     - A-Male to B-Male USB
-    - GPIO Headers
+    - KUNCAN DC 5V to DC 12V Converter Step Up Voltage Converter 5ft Am to DC 5.5 x 2.1mm
+    - HitLights LED Lightstrip DC Jack Connection - Female to Screw Terminal, Four Pack
+    - 12V wires
     - Logitech HD Webcam C525, Portable HD 720p Video Calling with Autofocus
     - Male to Male HDMI Cable
-    - "Monitor"
+    - HDMI Monitor
     - Adafruit DC & Stepper Motor HAT for Raspberry Pi - Mini Kit
-    - KUNCAN DC 5V to DC 12V Converter Step Up Voltage Converter 5ft Am to DC 5.5 x 2.1mm
-    - "12V to Port Connector"
-    - 12V wires
     - Adafruit Stepper Motor NEMA17 12V 350mA
-    - 48mm Omniwheels for LEGO NXT, Servo 
-    - 5mm Aluminum Mounting Hubs  
+    - 48mm Omniwheels for LEGO NXT, Servo
+    - 5mm Aluminum Mounting Hubs
     - Arduino Uno
-    - Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO Mega R3 Mega2560 Nano Duemilanove Nano Raspberry Pi 3 Robot
-    - Breadboard
-    - Jump Wires
+    - Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
+    - Non-Soldering Breadboard
+    - Non-Soldering Jump Wires
     - Internet Router
     - Robot Chassis
 * Optional:
     - Raspberry Pi Case
-    - Raspberry Pi Heat Sink
-    - _V 2 Port USB Battery Pack
+    - Raspberry Pi Heat Sink
+    - Ethernet Cable
+    - 15000mAh Dual USB Output and 2A Input Battery Pack
     - 2x20-pin Extra Tall Female Stacking Header 0.1"
 
 ### Assembly
