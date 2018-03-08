@@ -35,7 +35,6 @@ implements FetchBot {
         // path = new Pathfinding();
 
         while (comm.readToRobot("Stop").equals("0")) {
-            delay(1000);
             movement.move(Movement.Direction.FORWARD);
         }
         movement.move(Movement.Direction.STOP);
