@@ -19,19 +19,6 @@ implements FetchBot {
     private static Communication comm;
     private static Pathfinding path;
 
-    // Public Static Methods
-    public static void delay(long length) {
-        try {
-            Thread.sleep(length);
-        }
-        catch (InterruptedException e) {
-            Logger.error(e, "There was an issue with Interrupt!");
-        }
-        catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
-        }
-    }
-
     // Entry Point
     public static void main(String[] args)
     throws IOException, MotorException, UnsupportedBusNumberException, InterruptedException {
@@ -51,6 +38,11 @@ dcMotor.doSteps(200, MotorCommand.FORWARD, StepStyle.SINGLE);
     //        Logger.info("Stepped");
 
       //  }
+      try {
+          Thread.sleep(2000); //1000 milliseconds is one second.
+      } catch (InterruptedException ex) {
+          Thread.currentThread().interrupt();
+      }
 
         dcMotor.setSpeed(0);
 
