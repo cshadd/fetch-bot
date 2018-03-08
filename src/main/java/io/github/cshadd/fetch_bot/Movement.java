@@ -17,8 +17,7 @@ implements FetchBot {
     // Private Instance/Property Fields
     private MotorHAT mh;
     private int nbSteps = 100;
-    private MotorHAT.AdafruitStepperMotor stepperL;
-    private MotorHAT.AdafruitStepperMotor stepperR;
+    private MotorHAT.AdafruitStepperMotor stepper;
 
     // Public Instance/Property Fields
     public enum Direction {
@@ -27,16 +26,14 @@ implements FetchBot {
 
     // Public Constructors
     public Movement() {
-        final int rpm = Integer.parseInt(System.getProperty("rpm", DEFAULT_RPM));
+        final int rpm = 50;//Integer.parseInt(System.getProperty("rpm", DEFAULT_RPM));
         Logger.info("Movement - RPM set to " + rpm + ".");
-        nbSteps = Integer.parseInt(System.getProperty("steps", "100"));
+        nbSteps = 1;//Integer.parseInt(System.getProperty("steps", "100"));
 
         try {
             mh = new MotorHAT(nbStepsPerRev); // Default addr
-            stepperL = mh.getStepper(MotorHAT.AdafruitStepperMotor.PORT_M1_M2);
-            stepperL.setSpeed(rpm);
-            stepperR = mh.getStepper(MotorHAT.AdafruitStepperMotor.PORT_M3_M4);
-            stepperR.setSpeed(rpm);
+            stepper = mh.getStepper(MotorHAT.AdafruitStepperMotor.PORT_M3_M4);
+            stepper.setSpeed(rpm);
         }
         catch (I2CFactory.UnsupportedBusNumberException e) {
             Logger.error(e, "There was an issue with I2CFactory!");
@@ -50,8 +47,7 @@ implements FetchBot {
     private void moveCommand(int nbSteps, MotorHAT.ServoCommand command) {
         try { // Release all
             Logger.info("Movement - " + command + ".");
-            stepperL.step(nbSteps, command, MotorHAT.Style.SINGLE);
-            stepperR.step(nbSteps, command, MotorHAT.Style.SINGLE);
+            stepper.step(nbSteps, command, MotorHAT.Style.SINGLE);
         }
         catch (IOException e) {
             Logger.error(e, "There was an issue with IO!");

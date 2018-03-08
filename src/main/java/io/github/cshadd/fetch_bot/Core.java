@@ -33,8 +33,9 @@ implements FetchBot {
 
         movement = new Movement();
         // path = new Pathfinding();
-
-        movement.move(Movement.Direction.FORWARD);
+        for (int i = 0; i < 200; i++) {
+            movement.move(Movement.Direction.FORWARD);
+        }
 
 
         // loop...
