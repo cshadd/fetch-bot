@@ -1,5 +1,5 @@
-package io.github.cshadd.fetch_bot.util.adafruit_stepper_motor;
-import static io.github.cshadd.fetch_bot.util.TimeUtil.delay;
+package io.github.cshadd.fetch_bot.util.adafruit;
+import static io.github.cshadd.fetch_bot.Core.delay;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
@@ -7,7 +7,8 @@ import io.github.cshadd.fetch_bot.util.Logger;
 import java.io.IOException;
 
 // Adopted from: https://github.com/OlivierLD/raspberry-pi4j-samples
-public class StepperMotorPWM
+// Main
+public class MotorPWM
 implements Adafruit {
     // Private Constant Instance/Property Fields
     private static final int ALLCALL = 0x01;
@@ -37,20 +38,20 @@ implements Adafruit {
     private I2CDevice servoDriver;
 
     // Public Constructors
-    public StepperMotorPWM()
+    public MotorPWM()
     throws I2CFactory.UnsupportedBusNumberException {
         this(SERVO_ADDRESS);
     }
-    public StepperMotorPWM(int address)
+    public MotorPWM(int address)
     throws I2CFactory.UnsupportedBusNumberException {
         deviceAddr = address;
 
         try {
             // Get I2C bus
             bus = I2CFactory.getInstance(I2CBus.BUS_1); // Depends on the RasPI version
-            Logger.info("PWM - Connected to bus ok.");
+            Logger.info("MotorPWM - Connected to bus ok.");
             servoDriver = bus.getDevice(address); // Get device itself
-            Logger.info("PMW - Connected to device ok.");
+            Logger.info("MotorPWM - Connected to device ok.");
         }
         catch (IOException e) {
             Logger.error(e + "\nThere was an issue with IO!");
@@ -60,20 +61,20 @@ implements Adafruit {
         }
 
         try {
-            Logger.info("PMW - Resetting Adafruit HAT MODE1 (no SLEEP) and MODE2.");
-            setAllStepperMotorPWM((byte)0, (byte)0);
-            Logger.info("PMW - Write 0x" + Integer.toHexString(OUTDRV) + " to 0x" + Integer.toHexString(MODE2) + ".");
+            Logger.info("MotorPWM - Resetting Adafruit HAT MODE1 (no SLEEP) and MODE2.");
+            setAllMotorPWM((byte)0, (byte)0);
+            Logger.info("MotorPWM - Write 0x" + Integer.toHexString(OUTDRV) + " to 0x" + Integer.toHexString(MODE2) + ".");
             servoDriver.write(MODE2, (byte)OUTDRV);
 
-            Logger.info("PMW - Write 0x" + Integer.toHexString(ALLCALL) + " to 0x" + Integer.toHexString(MODE1) + ".");
+            Logger.info("MotorPWM - Write 0x" + Integer.toHexString(ALLCALL) + " to 0x" + Integer.toHexString(MODE1) + ".");
             servoDriver.write(MODE1, (byte)ALLCALL);
             delay(5); // Wait for oscillator
 
             int mode1 = servoDriver.read(MODE1);
-            Logger.info("PMW - Device 0x" + Integer.toHexString(deviceAddr) + " returned 0x" + Integer.toHexString(model) + " from 0x" + Integer.toHexString(MODE1) + ".");
+            Logger.info("MotorPWM - Device 0x" + Integer.toHexString(deviceAddr) + " returned 0x" + Integer.toHexString(mode1) + " from 0x" + Integer.toHexString(MODE1) + ".");
 
             mode1 = mode1 & ~SLEEP; // Wake up (Reset sleep)
-            Logger.info("PMW - Write 0x" + Integer.toHexString(mode1) + " to 0x" + Integer.toHexString(MODE1) + ".");
+            Logger.info("MotorPWM - Write 0x" + Integer.toHexString(mode1) + " to 0x" + Integer.toHexString(MODE1) + ".");
             servoDriver.write(MODE1, (byte)mode1);
             delay(5); // Wait for oscillator
         }
@@ -86,54 +87,55 @@ implements Adafruit {
     }
 
     // Public Methods
-    public void setAllStepperMotorPWM(byte on, byte off)
+    public void setAllMotorPWM(byte on, byte off)
     throws IOException {
-        // Sets a all StepperMotorPWM channels
-        Logger.info("PMW - Write 0x" + Integer.toHexString((on & 0xFF)) + " to 0x" + Integer.toHexString(ALL_LED_ON_L) + ".");
+        // Sets a all MotorPWM channels
+        Logger.info("MotorPWM - Write 0x" + Integer.toHexString((on & 0xFF)) + " to 0x" + Integer.toHexString(ALL_LED_ON_L) + ".");
         servoDriver.write(ALL_LED_ON_L, (byte)(on & 0xFF));
-        Logger.info("PMW - Write 0x" + Integer.toHexString((on >> 8)) + " to 0x" + Integer.toHexString(ALL_LED_ON_H) + ".");
+        Logger.info("MotorPWM - Write 0x" + Integer.toHexString((on >> 8)) + " to 0x" + Integer.toHexString(ALL_LED_ON_H) + ".");
         servoDriver.write(ALL_LED_ON_H, (byte)(on >> 8));
-        Logger.info("PMW - Write 0x" + Integer.toHexString((off & 0xFF)) + " to 0x" + Integer.toHexString(ALL_LED_OFF_L) + ".");
+        Logger.info("MotorPWM - Write 0x" + Integer.toHexString((off & 0xFF)) + " to 0x" + Integer.toHexString(ALL_LED_OFF_L) + ".");
         servoDriver.write(ALL_LED_OFF_L, (byte)(off & 0xFF));
-        Logger.info("PMW - Write 0x" + Integer.toHexString((off >> 8)) + " to 0x" + Integer.toHexString(ALL_LED_OFF_H) + ".");
+        Logger.info("MotorPWM - Write 0x" + Integer.toHexString((off >> 8)) + " to 0x" + Integer.toHexString(ALL_LED_OFF_H) + ".");
         servoDriver.write(ALL_LED_OFF_H, (byte)(off >> 8));
     }
-    public void setStepperMotorPWM(int channel, short on, short off)
+    public void setMotorPWM(int channel, short on, short off)
     throws IOException {
-        // Sets a single StepperMotorPWM channel
-        Logger.info("PMW - On: 0x" + on + "; Off: 0x" + off);
+        // Sets a single MotorPWM channel
+        Logger.info("MotorPWM - On: 0x" + on + "; Off: 0x" + off);
 
-        Logger.info("PMW - Write 0x" + Integer.toHexString((on & 0xFF)) + " to 0x" + Integer.toHexString(LED0_ON_L + 4*channel) + ".");
+        Logger.info("MotorPWM - Write 0x" + Integer.toHexString((on & 0xFF)) + " to 0x" + Integer.toHexString(LED0_ON_L + 4*channel) + ".");
         servoDriver.write(LED0_ON_L + 4*channel, (byte)(on & 0xFF));
-        Logger.info("PMW - Write 0x" + Integer.toHexString((on >> 8) & 0xFF) + " to 0x" + Integer.toHexString(LED0_ON_H + 4*channel) + ".");
+        Logger.info("MotorPWM - Write 0x" + Integer.toHexString((on >> 8) & 0xFF) + " to 0x" + Integer.toHexString(LED0_ON_H + 4*channel) + ".");
         servoDriver.write(LED0_ON_H + 4*channel, (byte)((on >> 8) & 0xFF));
-        Logger.info("PMW - Write 0x" + Integer.toHexString((off & 0xFF)) + " to 0x" + Integer.toHexString(LED0_OFF_L + 4*channel) + ".");
+        Logger.info("MotorPWM - Write 0x" + Integer.toHexString((off & 0xFF)) + " to 0x" + Integer.toHexString(LED0_OFF_L + 4*channel) + ".");
         servoDriver.write(LED0_OFF_L + 4*channel, (byte)(off & 0xFF));
-        Logger.info("PMW - Write 0x" + Integer.toHexString((off >> 8) & 0xFF) + " to 0x" + Integer.toHexString(LED0_OFF_H + 4*channel) + ".");
+        Logger.info("MotorPWM - Write 0x" + Integer.toHexString((off >> 8) & 0xFF) + " to 0x" + Integer.toHexString(LED0_OFF_H + 4*channel) + ".");
         servoDriver.write(LED0_OFF_H + 4*channel, (byte)((off >> 8) & 0xFF));
     }
-    public void setStepperMotorPWMFreq(int freq) throws IOException {
-        // Sets the StepperMotorPWM frequency
+    public void setMotorPWMFreq(int freq)
+    throws IOException {
+        // Sets the MotorPWM frequency
         double preScaleVal = 25_000_000.0; // 25MHz
         preScaleVal /= 4096.0; // 12-bit
         preScaleVal /= (float)freq;
         preScaleVal -= 1.0;
-        Logger.info("PMW - Setting PWM frequency to " + freq + " Hz.");
-        Logger.info("PMW - Estimated pre-scale: " + preScaleVal + ".");
+        Logger.info("MotorPWM - Setting MotorPWM frequency to " + freq + " Hz.");
+        Logger.info("MotorPWM - Estimated pre-scale: " + preScaleVal + ".");
         final double preScale = Math.floor(preScaleVal + 0.5);
-        Logger.info("PMW - Final pre-scale: " + preScale + ".");
+        Logger.info("MotorPWM - Final pre-scale: " + preScale + ".");
         int oldMode = servoDriver.read(MODE1);
         byte newMode = (byte)((oldMode & 0x7F) | 0x10); // WSleep
 
-        Logger.info("PMW - Write 0x" + Integer.toHexString(newMode) + " to 0x" + Integer.toHexString(MODE1) + ".");
+        Logger.info("MotorPWM - Write 0x" + Integer.toHexString(newMode) + " to 0x" + Integer.toHexString(MODE1) + ".");
         servoDriver.write(MODE1, newMode); // Go to sleep
-        Logger.info("PMW - Write 0x" + Integer.toHexString((byte)(Math.floor(preScale))) + " to 0x" + Integer.toHexString(PRESCALE) + ".");
+        Logger.info("MotorPWM - Write 0x" + Integer.toHexString((byte)(Math.floor(preScale))) + " to 0x" + Integer.toHexString(PRESCALE) + ".");
         servoDriver.write(PRESCALE, (byte)(Math.floor(preScale)));
-        Logger.info("PMW - Write 0x" + Integer.toHexString(oldMode) + " to 0x" + Integer.toHexString(MODE1) + ".");
+        Logger.info("MotorPWM - Write 0x" + Integer.toHexString(oldMode) + " to 0x" + Integer.toHexString(MODE1) + ".");
         servoDriver.write(MODE1, (byte)oldMode);
         delay(5);
 
-        Logger.info("PMW - Write 0x" + Integer.toHexString((oldMode | 0x80)) + " to 0x" + Integer.toHexString(MODE1) + ".");
+        Logger.info("MotorPWM - Write 0x" + Integer.toHexString((oldMode | 0x80)) + " to 0x" + Integer.toHexString(MODE1) + ".");
         servoDriver.write(MODE1, (byte) (oldMode | 0x80));
     }
 }
