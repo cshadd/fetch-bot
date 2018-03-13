@@ -13,7 +13,7 @@ This repository may be used for your own robot.
     - JBtek Raspberry Pi Micro USB Cable with ON / OFF Switch - Easy Start / Reboot
     - A-Male to B-Male USB
     - KUNCAN DC 5V to DC 12V Converter Step Up Voltage Converter 5ft Am to DC 5.5 x 2.1mm
-    - HitLights LED Lightstrip DC Jack Connection - Female to Screw Terminal, Four Pack
+    - ~~HitLights LED Lightstrip DC Jack Connection - Female to Screw Terminal, Four Pack~~
     - ~~12V wires~~
     - Logitech HD Webcam C525, Portable HD 720p Video Calling with Autofocus
     - Male to Male HDMI Cable
