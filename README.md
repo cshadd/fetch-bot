@@ -99,6 +99,9 @@ And the [contributers](https://github.com/cshadd/fetch-bot/graphs/contributors).
 ## License
 This project is licensed under the MIT License. Please check the [LICENSE](LICENSE).
 
+## Standards
+Please check the [Standards.pdf](/docs/Standards.pdf)
+
 ## Acknowledgements
 * [Raspberry Pi](https://www.raspberrypi.org/)
 * [Arduino](https://www.arduino.cc/)
