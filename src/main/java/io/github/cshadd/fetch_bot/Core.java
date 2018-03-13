@@ -7,21 +7,6 @@ public class Core
 implements FetchBot {
     // Private Static Instance/Property Fields
     private static Communication comm;
-    private static Movement movement;
-    private static Pathfinding path;
-
-    // Public Static Methods
-    public static void delay(long length) {
-        try {
-            Thread.sleep(length);
-        }
-        catch (InterruptedException e) {
-            Logger.error(e, "There was an issue with Interrupt!");
-        }
-        catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
-        }
-    }
 
     // Entry Point
     public static void main(String[] args) {
@@ -30,13 +15,6 @@ implements FetchBot {
         comm.resetToInterface();
         Logger.clear();
         Logger.info("Fetch Bot starting!");
-
-        movement = new Movement();
-        // path = new Pathfinding();
-        for (int i = 0; i < 1000; i++) {
-            movement.move(Movement.Direction.FORWARD);
-        }
-
 
         // loop...
         // import toRobot.json
