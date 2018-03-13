@@ -93,6 +93,7 @@
         <commons-io.version>2.6</commons-io.version>
         <json.version>20180130</json.version>
         <pi4j-core.version>1.1</pi4j-core.version>
+        <adafruit-motor-hat.version>-SNAPSHOT</adafruit-motor-hat.version>
 
         <!-- MAVEN COMPILER PROPERTIES -->
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -145,6 +146,11 @@
                 <artifactId>pi4j-core</artifactId>
                 <version>${pi4j-core.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.github.fcazalet</groupId>
+                <artifactId>adafruit-motor-hat</artifactId>
+                <version>${adafruit-motor-hat.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -169,6 +175,10 @@
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.fcazalet</groupId>
+            <artifactId>adafruit-motor-hat</artifactId>
         </dependency>
     </dependencies>
 
