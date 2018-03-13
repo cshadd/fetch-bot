@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.cshadd</groupId>
     <artifactId>fetch-bot</artifactId>
-    <version>v0.8.0</version>
+    <version>v0.9.0</version>
     <name>Fetch Bot</name>
     <description>AI based robot with image processing.</description>
     <url>https://www.github.com/cshadd/fetch-bot</url>
