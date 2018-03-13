@@ -62,7 +62,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot", "fetch_bot", "{
 	ProjectSection(SolutionItems) = preProject
 		src\main\java\io\github\cshadd\fetch_bot\Core.java = src\main\java\io\github\cshadd\fetch_bot\Core.java
 		src\main\java\io\github\cshadd\fetch_bot\FetchBot.java = src\main\java\io\github\cshadd\fetch_bot\FetchBot.java
-		src\main\java\io\github\cshadd\fetch_bot\Pathfinding.java = src\main\java\io\github\cshadd\fetch_bot\Pathfinding.java
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.util", "fetch_bot.util", "{42F06F5E-3498-4C15-B013-B2CAFB48F39C}"
@@ -70,13 +69,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.util", "fetch_bot
 		src\main\java\io\github\cshadd\fetch_bot\util\Communication.java = src\main\java\io\github\cshadd\fetch_bot\util\Communication.java
 		src\main\java\io\github\cshadd\fetch_bot\util\Logger.java = src\main\java\io\github\cshadd\fetch_bot\util\Logger.java
 		src\main\java\io\github\cshadd\fetch_bot\util\TimeUtil.java = src\main\java\io\github\cshadd\fetch_bot\util\TimeUtil.java
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "adafruit", "adafruit", "{418EBF20-1144-4943-A0CE-F2F8B07E26C7}"
-	ProjectSection(SolutionItems) = preProject
-		src\main\java\io\github\cshadd\fetch_bot\util\adafruit\Adafruit.java = src\main\java\io\github\cshadd\fetch_bot\util\adafruit\Adafruit.java
-		src\main\java\io\github\cshadd\fetch_bot\util\adafruit\StepperMotorHAT.java = src\main\java\io\github\cshadd\fetch_bot\util\adafruit\StepperMotorHAT.java
-		src\main\java\io\github\cshadd\fetch_bot\util\adafruit\StepperMotorPWM.java = src\main\java\io\github\cshadd\fetch_bot\util\adafruit\StepperMotorPWM.java
 	EndProjectSection
 EndProject
 Global
@@ -93,7 +85,6 @@ Global
 		{16872667-586C-46D4-B3ED-AB88806933FA} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{BDA2E018-42A9-4ADF-B5EA-919D6CF25D1C} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{42F06F5E-3498-4C15-B013-B2CAFB48F39C} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
-		{418EBF20-1144-4943-A0CE-F2F8B07E26C7} = {42F06F5E-3498-4C15-B013-B2CAFB48F39C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8F99668-DE84-4451-95F0-312B7F0E1A3C}
