@@ -105,8 +105,8 @@ implements FetchBot {
         Logger.info("Getting AdafruitMotorHat");
         hat = new AdafruitMotorHat(i2CBus);
 
-        stepperL = hat.getStepper(0);
-        stepperR = hat.getStepper(1);
+        stepperL = hat.getStepper(1);
+        stepperR = hat.getStepper(2);
         (new MotorTester(stepperL)).start();
         (new MotorTester(stepperR)).start();
 
