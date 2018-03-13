@@ -14,13 +14,13 @@ This repository may be used for your own robot.
     - A-Male to B-Male USB
     - KUNCAN DC 5V to DC 12V Converter Step Up Voltage Converter 5ft Am to DC 5.5 x 2.1mm
     - HitLights LED Lightstrip DC Jack Connection - Female to Screw Terminal, Four Pack
-    - 12V wires
+    - ~~12V wires~~
     - Logitech HD Webcam C525, Portable HD 720p Video Calling with Autofocus
     - Male to Male HDMI Cable
     - HDMI Monitor
-    - Adafruit DC & Stepper Motor HAT for Raspberry Pi - Mini Kit
+    - ~~Adafruit DC & Stepper Motor HAT for Raspberry Pi - Mini Kit~~
     - Adafruit Stepper Motor NEMA17 12V 350mA
-    - 48mm Omniwheels for LEGO NXT, Servo
+    - ~~48mm Omniwheels for LEGO NXT, Servo~~
     - 5mm Aluminum Mounting Hubs
     - Arduino Uno
     - Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
@@ -39,13 +39,13 @@ This repository may be used for your own robot.
 Great care is needed to assemble this robot.
 We specifically chose these parts for our robot but it is up to you to decide which ones you will use.
 
-### Why Raspberry Pi?
-Let's face it. In our day and age of the 21st century, we want lightweight mobile systems for robots. The Raspberry Pi is perfect for it.
-We cannot stress enough about the power of the Pi, and the features it contains that come preinstalled such as ``git``.
+### Why Raspberry Pi and Arduino Uno?
+Let's face it. In our day and age of the 21st century, we want lightweight mobile systems for robots. The Pi and Uno is perfect for it.
+We cannot stress enough about the power of the Pi and Uno. The features on the Pi contains preinstalled software such as ``git``.
 It is easy to setup and use as it is virtually a computer itself.
-We built this robot specifically on the Pi but made it as modular as possible to accomodate other systems.
-If you want to use a full tower as a robot brain, go ahead. But the Raspberry Pi is much simpler.
-Proceeding forward, we will be specifically talking about the Raspberry Pi unless otherwise. The system and Bash command lines will rely on the Raspberry Pi.
+We built this robot specifically on the Pi and Uno but made it as modular as possible to accomodate other systems.
+If you want to use a full tower as a robot brain, go ahead. But the Pi and Uno is much simpler.
+Proceeding forward, we will be specifically talking about the Pi and Uno unless otherwise. The system and Bash command lines will rely on the Pi.
 
 ### Prerequisites
 * Recommended:
