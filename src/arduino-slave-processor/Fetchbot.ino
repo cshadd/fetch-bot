@@ -76,7 +76,7 @@ void loop()
     duration4 = pulseIn(echoPin4, HIGH);
     distance4 = (duration4*.0343)/2;
 
-
+    Serial.print("This is a test! ");
     Serial.print("Distance1: ");
     Serial.print(distance1);
     Serial.print(" Distance2: ");

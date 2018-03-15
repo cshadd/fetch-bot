@@ -1,6 +1,11 @@
 #!/bin/bash
 
 ./bash-uninstall.sh
+cd ./src/arduino-slave-processor/
+make upload
+sudo rm -f -r ./build-uno
+cd ..
+cd ..
 mkdir -p ~/bin
 mvn package
 cp -r ./target/libs ~/bin
