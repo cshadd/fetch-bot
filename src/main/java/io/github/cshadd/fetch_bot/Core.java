@@ -6,6 +6,7 @@ public class Core
 implements FetchBot {
     // Private Static Instance/Property Fields
     private static Communication comm;
+    private static Logger log;
 
     // Private Static Methods
     private static void delayThread(long millis) {
@@ -13,38 +14,66 @@ implements FetchBot {
             Thread.sleep(millis);
         }
         catch (InterruptedException e) {
-            // Thread.currentThread().interrupt();
-            Logger.warn(e, "Thread was interrupted.");
+            log.warn(e, "Thread was interrupted.");
         }
         catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
+            log.error(e, "There was an unknown issue!");
         }
     }
 
     // Entry Point
     public static void main(String[] args) {
+        String auto = "0";
+        String isAuto = "0";
+
         comm = new Communication();
-        comm.resetToRobot();
-        comm.resetToInterface();
-        Logger.clear();
-        Logger.info("Fetch Bot starting!");
+        log = Logger.getInstance(comm);
 
-        // loop...
-        // import toRobot.json
-        // store toRobot.json vars
-        // if toRobot manualDrive...
-        // driveControl
+        comm.reset();
+        log.clear();
+        log.info("Fetch Bot starting!");
+        log.info("Product information at https://cshadd.github.io/fetch-bot/.");
 
-        // if not toRobot manualDrive...
-        // pathfind and driveControl
+        comm.pushInterface();
+        comm.pushRobot();
 
-        // send toInterface.json
-        // clear toRobot.json accessed var
-        // end loop...
+        while (true) {
+            comm.pullInterface();
+            comm.pullRobot();
 
-        Logger.info("Fetch Bot terminating!");
+            if (comm.getRobotValue("kill").equals("1")) {
+                log.info("Interface - [Kill] command received.");
+                break;
+            }
 
-        comm.resetToRobot();
-        comm.resetToInterface();
+            auto = comm.getRobotValue("auto");
+
+            if (auto.equals("0")) { // Manual
+                if (!auto.equals(isAuto)) {
+                    log.info("Interface - [Manual] mode command received.");
+                }
+                // driveControl
+            }
+            else if (auto.equals("1")) { // AI
+                if (!auto.equals(isAuto)) {
+                    log.info("Interface - [Auto] mode command received.");
+                }
+                // pathfind and driveControl
+            }
+            else {
+                log.warn("Interface - Invalid mode command recieved.");
+            }
+
+            isAuto = auto;
+
+            delayThread(1000);
+            comm.pushInterface();
+        }
+
+        log.info("Fetch Bot terminating!");
+
+        comm.clear();
+        comm.pushInterface();
+        comm.pushRobot();
     }
 }
