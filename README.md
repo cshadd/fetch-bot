@@ -57,16 +57,16 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
     - Apache Server 2.4.10 or higher
     - PHP 5.0 or higher
     - Text Editor/IDE
-    * Packaged Apps (Bash):
+    - Packaged Apps (Bash):
         - Unclutter
         - x11-xserver-utils
         - arduino-core
         - arduino-mk
 * Optional:
+    - Ino 0.3 or higher
     - Visual Studio 2017 or higher
     - VNC Server
     - VNC Viewer
-    - Inotool 0.3 or higher
 
 ### Installing
 Clone/fork this repository and save it. Then use ``./bash-install.sh`` to install to your system (Bash).
