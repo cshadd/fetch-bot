@@ -99,7 +99,7 @@ And the [contributers](https://github.com/cshadd/fetch-bot/graphs/contributors).
 ## License
 See [here](LICENSE).
 
-## Standards
+## Development Standards
 See [here](/docs/DevelopmentStandards.pdf).
 
 ## Acknowledgements
@@ -111,6 +111,8 @@ See [here](/docs/DevelopmentStandards.pdf).
 * [Apache](https://www.apache.org/)
 * [JitPack](https://www.jitpack.io/)
 * [ZenHub](https://www.zenhub.com/)
+* [W3Schools](https://www.w3schools.com/)
+* [The PHP Group](https://php.net/)
 * [Microsoft](https://www.microsoft.com/)
 
 [![<3 Raspberry Pi](https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png)](https://www.raspberrypi.org/)
