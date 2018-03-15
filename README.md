@@ -66,7 +66,7 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
     - Visual Studio 2017 or higher
     - VNC Server
     - VNC Viewer
-    - Inotool
+    - Inotool 0.3 or higher
 
 ### Installing
 Clone/fork this repository and save it. Then use ``./bash-install.sh`` to install to your system (Bash).
