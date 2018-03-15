@@ -21,12 +21,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Git_Config", "Git_Config", 
 		.gitignore = .gitignore
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		CONTRIBUTING.md = CONTRIBUTING.md
+		docs\DevelopmentStandards.Base.docx = docs\DevelopmentStandards.Base.docx
+		docs\DevelopmentStandards.pdf = docs\DevelopmentStandards.pdf
 		docs\index.html = docs\index.html
 		ISSUE_TEMPLATE.md = ISSUE_TEMPLATE.md
 		LICENSE = LICENSE
 		PULL_REQUEST_TEMPLATE.md = PULL_REQUEST_TEMPLATE.md
 		README.md = README.md
-		docs\Standards.pdf = docs\Standards.pdf
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5EEBD627-B341-4886-AACA-63966B6153F4}"
