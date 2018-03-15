@@ -13,7 +13,7 @@ This repository may be used for your own robot.
     - JBtek Raspberry Pi Micro USB Cable with ON / OFF Switch - Easy Start / Reboot
     - A-Male to B-Male USB
     - KUNCAN DC 5V to DC 12V Converter Step Up Voltage Converter 5ft Am to DC 5.5 x 2.1mm
-    - HitLights LED Lightstrip DC Jack Connection - Female to Screw Terminal, Four Pack
+    - ~~HitLights LED Lightstrip DC Jack Connection - Female to Screw Terminal, Four Pack~~
     - ~~12V wires~~
     - Logitech HD Webcam C525, Portable HD 720p Video Calling with Autofocus
     - Male to Male HDMI Cable
@@ -82,7 +82,7 @@ Clone/fork this repository and save it. Then use ``./bash-install.sh`` to instal
 You may use Visual Studio 2017 or higher as an editor. ``fetch-bot.sln`` is the solution file.
 
 ## Contributing
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+See [here](CONTRIBUTING.md).
 
 ## Versioning
 We use [SemVer](http://semver.org/) for versioning. For the versions avalible, see the [tags on this repository](https://github.com/cshadd/fetch-bot/tags).
@@ -97,18 +97,20 @@ We use [SemVer](http://semver.org/) for versioning. For the versions avalible, s
 And the [contributers](https://github.com/cshadd/fetch-bot/graphs/contributors).
 
 ## License
-This project is licensed under the MIT License. Please check the [LICENSE](LICENSE).
+See [here](LICENSE).
 
 ## Standards
-Please check the [Standards.pdf](/docs/Standards.pdf)
+See [here](/docs/DevelopmentStandards.pdf).
 
 ## Acknowledgements
 * [Raspberry Pi](https://www.raspberrypi.org/)
 * [Arduino](https://www.arduino.cc/)
 * [Adafruit](https://www.adafruit.com/)
 * [Oracle](https://www.oracle.com/)
-* [Apache](https://www.apache.org/)
 * [The Pi4J Project](http://pi4j.com/)
+* [Apache](https://www.apache.org/)
+* [JitPack](https://www.jitpack.io/)
 * [ZenHub](https://www.zenhub.com/)
+* [Microsoft](https://www.microsoft.com/)
 
 [![<3 Raspberry Pi](https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png)](https://www.raspberrypi.org/)
