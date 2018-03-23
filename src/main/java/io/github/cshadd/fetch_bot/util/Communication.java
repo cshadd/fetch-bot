@@ -11,25 +11,22 @@ implements FetchBot {
     private static final String TO_INTERFACE_JSON_PATH = "/var/www/html/FetchBot/comms/toInterface.json";
     private static final String TO_ROBOT_JSON_PATH = "/var/www/html/FetchBot/comms/toRobot.json";
 
+    // Private Instance/Property Fields
+    private JSONObject toInterfaceData;
+    private JSONObject toRobotData;
+
     // Public Constructors
-    public Communication() { }
+    public Communication() {
+        toInterfaceData = new JSONObject();
+        toRobotData = new JSONObject();
+    }
 
     // Private Final Methods
-    private final JSONObject read(String filePath)
-    throws IOException, JSONException {
-        File input = new File(filePath);
-        JSONObject returnData = new JSONObject(FileUtils.readFileToString(input, "UTF-8"));
-        return returnData;
-    }
-    private final JSONObject readLog(String filePath)
-    throws IOException, JSONException {
-        Logger.info("Communication - Reading JSON of " + filePath + ".");
-        return read(filePath);
-    }
-    private final JSONObject readSafeLog(String filePath) {
+    private final JSONObject read(String filePath) {
         JSONObject returnData = null;
         try {
-            returnData = read(filePath);
+            File input = new File(filePath);
+            returnData = new JSONObject(FileUtils.readFileToString(input, "UTF-8"));
         }
         catch (IOException e) {
             Logger.fatalError(e, "There was an issue with IO!");
@@ -43,19 +40,10 @@ implements FetchBot {
         finally { }
         return returnData;
     }
-    private final void write(JSONObject json, String filePath)
-    throws IOException, JSONException {
-        File input = new File(filePath);
-        FileUtils.writeStringToFile(input, "" + json, "UTF-8");
-    }
-    private final void writeLog(JSONObject json, String filePath)
-    throws IOException, JSONException {
-        Logger.info("Communication - Writing JSON to " + filePath + ".");
-        write(json, filePath);
-    }
-    private final void writeSafeLog(JSONObject json, String filePath) {
+    private final void write(JSONObject json, String filePath) {
         try {
-            write(json, filePath);
+            File input = new File(filePath);
+            FileUtils.writeStringToFile(input, "" + json, "UTF-8");
         }
         catch (IOException e) {
             Logger.fatalError(e, "There was an issue with IO!");
@@ -70,6 +58,107 @@ implements FetchBot {
     }
 
     // Public Final Methods
+    public final void clear() {
+        toInterfaceData = new JSONObject();
+        toRobotData = new JSONObject();
+    }
+    public final String getInterfaceValue(String key) {
+        String returnData = null;
+        try {
+            returnData = toInterfaceData.getString(key);
+        }
+        catch (JSONException e) {
+            Logger.error(e, "There was an issue with JSON!");
+        }
+        catch (Exception e) {
+            Logger.error(e, "There was an unknown issue!");
+        }
+        finally { }
+        return returnData;
+    }
+    public final String getRobotValue(String key) {
+        String returnData = null;
+        try {
+            returnData = toRobotData.getString(key);
+        }
+        catch (JSONException e) {
+            Logger.error(e, "There was an issue with JSON!");
+        }
+        catch (Exception e) {
+            Logger.error(e, "There was an unknown issue!");
+        }
+        finally { }
+        return returnData;
+    }
+    public final void pullInterface() {
+        toRobotData = read(TO_ROBOT_JSON_PATH);
+    }
+    public final void pullRobot() {
+        toRobotData = read(TO_ROBOT_JSON_PATH);
+    }
+    public final void pushInterface() {
+        write(toInterfaceData, TO_INTERFACE_JSON_PATH);
+    }
+    public final void pushRobot() {
+        write(toRobotData, TO_ROBOT_JSON_PATH);
+    }
+    public final void reset() {
+        clear();
+        setInterfaceValue("emotion", "Boot");
+        setInterfaceValue("mode", "Off");
+        setInterfaceValue("rot", "0");
+        setInterfaceValue("sensorback", "0");
+        setInterfaceValue("sensorfront", "0");
+        setInterfaceValue("sensorleft", "0");
+        setInterfaceValue("sensorright", "0");
+        setInterfaceValue("verbose", "...");
+        setInterfaceValue("x", "0");
+        setInterfaceValue("xmax", "0");
+        setInterfaceValue("y", "0");
+        setInterfaceValue("ymax", "0");
+
+        setRobotValue("auto", "0");
+        setRobotValue("kill", "0");
+    }
+    public final void setInterfaceValue(String key, String value) {
+        try {
+            toInterfaceData.put(key, value);
+        }
+        catch (JSONException e) {
+            Logger.error(e, "There was an issue with JSON!");
+        }
+        catch (Exception e) {
+            Logger.error(e, "There was an unknown issue!");
+        }
+        finally { }
+    }
+    public final void setRobotValue(String key, String value) {
+        try {
+            toRobotData.put(key, value);
+        }
+        catch (JSONException e) {
+            Logger.error(e, "There was an issue with JSON!");
+        }
+        catch (Exception e) {
+            Logger.error(e, "There was an unknown issue!");
+        }
+        finally { }
+    }
+
+
+
+
+
+
+
+    /*public final void clearToInterface() {
+        final JSONObject data = new JSONObject();
+    }
+    public final void clearToRobot() {
+        final JSONObject data = new JSONObject();
+        writeSafeLog(data, TO_INTERFACE_JSON_PATH);
+        writeSafeLog(data, TO_ROBOT_JSON_PATH);
+    }
     public final String readToInterface(String key) {
         String returnData = null;
         try {
@@ -128,13 +217,13 @@ implements FetchBot {
         writeSafeLog(data, TO_INTERFACE_JSON_PATH);
     }
     public final void resetToRobot() {
-        JSONObject data = new JSONObject();
+        final JSONObject data = new JSONObject();
         writeSafeLog(data, TO_ROBOT_JSON_PATH);
         data.put("Stop", "0");
         writeSafeLog(data, TO_ROBOT_JSON_PATH);
     }
     public final void writeToInterface(String key, String value) {
-        JSONObject data = null;
+        final JSONObject data = null;
         try {
             data = readLog(TO_INTERFACE_JSON_PATH).put(key, value);
             writeLog(data, TO_INTERFACE_JSON_PATH);
@@ -174,5 +263,5 @@ implements FetchBot {
     public final void writeToRobotSafeLog(String key, String value) {
         JSONObject data = readSafeLog(TO_ROBOT_JSON_PATH).put(key, value);
         writeSafeLog(data, TO_ROBOT_JSON_PATH);
-    }
+    }*/
 }
