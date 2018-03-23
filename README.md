@@ -7,38 +7,39 @@ This is a repository of an AI based robot that uses image processing and data st
 ## Getting Started
 This repository may be used for your own robot.
 
-### Parts
+### Items
+* Setup:
+    - x1 Computer
+    - x1 Ethernet Cable
+    - x1 Tool Kit
 * Recommended:
-    - Raspberry Pi 3 Model B
-    - JBtek Raspberry Pi Micro USB Cable with ON / OFF Switch - Easy Start / Reboot
-    - A-Male to B-Male USB
-    - KUNCAN DC 5V to DC 12V Converter Step Up Voltage Converter 5ft Am to DC 5.5 x 2.1mm
-    - ~~HitLights LED Lightstrip DC Jack Connection - Female to Screw Terminal, Four Pack~~
-    - ~~12V wires~~
-    - Logitech HD Webcam C525, Portable HD 720p Video Calling with Autofocus
-    - Male to Male HDMI Cable
-    - HDMI Monitor
-    - ~~Adafruit DC & Stepper Motor HAT for Raspberry Pi - Mini Kit~~
-    - Adafruit Stepper Motor NEMA17 12V 350mA
-    - "Omniwheels"
-    - 5mm Aluminum Mounting Hubs?
-    - "Motor Mount"
-    - Arduino Uno
-    - Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
-    - Non-Soldering Breadboard
-    - Non-Soldering Jump Wires
-    - Internet Router
-    - Robot Chassis
+    - x1 Raspberry Pi 3 Model B
+    - x1 JBtek Raspberry Pi Micro USB Cable with ON / OFF Switch - Easy Start / Reboot
+    - x1 A-Male to B-Male USB
+    - x1 KUNCAN DC 5V to DC 12V Converter Step Up Voltage Converter 5ft Am to DC 5.5 x 2.1mm
+    - x1 Logitech HD Webcam C525, Portable HD 720p Video Calling with Autofocus
+    - x1 Male to Male HDMI Cable
+    - x1 Elecrow RPA05010R HDMI 5-Inch 800x480 TFT LCD Display with Touch Screen Monitor for Raspberry Pi B+/2B/3B 
+    - x2 Adafruit Stepper Motor NEMA17 12V 350mA
+    - x2 Mounting Bracket for Nema 17 Stepper Motor (Geared Stepper) Hobby CNC/3D Printer
+    - x3 58mm Omni Wheel With Hubs For DIY Arduino Robot Competition Car Supporting LEGO
+    - x1 Arduino Uno
+    - x1 Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
+    - x1 Non-Soldering Breadboard
+    - x1 Non-Soldering Jump Wires
+    - x1 Internet Router
+    - x1 Robot Chassis
+    - x1 15000mAh Dual USB Output and 2A Input Battery Pack
 * Optional:
-    - Raspberry Pi Case
-    - Raspberry Pi Heat Sink
-    - Ethernet Cable
-    - 15000mAh Dual USB Output and 2A Input Battery Pack
-    - 2x20-pin Extra Tall Female Stacking Header 0.1"
+    - x1 Raspberry Pi Case Kit
+    - x1 2x20-pin Extra Tall Female Stacking Header 0.1"
 
 ### Assembly
 Great care is needed to assemble this robot.
 We specifically chose these parts for our robot but it is up to you to decide which ones you will use.
+```
+1. Assemble the chassis with the...
+```
 
 ### Why Raspberry Pi and Arduino Uno?
 Let's face it. In our day and age of the 21st century, we want lightweight mobile systems for robots. The Pi and Uno is perfect for it.
