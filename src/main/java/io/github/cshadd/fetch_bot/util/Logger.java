@@ -106,6 +106,11 @@ implements FetchBot {
     public static final void warn(String msg) {
         warn(msg, true);
     }
+    public static final void warn(Throwable e, String msg) {
+        final StringWriter errors = new StringWriter();
+        e.printStackTrace(new PrintWriter(errors));
+        warn(errors + "\n" + msg);
+    }
     public static final void warn(String msg, boolean append) {
         msg = TAG + " [WARN] " + msg;
         System.out.println(msg + "\nYou may want to check FetchBot.log!");
