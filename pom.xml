@@ -204,17 +204,6 @@
                     </plugin>
                 </plugins>
             </build>
-            <reporting>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <configuration>
-                            <additionalparam>-Xdoclint:none</additionalparam>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </reporting>
         </profile>
     </profiles>
 
@@ -319,27 +308,6 @@
 
     <reporting>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin.version}</version>
-                <reportSets>
-                    <reportSet>
-                        <id>non-aggregate</id>
-                        <configuration>
-                            <verbose>false</verbose>
-                            <linksource>true</linksource>
-                            <name>JavaDocs</name>
-                            <description>JavaDoc API documentation</description>
-                            <outputName>javadoc/index</outputName>
-                            <sourcepath>src/main/java</sourcepath>
-                        </configuration>
-                        <reports>
-                            <report>javadoc</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
