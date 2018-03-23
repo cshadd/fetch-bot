@@ -9,7 +9,7 @@ This repository may be used for your own robot.
 
 ### Parts
 * Recommended:
-    - Raspberry Pi 3 Model B ()
+    - Raspberry Pi 3 Model B
     - JBtek Raspberry Pi Micro USB Cable with ON / OFF Switch - Easy Start / Reboot
     - A-Male to B-Male USB
     - KUNCAN DC 5V to DC 12V Converter Step Up Voltage Converter 5ft Am to DC 5.5 x 2.1mm
@@ -20,8 +20,9 @@ This repository may be used for your own robot.
     - HDMI Monitor
     - ~~Adafruit DC & Stepper Motor HAT for Raspberry Pi - Mini Kit~~
     - Adafruit Stepper Motor NEMA17 12V 350mA
-    - ~~48mm Omniwheels for LEGO NXT, Servo~~
-    - 5mm Aluminum Mounting Hubs
+    - "Omniwheels"
+    - 5mm Aluminum Mounting Hubs?
+    - "Motor Mount"
     - Arduino Uno
     - Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
     - Non-Soldering Breadboard
@@ -70,16 +71,15 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
 
 ### Installing
 Clone/fork this repository and save it. Then use ``./bash-install.sh`` to install to your system (Bash).
-``~/bin/fetch-bot-x.x.x.jar`` is the compiled JAR.
 ``~/bin/StartFetchBot.sh`` is the launcher.
-``~/bin/StopFetchBot.sh`` is the terminator.
 ``/var/www/html/FetchBot/`` is the webserver.
 
 ## Deployment
 
 ### Recommended Deployment
-``~/bin/StartFetchBot.sh`` (Bash) is the launcher that you use to deploy the application and run it. ``~/bin/StopFetchBot.sh`` (Bash) is how you will terminate the application.
-``/var/www/html/FetchBot/`` is the server that you can access at http://localhost/FetchBot. You may need to disable the cache.
+``~/bin/StartFetchBot.sh`` (Bash) is the launcher that you use to deploy the application.
+To run or stop it you will need to use the web server.
+``/var/www/html/FetchBot/`` is the web server that you can access at http://localhost/FetchBot. You may need to disable the cache.
 
 ### Visual Studio Solution (Optional)
 You may use Visual Studio 2017 or higher as an editor. ``fetch-bot.sln`` is the solution file.
