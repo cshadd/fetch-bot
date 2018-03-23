@@ -51,16 +51,19 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
 * Recommended:
     - Raspbian OS Jessie or higher
     - Chromium Browser
-    - Unclutter
-    - x11-xserver-utils
     - Java SE Development Kit 8.0 or higher
     - Java SE Runtime Environment 8.0 or higher
     - Apache Maven 3.5.2 or higher
     - Apache Server 2.4.10 or higher
     - PHP 5.0 or higher
-    - "Arduino Compiler"
     - Text Editor/IDE
+    - Packaged Apps (Bash):
+        - Unclutter
+        - x11-xserver-utils
+        - arduino-core
+        - arduino-mk
 * Optional:
+    - Ino 0.3 or higher
     - Visual Studio 2017 or higher
     - VNC Server
     - VNC Viewer
@@ -105,6 +108,8 @@ See [here](/docs/DevelopmentStandards.pdf).
 ## Acknowledgements
 * [Raspberry Pi](https://www.raspberrypi.org/)
 * [Arduino](https://www.arduino.cc/)
+* [Ed's Blog](http://pblog.ebaker.me.uk/)
+* [Ino](http://inotool.org/)
 * [Adafruit](https://www.adafruit.com/)
 * [Oracle](https://www.oracle.com/)
 * [The Pi4J Project](http://pi4j.com/)
