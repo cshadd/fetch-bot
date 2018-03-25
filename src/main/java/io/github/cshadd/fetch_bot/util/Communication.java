@@ -107,15 +107,14 @@ implements FetchBot {
         setInterfaceValue("emotion", "Boot");
         setInterfaceValue("mode", "Off");
         setInterfaceValue("rot", "0");
-        setInterfaceValue("sensorback", "0");
-        setInterfaceValue("sensorfront", "0");
-        setInterfaceValue("sensorleft", "0");
-        setInterfaceValue("sensorright", "0");
+        setInterfaceValue("sensor-front", "0");
+        setInterfaceValue("sensor-left", "0");
+        setInterfaceValue("sensor-right", "0");
         setInterfaceValue("verbose", "...");
         setInterfaceValue("x", "0");
-        setInterfaceValue("xmax", "0");
+        setInterfaceValue("x-max", "0");
         setInterfaceValue("y", "0");
-        setInterfaceValue("ymax", "0");
+        setInterfaceValue("y-max", "0");
 
         setRobotValue("auto", "0");
         setRobotValue("kill", "0");
@@ -144,124 +143,4 @@ implements FetchBot {
         }
         finally { }
     }
-
-
-
-
-
-
-
-    /*public final void clearToInterface() {
-        final JSONObject data = new JSONObject();
-    }
-    public final void clearToRobot() {
-        final JSONObject data = new JSONObject();
-        writeSafeLog(data, TO_INTERFACE_JSON_PATH);
-        writeSafeLog(data, TO_ROBOT_JSON_PATH);
-    }
-    public final String readToInterface(String key) {
-        String returnData = null;
-        try {
-            returnData = readLog(TO_INTERFACE_JSON_PATH).getString(key);
-        }
-        catch (IOException e) {
-            Logger.error(e, "There was an issue with IO!");
-        }
-        catch (JSONException e) {
-            Logger.error(e, "There was an issue with JSON!");
-        }
-        catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
-        }
-        finally { }
-        return returnData;
-    }
-    public final String readToInterfaceSafeLog(String key) {
-        return readSafeLog(TO_INTERFACE_JSON_PATH).getString(key);
-    }
-    public final String readToRobot(String key) {
-        String returnData = null;
-        try {
-            returnData = readLog(TO_ROBOT_JSON_PATH).getString(key);
-        }
-        catch (IOException e) {
-            Logger.error(e, "There was an issue with IO!");
-        }
-        catch (JSONException e) {
-            Logger.error(e, "There was an issue with JSON!");
-        }
-        catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
-        }
-        finally { }
-        return returnData;
-    }
-    public final String readToRobotSafeLog(String key) {
-        return readSafeLog(TO_ROBOT_JSON_PATH).getString(key);
-    }
-    public final void resetToInterface() {
-        JSONObject data = new JSONObject();
-        writeSafeLog(data, TO_INTERFACE_JSON_PATH);
-        data.put("emotion", "Boot")
-                    .put("mode", "Off")
-                    .put("rot", "0")
-                    .put("sensorback", "0")
-                    .put("sensorfront", "0")
-                    .put("sensorleft", "0")
-                    .put("sensorright", "0")
-                    .put("verbose", "...")
-                    .put("x", "0")
-                    .put("xmax", "0")
-                    .put("y", "0")
-                    .put("ymax", "0");
-        writeSafeLog(data, TO_INTERFACE_JSON_PATH);
-    }
-    public final void resetToRobot() {
-        final JSONObject data = new JSONObject();
-        writeSafeLog(data, TO_ROBOT_JSON_PATH);
-        data.put("Stop", "0");
-        writeSafeLog(data, TO_ROBOT_JSON_PATH);
-    }
-    public final void writeToInterface(String key, String value) {
-        final JSONObject data = null;
-        try {
-            data = readLog(TO_INTERFACE_JSON_PATH).put(key, value);
-            writeLog(data, TO_INTERFACE_JSON_PATH);
-        }
-        catch (IOException e) {
-            Logger.error(e, "There was an issue with IO!");
-        }
-        catch (JSONException e) {
-            Logger.error(e, "There was an issue with JSON!");
-        }
-        catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
-        }
-        finally { }
-    }
-    public final void writeToInterfaceSafeLog(String key, String value) {
-        JSONObject data = readSafeLog(TO_INTERFACE_JSON_PATH).put(key, value);
-        writeSafeLog(data, TO_INTERFACE_JSON_PATH);
-    }
-    public final void writeToRobot(String key, String value) {
-        JSONObject data = null;
-        try {
-            data = readLog(TO_ROBOT_JSON_PATH).put(key, value);
-            writeLog(data, TO_ROBOT_JSON_PATH);
-        }
-        catch (IOException e) {
-            Logger.error(e, "There was an issue with IO!");
-        }
-        catch (JSONException e) {
-            Logger.error(e, "There was an issue with JSON!");
-        }
-        catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
-        }
-        finally { }
-    }
-    public final void writeToRobotSafeLog(String key, String value) {
-        JSONObject data = readSafeLog(TO_ROBOT_JSON_PATH).put(key, value);
-        writeSafeLog(data, TO_ROBOT_JSON_PATH);
-    }*/
 }
