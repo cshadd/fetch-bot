@@ -60,7 +60,10 @@ implements FetchBot {
     }
 
     // Public Static Final Methods
-    public static final Logger getInstance(Communication comm) {
+    public static final synchronized  Logger getInstance() {
+        return getInstance(null);
+    }
+    public static final synchronized  Logger getInstance(Communication comm) {
         if (instance != null) {
             return instance;
         }
