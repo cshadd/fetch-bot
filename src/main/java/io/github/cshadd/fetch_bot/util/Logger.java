@@ -90,7 +90,7 @@ implements FetchBot {
     }
     public static final void error(String msg, boolean append) {
         msg = TAG + " [ERROR (SAFELY CAUGHT)] " + msg;
-        System.err.println(msg + "\nPlease report this issue to the developers! You may want to check FetchBot.log!");
+        System.err.println(msg + "\nPlease report this issue to the developers!");
         writeInterface(msg, append);
     }
     public static final void fatalError(String msg) {
@@ -130,7 +130,7 @@ implements FetchBot {
     }
     public static final void warn(String msg, boolean append) {
         msg = TAG + " [WARN] " + msg;
-        System.out.println(msg + "\nYou may want to check FetchBot.log!");
+        System.out.println(msg);
         writeInterface(msg, append);
     }
 }
