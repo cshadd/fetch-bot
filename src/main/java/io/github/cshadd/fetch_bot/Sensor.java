@@ -26,7 +26,7 @@ implements FetchBot {
             return -1;
         }
         else {
-            throw new SensorException("Invalid direction type, " + command + ".");
+            throw new SensorException("Invalid direction type, " + direction + ".");
         }
     }
 }
