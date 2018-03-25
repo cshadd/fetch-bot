@@ -1,6 +1,8 @@
 package io.github.cshadd.fetch_bot;
-import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.Communication;
+import io.github.cshadd.fetch_bot.util.Logger;
+import io.github.cshadd.fetch_bot.util.VersionCheck;
+
 // Main
 public class Core
 implements FetchBot {
@@ -29,13 +31,14 @@ implements FetchBot {
     // Entry Point
     public static void main(String[] args) {
         String auto = "0";
-        String isAuto = "0";
+        String currentAuto = "0";
         boolean isDirectionFrontBlocked = false;
         boolean isDirectionLeftBlocked = false;
         boolean isDirectionRightBlocked = false;
         int sensorFront = 0;
         int sensorLeft = 0;
         int sensorRight = 0;
+        String version = "v0.0.0";
 
         comm = new Communication();
         movement = new Movement();
@@ -44,7 +47,11 @@ implements FetchBot {
 
         comm.reset();
         log.clear();
-        log.info("Fetch Bot starting!");
+        if (args.length >= 1) {
+            version = args[0];
+        }
+        log.info("Fetch Bot " + version + " starting!");
+        VersionCheck.checkVersionMatch(version);
         log.info("Product information at https://cshadd.github.io/fetch-bot/.");
         comm.pushInterface();
         comm.pushRobot();
@@ -59,9 +66,9 @@ implements FetchBot {
             }
 
             try {
-                sensorFront = sensor.getDistance(sensor.DIRECTION.FRONT);
-                sensorLeft = sensor.getDistance(sensor.DIRECTION.LEFT);
-                sensorRight = sensor.getDistance(sensor.DIRECTION.RIGHT);
+                sensorFront = sensor.getDistance(Sensor.DIRECTION.FRONT);
+                sensorLeft = sensor.getDistance(Sensor.DIRECTION.LEFT);
+                sensorRight = sensor.getDistance(Sensor.DIRECTION.RIGHT);
             }
             catch (SensorException e) {
                 Logger.error(e, "There was an issue with Sensor!");
@@ -70,9 +77,9 @@ implements FetchBot {
                 Logger.error(e, "There was an unknown issue!");
             }
             finally {
-                comm.setInterfaceValue("sensor-front", sensorFront);
-                comm.setInterfaceValue("sensor-left", sensorLeft);
-                comm.setInterfaceValue("sensor-right", sensorRight);
+                comm.setInterfaceValue("sensor-front", "" + sensorFront);
+                comm.setInterfaceValue("sensor-left", "" + sensorLeft);
+                comm.setInterfaceValue("sensor-right", "" + sensorRight);
 
                 if (sensorFront == COLLISION_DISTANCE) {
                     if (!isDirectionFrontBlocked) {
@@ -134,29 +141,29 @@ implements FetchBot {
 
             auto = comm.getRobotValue("auto");
             if (auto.equals("0")) { // Manual
-                if (!auto.equals(isAuto)) {
+                if (!auto.equals(currentAuto)) {
                     log.info("Interface - [Manual] mode command received.");
                 }
                 // driveControl
             }
             else if (auto.equals("1")) { // AI
-                if (!auto.equals(isAuto)) {
+                if (!auto.equals(currentAuto)) {
                     log.info("Interface - [Auto] mode command received.");
                 }
                 // pathfind and driveControl
             }
             else {
-                if (!auto.equals(isAuto)) {
+                if (!auto.equals(currentAuto)) {
                     log.warn("Interface - Invalid mode command recieved.");
                 }
             }
-            isAuto = auto;
+            currentAuto = auto;
 
             delayThread(1000);
             comm.pushInterface();
         }
 
-        log.info("Fetch Bot terminating!");
+        log.info("Fetch Bot terminating! Log file: ./FetchBot.log.");
         comm.clear();
         comm.pushInterface();
         comm.pushRobot();
