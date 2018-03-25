@@ -1,8 +1,10 @@
 package io.github.cshadd.fetch_bot.util;
 import io.github.cshadd.fetch_bot.FetchBot;
-import java.io.*;
-import org.apache.commons.io.*;
-import org.json.*;
+import java.io.File;
+import java.io.IOException;
+import org.apache.commons.io.FileUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 // Main
 public final class Communication
