@@ -79,7 +79,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.util", "fetch_bot
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "arduino-slave-processor", "arduino-slave-processor", "{60C4203F-A524-49E6-A778-D332C9E7C5A2}"
 	ProjectSection(SolutionItems) = preProject
-		src\arduino-slave-processor\Fetchbot.ino = src\arduino-slave-processor\Fetchbot.ino
+		src\arduino-slave-processor\FetchBot.ino = src\arduino-slave-processor\FetchBot.ino
 		src\arduino-slave-processor\Makefile = src\arduino-slave-processor\Makefile
 	EndProjectSection
 EndProject
