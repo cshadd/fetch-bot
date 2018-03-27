@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.cshadd</groupId>
     <artifactId>fetch-bot</artifactId>
-    <version>v0.10.0</version>
+    <version>v0.11.0</version>
     <name>Fetch Bot</name>
     <description>AI based robot with image processing.</description>
     <url>https://www.github.com/cshadd/fetch-bot</url>
@@ -89,7 +89,7 @@
     <properties>
         <!-- DEPENDENCY VERSIONS -->
         <junit.version>4.12</junit.version>
-        <cshadd-java-data-structures.version>v1.0.0-alpha</cshadd-java-data-structures.version>
+        <cshadd-java-data-structures.version>v1.0.0-alpha.1</cshadd-java-data-structures.version>
         <commons-io.version>2.6</commons-io.version>
         <json.version>20180130</json.version>
         <pi4j-core.version>1.1</pi4j-core.version>
@@ -204,17 +204,6 @@
                     </plugin>
                 </plugins>
             </build>
-            <reporting>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <configuration>
-                            <additionalparam>-Xdoclint:none</additionalparam>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </reporting>
         </profile>
     </profiles>
 
@@ -319,27 +308,6 @@
 
     <reporting>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin.version}</version>
-                <reportSets>
-                    <reportSet>
-                        <id>non-aggregate</id>
-                        <configuration>
-                            <verbose>false</verbose>
-                            <linksource>true</linksource>
-                            <name>JavaDocs</name>
-                            <description>JavaDoc API documentation</description>
-                            <outputName>javadoc/index</outputName>
-                            <sourcepath>src/main/java</sourcepath>
-                        </configuration>
-                        <reports>
-                            <report>javadoc</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>

@@ -7,7 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		bash-install.sh = bash-install.sh
 		src\bash-start.sh = src\bash-start.sh
-		src\bash-stop.sh = src\bash-stop.sh
 		bash-uninstall.sh = bash-uninstall.sh
 	EndProjectSection
 EndProject
@@ -65,12 +64,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot", "fetch_bot", "{
 	ProjectSection(SolutionItems) = preProject
 		src\main\java\io\github\cshadd\fetch_bot\Core.java = src\main\java\io\github\cshadd\fetch_bot\Core.java
 		src\main\java\io\github\cshadd\fetch_bot\FetchBot.java = src\main\java\io\github\cshadd\fetch_bot\FetchBot.java
+		src\main\java\io\github\cshadd\fetch_bot\Movement.java = src\main\java\io\github\cshadd\fetch_bot\Movement.java
+		src\main\java\io\github\cshadd\fetch_bot\MovementException.java = src\main\java\io\github\cshadd\fetch_bot\MovementException.java
+		src\main\java\io\github\cshadd\fetch_bot\Sensor.java = src\main\java\io\github\cshadd\fetch_bot\Sensor.java
+		src\main\java\io\github\cshadd\fetch_bot\SensorException.java = src\main\java\io\github\cshadd\fetch_bot\SensorException.java
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.util", "fetch_bot.util", "{42F06F5E-3498-4C15-B013-B2CAFB48F39C}"
 	ProjectSection(SolutionItems) = preProject
-		src\main\java\io\github\cshadd\fetch_bot\util\Communication.java = src\main\java\io\github\cshadd\fetch_bot\util\Communication.java
+		src\main\java\io\github\cshadd\fetch_bot\util\InterfaceCommunication.java = src\main\java\io\github\cshadd\fetch_bot\util\InterfaceCommunication.java
 		src\main\java\io\github\cshadd\fetch_bot\util\Logger.java = src\main\java\io\github\cshadd\fetch_bot\util\Logger.java
+		src\main\java\io\github\cshadd\fetch_bot\util\VersionCheck.java = src\main\java\io\github\cshadd\fetch_bot\util\VersionCheck.java
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "arduino-slave-processor", "arduino-slave-processor", "{60C4203F-A524-49E6-A778-D332C9E7C5A2}"
+	ProjectSection(SolutionItems) = preProject
+		src\arduino-slave-processor\FetchBot.ino = src\arduino-slave-processor\FetchBot.ino
+		src\arduino-slave-processor\Makefile = src\arduino-slave-processor\Makefile
 	EndProjectSection
 EndProject
 Global
@@ -87,6 +97,7 @@ Global
 		{16872667-586C-46D4-B3ED-AB88806933FA} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{BDA2E018-42A9-4ADF-B5EA-919D6CF25D1C} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{42F06F5E-3498-4C15-B013-B2CAFB48F39C} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{60C4203F-A524-49E6-A778-D332C9E7C5A2} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8F99668-DE84-4451-95F0-312B7F0E1A3C}

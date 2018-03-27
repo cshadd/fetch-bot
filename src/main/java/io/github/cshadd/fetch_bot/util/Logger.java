@@ -20,13 +20,13 @@ implements FetchBot {
     private static Logger instance;
 
     // Private Instance/Property Fields
-    private static Communication comm;
+    private static InterfaceCommunication comm;
 
     // Private Constructors
     private Logger() {
         this(null);
     }
-    private Logger(Communication comm) {
+    private Logger(InterfaceCommunication comm) {
         this.comm = comm;
     }
 
@@ -60,7 +60,10 @@ implements FetchBot {
     }
 
     // Public Static Final Methods
-    public static final Logger getInstance(Communication comm) {
+    public static final synchronized  Logger getInstance() {
+        return getInstance(null);
+    }
+    public static final synchronized  Logger getInstance(InterfaceCommunication comm) {
         if (instance != null) {
             return instance;
         }
@@ -87,7 +90,7 @@ implements FetchBot {
     }
     public static final void error(String msg, boolean append) {
         msg = TAG + " [ERROR (SAFELY CAUGHT)] " + msg;
-        System.err.println(msg + "\nPlease report this issue to the developers! You may want to check FetchBot.log!");
+        System.err.println(msg + "\nPlease report this issue to the developers!");
         writeInterface(msg, append);
     }
     public static final void fatalError(String msg) {
@@ -127,7 +130,7 @@ implements FetchBot {
     }
     public static final void warn(String msg, boolean append) {
         msg = TAG + " [WARN] " + msg;
-        System.out.println(msg + "\nYou may want to check FetchBot.log!");
+        System.out.println(msg);
         writeInterface(msg, append);
     }
 }
