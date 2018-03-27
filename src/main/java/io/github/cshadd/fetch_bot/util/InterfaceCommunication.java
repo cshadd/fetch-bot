@@ -106,8 +106,8 @@ implements FetchBot {
     }
     public final void reset() {
         clear();
-        setInterfaceValue("emotion", "Boot");
-        setInterfaceValue("mode", "Off");
+        setInterfaceValue("emotion", "Idle");
+        setInterfaceValue("mode", "Idle");
         setInterfaceValue("rot", "0");
         setInterfaceValue("sensor-front", "0");
         setInterfaceValue("sensor-left", "0");
@@ -118,8 +118,7 @@ implements FetchBot {
         setInterfaceValue("y", "0");
         setInterfaceValue("y-max", "0");
 
-        setRobotValue("auto", "0");
-        setRobotValue("kill", "0");
+        setRobotValue("mode", "Off");
     }
     public final void setInterfaceValue(String key, String value) {
         try {
