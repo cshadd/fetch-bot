@@ -1,5 +1,6 @@
 package io.github.cshadd.fetch_bot;
 import com.pi4j.util.Console;
+import io.github.cshadd.fetch_bot.util.ArduinoCommunication;
 import io.github.cshadd.fetch_bot.util.InterfaceCommunication;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.VersionCheck;
@@ -11,6 +12,7 @@ implements FetchBot {
     private static final int COLLISION_DISTANCE = 15;
 
     // Private Static Instance/Property Fields
+    private static ArduinoCommunication arduinoComm;
     private static InterfaceCommunication interfaceComm;
     private static Movement movement;
     private static Logger log;
@@ -40,6 +42,7 @@ implements FetchBot {
         int currentSensorRight = 0;
         String version = "v0.0.0";
 
+        arduinoComm = new ArduinoCommunication();
         interfaceComm = new InterfaceCommunication();
         movement = new Movement();
         log = Logger.getInstance(interfaceComm);
