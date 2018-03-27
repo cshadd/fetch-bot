@@ -103,7 +103,7 @@ void loop() {
     duration3 = pulseIn(echoPin3, HIGH);
     distance3 = (duration3*0.0343)/2;
 
-    if (!(distance1 != prevDistance1) && !(distance2 != prevDistance2) && !(distance3 != prevDistance3)) {
+    if (distance1 != prevDistance1 && distance2 != prevDistance2 && distance3 != prevDistance3) {
         String payload = "Distances: " + distance1 + "; " + distance2 + "; " + distance3;
         String nmea = generateNMEAString(payload, prefix, id);
         Serial.println(nmea);
