@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 // Main
-public final class Communication
+public final class InterfaceCommunication
 implements FetchBot {
     // Private Constant Instance/Property Fields
     private static final String TO_INTERFACE_JSON_PATH = "/var/www/html/FetchBot/comms/toInterface.json";
@@ -18,7 +18,7 @@ implements FetchBot {
     private JSONObject toRobotData;
 
     // Public Constructors
-    public Communication() {
+    public InterfaceCommunication() {
         toInterfaceData = new JSONObject();
         toRobotData = new JSONObject();
     }
