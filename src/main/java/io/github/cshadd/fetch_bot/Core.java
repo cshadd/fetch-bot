@@ -1,4 +1,5 @@
 package io.github.cshadd.fetch_bot;
+import com.pi4j.util.Console;
 import io.github.cshadd.fetch_bot.util.InterfaceCommunication;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.VersionCheck;
@@ -30,9 +31,9 @@ implements FetchBot {
 
     // Entry Point
     public static void main(String[] args) {
-        /*boolean isDirectionFrontBlocked = false;
-        boolean isDirectionLeftBlocked = false;
-        boolean isDirectionRightBlocked = false*/
+        final Console console = new Console();
+        console.title("--- Fetch Bot ---", "https://cshadd.github.io/fetch-bot/");
+
         String currentMode = "Idle";
         int currentSensorFront = 0;
         int currentSensorLeft = 0;
@@ -51,7 +52,6 @@ implements FetchBot {
         }
         log.info("Fetch Bot " + version + " starting!");
         VersionCheck.checkVersionMatch(version);
-        log.info("Product information at https://cshadd.github.io/fetch-bot/.");
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();
 
@@ -109,5 +109,6 @@ implements FetchBot {
         interfaceComm.clear();
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();
+        console.promptForExit();
     }
 }
