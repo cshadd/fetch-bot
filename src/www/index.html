@@ -23,7 +23,7 @@
                 $("#status-curr-coord").text("Current Coordinates: (" + data.x + ", " + data.y + ")");
                 $("#status-curr-rot").text("Current Rotation: " + data.rot + " Degrees");
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
-                $("#status-sensors").text("Sensors: {F: " + data['sensor-front'] + "; L: " + data['sensor-left'] + "; R: " + ['data.sensor-right'] + "}");
+                $("#status-sensors").text("Sensors: {F: " + data['sensor-front'] + "; L: " + data['sensor-left'] + "; R: " + data['sensor-right'] + "}");
                 $("#status-verbose").text(data.verbose);
 
                 if (data.mode == "Auto") {
