@@ -118,7 +118,7 @@ implements FetchBot {
         setInterfaceValue("y", "0");
         setInterfaceValue("y-max", "0");
 
-        setRobotValue("mode", "Off");
+        setRobotValue("mode", "Idle");
     }
     public final void setInterfaceValue(String key, String value) {
         try {

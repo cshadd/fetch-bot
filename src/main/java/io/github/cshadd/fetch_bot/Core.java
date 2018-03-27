@@ -90,7 +90,7 @@ implements FetchBot {
             else if (currentMode.equals("Idle")) {
                 interfaceComm.setInterfaceValue("emotion", "Idle");
             }
-            else if (currentMode.equals("Kill")) {
+            else if (currentMode.equals("Off")) {
                 break;
             }
             else if (currentMode.equals("Manual")) {
@@ -103,7 +103,6 @@ implements FetchBot {
 
             delayThread(500);
             interfaceComm.pushInterface();
-            interfaceComm.pushRobot();
         }
 
         log.info("Fetch Bot terminating! Log file: ./FetchBot.log.");
