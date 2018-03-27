@@ -16,13 +16,14 @@ This repository may be used for your own robot.
     - x1 Raspberry Pi 3 Model B
     - x1 JBtek Raspberry Pi Micro USB Cable with ON / OFF Switch - Easy Start / Reboot
     - x1 A-Male to B-Male USB
+    - x1 Micro USB
     - x1 KUNCAN DC 5V to DC 12V Converter Step Up Voltage Converter 5ft Am to DC 5.5 x 2.1mm
     - x1 Logitech HD Webcam C525, Portable HD 720p Video Calling with Autofocus
     - x1 Male to Male HDMI Cable
     - x1 Elecrow RPA05010R HDMI 5-Inch 800x480 TFT LCD Display with Touch Screen Monitor for Raspberry Pi B+/2B/3B
     - x2 Adafruit Stepper Motor NEMA17 12V 350mA
     - x2 Mounting Bracket for Nema 17 Stepper Motor (Geared Stepper) Hobby CNC/3D Printer
-    - x3 58mm Omni Wheel With Hubs For DIY Arduino Robot Competition Car Supporting LEGO
+    - ~~x3~~ x2 58mm Omni Wheel With Hubs For DIY Arduino Robot Competition Car Supporting LEGO
     - x1 Arduino Uno
     - x1 Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
     - x1 Non-Soldering Breadboard
