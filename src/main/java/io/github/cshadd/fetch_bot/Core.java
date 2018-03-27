@@ -1,5 +1,5 @@
 package io.github.cshadd.fetch_bot;
-import io.github.cshadd.fetch_bot.util.Communication;
+import io.github.cshadd.fetch_bot.util.InterfaceCommunication;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.VersionCheck;
 
@@ -10,7 +10,7 @@ implements FetchBot {
     private static final int COLLISION_DISTANCE = 15;
 
     // Private Static Instance/Property Fields
-    private static Communication comm;
+    private static InterfaceCommunication comm;
     private static Movement movement;
     private static Logger log;
     private static Sensor sensor;
@@ -40,7 +40,7 @@ implements FetchBot {
         int sensorRight = 0;
         String version = "v0.0.0";
 
-        comm = new Communication();
+        comm = new InterfaceCommunication();
         movement = new Movement();
         log = Logger.getInstance(comm);
         sensor = new Sensor();
@@ -55,6 +55,8 @@ implements FetchBot {
         log.info("Product information at https://cshadd.github.io/fetch-bot/.");
         comm.pushInterface();
         comm.pushRobot();
+
+        // https://github.com/OlivierLD/raspberry-pi4j-samples/blob/master/Arduino.RaspberryPI/src/arduino/raspberrypi/SerialReader.java
 
         while (true) {
             comm.pullInterface();
