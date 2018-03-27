@@ -12,7 +12,7 @@
      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="processInterface.js"></script>
+    <script src="readCommunications.js"></script>
     <script>
         function eyeBlink() {
             var $eye = $(".eye");
@@ -108,22 +108,37 @@
             if (data != null) {
                 if (data.emotion == "Angry") {
                     setEyeEmotion("#ff0000", "50px", 35);
+                    if (Math.floor((Math.random() * 10)) <= 3) {
+                        eyeMove(Math.floor(Math.random() * 10));
+                    }
+                    if (Math.floor((Math.random() * 10)) <= 3) {
+                        eyeBlink();
+                    }
                 }
                 else if (data.emotion == "Happy") {
                     setEyeEmotion("#00ff00", "50px", 0);
+                    if (Math.floor((Math.random() * 10)) <= 3) {
+                        eyeMove(Math.floor(Math.random() * 10));
+                    }
+                    if (Math.floor((Math.random() * 10)) <= 3) {
+                        eyeBlink();
+                    }
+                }
+                else if (data.emotion == "Idle") {
+                    setEyeEmotion("#fff", "10px", 0);
+                    eyeMove(10);
                 }
                 else if (data.emotion == "Neutral") {
                     setEyeEmotion("#fff", "50px", 0);
+                    if (Math.floor((Math.random() * 10)) <= 3) {
+                        eyeMove(Math.floor(Math.random() * 10));
+                    }
+                    if (Math.floor((Math.random() * 10)) <= 3) {
+                        eyeBlink();
+                    }
                 }
                 else if (data.emotion == "Sad") {
                     setEyeEmotion("#00ffff", "50px", -35);
-                }
-                else {
-                    data.emotion = "Boot";
-                    setEyeEmotion("#fff", "10px", 0);
-                }
-
-                if (data.emotion != "Boot") {
                     if (Math.floor((Math.random() * 10)) <= 3) {
                         eyeMove(Math.floor(Math.random() * 10));
                     }
@@ -132,6 +147,7 @@
                     }
                 }
                 else {
+                    setEyeEmotion("#ff0000", "10px", 0);
                     eyeMove(10);
                 }
             }

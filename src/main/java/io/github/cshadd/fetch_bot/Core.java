@@ -88,7 +88,7 @@ implements FetchBot {
                 interfaceComm.setInterfaceValue("emotion", "Neutral");
             }
             else if (currentMode.equals("Idle")) {
-                interfaceComm.setInterfaceValue("emotion", currentMode);
+                interfaceComm.setInterfaceValue("emotion", "Idle");
             }
             else if (currentMode.equals("Kill")) {
                 break;
