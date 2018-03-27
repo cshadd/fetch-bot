@@ -20,13 +20,13 @@ implements FetchBot {
     private static Logger instance;
 
     // Private Instance/Property Fields
-    private static Communication comm;
+    private static InterfaceCommunication comm;
 
     // Private Constructors
     private Logger() {
         this(null);
     }
-    private Logger(Communication comm) {
+    private Logger(InterfaceCommunication comm) {
         this.comm = comm;
     }
 
@@ -63,7 +63,7 @@ implements FetchBot {
     public static final synchronized  Logger getInstance() {
         return getInstance(null);
     }
-    public static final synchronized  Logger getInstance(Communication comm) {
+    public static final synchronized  Logger getInstance(InterfaceCommunication comm) {
         if (instance != null) {
             return instance;
         }
