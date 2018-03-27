@@ -3,15 +3,15 @@ package io.github.cshadd.fetch_bot;
 // Main
 public class Sensor
 implements FetchBot {
-    // Public Constant Instance/Property Fields
+    // Public Constructors
+    public Sensor() { }
+
+    // Public Static Nested Classes
     public enum DIRECTION {
         FRONT,
         LEFT,
         RIGHT
     }
-
-    // Public Constructors
-    public Sensor() { }
 
     // Public Methods
     public int getDistance(DIRECTION direction)
