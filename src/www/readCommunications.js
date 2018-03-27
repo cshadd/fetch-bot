@@ -1,6 +1,7 @@
 var data = null;
 var data2 = null;
 var processing = false;
+var processing2 = false;
 
 setInterval(function () {
     if (processing != true) {
@@ -19,6 +20,9 @@ setInterval(function () {
             data = null;
             processing = false;
         });
+    }
+    if (processing2 != true) {
+        processing2 = true;
         $.ajax({
             url: "comms/toRobot.json?refresh=" + new Date().getTime(),
             dataType: "json",
@@ -26,12 +30,12 @@ setInterval(function () {
             data: null,
             success: function (json) {
                 data2 = json;
-                processing = false;
+                processing2 = false;
             }
         })
         .fail(function () {
             data2 = null;
-            processing = false;
+            processing2 = false;
         });
     }
 }, 2000);

@@ -16,31 +16,34 @@
     <script src="readCommunications.js"></script>
     <script>
         setInterval(function () {
-            if (data != null) {
+            if (data != null && data2 != null) {
                 $("#connection-offline").hide();
                 $("#status-curr-mode").text("Current Mode: " + data.mode);
-                $("#status-max-coord").text("Max Coordinates: ([-" + data["x-max"] + "],[" + data["x-max"] + "], [-" + data["y-max"] + "],[" + data["y-max"] + "])");
+                $("#status-max-coord").text("Max Coordinates: ([-" + data['x-max'] + "],[" + data['x-max'] + "], [-" + data['y-max'] + "],[" + data['y-max'] + "])");
                 $("#status-curr-coord").text("Current Coordinates: (" + data.x + ", " + data.y + ")");
                 $("#status-curr-rot").text("Current Rotation: " + data.rot + " Degrees");
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
-                $("#status-sensors").text("Sensors: {F:" + data["sensor-front"] + "; L:" + data["sensor-left"] + "; R:" + data["sensor-right"] + "}");
+                $("#status-sensors").text("Sensors: {F: " + data['sensor-front'] + "; L: " + data['sensor-left'] + "; R: " + ['data.sensor-right'] + "}");
                 $("#status-verbose").text(data.verbose);
 
                 if (data.mode == "Auto") {
                     $("#btn-auto").hide();
                     $("#btn-idle").show();
+                    $("#btn-kill").show();
                     $("#btn-manual").show();
                     $("#controls-manual").hide();
                 }
                 else if (data.mode == "Manual") {
                     $("#btn-auto").show();
                     $("#btn-idle").show();
+                    $("#btn-kill").show();
                     $("#btn-manual").hide();
                     $("#controls-manual").show();
                 }
-                else if (data.mode == "Idle")
+                else if (data.mode == "Idle") {
                     $("#btn-auto").show();
                     $("#btn-idle").hide();
+                    $("#btn-kill").show();
                     $("#btn-manual").show();
                     $("#controls-manual").hide();
                 }
@@ -51,10 +54,11 @@
                     $("#status-curr-coord").text("Current Coordinates:");
                     $("#status-curr-rot").text("Current Rotation:");
                     $("#status-curr-emotion").text("Current Emotion:");
-                    $("#status-sensors").text("Sensors (0 = Open, 1 = Blocked):");
+                    $("#status-sensors").text("Sensors:");
                     $("#status-verbose").text("...");
                     $("#btn-auto").hide();
                     $("#btn-idle").hide();
+                    $("#btn-kill").hide();
                     $("#btn-manual").hide();
                     $("#controls-manual").hide();
                 }
@@ -66,10 +70,11 @@
                 $("#status-curr-coord").text("Current Coordinates:");
                 $("#status-curr-rot").text("Current Rotation:");
                 $("#status-curr-emotion").text("Current Emotion:");
-                $("#status-sensors").text("Sensors (0 = Open, 1 = Blocked):");
+                $("#status-sensors").text("Sensors:");
                 $("#status-verbose").text("...");
                 $("#btn-auto").hide();
                 $("#btn-idle").hide();
+                $("#btn-kill").hide();
                 $("#btn-manual").hide();
                 $("#controls-manual").hide();
             }
@@ -106,10 +111,8 @@
         }
 
         function setMode(mode) {
-            if (data2 != null) {
-                data2.mode = mode;
-                sendToRobot();
-            }
+            data2.mode = mode;
+            sendToRobot();
         }
 
         function setCoordinates() {
@@ -128,7 +131,11 @@
 <body>
     <main>
         <div id="connection-offline" class="alert alert-danger">
-            <p><strong>Error: </strong> Robot connection offline.</p>
+            <div class="progress">
+                <div class="connection-progress-bar progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                    <p>Waiting for connection to robot.</p>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-4">
@@ -166,10 +173,10 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">Controls</div>
                         <div class="panel-body">
-                            <input id="btn-kill" class="btn btn-danger" type="button" value="Kill" onclick="setMode(&apos;Kill&apos;)" /><br /><br />
-                            <input id="btn-auto" class="btn btn-warning" type="button" value="Auto" onclick="setMode(&apos;Auto&apos;)" />
-                            <input id="btn-idle" class="btn btn-warning" type="button" value="Idle" onclick="setMode(&apos;Idle&apos;)" />
-                            <input id="btn-manual" class="btn btn-warning" type="button" value="Manual" onclick="setMode(&apos;Manual&apos;)" /><br /><br />
+                            <input id="btn-kill" class="btn btn-danger" type="button" value="Kill" onclick="setMode('Off')" /><br /><br />
+                            <input id="btn-auto" class="btn btn-warning" type="button" value="Auto" onclick="setMode('Auto')" />
+                            <input id="btn-idle" class="btn btn-warning" type="button" value="Idle" onclick="setMode('Idle')" />
+                            <input id="btn-manual" class="btn btn-warning" type="button" value="Manual" onclick="setMode('Manual')" /><br /><br />
                             <div id="controls-manual">
                                 <!--<div class="row">
                                     <div class="col-sm-4">
