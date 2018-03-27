@@ -3,16 +3,16 @@ package io.github.cshadd.fetch_bot;
 // Main
 public class Movement
 implements FetchBot {
-    // Public Constant Instance/Property Fields
+    // Public Constructors
+    public Movement() { }
+
+    // Public Static Nested Classes
     public enum COMMAND {
         FORWARD,
         LEFT,
         RIGHT,
         STOP
     }
-
-    // Public Constructors
-    public Movement() { }
 
     // Public Methods
     public void move(COMMAND command)
