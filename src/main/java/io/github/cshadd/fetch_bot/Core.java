@@ -73,7 +73,7 @@ implements FetchBot {
                 currentSensorRight = sensors.getDistance(Sensors.DIRECTION.RIGHT);
             }
             catch (SensorsException e) {
-                Logger.error(e, "There was an issue with Sensor!");
+                Logger.error(e, "There was an issue with Sensors!");
             }
             catch (Exception e) {
                 Logger.error(e, "There was an unknown issue!");
