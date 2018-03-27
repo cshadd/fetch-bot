@@ -93,7 +93,7 @@ implements FetchBot {
         return returnData;
     }
     public final void pullInterface() {
-        toRobotData = read(TO_ROBOT_JSON_PATH);
+        toInterfaceData = read(TO_INTERFACE_JSON_PATH);
     }
     public final void pullRobot() {
         toRobotData = read(TO_ROBOT_JSON_PATH);

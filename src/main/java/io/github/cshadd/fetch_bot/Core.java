@@ -103,6 +103,7 @@ implements FetchBot {
 
             delayThread(500);
             interfaceComm.pushInterface();
+            // interfaceComm.pushRobot();
         }
 
         log.info("Fetch Bot terminating! Log file: ./FetchBot.log.");
