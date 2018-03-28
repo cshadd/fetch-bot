@@ -58,8 +58,8 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
     - Java SE Runtime Environment 8.0 or higher
     - Ino 0.3 or higher
     - Apache Maven 3.5.2 or higher
-    - Apache HTTP Server 2.4.10 or higher
-    - PHP 5.0 or higher
+    - Apache HTTP Server 2.4.25 or higher
+    - PHP 7.0 or higher
     - Packaged Apps (Bash):
         - Unclutter
         - arduino-core
