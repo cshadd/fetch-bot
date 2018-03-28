@@ -72,6 +72,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot", "fetch_bot", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.util", "fetch_bot.util", "{42F06F5E-3498-4C15-B013-B2CAFB48F39C}"
 	ProjectSection(SolutionItems) = preProject
+		src\main\java\io\github\cshadd\fetch_bot\util\ArduinoCommunication.java = src\main\java\io\github\cshadd\fetch_bot\util\ArduinoCommunication.java
 		src\main\java\io\github\cshadd\fetch_bot\util\InterfaceCommunication.java = src\main\java\io\github\cshadd\fetch_bot\util\InterfaceCommunication.java
 		src\main\java\io\github\cshadd\fetch_bot\util\Logger.java = src\main\java\io\github\cshadd\fetch_bot\util\Logger.java
 		src\main\java\io\github\cshadd\fetch_bot\util\VersionCheck.java = src\main\java\io\github\cshadd\fetch_bot\util\VersionCheck.java
