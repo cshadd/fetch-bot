@@ -46,6 +46,7 @@ FetchBot.ino:107:42: error: invalid operands of types ‘const char [12]’ and 
         console.title("--- Fetch Bot ---", "https://cshadd.github.io/fetch-bot/");
 
         String currentMode = "Idle";
+        String currentMove = "Stop";
         int currentSensorFront = 0;
         int currentSensorLeft = 0;
         int currentSensorRight = 0;
@@ -79,7 +80,7 @@ FetchBot.ino:107:42: error: invalid operands of types ‘const char [12]’ and 
             }
             interfaceComm.setInterfaceValue("mode", currentMode);
 
-            try {
+            /*try {
                 currentSensorFront = sensors.getDistance(Sensors.DIRECTION.FRONT);
                 currentSensorLeft = sensors.getDistance(Sensors.DIRECTION.LEFT);
                 currentSensorRight = sensors.getDistance(Sensors.DIRECTION.RIGHT);
@@ -94,7 +95,7 @@ FetchBot.ino:107:42: error: invalid operands of types ‘const char [12]’ and 
                 interfaceComm.setInterfaceValue("sensor-front", "" + currentSensorFront);
                 interfaceComm.setInterfaceValue("sensor-left", "" + currentSensorLeft);
                 interfaceComm.setInterfaceValue("sensor-right", "" + currentSensorRight);
-            }
+            }*/
 
             if (currentMode.equals("Auto")) {
                 interfaceComm.setInterfaceValue("emotion", "Neutral");
@@ -107,6 +108,17 @@ FetchBot.ino:107:42: error: invalid operands of types ‘const char [12]’ and 
             }
             else if (currentMode.equals("Manual")) {
                 interfaceComm.setInterfaceValue("emotion", "Happy");
+                if (!interfaceComm.getRobotValue("move").equals(currentMove)) {
+                    currentMove = interfaceComm.getRobotValue("move");
+                    if (!currentMove.equals("Stop")) {
+                        log.info("Interface - [move: " + currentMove + "] command received.");
+                        // Call Movement Class?
+                        interfaceComm.setRobotValue("move", "Stop");
+                        interfaceComm.pushRobot();
+                        currentMove = "Stop";
+                    }
+                    delayThread(500); // May not need this?
+                }
             }
             else {
                 log.warn("Interface - [mode: " + currentMode + "] is invalid, setting to [mode: Idle].");

@@ -31,6 +31,7 @@
                     $("#btn-idle").show();
                     $("#btn-kill").show();
                     $("#btn-manual").show();
+                    $("#controls-auto").show();
                     $("#controls-manual").hide();
                 }
                 else if (data.mode == "Manual") {
@@ -38,6 +39,7 @@
                     $("#btn-idle").show();
                     $("#btn-kill").show();
                     $("#btn-manual").hide();
+                    $("#controls-auto").hide();
                     $("#controls-manual").show();
                 }
                 else if (data.mode == "Idle") {
@@ -45,6 +47,7 @@
                     $("#btn-idle").hide();
                     $("#btn-kill").show();
                     $("#btn-manual").show();
+                    $("#controls-auto").hide();
                     $("#controls-manual").hide();
                 }
                 else {
@@ -60,6 +63,7 @@
                     $("#btn-idle").hide();
                     $("#btn-kill").hide();
                     $("#btn-manual").hide();
+                    $("#controls-auto").hide();
                     $("#controls-manual").hide();
                 }
             }
@@ -76,6 +80,7 @@
                 $("#btn-idle").hide();
                 $("#btn-kill").hide();
                 $("#btn-manual").hide();
+                $("#controls-auto").hide();
                 $("#controls-manual").hide();
             }
         }, 1000);
@@ -93,12 +98,6 @@
             });
         }
 
-        function manualMove(direction) {
-            /*sendToRobot({
-                move: direction
-            });*/
-        }
-
         function resetCoordinates() {
             // $("#max-coord-x").val(0);
             // $("#max-coord-y").val(0);
@@ -110,11 +109,6 @@
             });*/
         }
 
-        function setMode(mode) {
-            data2.mode = mode;
-            sendToRobot();
-        }
-
         function setCoordinates() {
             $("#max-coord-x").val(Math.abs($("#max-coord-x").val()));
             $("#max-coord-y").val(Math.abs($("#max-coord-y").val()));
@@ -124,6 +118,16 @@
                     ymax: $("#max-coord-y").val()
                 }
             });*/
+        }
+
+        function setMode(mode) {
+            data2.mode = mode;
+            sendToRobot();
+        }
+
+        function setMove(direction) {
+            data2.move = direction;
+            sendToRobot();
         }
     </script>
     <title>Fetch Bot Web Interface</title>
@@ -158,17 +162,6 @@
                             <textarea id="status-verbose" class="collapse" readonly="readonly"></textarea>
                         </div>
                     </div>
-                    <!--<div class="panel panel-primary">
-                        <div class="panel-heading">Coordinate Setup</div>
-                        <div class="panel-body">
-                            <label for="max-coord-x">Maximum X Coordinate: </label>
-                            <input id="max-coord-x" type="number" name="max-coord-x" value="0" />
-                            <label for="max-coord-y">Maximum Y Coordinate: </label>
-                            <input id="max-coord-y" type="number" name="max-coord-y" value="0" /><br /><br />
-                            <input id="btn-max-coord" class="btn btn-primary" type="button" value="Set Max Coordinates" onclick="setCoordinates()" /><br /><br />
-                            <input id="btn-max-coord-reset" class="btn btn-danger" type="button" value="Reset Max Coordinates" onclick="resetCoordinates()" /><br />
-                        </div>
-                    </div>-->
 
                     <div class="panel panel-primary">
                         <div class="panel-heading">Controls</div>
@@ -177,38 +170,27 @@
                             <input id="btn-auto" class="btn btn-warning" type="button" value="Auto" onclick="setMode('Auto')" />
                             <input id="btn-idle" class="btn btn-warning" type="button" value="Idle" onclick="setMode('Idle')" />
                             <input id="btn-manual" class="btn btn-warning" type="button" value="Manual" onclick="setMode('Manual')" /><br /><br />
+                            <div id="controls-auto">
+                                <label for="max-coord-x">Maximum X Coordinate: </label>
+                                <input id="max-coord-x" type="number" name="max-coord-x" value="0" />
+                                <label for="max-coord-y">Maximum Y Coordinate: </label>
+                                <input id="max-coord-y" type="number" name="max-coord-y" value="0" /><br /><br />
+                                <!--<input id="btn-max-coord" class="btn btn-primary" type="button" value="Set Max Coordinates" onclick="setCoordinates()" /><br /><br />
+                                <input id="btn-max-coord-reset" class="btn btn-danger" type="button" value="Reset Max Coordinates" onclick="resetCoordinates()" /><br />-->
+                            </div>
                             <div id="controls-manual">
-                                <!--<div class="row">
+                                <div class="row">
                                     <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="rot-n90" value="Rot -90" onclick="manualMove('r-90')" />
+                                        <input class="btn btn-primary move-button" type="button" name="move-left" value="Turn Left" onclick="setMove('Left')" />
                                     </div>
                                     <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="move-forward" value="Forward" onclick="manualMove('f')" />
+                                        <input class="btn btn-primary move-button" type="button" name="move-forward" value="Move Forward" onclick="setMove('Forward')" />
                                     </div>
                                     <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="rot-90" value="Rot 90" onclick="manualMove('r90')" />
+                                        <input class="btn btn-primary move-button" type="button" name="move-right" value="Turn Right" onclick="setMove('Right')" />
                                     </div>
                                 </div>
                                 <br />
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="move-left" value="Left" onclick="manualMove('l')" />
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input class="btn btn-danger move-button" type="button" name="move-left" value="Stop" onclick="manualMove('s')" />
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="move-right" value="Right" onclick="manualMove('r')" />
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-sm-4"></div>
-                                    <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="move-back" value="Back" onclick="manualMove('b')" />
-                                    </div>
-                                    <div class="col-sm-4"></div>
-                                </div>-->
                             </div>
                         </div>
                     </div>
