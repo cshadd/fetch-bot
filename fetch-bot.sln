@@ -4,26 +4,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6082E4AE-8549-4C62-9A27-DA0CC34A16DB}"
-	ProjectSection(SolutionItems) = preProject
-		bash-install.sh = bash-install.sh
-		src\bash-start.sh = src\bash-start.sh
-		bash-uninstall.sh = bash-uninstall.sh
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft Visual Studio_Config", "Microsoft Visual Studio_Config", "{3D8194ED-68FA-499F-ADA0-70C4CA0405F2}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Git_Config", "Git_Config", "{793C9952-564A-493C-8956-47B8D90F1879}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{793C9952-564A-493C-8956-47B8D90F1879}"
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 		CONTRIBUTING.md = CONTRIBUTING.md
-		docs\DevelopmentStandards.Base.docx = docs\DevelopmentStandards.Base.docx
-		docs\DevelopmentStandards.pdf = docs\DevelopmentStandards.pdf
-		docs\index.html = docs\index.html
 		ISSUE_TEMPLATE.md = ISSUE_TEMPLATE.md
 		LICENSE = LICENSE
 		PULL_REQUEST_TEMPLATE.md = PULL_REQUEST_TEMPLATE.md
@@ -84,6 +76,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "arduino-slave-processor", "
 		src\arduino-slave-processor\Makefile = src\arduino-slave-processor\Makefile
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main", "Main", "{678A9F65-DA68-4368-AE51-59B334A2E5EF}"
+	ProjectSection(SolutionItems) = preProject
+		bash-install.sh = bash-install.sh
+		src\bash-start.sh = src\bash-start.sh
+		bash-uninstall.sh = bash-uninstall.sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03}"
+	ProjectSection(SolutionItems) = preProject
+		docs\DevelopmentStandards.Base.docx = docs\DevelopmentStandards.Base.docx
+		docs\DevelopmentStandards.pdf = docs\DevelopmentStandards.pdf
+		docs\index.html = docs\index.html
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,14 +97,16 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3D8194ED-68FA-499F-ADA0-70C4CA0405F2} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{793C9952-564A-493C-8956-47B8D90F1879} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
-		{5EEBD627-B341-4886-AACA-63966B6153F4} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
-		{02363110-681E-43A5-97B8-091F67393A6A} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{5EEBD627-B341-4886-AACA-63966B6153F4} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
+		{02363110-681E-43A5-97B8-091F67393A6A} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
 		{ED0D80B0-76CB-4F5F-857F-19F4E67A0905} = {02363110-681E-43A5-97B8-091F67393A6A}
 		{D0E4C96A-7D47-4314-8005-F49BD335F4E4} = {02363110-681E-43A5-97B8-091F67393A6A}
 		{16872667-586C-46D4-B3ED-AB88806933FA} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
-		{BDA2E018-42A9-4ADF-B5EA-919D6CF25D1C} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
-		{42F06F5E-3498-4C15-B013-B2CAFB48F39C} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
-		{60C4203F-A524-49E6-A778-D332C9E7C5A2} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{BDA2E018-42A9-4ADF-B5EA-919D6CF25D1C} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
+		{42F06F5E-3498-4C15-B013-B2CAFB48F39C} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
+		{60C4203F-A524-49E6-A778-D332C9E7C5A2} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
+		{678A9F65-DA68-4368-AE51-59B334A2E5EF} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8F99668-DE84-4451-95F0-312B7F0E1A3C}
