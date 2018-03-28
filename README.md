@@ -58,20 +58,16 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
     - Java SE Runtime Environment 8.0 or higher
     - Ino 0.3 or higher
     - Apache Maven 3.5.2 or higher
-    - Apache Server 2.4.10 or higher
+    - Apache HTTP Server 2.4.10 or higher
     - PHP 5.0 or higher
     - Packaged Apps (Bash):
         - Unclutter
-        - ~~xscreensaver~~
         - arduino-core
         - arduino-mk
 * Recommended (Computer):
     - Text Editor/IDE
-* Optional (Raspberry Pi):
-    - VNC Server
 * Optional (Computer):
     - Visual Studio 2017 or higher
-    - VNC Viewer
 
 ### Installing
 Clone/fork this repository and save it. Then use ``./bash-install.sh`` to install to your system (Bash).
