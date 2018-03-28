@@ -33,6 +33,15 @@ implements FetchBot {
 
     // Entry Point
     public static void main(String[] args) {
+
+    /*
+mkdir -p build-uno
+/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -x c++ -include Arduino.h -MMD -c -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto FetchBot.ino -o build-uno/FetchBot.ino.o
+FetchBot.ino: In function ‘void loop()’:
+FetchBot.ino:107:42: error: invalid operands of types ‘const char [12]’ and ‘float’ to binary ‘operator+’
+         String payload = "Distances: " + distance1 + "; " + distance2 + "; " + distance3;
+*/
+
         final Console console = new Console();
         console.title("--- Fetch Bot ---", "https://cshadd.github.io/fetch-bot/");
 
