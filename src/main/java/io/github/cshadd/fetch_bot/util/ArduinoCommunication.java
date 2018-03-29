@@ -1,6 +1,8 @@
 package io.github.cshadd.fetch_bot.util;
 import java.io.IOException;
 import com.pi4j.io.serial.Serial;
+import com.pi4j.io.serial.SerialDataEvent;
+import com.pi4j.io.serial.SerialDataEventListener;
 import com.pi4j.io.serial.SerialFactory;
 import com.pi4j.io.serial.SerialPortException;
 import io.github.cshadd.fetch_bot.FetchBot;
@@ -150,7 +152,7 @@ implements FetchBot {
     }
     public final String getRobotValue(String key) {
         String returnData = null;
-        try {
+        /*try {
             returnData = toRobotData.getString(key);
         }
         catch (JSONException e) {
@@ -159,7 +161,8 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }
+        finally { }*/
+        returnData = "0";
         return returnData;
     }
     public final void pullRobot() {
