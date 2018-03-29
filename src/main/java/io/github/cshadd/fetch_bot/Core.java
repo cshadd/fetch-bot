@@ -42,10 +42,10 @@ implements FetchBot {
         int currentSensorRight = 0;
         String version = "v0.0.0";
 
-        arduinoComm = new ArduinoCommunication();
         interfaceComm = new InterfaceCommunication();
-        movement = new Movement();
         log = Logger.getInstance(interfaceComm);
+        arduinoComm = new ArduinoCommunication();
+        movement = new Movement();
 
         arduinoComm.reset();
         interfaceComm.reset();
