@@ -92,7 +92,7 @@ FetchBot.ino:107:42: error: invalid operands of types ‘const char [12]’ and 
                         break;
                     }
                     else if (currentMode.equals("Manual")) {
-                        interfaceComm.setInterfaceValue("emotion", "Idle");
+                        interfaceComm.setInterfaceValue("emotion", "Neutral");
                         if (!interfaceComm.getRobotValue("move").equals(currentMove)) {
                             currentMove = interfaceComm.getRobotValue("move");
                             if (!currentMove.equals("Stop")) {
