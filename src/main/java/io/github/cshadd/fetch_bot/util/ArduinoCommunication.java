@@ -28,10 +28,6 @@ implements FetchBot {
         serialBr = 9600;
         serialData = "";
         serialPort = Serial.DEFAULT_COM_PORT;
-    }
-
-    // Private Final Methods
-    private final void listenSerialPort() {
         serial.addListener(new SerialDataEventListener() {
             @Override
             public void dataReceived(SerialDataEvent event) {
@@ -44,6 +40,8 @@ implements FetchBot {
             }
         });
     }
+
+    // Private Final Methods
     private final boolean openSerialPort() {
         boolean returnData = false;
         if (!serial.isOpen()) {
