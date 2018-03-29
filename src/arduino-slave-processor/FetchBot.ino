@@ -42,36 +42,6 @@ void setup() {
     Serial.begin(9600);
 }
 
-int checksum(String s) {
-    int cs = 0;
-    int len = s.length() + 1;
-    char ca[len];
-    s.toCharArray(ca, len);
-    for (int i=0; i<len; i++) {
-        cs ^= ca[i];
-    }
-    return cs;
-}
-
-String generateNMEAString(String payload, String prefix, String id) {
-    String nmea = "";
-    if (prefix.length() != 2) {
-        return nmea;
-    }
-    if (id.length() != 3) {
-        return nmea;
-    }
-    nmea = prefix + id + "," + payload;
-    int cs = checksum(nmea);
-    String cks = String(cs, HEX);
-    cks.toUpperCase();
-    if (cks.length() < 2) {
-        cks = "0" + cks;
-    }
-    nmea += ("*" + cks);
-    return "$" + nmea;
-}
-
 void loop() {
     // For Sensor 1
     digitalWrite(trigPin1, LOW);
@@ -104,9 +74,9 @@ void loop() {
     distance3 = (duration3*0.0343)/2;
 
     if (distance1 != prevDistance1 && distance2 != prevDistance2 && distance3 != prevDistance3) {
-        String payload = "Distances: " + distance1 + "; " + distance2 + "; " + distance3;
-        String nmea = generateNMEAString(payload, prefix, id);
-        Serial.println(nmea);
+        Serial.println(distance1);
+        Serial.println(distance2);
+        Serial.println(distance3);
     }
 
     prevDistance1 = distance1;
