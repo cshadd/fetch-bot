@@ -74,60 +74,69 @@ FetchBot.ino:107:42: error: invalid operands of types ‘const char [12]’ and 
             interfaceComm.pullInterface();
             interfaceComm.pullRobot();
 
-            if (!interfaceComm.getRobotValue("mode").equals(currentMode)) {
-                currentMode = interfaceComm.getRobotValue("mode");
-                log.info("Interface - [mode: " + currentMode + "] command received.");
-            }
-            interfaceComm.setInterfaceValue("mode", currentMode);
-
-            /*try {
-                currentSensorFront = sensors.getDistance(Sensors.DIRECTION.FRONT);
-                currentSensorLeft = sensors.getDistance(Sensors.DIRECTION.LEFT);
-                currentSensorRight = sensors.getDistance(Sensors.DIRECTION.RIGHT);
-            }
-            catch (SensorsException e) {
-                Logger.error(e, "There was an issue with Sensors!");
-            }
-            catch (Exception e) {
-                Logger.error(e, "There was an unknown issue!");
-            }
-            finally {
-                interfaceComm.setInterfaceValue("sensor-front", "" + currentSensorFront);
-                interfaceComm.setInterfaceValue("sensor-left", "" + currentSensorLeft);
-                interfaceComm.setInterfaceValue("sensor-right", "" + currentSensorRight);
-            }*/
-
-            if (currentMode.equals("Auto")) {
-                interfaceComm.setInterfaceValue("emotion", "Neutral");
-            }
-            else if (currentMode.equals("Idle")) {
-                interfaceComm.setInterfaceValue("emotion", "Idle");
-            }
-            else if (currentMode.equals("Off")) {
-                break;
-            }
-            else if (currentMode.equals("Manual")) {
-                interfaceComm.setInterfaceValue("emotion", "Happy");
-                if (!interfaceComm.getRobotValue("move").equals(currentMove)) {
-                    currentMove = interfaceComm.getRobotValue("move");
-                    if (!currentMove.equals("Stop")) {
-                        log.info("Interface - [move: " + currentMove + "] command received.");
-                        // Call Movement Class?
-                        interfaceComm.setRobotValue("move", "Stop");
-                        interfaceComm.pushRobot();
-                        currentMove = "Stop";
+            if (interfaceComm != null) {
+                if (interfaceComm.getRobotValue("mode") != null) {
+                    if (!interfaceComm.getRobotValue("mode").equals(currentMode)) {
+                        currentMode = interfaceComm.getRobotValue("mode");
+                        log.info("Interface - [mode: " + currentMode + "] command received.");
                     }
-                    delayThread(500); // May not need this?
+                    interfaceComm.setInterfaceValue("mode", currentMode);
+
+                    if (currentMode.equals("Auto")) {
+                        interfaceComm.setInterfaceValue("emotion", "Neutral");
+                    }
+                    else if (currentMode.equals("Idle")) {
+                        interfaceComm.setInterfaceValue("emotion", "Idle");
+                    }
+                    else if (currentMode.equals("Off")) {
+                        break;
+                    }
+                    else if (currentMode.equals("Manual")) {
+                        interfaceComm.setInterfaceValue("emotion", "Idle");
+                        if (!interfaceComm.getRobotValue("move").equals(currentMove)) {
+                            currentMove = interfaceComm.getRobotValue("move");
+                            if (!currentMove.equals("Stop")) {
+                                log.info("Interface - [move: " + currentMove + "] command received.");
+                                interfaceComm.setInterfaceValue("emotion", "Happy");
+                                interfaceComm.pushInterface();
+                                // Call Movement Class?
+                                interfaceComm.setRobotValue("move", "Stop");
+                                interfaceComm.pushRobot();
+                                currentMove = "Stop";
+                            }
+                        }
+                    }
+                    else {
+                        log.warn("[mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
+                        interfaceComm.setRobotValue("mode", "Idle");
+                    }
                 }
+                else {
+                    log.warn("Communication failure. Will try again.");
+                }
+
+                /*try {
+                    currentSensorFront = sensors.getDistance(Sensors.DIRECTION.FRONT);
+                    currentSensorLeft = sensors.getDistance(Sensors.DIRECTION.LEFT);
+                    currentSensorRight = sensors.getDistance(Sensors.DIRECTION.RIGHT);
+                }
+                catch (SensorsException e) {
+                    Logger.error(e, "There was an issue with Sensors!");
+                }
+                catch (Exception e) {
+                    Logger.error(e, "There was an unknown issue!");
+                }
+                finally {
+                    interfaceComm.setInterfaceValue("sensor-front", "" + currentSensorFront);
+                    interfaceComm.setInterfaceValue("sensor-left", "" + currentSensorLeft);
+                    interfaceComm.setInterfaceValue("sensor-right", "" + currentSensorRight);
+                }*/
+                interfaceComm.pushInterface();
             }
             else {
-                log.warn("Interface - [mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
-                interfaceComm.setRobotValue("mode", "Idle");
+                log.warn("Communication failure. Will try again.");
             }
-
             delayThread(500);
-            interfaceComm.pushInterface();
-            // interfaceComm.pushRobot();
         }
 
         log.info("Fetch Bot terminating! Log file: ./FetchBot.log.");
