@@ -16,7 +16,6 @@ implements FetchBot {
     private static InterfaceCommunication interfaceComm;
     private static Movement movement;
     private static Logger log;
-    private static Sensors sensors;
 
     // Private Static Methods
     private static void delayThread(long millis) {
@@ -33,15 +32,6 @@ implements FetchBot {
 
     // Entry Point
     public static void main(String[] args) {
-
-    /*
-mkdir -p build-uno
-/usr/share/arduino/hardware/tools/avr/bin/avr-g++ -x c++ -include Arduino.h -MMD -c -mmcu=atmega328p -DF_CPU=16000000L -DARDUINO=105  -D__PROG_TYPES_COMPAT__ -I/usr/share/arduino/hardware/arduino//cores/arduino -I/usr/share/arduino/hardware/arduino//variants/standard    -Wall -ffunction-sections -fdata-sections -Os -fpermissive -fno-exceptions -std=gnu++11 -fno-threadsafe-statics -flto FetchBot.ino -o build-uno/FetchBot.ino.o
-FetchBot.ino: In function ‘void loop()’:
-FetchBot.ino:107:42: error: invalid operands of types ‘const char [12]’ and ‘float’ to binary ‘operator+’
-         String payload = "Distances: " + distance1 + "; " + distance2 + "; " + distance3;
-*/
-
         final Console console = new Console();
         console.title("--- Fetch Bot ---", "https://cshadd.github.io/fetch-bot/");
 
@@ -56,8 +46,8 @@ FetchBot.ino:107:42: error: invalid operands of types ‘const char [12]’ and 
         interfaceComm = new InterfaceCommunication();
         movement = new Movement();
         log = Logger.getInstance(interfaceComm);
-        sensors = new Sensors();
 
+        arduinoComm.reset();
         interfaceComm.reset();
         log.clear();
         if (args.length >= 1) {
@@ -71,75 +61,84 @@ FetchBot.ino:107:42: error: invalid operands of types ‘const char [12]’ and 
         // https://github.com/OlivierLD/raspberry-pi4j-samples/blob/master/Arduino.RaspberryPI/src/arduino/raspberrypi/SerialReader.java
 
         while (true) {
+            arduinoComm.pullRobot();
             interfaceComm.pullInterface();
             interfaceComm.pullRobot();
 
             if (interfaceComm != null) {
-                if (interfaceComm.getRobotValue("mode") != null) {
-                    if (!interfaceComm.getRobotValue("mode").equals(currentMode)) {
-                        currentMode = interfaceComm.getRobotValue("mode");
-                        log.info("Interface - [mode: " + currentMode + "] command received.");
-                    }
-                    interfaceComm.setInterfaceValue("mode", currentMode);
-
-                    if (currentMode.equals("Auto")) {
-                        interfaceComm.setInterfaceValue("emotion", "Neutral");
-                    }
-                    else if (currentMode.equals("Idle")) {
-                        interfaceComm.setInterfaceValue("emotion", "Idle");
-                    }
-                    else if (currentMode.equals("Off")) {
-                        break;
-                    }
-                    else if (currentMode.equals("Manual")) {
-                        interfaceComm.setInterfaceValue("emotion", "Neutral");
-                        if (!interfaceComm.getRobotValue("move").equals(currentMove)) {
-                            currentMove = interfaceComm.getRobotValue("move");
-                            if (!currentMove.equals("Stop")) {
-                                log.info("Interface - [move: " + currentMove + "] command received.");
-                                interfaceComm.setInterfaceValue("emotion", "Happy");
-                                interfaceComm.pushInterface();
-                                // Call Movement Class?
-                                interfaceComm.setRobotValue("move", "Stop");
-                                interfaceComm.pushRobot();
-                                currentMove = "Stop";
+                if (arduinoComm != null){
+                    if (arduinoComm.getRobotValue("sensor-front") != null) {
+                        if (!arduinoComm.getRobotValue("sensor-front").equals(currentSensorFront)) {
+                            try {
+                                currentSensorFront = Integer.parseInt(arduinoComm.getRobotValue("sensor-front"));
                             }
+                            catch (NumberFormatException e) {
+                                log.error(e, "There was an issue with formatting a number!");
+                            }
+                            catch (Exception e) {
+                                log.error(e, "There was an unknown issue!");
+                            }
+                            log.info("Arduino - [sensor-front: " + currentSensorFront + "] received.");
+                        }
+                        interfaceComm.setInterfaceValue("sensor-front", "" + currentSensorFront);
+                    }
+                    else {
+                        log.warn("Communication failure to Arduino.");
+                    }
+
+                    if (interfaceComm.getRobotValue("mode") != null) {
+                        if (!interfaceComm.getRobotValue("mode").equals(currentMode)) {
+                            currentMode = interfaceComm.getRobotValue("mode");
+                            log.info("Interface - [mode: " + currentMode + "] command received.");
+                        }
+                        interfaceComm.setInterfaceValue("mode", currentMode);
+
+                        if (currentMode.equals("Auto")) {
+                            interfaceComm.setInterfaceValue("emotion", "Neutral");
+                        }
+                        else if (currentMode.equals("Idle")) {
+                            interfaceComm.setInterfaceValue("emotion", "Idle");
+                        }
+                        else if (currentMode.equals("Off")) {
+                            break;
+                        }
+                        else if (currentMode.equals("Manual")) {
+                            interfaceComm.setInterfaceValue("emotion", "Neutral");
+                            if (!interfaceComm.getRobotValue("move").equals(currentMove)) {
+                                currentMove = interfaceComm.getRobotValue("move");
+                                if (!currentMove.equals("Stop")) {
+                                    log.info("Interface - [move: " + currentMove + "] command received.");
+                                    interfaceComm.setInterfaceValue("emotion", "Happy");
+                                    interfaceComm.pushInterface();
+                                    // Call Movement Class?
+                                    interfaceComm.setRobotValue("move", "Stop");
+                                    interfaceComm.pushRobot();
+                                    currentMove = "Stop";
+                                }
+                            }
+                        }
+                        else {
+                            log.warn("[mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
+                            interfaceComm.setRobotValue("mode", "Idle");
                         }
                     }
                     else {
-                        log.warn("[mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
-                        interfaceComm.setRobotValue("mode", "Idle");
+                        log.warn("Communication failure to interface.");
                     }
                 }
                 else {
-                    log.warn("Communication failure. Will try again.");
+                    log.warn("Communication failure to Arduino.");
                 }
-
-                /*try {
-                    currentSensorFront = sensors.getDistance(Sensors.DIRECTION.FRONT);
-                    currentSensorLeft = sensors.getDistance(Sensors.DIRECTION.LEFT);
-                    currentSensorRight = sensors.getDistance(Sensors.DIRECTION.RIGHT);
-                }
-                catch (SensorsException e) {
-                    Logger.error(e, "There was an issue with Sensors!");
-                }
-                catch (Exception e) {
-                    Logger.error(e, "There was an unknown issue!");
-                }
-                finally {
-                    interfaceComm.setInterfaceValue("sensor-front", "" + currentSensorFront);
-                    interfaceComm.setInterfaceValue("sensor-left", "" + currentSensorLeft);
-                    interfaceComm.setInterfaceValue("sensor-right", "" + currentSensorRight);
-                }*/
                 interfaceComm.pushInterface();
             }
             else {
-                log.warn("Communication failure. Will try again.");
+                log.warn("Communication failure to interface.");
             }
             delayThread(500);
         }
 
         log.info("Fetch Bot terminating! Log file: ./FetchBot.log.");
+        arduinoComm.clear();
         interfaceComm.clear();
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();

@@ -1,11 +1,9 @@
+#include <../../submodules/ArduinoJson/ArduinoJson.h>
+
 // Echo Pin Constants
 const int echoPin1 = 2; // Sensor 1
 const int echoPin2 = 4; // Sensor 2
 const int echoPin3 = 6; // Sensor 3
-
-// Serial Constants
-const String id = "MSG";
-const String prefix = "OS";
 
 // Trigger Pin Constants
 const int trigPin1 = 3; // Sensor 1
@@ -19,9 +17,7 @@ float distance3;
 float duration1;
 float duration2;
 float duration3;
-float prevDistance1;
-float prevDistance2;
-float prevDistance3;
+int move;
 
 void setup() {
     pinMode(trigPin1, OUTPUT);
@@ -36,10 +32,29 @@ void setup() {
     duration1 = 0;
     duration2 = 0;
     duration3 = 0;
-    prevDistance1 = 0;
-    prevDistance2 = 0;
-    prevDistance3 = 0;
+    move = 0;
     Serial.begin(9600);
+}
+
+void toArduino() {
+    if (Serial.available() > 0) {
+        move = Serial.read();
+    }
+    else {
+        move = 0;
+    }
+}
+
+void toRobot() {
+    const size_t bufferSize = JSON_OBJECT_SIZE(4);
+    DynamicJsonBuffer jsonBuffer(bufferSize);
+
+    JsonObject& root = jsonBuffer.createObject();
+    root["sensor-front"] = distance1;
+    root["sensor-left"] = distance2;
+    root["sensor-right"] = distance3;
+
+    root.printTo(Serial);
 }
 
 void loop() {
@@ -73,15 +88,10 @@ void loop() {
     duration3 = pulseIn(echoPin3, HIGH);
     distance3 = (duration3*0.0343)/2;
 
-    if (distance1 != prevDistance1 && distance2 != prevDistance2 && distance3 != prevDistance3) {
-        Serial.println(distance1);
-        Serial.println(distance2);
-        Serial.println(distance3);
-    }
-
-    prevDistance1 = distance1;
-    prevDistance2 = distance2;
-    prevDistance3 = distance3;
-
+    toRobot();
+    delay(500);
+    toArduino();
+    // Movement here...
+    move = 0;
     delay(500);
 }
