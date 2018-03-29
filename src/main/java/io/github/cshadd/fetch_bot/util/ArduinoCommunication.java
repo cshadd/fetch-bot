@@ -29,6 +29,7 @@ implements FetchBot {
         serial.addListener(event -> {
             try {
                 serialData = event.getAsciiString();
+                Logger.info("Getting data: " + serialData);
             }
             catch (IOException e) {
                 Logger.error(e, "There was an issue with IO!");

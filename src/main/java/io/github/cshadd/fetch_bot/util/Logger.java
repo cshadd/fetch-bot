@@ -51,7 +51,7 @@ implements FetchBot {
     private static final void writeInterface(String msg, boolean append) {
         write(msg, append);
         try {
-            if (interfaceComm) {
+            if (interfaceComm != null) {
                 interfaceComm.setInterfaceValue("verbose", read());
             }
         }
