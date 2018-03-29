@@ -1,4 +1,4 @@
-![Fetch Bot](docs/FullLogo.png)
+[![Fetch Bot](docs/FullLogo.png)](https://github.com/cshadd/fetch-bot/)
 
 [![Release](https://img.shields.io/github/release/cshadd/fetch-bot/all.svg)](https://github.com/cshadd/fetch-bot/releases)
 [![License](https://img.shields.io/github/license/cshadd/fetch-bot.svg)](LICENSE)
