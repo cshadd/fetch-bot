@@ -26,8 +26,23 @@ implements FetchBot {
         serialBr = Integer.parseInt(System.getProperty("baud.rate", "9600"));
         serialData = "";
         serialPort = System.getProperty("serial.port", Serial.DEFAULT_COM_PORT);
-        serial.addListener(event -> {
-            try {
+        serial.addListener(new SerialDataEventListener() {
+            @Override
+            public void dataReceived(SerialDataEvent event) {
+
+                // NOTE! - It is extremely important to read the data received from the
+                // serial port.  If it does not get read from the receive buffer, the
+                // buffer will continue to grow and consume memory.
+
+                // print out the data received to the console
+                try {
+                    Logger.info("[ASCII DATA] " + event.getAsciiString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            /*try {
                 serialData = event.getAsciiString();
                 Logger.info("Getting data: " + serialData);
             }
@@ -36,7 +51,7 @@ implements FetchBot {
             }
             catch (Exception e) {
                 Logger.error(e, "There was an unknown issue!");
-            }
+            }*/
         });
         openSerialPort();
     }
