@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ./bash-uninstall.sh
-sudo cd -R submodules/ArduinoJson/ /usr/share/arduino/libraries/ArduinoJson/
+sudo cp -R submodules/ArduinoJson/ /usr/share/arduino/libraries/
 cd ./src/arduino-slave-processor/
 make upload
 sudo rm -f -r ./build-uno
