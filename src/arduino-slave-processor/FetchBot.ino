@@ -104,7 +104,7 @@ void loop() {
     distance3 = (duration3*0.0343)/2;
 
     if (distance1 != prevDistance1 && distance2 != prevDistance2 && distance3 != prevDistance3) {
-        char[] payload = "Distances: " + distance1 + "; " + distance2 + "; " + distance3;
+        char[ ] payload = "Distances: " + distance1 + "; " + distance2 + "; " + distance3;
         String nmea = generateNMEAString(payload, prefix, id);
         Serial.println(nmea);
     }
