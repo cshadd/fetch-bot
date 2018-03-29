@@ -130,3 +130,7 @@ See [here](/docs/DevelopmentStandards.pdf).
 * [Microsoft](https://www.microsoft.com/)
 
 [![<3 Raspberry Pi](https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png)](https://www.raspberrypi.org/)
+
+## CSUN AI-JAM 2018 Pre-Alpha Preview
+
+[![CSUN AI-JAM 2018 Pre-Alpha Preview](https://img.youtube.com/vi/jIrqqUIsi4s/0.jpg)](https://www.youtube.com/watch?v=jIrqqUIsi4s)
