@@ -1,3 +1,5 @@
+![Fetch Bot](docs/FullLogo.png){:height="50%" width="50%"}
+
 [![Release](https://img.shields.io/github/release/cshadd/fetch-bot/all.svg)](https://github.com/cshadd/fetch-bot/releases)
 [![License](https://img.shields.io/github/license/cshadd/fetch-bot.svg)](LICENSE)
 

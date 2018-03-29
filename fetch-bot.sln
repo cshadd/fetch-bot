@@ -87,7 +87,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3CE22A40-1
 	ProjectSection(SolutionItems) = preProject
 		docs\DevelopmentStandards.Base.docx = docs\DevelopmentStandards.Base.docx
 		docs\DevelopmentStandards.pdf = docs\DevelopmentStandards.pdf
+		docs\FullLogo.png = docs\FullLogo.png
 		docs\index.html = docs\index.html
+		docs\Logo.png = docs\Logo.png
 	EndProjectSection
 EndProject
 Global
