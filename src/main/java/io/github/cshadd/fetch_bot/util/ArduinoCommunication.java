@@ -25,9 +25,13 @@ implements FetchBot {
         toArduinoData = "";
         toRobotData = new JSONObject();
         serial = SerialFactory.createInstance();
-        serialBr = Integer.parseInt(System.getProperty("baud.rate", "9600"));
+        serialBr = 9600;
         serialData = "";
-        serialPort = System.getProperty("serial.port", Serial.DEFAULT_COM_PORT);
+        serialPort = Serial.DEFAULT_COM_PORT;
+    }
+
+    // Private Final Methods
+    private final void listenSerialPort() {
         serial.addListener(new SerialDataEventListener() {
             @Override
             public void dataReceived(SerialDataEvent event) {
@@ -38,7 +42,7 @@ implements FetchBot {
 
                 // print out the data received to the console
                 try {
-                    Logger.info("[ASCII DATA] " + event.getAsciiString());
+                    System.out.println("[ASCII DATA] " + event.getAsciiString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -55,10 +59,7 @@ implements FetchBot {
                 Logger.error(e, "There was an unknown issue!");
             }*/
         });
-        openSerialPort();
     }
-
-    // Private Final Methods
     private final boolean openSerialPort() {
         boolean returnData = false;
         if (!serial.isOpen()) {
@@ -98,7 +99,7 @@ implements FetchBot {
         JSONObject returnData = null;
         try {
             if (openSerialPort()) {
-                returnData = new JSONObject(serialData);
+                // returnData = new JSONObject(serialData);
             }
             else {
                 Logger.warn("Was unable to process serial port, had to first open.");
