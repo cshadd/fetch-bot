@@ -1,4 +1,4 @@
-#include <../../submodules/ArduinoJson/ArduinoJson.h>
+#include <ArduinoJson/ArduinoJson.h>
 
 // Echo Pin Constants
 const int echoPin1 = 2; // Sensor 1
