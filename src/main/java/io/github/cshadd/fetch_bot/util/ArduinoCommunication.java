@@ -35,29 +35,13 @@ implements FetchBot {
         serial.addListener(new SerialDataEventListener() {
             @Override
             public void dataReceived(SerialDataEvent event) {
-
-                // NOTE! - It is extremely important to read the data received from the
-                // serial port.  If it does not get read from the receive buffer, the
-                // buffer will continue to grow and consume memory.
-
-                // print out the data received to the console
                 try {
                     System.out.println("[ASCII DATA] " + event.getAsciiString());
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-
-            /*try {
-                serialData = event.getAsciiString();
-                Logger.info("Getting data: " + serialData);
-            }
-            catch (IOException e) {
-                Logger.error(e, "There was an issue with IO!");
-            }
-            catch (Exception e) {
-                Logger.error(e, "There was an unknown issue!");
-            }*/
         });
     }
     private final boolean openSerialPort() {
@@ -77,10 +61,10 @@ implements FetchBot {
                 }
                 finally { }
 
-                /*final Thread me = Thread.currentThread();
+                final Thread me = Thread.currentThread();
                 synchronized (me) {
                     me.wait();
-                }*/
+                }
             }
             catch (SerialPortException e) {
                 Logger.error(e, "There was an issue with Serial!");

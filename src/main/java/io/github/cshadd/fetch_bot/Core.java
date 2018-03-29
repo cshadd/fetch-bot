@@ -89,7 +89,7 @@ implements FetchBot {
                     if (interfaceComm.getRobotValue("mode") != null) {
                         if (!interfaceComm.getRobotValue("mode").equals(currentMode)) {
                             currentMode = interfaceComm.getRobotValue("mode");
-                            log.info("Interface - [mode: " + currentMode + "] command received.");
+                            // log.info("Interface - [mode: " + currentMode + "] command received.");
                         }
                         interfaceComm.setInterfaceValue("mode", currentMode);
 

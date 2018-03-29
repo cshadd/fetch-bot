@@ -89,9 +89,8 @@ void loop() {
     distance3 = (duration3*0.0343)/2;
 
     toRobot();
-    delay(500);
     toArduino();
     // Movement here...
     move = 0;
-    delay(500);
+    delay(1000);
 }
