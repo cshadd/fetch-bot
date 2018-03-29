@@ -13,7 +13,6 @@ implements FetchBot {
     // Private Instance/Property Fields
     private String toArduinoData;
     private JSONObject toRobotData;
-    private Logger log;
     private Serial serial;
     private int serialBr;
     private String serialData;
@@ -23,7 +22,6 @@ implements FetchBot {
     public ArduinoCommunication() {
         toArduinoData = "";
         toRobotData = new JSONObject();
-        log = Logger.getInstance();
         serial = SerialFactory.createInstance();
         serialBr = Integer.parseInt(System.getProperty("baud.rate", "9600"));
         serialData = "";
@@ -33,10 +31,10 @@ implements FetchBot {
                 serialData = event.getAsciiString();
             }
             catch (IOException e) {
-                log.error(e, "There was an issue with IO!");
+                Logger.error(e, "There was an issue with IO!");
             }
             catch (Exception e) {
-                log.error(e, "There was an unknown issue!");
+                Logger.error(e, "There was an unknown issue!");
             }
         });
         openSerialPort();
@@ -49,7 +47,7 @@ implements FetchBot {
             try {
                 try {
                     serial.open(serialPort, serialBr);
-                    log.info("ArduinoCommunication - Opened serial port.");
+                    Logger.info("ArduinoCommunication - Opened serial port.");
                     returnData = true;
                 }
                 catch (IOException e) {
@@ -66,10 +64,10 @@ implements FetchBot {
                 }*/
             }
             catch (SerialPortException e) {
-                log.error(e, "There was an issue with Serial!");
+                Logger.error(e, "There was an issue with Serial!");
             }
             catch (Exception e) {
-                log.error(e, "There was an unknown issue!");
+                Logger.error(e, "There was an unknown issue!");
             }
             finally { }
         }
@@ -85,14 +83,14 @@ implements FetchBot {
                 returnData = new JSONObject(serialData);
             }
             else {
-                log.warn("Was unable to process serial port, had to first open.");
+                Logger.warn("Was unable to process serial port, had to first open.");
             }
         }
         catch (JSONException e) {
-            log.error(e, "There was an issue with JSON!");
+            Logger.error(e, "There was an issue with JSON!");
         }
         catch (Exception e) {
-            log.error(e, "There was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
         finally { }
         return returnData;
@@ -103,14 +101,14 @@ implements FetchBot {
                 serial.write(value);
             }
             else {
-                log.warn("Was unable to process serial port, had to first open.");
+                Logger.warn("Was unable to process serial port, had to first open.");
             }
         }
         catch (IOException e) {
-            log.error(e, "There was an issue with IO!");
+            Logger.error(e, "There was an issue with IO!");
         }
         catch (Exception e) {
-            log.error(e, "There was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
     }
 
@@ -123,10 +121,10 @@ implements FetchBot {
                 serial.close();
             }
             catch (IOException e) {
-                log.error(e, "There was an issue with IO!");
+                Logger.error(e, "There was an issue with IO!");
             }
             catch (Exception e) {
-                log.error(e, "There was an unknown issue!");
+                Logger.error(e, "There was an unknown issue!");
             }
             finally { }
         }
