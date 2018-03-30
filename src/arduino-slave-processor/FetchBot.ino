@@ -36,61 +36,50 @@ void setup() {
     Serial.begin(9600);
 }
 
-void toArduino() {
+void loop() {
     if (Serial.available() > 0) {
         move = Serial.read();
-    }
-    else {
+
+        // For Sensor 1
+        digitalWrite(trigPin1, LOW);
+        delayMicroseconds(2);
+        digitalWrite(trigPin1, HIGH);
+        delayMicroseconds(10);
+        digitalWrite(trigPin1, LOW);
+
+        duration1 = pulseIn(echoPin1, HIGH);
+        distance1 = (duration1*0.0343)/2;
+
+        // For Sensor 2
+        digitalWrite(trigPin2, LOW);
+        delayMicroseconds(2);
+        digitalWrite(trigPin2, HIGH);
+        delayMicroseconds(10);
+        digitalWrite(trigPin2, LOW);
+
+        duration2 = pulseIn(echoPin2, HIGH);
+        distance2 = (duration2*0.0343)/2;
+
+        // For Sensor 3
+        digitalWrite(trigPin3, LOW);
+        delayMicroseconds(2);
+        digitalWrite(trigPin3, HIGH);
+        delayMicroseconds(10);
+        digitalWrite(trigPin3, LOW);
+
+        duration3 = pulseIn(echoPin3, HIGH);
+        distance3 = (duration3*0.0343)/2;
+
+        const size_t bufferSize = JSON_OBJECT_SIZE(4);
+        DynamicJsonBuffer jsonBuffer(bufferSize);
+
+        JsonObject& root = jsonBuffer.createObject();
+        root["sf"] = distance1;
+        root["sl"] = distance2;
+        root["sr"] = distance3;
+
+        // Movement here...
         move = 0;
+        root.printTo(Serial);
     }
-}
-
-void toRobot() {
-    const size_t bufferSize = JSON_OBJECT_SIZE(4);
-    DynamicJsonBuffer jsonBuffer(bufferSize);
-
-    JsonObject& root = jsonBuffer.createObject();
-    root["sensor-front"] = distance1;
-    root["sensor-left"] = distance2;
-    root["sensor-right"] = distance3;
-
-    root.printTo(Serial);
-}
-
-void loop() {
-    // For Sensor 1
-    digitalWrite(trigPin1, LOW);
-    delayMicroseconds(2);
-    digitalWrite(trigPin1, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(trigPin1, LOW);
-
-    duration1 = pulseIn(echoPin1, HIGH);
-    distance1 = (duration1*0.0343)/2;
-
-    // For Sensor 2
-    digitalWrite(trigPin2, LOW);
-    delayMicroseconds(2);
-    digitalWrite(trigPin2, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(trigPin2, LOW);
-
-    duration2 = pulseIn(echoPin2, HIGH);
-    distance2 = (duration2*0.0343)/2;
-
-    // For Sensor 3
-    digitalWrite(trigPin3, LOW);
-    delayMicroseconds(2);
-    digitalWrite(trigPin3, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(trigPin3, LOW);
-
-    duration3 = pulseIn(echoPin3, HIGH);
-    distance3 = (duration3*0.0343)/2;
-
-    toRobot();
-    toArduino();
-    // Movement here...
-    move = 0;
-    delay(1000);
 }
