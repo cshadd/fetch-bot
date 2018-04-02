@@ -8,33 +8,63 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="includes/common.css" />
     <!--[if lt IE 9]>
-     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="processInterface.js"></script>
+    <script src="readCommunications.js"></script>
     <script>
         setInterval(function () {
-            if (data != null) {
+            if (data != null && data2 != null) {
                 $("#connection-offline").hide();
                 $("#status-curr-mode").text("Current Mode: " + data.mode);
-                $("#status-max-coord").text("Max Coordinates: ([-" + data.xmax + "],[" + data.xmax + "], [-" + data.ymax + "],[" + data.ymax + "])");
+                $("#status-max-coord").text("Max Coordinates: ([-" + data['x-max'] + "],[" + data['x-max'] + "], [-" + data['y-max'] + "],[" + data['y-max'] + "])");
                 $("#status-curr-coord").text("Current Coordinates: (" + data.x + ", " + data.y + ")");
                 $("#status-curr-rot").text("Current Rotation: " + data.rot + " Degrees");
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
-                $("#status-sensors").text("Sensors (0 = Open, 1 = Blocked): {B:" + data.sensorback + "; F:" + data.sensorfront + "; L:" + data.sensorleft + "; R:" + data.sensorright + "}");
+                $("#status-sensors").text("Sensors: {F: " + data['sensor-front'] + "; L: " + data['sensor-left'] + "; R: " + data['sensor-right'] + "}");
                 $("#status-verbose").text(data.verbose);
 
                 if (data.mode == "Auto") {
-                    $("#controls-manual").hide();
                     $("#btn-auto").hide();
+                    $("#btn-idle").show();
+                    $("#btn-kill").show();
                     $("#btn-manual").show();
+                    $("#controls-auto").show();
+                    $("#controls-manual").hide();
+                }
+                else if (data.mode == "Manual") {
+                    $("#btn-auto").show();
+                    $("#btn-idle").show();
+                    $("#btn-kill").show();
+                    $("#btn-manual").hide();
+                    $("#controls-auto").hide();
+                    $("#controls-manual").show();
+                }
+                else if (data.mode == "Idle") {
+                    $("#btn-auto").show();
+                    $("#btn-idle").hide();
+                    $("#btn-kill").show();
+                    $("#btn-manual").show();
+                    $("#controls-auto").hide();
+                    $("#controls-manual").hide();
                 }
                 else {
-                    $("#controls-manual").show();
-                    $("#btn-auto").show();
+                    $("#connection-offline").show();
+                    $("#status-curr-mode").text("Current Mode:");
+                    $("#status-max-coord").text("Max Coordinates:");
+                    $("#status-curr-coord").text("Current Coordinates:");
+                    $("#status-curr-rot").text("Current Rotation:");
+                    $("#status-curr-emotion").text("Current Emotion:");
+                    $("#status-sensors").text("Sensors:");
+                    $("#status-verbose").text("...");
+                    $("#btn-auto").hide();
+                    $("#btn-idle").hide();
+                    $("#btn-kill").hide();
                     $("#btn-manual").hide();
+                    $("#controls-auto").hide();
+                    $("#controls-manual").hide();
                 }
             }
             else {
@@ -44,59 +74,60 @@
                 $("#status-curr-coord").text("Current Coordinates:");
                 $("#status-curr-rot").text("Current Rotation:");
                 $("#status-curr-emotion").text("Current Emotion:");
-                $("#status-sensors").text("Sensors (0 = Open, 1 = Blocked):");
+                $("#status-sensors").text("Sensors:");
                 $("#status-verbose").text("...");
-                $("#controls-manual").hide();
                 $("#btn-auto").hide();
+                $("#btn-idle").hide();
+                $("#btn-kill").hide();
                 $("#btn-manual").hide();
+                $("#controls-auto").hide();
+                $("#controls-manual").hide();
             }
         }, 1000);
 
-        function sendToRobot(send) {
+        function sendToRobot() {
             $.ajax({
                 type: "POST",
                 url: "processRobot.php",
                 dataType: "json",
                 async: false,
                 data: {
-                    data: JSON.stringify(send)
+                    data: JSON.stringify(data2)
                 },
                 success: function () { }
             });
         }
 
-        function manualMove(direction) {
-            sendToRobot({
-                move: direction
-            });
-        }
-
         function resetCoordinates() {
-            $("#max-coord-x").val(0);
-            $("#max-coord-y").val(0);
-            sendToRobot({
+            // $("#max-coord-x").val(0);
+            // $("#max-coord-y").val(0);
+            /*sendToRobot({
                 coordinates: {
                     xmax: 0,
                     ymax: 0
                 }
-            });
-        }
-
-        function setAutoControl(isAuto) {
-            sendToRobot({
-                auto: isAuto
-            });
+            });*/
         }
 
         function setCoordinates() {
             $("#max-coord-x").val(Math.abs($("#max-coord-x").val()));
             $("#max-coord-y").val(Math.abs($("#max-coord-y").val()));
-            sendToRobot({
+            /*sendToRobot({
                 coordinates: {
                     xmax: $("#max-coord-x").val(),
                     ymax: $("#max-coord-y").val()
                 }
-            });
+            });*/
+        }
+
+        function setMode(mode) {
+            data2.mode = mode;
+            sendToRobot();
+        }
+
+        function setMove(direction) {
+            data2.move = direction;
+            sendToRobot();
         }
     </script>
     <title>Fetch Bot Web Interface</title>
@@ -104,8 +135,13 @@
 <body>
     <main>
         <div id="connection-offline" class="alert alert-danger">
-            <p><strong>Error: </strong> Robot connection offline.</p>
+            <div class="progress">
+                <div class="connection-progress-bar progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                    <p>Waiting for connection to robot.</p>
+                </div>
+            </div>
         </div>
+        <img class="logo" src="https://cshadd.github.io/fetch-bot/Logo.png" alt="Fetch Bot" />
         <div class="row">
             <div class="col-sm-4">
                 <iframe class="ext-display" src="face.html"></iframe>
@@ -117,65 +153,45 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">Status</div>
                         <div class="panel-body">
-                            <p id="status-curr-mode">Current Mode:</p>
-                            <p id="status-max-coord">Max Coordinates:</p>
-                            <p id="status-curr-coord">Current Coordinates:</p>
-                            <p id="status-curr-rot">Current Rotation:</p>
-                            <p id="status-curr-emotion">Current Emotion:</p>
-                            <p id="status-sensors">Sensors (0 = Open, 1 = Blocked):</p>
+                            <p id="status-curr-mode"></p>
+                            <p id="status-max-coord"></p>
+                            <p id="status-curr-coord"></p>
+                            <p id="status-curr-rot"></p>
+                            <p id="status-curr-emotion"></p>
+                            <p id="status-sensors"></p>
                             <input data-toggle="collapse" data-target="#status-verbose" class="btn btn-primary" type="button" value="Show/Hide Verbose" />
                             <textarea id="status-verbose" class="collapse" readonly="readonly"></textarea>
-                        </div>
-                    </div>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">Coordinate Setup</div>
-                        <div class="panel-body">
-                            <label for="max-coord-x">Maximum X Coordinate: </label>
-                            <input id="max-coord-x" type="number" name="max-coord-x" value="0" />
-                            <label for="max-coord-y">Maximum Y Coordinate: </label>
-                            <input id="max-coord-y" type="number" name="max-coord-y" value="0" /><br /><br />
-                            <input id="btn-max-coord" class="btn btn-primary" type="button" value="Set Max Coordinates" onclick="setCoordinates()" /><br /><br />
-                            <input id="btn-max-coord-reset" class="btn btn-danger" type="button" value="Reset Max Coordinates" onclick="resetCoordinates()" /><br />
                         </div>
                     </div>
 
                     <div class="panel panel-primary">
                         <div class="panel-heading">Controls</div>
                         <div class="panel-body">
-                            <input id="btn-auto" class="btn btn-warning" type="button" value="Auto Control" onclick="setAutoControl(true)" />
-                            <input id="btn-manual" class="btn btn-warning" type="button" value="Manual Control" onclick="setAutoControl(false)" /><br /><br />
+                            <input id="btn-kill" class="btn btn-danger" type="button" value="Kill" onclick="setMode('Off')" /><br /><br />
+                            <input id="btn-auto" class="btn btn-warning" type="button" value="Auto" onclick="setMode('Auto')" />
+                            <input id="btn-idle" class="btn btn-warning" type="button" value="Idle" onclick="setMode('Idle')" />
+                            <input id="btn-manual" class="btn btn-warning" type="button" value="Manual" onclick="setMode('Manual')" /><br /><br />
+                            <div id="controls-auto">
+                                <label for="max-coord-x">Maximum X Coordinate: </label>
+                                <input id="max-coord-x" type="number" name="max-coord-x" value="0" />
+                                <label for="max-coord-y">Maximum Y Coordinate: </label>
+                                <input id="max-coord-y" type="number" name="max-coord-y" value="0" /><br /><br />
+                                <!--<input id="btn-max-coord" class="btn btn-primary" type="button" value="Set Max Coordinates" onclick="setCoordinates()" /><br /><br />
+                                <input id="btn-max-coord-reset" class="btn btn-danger" type="button" value="Reset Max Coordinates" onclick="resetCoordinates()" /><br />-->
+                            </div>
                             <div id="controls-manual">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="rot-n90" value="Rot -90" onclick="manualMove('r-90')" />
+                                        <input class="btn btn-primary move-button" type="button" name="move-left" value="Turn Left" onclick="setMove('Left')" />
                                     </div>
                                     <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="move-forward" value="Forward" onclick="manualMove('f')" />
+                                        <input class="btn btn-primary move-button" type="button" name="move-forward" value="Move Forward" onclick="setMove('Forward')" />
                                     </div>
                                     <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="rot-90" value="Rot 90" onclick="manualMove('r90')" />
+                                        <input class="btn btn-primary move-button" type="button" name="move-right" value="Turn Right" onclick="setMove('Right')" />
                                     </div>
                                 </div>
                                 <br />
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="move-left" value="Left" onclick="manualMove('l')" />
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input class="btn btn-danger move-button" type="button" name="move-left" value="Stop" onclick="manualMove('s')" />
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="move-right" value="Right" onclick="manualMove('r')" />
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-sm-4"></div>
-                                    <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="move-back" value="Back" onclick="manualMove('b')" />
-                                    </div>
-                                    <div class="col-sm-4"></div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -186,7 +202,9 @@
             </div>
         </div>
         <br />
-        <img src="https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png" alt="<3 Raspberry Pi" />
+        <a href="https://www.raspberrypi.org/">
+            <img src="https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png" alt="<3 Raspberry Pi" />
+        </a>
     </main>
 </body>
 </html>

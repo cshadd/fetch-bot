@@ -1,6 +1,17 @@
+.connection-progress-bar {
+    width: 100%;
+}
+
 .ext-display {
     height: 500px;
     width: 100%;
+}
+
+.logo {
+    margin-left: 40%;
+    margin-right: 40%;
+    width: 30%;
+    height: 30%;
 }
 
 .move-button {

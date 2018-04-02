@@ -1,4 +1,6 @@
 package io.github.cshadd.fetch_bot;
+import com.pi4j.util.Console;
+import io.github.cshadd.fetch_bot.util.ArduinoCommunication;
 import io.github.cshadd.fetch_bot.util.InterfaceCommunication;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.VersionCheck;
@@ -10,10 +12,10 @@ implements FetchBot {
     private static final int COLLISION_DISTANCE = 15;
 
     // Private Static Instance/Property Fields
-    private static InterfaceCommunication comm;
+    private static ArduinoCommunication arduinoComm;
+    private static InterfaceCommunication interfaceComm;
     private static Movement movement;
     private static Logger log;
-    private static Sensor sensor;
 
     // Private Static Methods
     private static void delayThread(long millis) {
@@ -30,144 +32,116 @@ implements FetchBot {
 
     // Entry Point
     public static void main(String[] args) {
-        String auto = "0";
-        String currentAuto = "0";
-        boolean isDirectionFrontBlocked = false;
-        boolean isDirectionLeftBlocked = false;
-        boolean isDirectionRightBlocked = false;
-        int sensorFront = 0;
-        int sensorLeft = 0;
-        int sensorRight = 0;
+        final Console console = new Console();
+        console.title("--- Fetch Bot ---", "https://cshadd.github.io/fetch-bot/");
+
+        String currentMode = "Idle";
+        String currentMove = "Stop";
+        int currentSensorFront = 0;
+        int currentSensorLeft = 0;
+        int currentSensorRight = 0;
         String version = "v0.0.0";
 
-        comm = new InterfaceCommunication();
+        interfaceComm = new InterfaceCommunication();
+        log = Logger.getInstance(interfaceComm);
+        arduinoComm = new ArduinoCommunication();
         movement = new Movement();
-        log = Logger.getInstance(comm);
-        sensor = new Sensor();
 
-        comm.reset();
+        arduinoComm.reset();
+        interfaceComm.reset();
         log.clear();
         if (args.length >= 1) {
             version = args[0];
         }
         log.info("Fetch Bot " + version + " starting!");
         VersionCheck.checkVersionMatch(version);
-        log.info("Product information at https://cshadd.github.io/fetch-bot/.");
-        comm.pushInterface();
-        comm.pushRobot();
+        interfaceComm.pushInterface();
+        interfaceComm.pushRobot();
 
         // https://github.com/OlivierLD/raspberry-pi4j-samples/blob/master/Arduino.RaspberryPI/src/arduino/raspberrypi/SerialReader.java
 
         while (true) {
-            comm.pullInterface();
-            comm.pullRobot();
+            arduinoComm.pullRobot();
+            interfaceComm.pullInterface();
+            interfaceComm.pullRobot();
 
-            if (comm.getRobotValue("kill").equals("1")) {
-                log.info("Interface - [Kill] command received.");
-                break;
-            }
-
-            try {
-                sensorFront = sensor.getDistance(Sensor.DIRECTION.FRONT);
-                sensorLeft = sensor.getDistance(Sensor.DIRECTION.LEFT);
-                sensorRight = sensor.getDistance(Sensor.DIRECTION.RIGHT);
-            }
-            catch (SensorException e) {
-                Logger.error(e, "There was an issue with Sensor!");
-            }
-            catch (Exception e) {
-                Logger.error(e, "There was an unknown issue!");
-            }
-            finally {
-                comm.setInterfaceValue("sensor-front", "" + sensorFront);
-                comm.setInterfaceValue("sensor-left", "" + sensorLeft);
-                comm.setInterfaceValue("sensor-right", "" + sensorRight);
-
-                if (sensorFront == COLLISION_DISTANCE) {
-                    if (!isDirectionFrontBlocked) {
-                        Logger.info("Sensor - [Front] is blocked.");
+            if (interfaceComm != null) {
+                if (arduinoComm != null){
+                    if (arduinoComm.getRobotValue("sensor-front") != null) {
+                        if (!arduinoComm.getRobotValue("sensor-front").equals(currentSensorFront)) {
+                            try {
+                                currentSensorFront = Integer.parseInt(arduinoComm.getRobotValue("sensor-front"));
+                            }
+                            catch (NumberFormatException e) {
+                                log.error(e, "There was an issue with formatting a number!");
+                            }
+                            catch (Exception e) {
+                                log.error(e, "There was an unknown issue!");
+                            }
+                            log.info("Arduino - [sensor-front: " + currentSensorFront + "] received.");
+                        }
+                        interfaceComm.setInterfaceValue("sensor-front", "" + currentSensorFront);
                     }
-                    isDirectionFrontBlocked = true;
-                }
-                else if (sensorFront < COLLISION_DISTANCE) {
-                    if (!isDirectionFrontBlocked) {
-                        Logger.warn("Sensor - [Front] imminent collision.");
+                    else {
+                        log.warn("Communication failure to Arduino.");
                     }
-                    isDirectionFrontBlocked = true;
+
+                    if (interfaceComm.getRobotValue("mode") != null) {
+                        if (!interfaceComm.getRobotValue("mode").equals(currentMode)) {
+                            currentMode = interfaceComm.getRobotValue("mode");
+                            log.info("Interface - [mode: " + currentMode + "] command received.");
+                        }
+                        interfaceComm.setInterfaceValue("mode", currentMode);
+
+                        if (currentMode.equals("Auto")) {
+                            interfaceComm.setInterfaceValue("emotion", "Neutral");
+                        }
+                        else if (currentMode.equals("Idle")) {
+                            interfaceComm.setInterfaceValue("emotion", "Idle");
+                        }
+                        else if (currentMode.equals("Off")) {
+                            break;
+                        }
+                        else if (currentMode.equals("Manual")) {
+                            interfaceComm.setInterfaceValue("emotion", "Neutral");
+                            if (!interfaceComm.getRobotValue("move").equals(currentMove)) {
+                                currentMove = interfaceComm.getRobotValue("move");
+                                if (!currentMove.equals("Stop")) {
+                                    log.info("Interface - [move: " + currentMove + "] command received.");
+                                    interfaceComm.setInterfaceValue("emotion", "Happy");
+                                    interfaceComm.pushInterface();
+                                    // Call Movement Class?
+                                    interfaceComm.setRobotValue("move", "Stop");
+                                    interfaceComm.pushRobot();
+                                    currentMove = "Stop";
+                                }
+                            }
+                        }
+                        else {
+                            log.warn("[mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
+                            interfaceComm.setRobotValue("mode", "Idle");
+                        }
+                    }
+                    else {
+                        log.warn("Communication failure to interface.");
+                    }
                 }
                 else {
-                    if (!isDirectionFrontBlocked) {
-                        Logger.info("Sensor - [Front] is clear.");
-                    }
-                    isDirectionFrontBlocked = false;
+                    log.warn("Communication failure to Arduino.");
                 }
-
-                if (sensorLeft == COLLISION_DISTANCE) {
-                    if (!isDirectionLeftBlocked) {
-                        Logger.info("Sensor - [Left] is blocked.");
-                    }
-                    isDirectionLeftBlocked = true;
-                }
-                else if (sensorLeft < COLLISION_DISTANCE) {
-                    if (!isDirectionLeftBlocked) {
-                        Logger.warn("Sensor - [Left] imminent collision.");
-                    }
-                    isDirectionLeftBlocked = true;
-                }
-                else {
-                    if (!isDirectionLeftBlocked) {
-                        Logger.info("Sensor - [Left] is clear.");
-                    }
-                    isDirectionLeftBlocked = false;
-                }
-
-                if (sensorRight == COLLISION_DISTANCE) {
-                    if (!isDirectionRightBlocked) {
-                        Logger.info("Sensor - [Right] is blocked.");
-                    }
-                    isDirectionRightBlocked = true;
-                }
-                else if (sensorRight < COLLISION_DISTANCE) {
-                    if (!isDirectionRightBlocked) {
-                        Logger.warn("Sensor - [Right] imminent collision.");
-                    }
-                    isDirectionRightBlocked = true;
-                }
-                else {
-                    if (!isDirectionRightBlocked) {
-                        Logger.info("Sensor - [Right] is clear.");
-                    }
-                    isDirectionRightBlocked = false;
-                }
-            }
-
-            auto = comm.getRobotValue("auto");
-            if (auto.equals("0")) { // Manual
-                if (!auto.equals(currentAuto)) {
-                    log.info("Interface - [Manual] mode command received.");
-                }
-                // driveControl
-            }
-            else if (auto.equals("1")) { // AI
-                if (!auto.equals(currentAuto)) {
-                    log.info("Interface - [Auto] mode command received.");
-                }
-                // pathfind and driveControl
+                interfaceComm.pushInterface();
             }
             else {
-                if (!auto.equals(currentAuto)) {
-                    log.warn("Interface - Invalid mode command recieved.");
-                }
+                log.warn("Communication failure to interface.");
             }
-            currentAuto = auto;
-
             delayThread(1000);
-            comm.pushInterface();
         }
 
         log.info("Fetch Bot terminating! Log file: ./FetchBot.log.");
-        comm.clear();
-        comm.pushInterface();
-        comm.pushRobot();
+        arduinoComm.clear();
+        interfaceComm.clear();
+        interfaceComm.pushInterface();
+        interfaceComm.pushRobot();
+        console.promptForExit();
     }
 }

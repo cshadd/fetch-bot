@@ -20,14 +20,14 @@ implements FetchBot {
     private static Logger instance;
 
     // Private Instance/Property Fields
-    private static InterfaceCommunication comm;
+    private static InterfaceCommunication interfaceComm;
 
     // Private Constructors
     private Logger() {
         this(null);
     }
-    private Logger(InterfaceCommunication comm) {
-        this.comm = comm;
+    private Logger(InterfaceCommunication interfaceComm) {
+        this.interfaceComm = interfaceComm;
     }
 
     // Private Static Final Methods
@@ -51,7 +51,9 @@ implements FetchBot {
     private static final void writeInterface(String msg, boolean append) {
         write(msg, append);
         try {
-            comm.setInterfaceValue("verbose", read());
+            // if (interfaceComm != null) {
+                interfaceComm.setInterfaceValue("verbose", read());
+            // }
         }
         catch (Exception e) {
             fatalError(e, "There was an unknown issue!");
@@ -60,14 +62,14 @@ implements FetchBot {
     }
 
     // Public Static Final Methods
-    public static final synchronized  Logger getInstance() {
+    public static final synchronized Logger getInstance() {
         return getInstance(null);
     }
-    public static final synchronized  Logger getInstance(InterfaceCommunication comm) {
+    public static final synchronized Logger getInstance(InterfaceCommunication interfaceComm) {
         if (instance != null) {
             return instance;
         }
-        return new Logger(comm);
+        return new Logger(interfaceComm);
     }
     public static final void clear() {
         File input = null;

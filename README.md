@@ -1,3 +1,5 @@
+[![Fetch Bot](docs/FullLogo.png)](https://github.com/cshadd/fetch-bot/)
+
 [![Release](https://img.shields.io/github/release/cshadd/fetch-bot/all.svg)](https://github.com/cshadd/fetch-bot/releases)
 [![License](https://img.shields.io/github/license/cshadd/fetch-bot.svg)](LICENSE)
 
@@ -16,13 +18,14 @@ This repository may be used for your own robot.
     - x1 Raspberry Pi 3 Model B
     - x1 JBtek Raspberry Pi Micro USB Cable with ON / OFF Switch - Easy Start / Reboot
     - x1 A-Male to B-Male USB
+    - x1 Micro USB
     - x1 KUNCAN DC 5V to DC 12V Converter Step Up Voltage Converter 5ft Am to DC 5.5 x 2.1mm
     - x1 Logitech HD Webcam C525, Portable HD 720p Video Calling with Autofocus
     - x1 Male to Male HDMI Cable
-    - x1 Elecrow RPA05010R HDMI 5-Inch 800x480 TFT LCD Display with Touch Screen Monitor for Raspberry Pi B+/2B/3B 
+    - x1 Elecrow RPA05010R HDMI 5-Inch 800x480 TFT LCD Display with Touch Screen Monitor for Raspberry Pi B+/2B/3B
     - x2 Adafruit Stepper Motor NEMA17 12V 350mA
     - x2 Mounting Bracket for Nema 17 Stepper Motor (Geared Stepper) Hobby CNC/3D Printer
-    - x3 58mm Omni Wheel With Hubs For DIY Arduino Robot Competition Car Supporting LEGO
+    - ~~x3~~ x2 58mm Omni Wheel With Hubs For DIY Arduino Robot Competition Car Supporting LEGO
     - x1 Arduino Uno
     - x1 Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
     - x1 Non-Soldering Breadboard
@@ -32,7 +35,7 @@ This repository may be used for your own robot.
     - x1 15000mAh Dual USB Output and 2A Input Battery Pack
 * Optional:
     - x1 Raspberry Pi Case Kit
-    - x1 2x20-pin Extra Tall Female Stacking Header 0.1"
+    - ~~x1 2x20-pin Extra Tall Female Stacking Header 0.1"~~
 
 ### Assembly
 Great care is needed to assemble this robot.
@@ -50,30 +53,35 @@ If you want to use a full tower as a robot brain, go ahead. But the Pi and Uno i
 Proceeding forward, we will be specifically talking about the Pi and Uno unless otherwise. The system and Bash command lines will rely on the Pi.
 
 ### Prerequisites
-* Recommended:
-    - Raspbian OS Jessie or higher
+* Recommended (Raspberry Pi):
+    - Raspbian OS Stretch or higher
     - Chromium Browser
     - Java SE Development Kit 8.0 or higher
     - Java SE Runtime Environment 8.0 or higher
+    - Ino 0.3 or higher
     - Apache Maven 3.5.2 or higher
-    - Apache Server 2.4.10 or higher
-    - PHP 5.0 or higher
-    - Text Editor/IDE
+    - Apache HTTP Server 2.4.25 or higher
+    - PHP 7.0 or higher
     - Packaged Apps (Bash):
         - Unclutter
-        - x11-xserver-utils
         - arduino-core
         - arduino-mk
-* Optional:
-    - Ino 0.3 or higher
+* Recommended (Computer):
+    - Text Editor/IDE
+* Optional (Computer):
     - Visual Studio 2017 or higher
-    - VNC Server
-    - VNC Viewer
 
 ### Installing
 Clone/fork this repository and save it. Then use ``./bash-install.sh`` to install to your system (Bash).
 ``~/bin/StartFetchBot.sh`` is the launcher.
 ``/var/www/html/FetchBot/`` is the webserver.
+
+### Further Considerations
+You may want to:
+* Configure remote SSH.
+* Configure serial access.
+* Check the serial ports when connecting the Arduino to the Raspberry Pi and change them if necessary in accordance with this program.
+* Check the wiring when connecting the sensors and motors to the Arduino and change them if necessary in accordance with this program.
 
 ## Deployment
 
@@ -122,3 +130,7 @@ See [here](/docs/DevelopmentStandards.pdf).
 * [Microsoft](https://www.microsoft.com/)
 
 [![<3 Raspberry Pi](https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png)](https://www.raspberrypi.org/)
+
+## CSUN AI-JAM 2018 Pre-Alpha Preview
+
+[![CSUN AI-JAM 2018 Pre-Alpha Preview](https://img.youtube.com/vi/jIrqqUIsi4s/0.jpg)](https://www.youtube.com/watch?v=jIrqqUIsi4s)

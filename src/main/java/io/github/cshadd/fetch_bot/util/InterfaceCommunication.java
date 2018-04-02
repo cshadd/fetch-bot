@@ -93,7 +93,7 @@ implements FetchBot {
         return returnData;
     }
     public final void pullInterface() {
-        toRobotData = read(TO_ROBOT_JSON_PATH);
+        toInterfaceData = read(TO_INTERFACE_JSON_PATH);
     }
     public final void pullRobot() {
         toRobotData = read(TO_ROBOT_JSON_PATH);
@@ -106,8 +106,8 @@ implements FetchBot {
     }
     public final void reset() {
         clear();
-        setInterfaceValue("emotion", "Boot");
-        setInterfaceValue("mode", "Off");
+        setInterfaceValue("emotion", "Idle");
+        setInterfaceValue("mode", "Idle");
         setInterfaceValue("rot", "0");
         setInterfaceValue("sensor-front", "0");
         setInterfaceValue("sensor-left", "0");
@@ -118,8 +118,8 @@ implements FetchBot {
         setInterfaceValue("y", "0");
         setInterfaceValue("y-max", "0");
 
-        setRobotValue("auto", "0");
-        setRobotValue("kill", "0");
+        setRobotValue("mode", "Idle");
+        setRobotValue("move", "Stop");
     }
     public final void setInterfaceValue(String key, String value) {
         try {
