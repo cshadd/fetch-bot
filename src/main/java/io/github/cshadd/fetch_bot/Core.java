@@ -125,7 +125,7 @@ implements FetchBot {
                     else {
                         log.warn("Communication failure to interface.");
                     }
-                }
+                // }
                 // else {
                     // log.warn("Communication failure to Arduino.");
                 // }
