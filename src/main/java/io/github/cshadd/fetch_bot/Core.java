@@ -44,7 +44,7 @@ implements FetchBot {
 
         interfaceComm = new InterfaceCommunication();
         log = Logger.getInstance(interfaceComm);
-        arduinoComm = new ArduinoCommunication();
+        // arduinoComm = new ArduinoCommunication();
         movement = new Movement();
 
         // arduinoComm.reset();
@@ -138,7 +138,7 @@ implements FetchBot {
         }
 
         log.info("Fetch Bot terminating! Log file: ./FetchBot.log.");
-        arduinoComm.clear();
+        // arduinoComm.clear();
         interfaceComm.clear();
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();
