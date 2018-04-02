@@ -44,10 +44,10 @@ implements FetchBot {
 
         interfaceComm = new InterfaceCommunication();
         log = Logger.getInstance(interfaceComm);
-        arduinoComm = new ArduinoCommunication();
+        // arduinoComm = new ArduinoCommunication();
         movement = new Movement();
 
-        arduinoComm.reset();
+        // arduinoComm.reset();
         interfaceComm.reset();
         log.clear();
         if (args.length >= 1) {
@@ -61,12 +61,12 @@ implements FetchBot {
         // https://github.com/OlivierLD/raspberry-pi4j-samples/blob/master/Arduino.RaspberryPI/src/arduino/raspberrypi/SerialReader.java
 
         while (true) {
-            arduinoComm.pullRobot();
+            // arduinoComm.pullRobot();
             interfaceComm.pullInterface();
             interfaceComm.pullRobot();
 
             if (interfaceComm != null) {
-                if (arduinoComm != null){
+                /*if (arduinoComm != null){
                     if (arduinoComm.getRobotValue("sensor-front") != null) {
                         if (!arduinoComm.getRobotValue("sensor-front").equals(currentSensorFront)) {
                             try {
@@ -84,7 +84,7 @@ implements FetchBot {
                     }
                     else {
                         log.warn("Communication failure to Arduino.");
-                    }
+                    }*/
 
                     if (interfaceComm.getRobotValue("mode") != null) {
                         if (!interfaceComm.getRobotValue("mode").equals(currentMode)) {
@@ -126,9 +126,9 @@ implements FetchBot {
                         log.warn("Communication failure to interface.");
                     }
                 }
-                else {
-                    log.warn("Communication failure to Arduino.");
-                }
+                // else {
+                    // log.warn("Communication failure to Arduino.");
+                // }
                 interfaceComm.pushInterface();
             }
             else {
@@ -138,7 +138,7 @@ implements FetchBot {
         }
 
         log.info("Fetch Bot terminating! Log file: ./FetchBot.log.");
-        arduinoComm.clear();
+        // arduinoComm.clear();
         interfaceComm.clear();
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();
