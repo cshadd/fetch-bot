@@ -9,10 +9,10 @@ import io.github.cshadd.fetch_bot.util.VersionCheck;
 public class Core
 implements FetchBot {
     // Private Constant Instance/Property Fields
-    private static final int COLLISION_DISTANCE = 15;
+    // private static final int COLLISION_DISTANCE = 15;
 
     // Private Static Instance/Property Fields
-    private static ArduinoCommunication arduinoComm;
+    // private static ArduinoCommunication arduinoComm;
     private static InterfaceCommunication interfaceComm;
     private static Movement movement;
     private static Logger log;
@@ -47,7 +47,7 @@ implements FetchBot {
         arduinoComm = new ArduinoCommunication();
         movement = new Movement();
 
-        arduinoComm.reset();
+        // arduinoComm.reset();
         interfaceComm.reset();
         log.clear();
         if (args.length >= 1) {
@@ -61,12 +61,12 @@ implements FetchBot {
         // https://github.com/OlivierLD/raspberry-pi4j-samples/blob/master/Arduino.RaspberryPI/src/arduino/raspberrypi/SerialReader.java
 
         while (true) {
-            arduinoComm.pullRobot();
+            // arduinoComm.pullRobot();
             interfaceComm.pullInterface();
             interfaceComm.pullRobot();
 
             if (interfaceComm != null) {
-                if (arduinoComm != null){
+                /*if (arduinoComm != null){
                     if (arduinoComm.getRobotValue("sensor-front") != null) {
                         if (!arduinoComm.getRobotValue("sensor-front").equals(currentSensorFront)) {
                             try {
@@ -84,7 +84,7 @@ implements FetchBot {
                     }
                     else {
                         log.warn("Communication failure to Arduino.");
-                    }
+                    }*/
 
                     if (interfaceComm.getRobotValue("mode") != null) {
                         if (!interfaceComm.getRobotValue("mode").equals(currentMode)) {
@@ -125,10 +125,10 @@ implements FetchBot {
                     else {
                         log.warn("Communication failure to interface.");
                     }
-                }
+                /* }
                 else {
                     log.warn("Communication failure to Arduino.");
-                }
+                }*/
                 interfaceComm.pushInterface();
             }
             else {
