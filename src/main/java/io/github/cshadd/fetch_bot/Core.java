@@ -75,7 +75,8 @@ implements FetchBot {
             interfaceComm.pullInterface();
             interfaceComm.pullRobot();
             arduinoComm.pullRobot();
-            delayThread(5000);
+            
+            delayThread(1000);
 
             if (interfaceComm != null) {
                 if (arduinoComm != null){

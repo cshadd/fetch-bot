@@ -149,6 +149,7 @@ implements FetchBot {
         float returnData = -1;
         try {
             returnData = toRobotData.getFloat(key);
+            System.out.println(returnData);
         }
         catch (JSONException e) {
             Logger.error(e, "There was an issue with JSON!");
