@@ -149,6 +149,7 @@ implements FetchBot {
     }
     public final float getRobotValue(String key) {
         float returnData = -1;
+        System.out.println(toRobotData);
         try {
             returnData = toRobotData.getFloat(key);
         }
@@ -163,6 +164,7 @@ implements FetchBot {
     }
     public final void pullRobot() {
         toRobotData = read();
+        System.out.println("WOO:" + read());
     }
     public final void pushArduino() {
         open();
