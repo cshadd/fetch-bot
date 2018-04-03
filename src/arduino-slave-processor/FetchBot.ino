@@ -73,6 +73,6 @@ void loop() {
         root["sr"] = distance3;
 
         root.printTo(Serial);
-        delay(980);
+        delay(10);
     }
 }

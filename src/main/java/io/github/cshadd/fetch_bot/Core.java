@@ -47,30 +47,31 @@ implements FetchBot {
         // arduinoComm = new ArduinoCommunication();
         movement = new Movement();
 
-        // arduinoComm.reset();
         interfaceComm.reset();
+        arduinoComm.reset();
         log.clear();
         if (args.length >= 1) {
             version = args[0];
+            log.info("Fetch Bot " + version + " starting!");
         }
-        log.info("Fetch Bot " + version + " starting!");
         VersionCheck.checkVersionMatch(version);
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();
+        arduinoComm.pushRobot();
 
         // https://github.com/OlivierLD/raspberry-pi4j-samples/blob/master/Arduino.RaspberryPI/src/arduino/raspberrypi/SerialReader.java
 
         while (true) {
-            // arduinoComm.pullRobot();
             interfaceComm.pullInterface();
             interfaceComm.pullRobot();
+            arduinoComm.pullRobot();
 
             if (interfaceComm != null) {
-                /*if (arduinoComm != null){
-                    if (arduinoComm.getRobotValue("sensor-front") != null) {
-                        if (!arduinoComm.getRobotValue("sensor-front").equals(currentSensorFront)) {
+                if (arduinoComm != null){
+                    if (arduinoComm.getRobotValue("f") != null) {
+                        if (!arduinoComm.getRobotValue("f").equals(currentSensorFront)) {
                             try {
-                                currentSensorFront = Integer.parseInt(arduinoComm.getRobotValue("sensor-front"));
+                                currentSensorFront = arduinoComm.getRobotValue("f");
                             }
                             catch (NumberFormatException e) {
                                 log.error(e, "There was an issue with formatting a number!");
@@ -78,13 +79,13 @@ implements FetchBot {
                             catch (Exception e) {
                                 log.error(e, "There was an unknown issue!");
                             }
-                            log.info("Arduino - [sensor-front: " + currentSensorFront + "] received.");
+                            log.info("Arduino - [f: " + currentSensorFront + "] received.");
                         }
-                        interfaceComm.setInterfaceValue("sensor-front", "" + currentSensorFront);
+                        interfaceComm.setInterfaceValue("f", "" + currentSensorFront);
                     }
                     else {
                         log.warn("Communication failure to Arduino.");
-                    }*/
+                    }
 
                     if (interfaceComm.getRobotValue("mode") != null) {
                         if (!interfaceComm.getRobotValue("mode").equals(currentMode)) {
@@ -125,10 +126,10 @@ implements FetchBot {
                     else {
                         log.warn("Communication failure to interface.");
                     }
-                /* }
+                }
                 else {
                     log.warn("Communication failure to Arduino.");
-                }*/
+                }
                 interfaceComm.pushInterface();
             }
             else {
@@ -138,7 +139,7 @@ implements FetchBot {
         }
 
         log.info("Fetch Bot terminating! Log file: ./FetchBot.log.");
-        // arduinoComm.clear();
+        arduinoComm.clear();
         interfaceComm.clear();
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();
