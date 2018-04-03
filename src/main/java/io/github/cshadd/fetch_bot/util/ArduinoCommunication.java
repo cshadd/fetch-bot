@@ -93,8 +93,14 @@ implements FetchBot {
         try {
             if (buffer.charAt(0) != '{') {
                 buffer = "{ }";
+                returnData = new JSONObject(buffer);
+                returnData.put("f", -1);
+                returnData.put("l", -1);
+                returnData.put("r", -1);
             }
-            returnData = new JSONObject(buffer);
+            else {
+                returnData = new JSONObject(buffer);
+            }
         }
         catch (JSONException e) {
             Logger.fatalError(e, "There was an issue with JSON!");

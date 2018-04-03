@@ -54,7 +54,7 @@ implements FetchBot {
         log.clear();
 
         // Show user that we started
-        log.info("Fetch Bot " + version + " starting!");
+        log.info("Fetch Bot " + version + " preparing!");
 
         // Version check
         VersionCheck.checkVersionMatch(version);
@@ -69,11 +69,17 @@ implements FetchBot {
         arduinoComm.reset();
         arduinoComm.pushArduino();
 
+        delayThread(5000);
+
+        log.info("Fetch Bot started!");
+
         while (true) {
             // Pull data from communications
             interfaceComm.pullInterface();
             interfaceComm.pullRobot();
             arduinoComm.pullRobot();
+
+            delayThread(10);
 
             if (interfaceComm != null) {
                 if (arduinoComm != null){
