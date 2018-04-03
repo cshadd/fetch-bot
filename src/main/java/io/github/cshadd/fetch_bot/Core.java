@@ -162,9 +162,10 @@ implements FetchBot {
 
         // Termination
         log.info("Fetch Bot terminating! Log file: ./FetchBot.log.");
-        arduinoComm.clear();
         arduinoComm.setArduinoValue("Stop");
         arduinoComm.pushArduino();
+        delayThread(1000);
+        arduinoComm.clear();
         interfaceComm.clear();
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();
