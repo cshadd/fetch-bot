@@ -10,7 +10,7 @@ cd ..
 mkdir -p ~/bin
 mvn package
 cp -r ./target/libs ~/bin
-cp ./target/fetch-bot-v0.12.0.jar ~/bin/fetch-bot-v0.12.0.jar
+cp ./target/fetch-bot-v0.13.0.jar ~/bin/fetch-bot-v0.13.0.jar
 cp ./src/bash-start.sh ~/bin/StartFetchBot.sh
 sudo chmod 764 ~/bin/StartFetchBot.sh
 sudo cp -R ./src/www /var/www/html/FetchBot
