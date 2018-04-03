@@ -12,7 +12,7 @@ implements FetchBot {
     // private static final int COLLISION_DISTANCE = 15;
 
     // Private Static Instance/Property Fields
-    // private static ArduinoCommunication arduinoComm;
+    private static ArduinoCommunication arduinoComm;
     private static InterfaceCommunication interfaceComm;
     private static Movement movement;
     private static Logger log;
@@ -55,21 +55,19 @@ implements FetchBot {
             log.info("Fetch Bot " + version + " starting!");
         }
         VersionCheck.checkVersionMatch(version);
+        arduinoComm.pushRobot();
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();
-        arduinoComm.pushRobot();
-
-        // https://github.com/OlivierLD/raspberry-pi4j-samples/blob/master/Arduino.RaspberryPI/src/arduino/raspberrypi/SerialReader.java
 
         while (true) {
             interfaceComm.pullInterface();
             interfaceComm.pullRobot();
-            arduinoComm.pullRobot();
+            arduinoComm.pullArduino();
 
             if (interfaceComm != null) {
                 if (arduinoComm != null){
-                    if (arduinoComm.getRobotValue("f") != null) {
-                        if (!arduinoComm.getRobotValue("f").equals(currentSensorFront)) {
+                    if (arduinoComm.getRobotValue("f") != -1) {
+                        if (arduinoComm.getRobotValue("f") != currentSensorFront) {
                             try {
                                 currentSensorFront = arduinoComm.getRobotValue("f");
                             }
@@ -112,6 +110,10 @@ implements FetchBot {
                                     interfaceComm.setInterfaceValue("emotion", "Happy");
                                     interfaceComm.pushInterface();
                                     // Call Movement Class?
+
+                                    arduinoComm.setArduinoValue(0);
+                                    arduinoComm.pushRobot();
+
                                     interfaceComm.setRobotValue("move", "Stop");
                                     interfaceComm.pushRobot();
                                     currentMove = "Stop";

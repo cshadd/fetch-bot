@@ -165,14 +165,14 @@ implements FetchBot {
     }
     public final void reset() {
         clear();
-        setArduinoValue("move", 0);
+        setArduinoValue(0);
         setRobotValue("f", 0);
         setRobotValue("l", 0);
         setRobotValue("r", 0);
     }
-    public final void setArduinoValue(String key, int value) {
+    public final void setArduinoValue(int value) {
         try {
-            toArduinoData.put(key, value);
+            toArduinoData.put("m", value);
         }
         catch (JSONException e) {
             Logger.error(e, "There was an issue with JSON!");
