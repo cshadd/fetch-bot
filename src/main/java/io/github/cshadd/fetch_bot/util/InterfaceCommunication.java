@@ -64,7 +64,7 @@ implements FetchBot {
         toInterfaceData = new JSONObject();
         toRobotData = new JSONObject();
     }
-    public final String getInterfaceValue(String key) {
+    public synchronized final String getInterfaceValue(String key) {
         String returnData = null;
         try {
             returnData = toInterfaceData.getString(key);
@@ -78,7 +78,7 @@ implements FetchBot {
         finally { }
         return returnData;
     }
-    public final String getRobotValue(String key) {
+    public synchronized final String getRobotValue(String key) {
         String returnData = null;
         try {
             returnData = toRobotData.getString(key);
@@ -121,7 +121,7 @@ implements FetchBot {
         setRobotValue("mode", "Idle");
         setRobotValue("move", "Stop");
     }
-    public final void setInterfaceValue(String key, String value) {
+    public synchronized final void setInterfaceValue(String key, String value) {
         try {
             toInterfaceData.put(key, value);
         }
@@ -133,7 +133,7 @@ implements FetchBot {
         }
         finally { }
     }
-    public final void setRobotValue(String key, String value) {
+    public synchronized final void setRobotValue(String key, String value) {
         try {
             toRobotData.put(key, value);
         }
