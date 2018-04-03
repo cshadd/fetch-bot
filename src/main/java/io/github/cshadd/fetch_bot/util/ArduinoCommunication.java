@@ -90,20 +90,14 @@ implements FetchBot {
         finally { }
     }
     private synchronized final JSONObject read() {
-        JSONObject returnData = null;
-        System.out.println("ARGH:" + buffer);
+        JSONObject returnData = new JSONObject();
+        returnData.put("f", -1);
+        returnData.put("l", -1);
+        returnData.put("r", -1);
         try {
-            if (buffer.charAt(0) != '{') {
-                buffer = "{ }";
-                returnData = new JSONObject(buffer);
-                returnData.put("f", -1);
-                returnData.put("l", -1);
-                returnData.put("r", -1);
-            }
-            else {
+            if (buffer.charAt(0) == '{') {
                 returnData = new JSONObject(buffer);
             }
-            System.out.println("ugh: " + returnData);
         }
         catch (JSONException e) {
             Logger.fatalError(e, "There was an issue with JSON!");
@@ -118,7 +112,6 @@ implements FetchBot {
         try {
             if (serial.isOpen()) {
                 serial.write("" + getArduinoValue("m"));
-                delayThread(600);
             }
         }
         catch (IOException e) {
@@ -150,7 +143,7 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }*/
+        finally { }
         return returnData;
     }
     public final int getRobotValue(String key) {

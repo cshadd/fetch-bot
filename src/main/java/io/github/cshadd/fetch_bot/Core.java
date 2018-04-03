@@ -84,15 +84,10 @@ implements FetchBot {
                 if (arduinoComm != null){
                     // Sensors
                     final int frontSensor = arduinoComm.getRobotValue("f");
-                    if (frontSensor != -1) {
-                        if (frontSensor != currentSensorFront) {
-                            currentSensorFront = frontSensor;
-                            log.info("Arduino - [f: " + currentSensorFront + "] received.");
-                        }
+                    if (frontSensor != currentSensorFront) {
+                        currentSensorFront = frontSensor;
+                        log.info("Arduino - [f: " + currentSensorFront + "] received.");
                         interfaceComm.setInterfaceValue("f", "" + currentSensorFront);
-                    }
-                    else {
-                        log.warn("Communication failure to Arduino.");
                     }
 
                     // Mode
