@@ -45,6 +45,7 @@ implements FetchBot {
            public void dataReceived(SerialDataEvent event) {
                try {
                    buffer = event.getAsciiString();
+                   Logger.info("Test " + buffer);
                }
                catch (IOException e) {
                    Logger.error(e, "There was an issue with IO!");
@@ -116,7 +117,7 @@ implements FetchBot {
         try {
             if (serial.isOpen()) {
                 serial.write(getArduinoValue("m"));
-                delayThread(5000);
+                delayThread(600);
             }
         }
         catch (IOException e) {
