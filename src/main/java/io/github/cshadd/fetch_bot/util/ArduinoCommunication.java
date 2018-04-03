@@ -91,10 +91,9 @@ implements FetchBot {
     }
     private synchronized final JSONObject read() {
         JSONObject returnData = null;
+        System.out.println("ARGH": + buffer);
         try {
-            System.out.println(buffer);
             if (buffer.charAt(0) != '{') {
-                System.out.println("T1");
                 buffer = "{ }";
                 returnData = new JSONObject(buffer);
                 returnData.put("f", -1);
@@ -102,7 +101,6 @@ implements FetchBot {
                 returnData.put("r", -1);
             }
             else {
-                System.out.println("T2");
                 returnData = new JSONObject(buffer);
             }
             System.out.println("ugh: " + returnData);
