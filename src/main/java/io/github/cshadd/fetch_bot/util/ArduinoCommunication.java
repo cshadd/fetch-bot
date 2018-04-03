@@ -165,6 +165,7 @@ implements FetchBot {
     }
     public final void pullRobot() {
         toRobotData = read();
+        System.out.println(toRobotData);
     }
     public final void pushArduino() {
         open();
