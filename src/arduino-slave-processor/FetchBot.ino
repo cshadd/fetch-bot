@@ -70,6 +70,7 @@ void loop() {
         root["f"] = distance1;
         root["l"] = distance2;
         root["r"] = distance3;
+        root["m"] = move;
 
         root.printTo(Serial);
     }

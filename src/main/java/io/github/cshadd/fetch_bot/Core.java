@@ -88,7 +88,7 @@ implements FetchBot {
                         if (frontSensor != currentSensorFront) {
                             currentSensorFront = frontSensor;
                             log.info("Arduino - [f: " + currentSensorFront + "] received.");
-                            interfaceComm.setInterfaceValue("f", "" + currentSensorFront);
+                            interfaceComm.setInterfaceValue("sensor-front", "" + currentSensorFront);
                         }
                     // }
                     // else {

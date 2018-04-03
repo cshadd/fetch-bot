@@ -135,7 +135,7 @@ implements FetchBot {
     }
     public final String getArduinoValue(String key) {
         String returnData = null;
-        /*try {
+        try {
             returnData = toArduinoData.getString(key);
         }
         catch (JSONException e) {
@@ -144,12 +144,12 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }*/
+        finally { }
         return returnData;
     }
     public final float getRobotValue(String key) {
         float returnData = -1;
-        /*try {
+        try {
             returnData = toRobotData.getFloat(key);
         }
         catch (JSONException e) {
@@ -158,7 +158,7 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }*/
+        finally { }
         return returnData;
     }
     public final void pullRobot() {
@@ -176,7 +176,7 @@ implements FetchBot {
         setRobotValue("r", -1);
     }
     public final void setArduinoValue(String value) {
-        /*try {
+        try {
             toArduinoData.put("m", value);
         }
         catch (JSONException e) {
@@ -185,10 +185,10 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }*/
+        finally { }
     }
     public final void setRobotValue(String key, float value) {
-        /*try {
+        try {
             toRobotData.put(key, value);
         }
         catch (JSONException e) {
@@ -197,6 +197,6 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }*/
+        finally { }
     }
 }
