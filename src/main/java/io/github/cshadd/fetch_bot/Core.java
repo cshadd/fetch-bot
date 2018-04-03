@@ -90,9 +90,9 @@ implements FetchBot {
                             interfaceComm.setInterfaceValue("sensor-front", "" + currentSensorFront);
                         }
                     }
-                    else {
+                    /* else {
                         log.warn("Communication failure to Arduino.");
-                    }
+                    } */
 
                     // Mode
                     final String mode = interfaceComm.getRobotValue("mode");

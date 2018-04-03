@@ -38,8 +38,13 @@ void setup() {
 
 void loop() {
     if (Serial.available() > 0) {
+        const size_t bufferSize = JSON_OBJECT_SIZE(4);
+        DynamicJsonBuffer jsonBuffer(bufferSize);
+        JsonObject& root = jsonBuffer.createObject();
+
         move = Serial.readString();
         // Movement here...
+        root["m"] = move;
         move = "Stop";
 
         // For Sensor 1
@@ -63,14 +68,9 @@ void loop() {
         distance2 = 2;// (duration2*0.0343)/2;
         distance3 = 3;// (duration3*0.0343)/2;
 
-        const size_t bufferSize = JSON_OBJECT_SIZE(4);
-        DynamicJsonBuffer jsonBuffer(bufferSize);
-
-        JsonObject& root = jsonBuffer.createObject();
         root["f"] = distance1;
         root["l"] = distance2;
         root["r"] = distance3;
-        root["m"] = move;
 
         root.printTo(Serial);
     }

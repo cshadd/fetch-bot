@@ -22,6 +22,7 @@ implements FetchBot {
 
     // Private Instance/Property Fields
     private String buffer;
+    private boolean isProcessing = false;
     private Serial serial;
     private SerialConfig serialConfig;
     private JSONObject toArduinoData;
@@ -30,6 +31,7 @@ implements FetchBot {
     // Public Constructors
     public ArduinoCommunication() {
         buffer = "{ }";
+        isProcessing = false;
         serial = SerialFactory.createInstance();
         serialConfig = new SerialConfig();
         serialConfig.device(SERIAL_PORT)
@@ -44,6 +46,8 @@ implements FetchBot {
            public void dataReceived(SerialDataEvent event) {
                try {
                    buffer = event.getAsciiString();
+                   isProcessing = false;
+                   notifyAll();
                }
                catch (IOException e) {
                    Logger.error(e, "There was an issue with IO!");
@@ -111,7 +115,16 @@ implements FetchBot {
     private synchronized final void write() {
         try {
             if (serial.isOpen()) {
+                isProcessing = true;
                 serial.write("" + getArduinoValue("m"));
+                while (isProcessing) {
+                    try {
+                        wait();
+                    }
+                    catch (InterruptedException e) {
+                        Logger.warn(e, "Thread was interrupted.");
+                    }
+                }
             }
         }
         catch (IOException e) {
