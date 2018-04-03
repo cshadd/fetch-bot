@@ -66,6 +66,7 @@ implements FetchBot {
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();
         arduinoComm.reset();
+        System.out.println("...");
         arduinoComm.setArduinoValue("Stop");
         arduinoComm.pushArduino();
 
