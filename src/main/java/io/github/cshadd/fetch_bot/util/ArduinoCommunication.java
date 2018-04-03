@@ -22,7 +22,6 @@ implements FetchBot {
 
     // Private Instance/Property Fields
     private String buffer;
-    private boolean isProcessing = false;
     private Serial serial;
     private SerialConfig serialConfig;
     private JSONObject toArduinoData;
@@ -31,7 +30,6 @@ implements FetchBot {
     // Public Constructors
     public ArduinoCommunication() {
         buffer = "{ }";
-        isProcessing = false;
         serial = SerialFactory.createInstance();
         serialConfig = new SerialConfig();
         serialConfig.device(SERIAL_PORT)
@@ -46,7 +44,6 @@ implements FetchBot {
            public void dataReceived(SerialDataEvent event) {
                try {
                    buffer = event.getAsciiString();
-                   isProcessing = false;
                }
                catch (IOException e) {
                    Logger.error(e, "There was an issue with IO!");
@@ -93,12 +90,11 @@ implements FetchBot {
     }
     private synchronized final JSONObject read() {
         JSONObject returnData = new JSONObject();
-        returnData.put("f", -1);
-        returnData.put("l", -1);
-        returnData.put("r", -1);
-        System.out.println("TEST: " + buffer);
         try {
-            if (buffer.charAt(0) == '{') {
+            returnData.put("f", -1);
+            returnData.put("l", -1);
+            returnData.put("r", -1);
+            if (buffer.charAt(0) == '{' && !buffer.equals("{ }")) {
                 returnData = new JSONObject(buffer);
             }
         }
@@ -114,11 +110,7 @@ implements FetchBot {
     private synchronized final void write() {
         try {
             if (serial.isOpen()) {
-                isProcessing = true;
                 serial.write("" + getArduinoValue("m"));
-                while (isProcessing) {
-                    delayThread(1000);
-                }
             }
         }
         catch (IOException e) {
@@ -155,7 +147,6 @@ implements FetchBot {
     }
     public final float getRobotValue(String key) {
         float returnData = -1;
-        System.out.println(toRobotData);
         try {
             returnData = toRobotData.getFloat(key);
         }
@@ -170,7 +161,6 @@ implements FetchBot {
     }
     public final void pullRobot() {
         toRobotData = read();
-        System.out.println("WOO:" + read());
     }
     public final void pushArduino() {
         open();

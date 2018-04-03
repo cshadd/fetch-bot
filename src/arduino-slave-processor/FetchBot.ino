@@ -38,7 +38,7 @@ void setup() {
 
 void loop() {
     if (Serial.available() > 0) {
-        const size_t bufferSize = JSON_OBJECT_SIZE(4);
+        const size_t bufferSize = JSON_OBJECT_SIZE(5);
         DynamicJsonBuffer jsonBuffer(bufferSize);
         JsonObject& root = jsonBuffer.createObject();
 
@@ -64,9 +64,9 @@ void loop() {
         duration2 = pulseIn(echoPin2, HIGH);
         duration3 = pulseIn(echoPin3, HIGH);
 
-        distance1 = 1;// (duration1*0.0343)/2;
-        distance2 = 2;// (duration2*0.0343)/2;
-        distance3 = 3;// (duration3*0.0343)/2;
+        distance1 = (duration1*0.0343)/2;
+        distance2 = (duration2*0.0343)/2;
+        distance3 = (duration3*0.0343)/2;
 
         root["f"] = distance1;
         root["l"] = distance2;
