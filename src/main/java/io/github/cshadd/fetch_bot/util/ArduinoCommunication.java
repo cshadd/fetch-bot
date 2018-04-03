@@ -22,7 +22,6 @@ implements FetchBot {
 
     // Private Instance/Property Fields
     private String buffer;
-    private boolean bufferAvalible;
     private Serial serial;
     private SerialConfig serialConfig;
     private JSONObject toArduinoData;
@@ -31,7 +30,6 @@ implements FetchBot {
     // Public Constructors
     public ArduinoCommunication() {
         buffer = "{ }";
-        bufferAvalible = false;
         serial = SerialFactory.createInstance();
         serialConfig = new SerialConfig();
         serialConfig.device(SERIAL_PORT)
@@ -46,7 +44,6 @@ implements FetchBot {
            public void dataReceived(SerialDataEvent event) {
                try {
                    buffer = event.getAsciiString();
-                   bufferAvalible = true;
                }
                catch (IOException e) {
                    Logger.error(e, "There was an issue with IO!");
@@ -94,12 +91,10 @@ implements FetchBot {
     private synchronized final JSONObject read() {
         JSONObject returnData = null;
         try {
-            while (!bufferAvalible) { }
             if (buffer.charAt(0) != '{') {
                 buffer = "{ }";
             }
             returnData = new JSONObject(buffer);
-            bufferAvalible = false;
         }
         catch (JSONException e) {
             Logger.fatalError(e, "There was an issue with JSON!");
