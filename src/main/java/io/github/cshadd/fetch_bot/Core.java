@@ -14,7 +14,6 @@ implements FetchBot {
     // Private Static Instance/Property Fields
     private static ArduinoCommunication arduinoComm;
     private static InterfaceCommunication interfaceComm;
-    private static Movement movement;
     private static Logger log;
 
     // Private Static Methods
@@ -32,43 +31,57 @@ implements FetchBot {
 
     // Entry Point
     public static void main(String[] args) {
+        // Start console
         final Console console = new Console();
         console.title("--- Fetch Bot ---", "https://cshadd.github.io/fetch-bot/");
 
+        // Assign first vars
         String currentMode = "Idle";
         String currentMove = "Stop";
         int currentSensorFront = -1;
         int currentSensorLeft = -1;
         int currentSensorRight = -1;
         String version = "v0.0.0";
-
-        interfaceComm = new InterfaceCommunication();
-        log = Logger.getInstance(interfaceComm);
-        arduinoComm = new ArduinoCommunication();
-        movement = new Movement();
-
-        interfaceComm.reset();
-        arduinoComm.reset();
-        log.clear();
         if (args.length >= 1) {
             version = args[0];
-            log.info("Fetch Bot " + version + " starting!");
         }
+
+        // Initiate interface communications
+        interfaceComm = new InterfaceCommunication();
+
+        // Initiate logging
+        log = Logger.getInstance(interfaceComm);
+        log.clear();
+
+        // Show user that we started
+        log.info("Fetch Bot " + version + " starting!");
+
+        // Version check
         VersionCheck.checkVersionMatch(version);
-        arduinoComm.pushArduino();
+
+        // Initiate arduino communications
+        arduinoComm = new ArduinoCommunication();
+
+        // Reset communications
+        interfaceComm.reset();
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();
+        arduinoComm.reset();
+        arduinoComm.pushArduino();
 
         while (true) {
+            // Pull data from communications
             interfaceComm.pullInterface();
             interfaceComm.pullRobot();
-            arduinoComm.pullArduino();
+            arduinoComm.pullRobot();
 
             if (interfaceComm != null) {
                 if (arduinoComm != null){
-                    if (arduinoComm.getRobotValue("f") != -1) {
-                        if (arduinoComm.getRobotValue("f") != currentSensorFront) {
-                            currentSensorFront = arduinoComm.getRobotValue("f");
+                    // Sensors
+                    final int frontSensor = arduinoComm.getRobotValue("f");
+                    if (frontSensor != -1) {
+                        if (frontSensor != currentSensorFront) {
+                            currentSensorFront = frontSensor;
                             log.info("Arduino - [f: " + currentSensorFront + "] received.");
                         }
                         interfaceComm.setInterfaceValue("f", "" + currentSensorFront);
@@ -77,9 +90,11 @@ implements FetchBot {
                         log.warn("Communication failure to Arduino.");
                     }
 
-                    if (interfaceComm.getRobotValue("mode") != null) {
-                        if (!interfaceComm.getRobotValue("mode").equals(currentMode)) {
-                            currentMode = interfaceComm.getRobotValue("mode");
+                    // Mode
+                    final String mode = interfaceComm.getRobotValue("mode");
+                    if (mode != null) {
+                        if (!mode.equals(currentMode)) {
+                            currentMode = mode;
                             log.info("Interface - [mode: " + currentMode + "] command received.");
                         }
                         interfaceComm.setInterfaceValue("mode", currentMode);
@@ -95,14 +110,21 @@ implements FetchBot {
                         }
                         else if (currentMode.equals("Manual")) {
                             interfaceComm.setInterfaceValue("emotion", "Neutral");
-                            if (!interfaceComm.getRobotValue("move").equals(currentMove)) {
-                                currentMove = interfaceComm.getRobotValue("move");
-                                if (!currentMove.equals("Stop")) {
-                                    log.info("Interface - [move: " + currentMove + "] command received.");
-                                    interfaceComm.setInterfaceValue("emotion", "Happy");
-                                    interfaceComm.pushInterface();
-                                    // Call Movement Class?
+                            // Movement (to be revised)
+                            final String move = interfaceComm.getRobotValue("move");
+                            if (!move.equals(currentMove)) {
+                                currentMove = move;
+                                log.info("Interface - [move: " + currentMove + "] command received.");
 
+                                arduinoComm.setArduinoValue(currentMove);
+                                arduinoComm.pushArduino();
+
+                                if (!move.equals("Stop")) {
+                                    interfaceComm.setInterfaceValue("emotion", "Happy");
+
+                                    delayThread(2000);
+
+                                    // Calculations
                                     arduinoComm.setArduinoValue("Stop");
                                     arduinoComm.pushArduino();
 
@@ -124,6 +146,8 @@ implements FetchBot {
                 else {
                     log.warn("Communication failure to Arduino.");
                 }
+
+                // Push data to communications
                 interfaceComm.pushInterface();
             }
             else {
@@ -132,8 +156,11 @@ implements FetchBot {
             delayThread(1000);
         }
 
+        // Termination
         log.info("Fetch Bot terminating! Log file: ./FetchBot.log.");
         arduinoComm.clear();
+        arduinoComm.setArduinoValue("Stop");
+        arduinoComm.pushArduino();
         interfaceComm.clear();
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();

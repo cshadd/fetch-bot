@@ -22,6 +22,7 @@ implements FetchBot {
 
     // Private Instance/Property Fields
     private String buffer;
+    private boolean bufferAvalible;
     private Serial serial;
     private SerialConfig serialConfig;
     private JSONObject toArduinoData;
@@ -30,6 +31,7 @@ implements FetchBot {
     // Public Constructors
     public ArduinoCommunication() {
         buffer = "{ }";
+        bufferAvalible = false;
         serial = SerialFactory.createInstance();
         serialConfig = new SerialConfig();
         serialConfig.device(SERIAL_PORT)
@@ -42,9 +44,9 @@ implements FetchBot {
         serial.addListener(new SerialDataEventListener() {
            @Override
            public void dataReceived(SerialDataEvent event) {
-
                try {
-                    buffer = event.getAsciiString();
+                   buffer = event.getAsciiString();
+                   bufferAvalible = true;
                }
                catch (IOException e) {
                    Logger.error(e, "There was an issue with IO!");
@@ -60,7 +62,7 @@ implements FetchBot {
     }
 
     // Private Final Methods
-    private final void close() {
+    private synchronized final void close() {
         try {
             if (serial.isOpen()) {
                 serial.close();
@@ -74,10 +76,10 @@ implements FetchBot {
         }
         finally { }
     }
-    private final void open() {
+    private synchronized final void open() {
         try {
             if (!serial.isOpen()) {
-Logger.info("ArduinoCommunication - Opening serial on " + SERIAL_PORT + ".");
+                Logger.info("ArduinoCommunication - Opening serial on " + SERIAL_PORT + ".");
                 serial.open(serialConfig);
             }
         }
@@ -89,13 +91,15 @@ Logger.info("ArduinoCommunication - Opening serial on " + SERIAL_PORT + ".");
         }
         finally { }
     }
-    private final JSONObject read() {
+    private synchronized final JSONObject read() {
         JSONObject returnData = null;
         try {
-            if (!buffer.equals("{ }")) {
-                returnData = new JSONObject(buffer);
+            while (!bufferAvalible) { }
+            if (buffer.charAt(0) != '{') {
+                buffer = "{ }";
             }
-            buffer = "{ }";
+            returnData = new JSONObject(buffer);
+            bufferAvalible = false;
         }
         catch (JSONException e) {
             Logger.fatalError(e, "There was an issue with JSON!");
@@ -106,7 +110,7 @@ Logger.info("ArduinoCommunication - Opening serial on " + SERIAL_PORT + ".");
         finally { }
         return returnData;
     }
-    private final void write() {
+    private synchronized final void write() {
         try {
             if (serial.isOpen()) {
                 serial.write(getArduinoValue("m"));
@@ -142,7 +146,6 @@ Logger.info("ArduinoCommunication - Opening serial on " + SERIAL_PORT + ".");
             Logger.error(e, "There was an unknown issue!");
         }
         finally { }
-System.out.println("Sending to Arduino " + returnData);
         return returnData;
     }
     public final int getRobotValue(String key) {
@@ -159,11 +162,11 @@ System.out.println("Sending to Arduino " + returnData);
         finally { }
         return returnData;
     }
-    public final void pullToRobot() {
+    public final void pullRobot() {
         toRobotData = read();
     }
-    public final void pushToArduino() {
-       open();
+    public final void pushArduino() {
+        open();
         write();
     }
     public final void reset() {
@@ -172,13 +175,9 @@ System.out.println("Sending to Arduino " + returnData);
         setRobotValue("f", -1);
         setRobotValue("l", -1);
         setRobotValue("r", -1);
-System.out.println(toArduinoData.get("m"));
     }
     public final void setArduinoValue(String value) {
         try {
-if (toArduinoData == null) {
-	System.out.println("BS");
-}
             toArduinoData.put("m", value);
         }
         catch (JSONException e) {

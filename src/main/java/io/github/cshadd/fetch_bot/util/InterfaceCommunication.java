@@ -24,7 +24,7 @@ implements FetchBot {
     }
 
     // Private Final Methods
-    private final JSONObject read(String filePath) {
+    private synchronized final JSONObject read(String filePath) {
         JSONObject returnData = null;
         try {
             File input = new File(filePath);
@@ -42,7 +42,7 @@ implements FetchBot {
         finally { }
         return returnData;
     }
-    private final void write(JSONObject json, String filePath) {
+    private synchronized final void write(JSONObject json, String filePath) {
         try {
             File input = new File(filePath);
             FileUtils.writeStringToFile(input, "" + json, "UTF-8");
