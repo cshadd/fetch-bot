@@ -74,4 +74,5 @@ void loop() {
 
         root.printTo(Serial);
     }
+    delay(10);
 }

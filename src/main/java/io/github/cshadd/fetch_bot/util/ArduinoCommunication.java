@@ -91,7 +91,6 @@ implements FetchBot {
     private synchronized final JSONObject read() {
         JSONObject returnData = new JSONObject();
         try {
-            System.out.println(buffer);
             returnData.put("f", -1);
             returnData.put("l", -1);
             returnData.put("r", -1);
@@ -111,7 +110,6 @@ implements FetchBot {
     private synchronized final void write() {
         try {
             if (serial.isOpen()) {
-                System.out.println(getArduinoValue("m"));
                 serial.write(getArduinoValue("m"));
             }
         }
@@ -176,9 +174,10 @@ implements FetchBot {
         setRobotValue("r", -1);
         open();
     }
-    public final void setArduinoValue(String value) {
+    public synchronized final void setArduinoValue(String value) {
         try {
             toArduinoData.put("m", value);
+            System.out.println(toArduinoData);
         }
         catch (JSONException e) {
             Logger.error(e, "There was an issue with JSON!");
@@ -188,7 +187,7 @@ implements FetchBot {
         }
         finally { }
     }
-    public final void setRobotValue(String key, float value) {
+    public synchronized final void setRobotValue(String key, float value) {
         try {
             toRobotData.put(key, value);
         }
