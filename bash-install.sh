@@ -4,7 +4,7 @@
 sudo cp -R submodules/ArduinoJson/ /usr/share/arduino/libraries/
 cd ./src/arduino-slave-processor/
 make upload
-sudo rm -f -r ./build-uno
+rm -f -r ./build-uno
 cd ..
 cd ..
 mkdir -p ~/bin
