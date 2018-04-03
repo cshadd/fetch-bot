@@ -45,7 +45,6 @@ implements FetchBot {
            public void dataReceived(SerialDataEvent event) {
                try {
                    buffer = event.getAsciiString();
-                   Logger.info("Test " + buffer);
                }
                catch (IOException e) {
                    Logger.error(e, "There was an issue with IO!");
@@ -103,6 +102,7 @@ implements FetchBot {
             else {
                 returnData = new JSONObject(buffer);
             }
+            System.out.println("ugh: " + returnData);
         }
         catch (JSONException e) {
             Logger.fatalError(e, "There was an issue with JSON!");
@@ -140,7 +140,7 @@ implements FetchBot {
     }
     public final String getArduinoValue(String key) {
         String returnData = null;
-        try {
+        /*try {
             returnData = toArduinoData.getString(key);
         }
         catch (JSONException e) {
@@ -149,12 +149,12 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }
+        finally { }*/
         return returnData;
     }
     public final int getRobotValue(String key) {
         int returnData = -1;
-        try {
+        /*try {
             returnData = toRobotData.getInt(key);
         }
         catch (JSONException e) {
@@ -163,12 +163,11 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }
+        finally { }*/
         return returnData;
     }
     public final void pullRobot() {
         toRobotData = read();
-        System.out.println(toRobotData);
     }
     public final void pushArduino() {
         open();
@@ -182,7 +181,7 @@ implements FetchBot {
         setRobotValue("r", -1);
     }
     public final void setArduinoValue(String value) {
-        try {
+        /*try {
             toArduinoData.put("m", value);
         }
         catch (JSONException e) {
@@ -191,10 +190,10 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }
+        finally { }*/
     }
     public final void setRobotValue(String key, int value) {
-        try {
+        /*try {
             toRobotData.put(key, value);
         }
         catch (JSONException e) {
@@ -203,6 +202,6 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }
+        finally { }*/
     }
 }
