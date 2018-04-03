@@ -44,7 +44,7 @@ implements FetchBot {
 
         interfaceComm = new InterfaceCommunication();
         log = Logger.getInstance(interfaceComm);
-        // arduinoComm = new ArduinoCommunication();
+        arduinoComm = new ArduinoCommunication();
         movement = new Movement();
 
         interfaceComm.reset();
