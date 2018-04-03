@@ -29,7 +29,7 @@ implements FetchBot {
 
     // Public Constructors
     public ArduinoCommunication() {
-        buffer = "";
+        buffer = "{ }";
         serial = SerialFactory.createInstance();
         serialConfig = new SerialConfig();
         serialConfig.device(SERIAL_PORT)
@@ -90,10 +90,10 @@ implements FetchBot {
     private final JSONObject read() {
         JSONObject returnData = null;
         try {
-            if (buffer != "") {
+            if (!buffer.equals("{ }")) {
                 returnData = new JSONObject(buffer);
             }
-            buffer = "";
+            buffer = "{ }";
         }
         catch (JSONException e) {
             Logger.fatalError(e, "There was an issue with JSON!");
