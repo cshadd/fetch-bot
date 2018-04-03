@@ -91,6 +91,7 @@ implements FetchBot {
     private synchronized final JSONObject read() {
         JSONObject returnData = new JSONObject();
         try {
+            System.out.println(buffer);
             returnData.put("f", -1);
             returnData.put("l", -1);
             returnData.put("r", -1);
@@ -149,7 +150,6 @@ implements FetchBot {
         float returnData = -1;
         try {
             returnData = toRobotData.getFloat(key);
-            System.out.println(returnData);
         }
         catch (JSONException e) {
             Logger.error(e, "There was an issue with JSON!");
@@ -165,6 +165,7 @@ implements FetchBot {
     }
     public final void pushArduino() {
         write();
+        pullRobot();
     }
     public final void reset() {
         clear();
