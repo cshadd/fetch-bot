@@ -71,7 +71,8 @@ void loop() {
         root["l"] = distance2;
         root["r"] = distance3;
 
-        root.printTo(Serial);
+        // root.printTo(Serial);
+        Serial.println(root);
     }
-    delay(500);
+    delay(10);
 }
