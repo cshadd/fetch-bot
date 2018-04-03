@@ -10,6 +10,7 @@ import com.pi4j.io.serial.SerialDataEventListener;
 import com.pi4j.io.serial.SerialDataEvent;
 import com.pi4j.io.serial.StopBits;
 import io.github.cshadd.fetch_bot.FetchBot;
+import io.github.cshadd.fetch_bot.Core.delayThread;
 import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -115,6 +116,7 @@ implements FetchBot {
         try {
             if (serial.isOpen()) {
                 serial.write(getArduinoValue("m"));
+                delayThread(5000);
             }
         }
         catch (IOException e) {

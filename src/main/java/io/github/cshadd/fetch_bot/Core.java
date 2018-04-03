@@ -16,8 +16,8 @@ implements FetchBot {
     private static InterfaceCommunication interfaceComm;
     private static Logger log;
 
-    // Private Static Methods
-    private static void delayThread(long millis) {
+    // Public Static Methods
+    public static void delayThread(long millis) {
         try {
             Thread.sleep(millis);
         }
@@ -28,7 +28,6 @@ implements FetchBot {
             log.error(e, "There was an unknown issue!");
         }
     }
-
     // Entry Point
     public static void main(String[] args) {
         // Start console
