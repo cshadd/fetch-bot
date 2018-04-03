@@ -146,10 +146,10 @@ implements FetchBot {
         finally { }*/
         return returnData;
     }
-    public final int getRobotValue(String key) {
-        int returnData = -1;
+    public final float getRobotValue(String key) {
+        float returnData = -1;
         /*try {
-            returnData = toRobotData.getInt(key);
+            returnData = toRobotData.getFloat(key);
         }
         catch (JSONException e) {
             Logger.error(e, "There was an issue with JSON!");
@@ -186,7 +186,7 @@ implements FetchBot {
         }
         finally { }*/
     }
-    public final void setRobotValue(String key, int value) {
+    public final void setRobotValue(String key, float value) {
         /*try {
             toRobotData.put(key, value);
         }

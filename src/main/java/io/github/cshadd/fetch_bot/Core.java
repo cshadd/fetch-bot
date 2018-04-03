@@ -37,9 +37,9 @@ implements FetchBot {
         // Assign first vars
         String currentMode = "Idle";
         String currentMove = "Stop";
-        int currentSensorFront = -1;
-        int currentSensorLeft = -1;
-        int currentSensorRight = -1;
+        float currentSensorFront = -1;
+        float currentSensorLeft = -1;
+        float currentSensorRight = -1;
         String version = "v0.0.0";
         if (args.length >= 1) {
             version = args[0];
@@ -83,12 +83,17 @@ implements FetchBot {
             if (interfaceComm != null) {
                 if (arduinoComm != null){
                     // Sensors
-                    final int frontSensor = arduinoComm.getRobotValue("f");
-                    if (frontSensor != currentSensorFront) {
-                        currentSensorFront = frontSensor;
-                        log.info("Arduino - [f: " + currentSensorFront + "] received.");
-                        interfaceComm.setInterfaceValue("f", "" + currentSensorFront);
-                    }
+                    final float frontSensor = arduinoComm.getRobotValue("f");
+                    // if (frontSensor != -1) {
+                        if (frontSensor != currentSensorFront) {
+                            currentSensorFront = frontSensor;
+                            log.info("Arduino - [f: " + currentSensorFront + "] received.");
+                            interfaceComm.setInterfaceValue("f", "" + currentSensorFront);
+                        }
+                    // }
+                    // else {
+                        // log.warn("Communication failure to Arduino.");
+                    // }
 
                     // Mode
                     final String mode = interfaceComm.getRobotValue("mode");
