@@ -66,8 +66,6 @@ implements FetchBot {
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();
         arduinoComm.reset();
-        System.out.println("...");
-        arduinoComm.setArduinoValue("Stop");
         arduinoComm.pushArduino();
 
         log.info("Fetch Bot started!");
@@ -77,7 +75,7 @@ implements FetchBot {
             interfaceComm.pullInterface();
             interfaceComm.pullRobot();
             arduinoComm.pullRobot();
-            delayThread(1000);
+            delayThread(5000);
 
             if (interfaceComm != null) {
                 if (arduinoComm != null){
@@ -129,11 +127,9 @@ implements FetchBot {
                                     delayThread(1000);
 
                                     // Calculations
+
                                     arduinoComm.setArduinoValue("Stop");
                                     arduinoComm.pushArduino();
-
-                                    delayThread(1000);
-
                                     interfaceComm.setRobotValue("move", "Stop");
                                     interfaceComm.pushRobot();
                                     currentMove = "Stop";
