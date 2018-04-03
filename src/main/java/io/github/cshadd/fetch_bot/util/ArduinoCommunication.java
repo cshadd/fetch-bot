@@ -10,7 +10,6 @@ import com.pi4j.io.serial.SerialDataEventListener;
 import com.pi4j.io.serial.SerialDataEvent;
 import com.pi4j.io.serial.StopBits;
 import io.github.cshadd.fetch_bot.FetchBot;
-import static io.github.cshadd.fetch_bot.Core.delayThread;
 import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,6 +89,7 @@ implements FetchBot {
         finally { }
     }
     private synchronized final JSONObject read() {
+        System.out.println("TESTY");
         JSONObject returnData = new JSONObject();
         try {
             returnData.put("f", -1);
@@ -111,7 +111,7 @@ implements FetchBot {
     private synchronized final void write() {
         try {
             if (serial.isOpen()) {
-                serial.write("" + getArduinoValue("m"));
+                serial.write(getArduinoValue("m"));
             }
         }
         catch (IOException e) {
@@ -173,10 +173,6 @@ implements FetchBot {
         setRobotValue("l", -1);
         setRobotValue("r", -1);
         open();
-        while (!serial.isOpen()) {
-            System.out.println("f");
-            delayThread(1000);
-        }
     }
     public final void setArduinoValue(String value) {
         try {
