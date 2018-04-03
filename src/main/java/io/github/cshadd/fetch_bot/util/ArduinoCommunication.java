@@ -91,7 +91,7 @@ implements FetchBot {
     }
     private synchronized final JSONObject read() {
         JSONObject returnData = null;
-        System.out.println("ARGH": + buffer);
+        System.out.println("ARGH:" + buffer);
         try {
             if (buffer.charAt(0) != '{') {
                 buffer = "{ }";
