@@ -89,7 +89,6 @@ implements FetchBot {
         finally { }
     }
     private synchronized final JSONObject read() {
-        System.out.println("TESTY");
         JSONObject returnData = new JSONObject();
         try {
             returnData.put("f", -1);

@@ -66,10 +66,8 @@ implements FetchBot {
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();
         arduinoComm.reset();
+        arduinoComm.setArduinoValue("Stop");
         arduinoComm.pushArduino();
-        // arduinoComm.pushArduino();
-        // arduinoComm.pushArduino();
-        delayThread(8000);
 
         log.info("Fetch Bot started!");
 
