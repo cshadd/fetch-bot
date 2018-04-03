@@ -32,7 +32,7 @@ void setup() {
     duration1 = 0;
     duration2 = 0;
     duration3 = 0;
-    move = "STOP";
+    move = "Stop";
     Serial.begin(9600);
 }
 
@@ -40,7 +40,7 @@ void loop() {
     if (Serial.available() > 0) {
         move = Serial.readString();
         // Movement here...
-        move = "STOP";
+        move = "Stop";
 
         // For Sensor 1
         digitalWrite(trigPin1, LOW);
