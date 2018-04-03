@@ -68,8 +68,6 @@ implements FetchBot {
         arduinoComm.reset();
         arduinoComm.pushArduino();
 
-        delayThread(5000);
-
         log.info("Fetch Bot started!");
 
         while (true) {

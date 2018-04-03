@@ -164,7 +164,6 @@ implements FetchBot {
         toRobotData = read();
     }
     public final void pushArduino() {
-        open();
         write();
     }
     public final void reset() {
@@ -173,6 +172,8 @@ implements FetchBot {
         setRobotValue("f", -1);
         setRobotValue("l", -1);
         setRobotValue("r", -1);
+        open();
+        while (!serial.isOpen()) { }
     }
     public final void setArduinoValue(String value) {
         try {
