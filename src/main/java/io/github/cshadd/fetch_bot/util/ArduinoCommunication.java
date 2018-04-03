@@ -143,7 +143,7 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }
+        finally { }*/
         return returnData;
     }
     public final int getRobotValue(String key) {
