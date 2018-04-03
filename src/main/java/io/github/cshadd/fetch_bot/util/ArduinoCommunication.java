@@ -116,7 +116,7 @@ implements FetchBot {
     private synchronized final void write() {
         try {
             if (serial.isOpen()) {
-                serial.write(getArduinoValue("m"));
+                serial.write("" + getArduinoValue("m"));
                 delayThread(600);
             }
         }
