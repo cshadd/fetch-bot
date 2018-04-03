@@ -47,7 +47,6 @@ implements FetchBot {
                try {
                    buffer = event.getAsciiString();
                    isProcessing = false;
-                   notifyAll();
                }
                catch (IOException e) {
                    Logger.error(e, "There was an issue with IO!");
@@ -118,12 +117,7 @@ implements FetchBot {
                 isProcessing = true;
                 serial.write("" + getArduinoValue("m"));
                 while (isProcessing) {
-                    try {
-                        wait();
-                    }
-                    catch (InterruptedException e) {
-                        Logger.warn(e, "Thread was interrupted.");
-                    }
+                    delayThread(1000);
                 }
             }
         }
