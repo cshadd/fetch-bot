@@ -37,9 +37,9 @@ implements FetchBot {
 
         String currentMode = "Idle";
         String currentMove = "Stop";
-        int currentSensorFront = 0;
-        int currentSensorLeft = 0;
-        int currentSensorRight = 0;
+        int currentSensorFront = -1;
+        int currentSensorLeft = -1;
+        int currentSensorRight = -1;
         String version = "v0.0.0";
 
         interfaceComm = new InterfaceCommunication();
@@ -55,7 +55,7 @@ implements FetchBot {
             log.info("Fetch Bot " + version + " starting!");
         }
         VersionCheck.checkVersionMatch(version);
-        arduinoComm.pushRobot();
+        arduinoComm.pushArduino();
         interfaceComm.pushInterface();
         interfaceComm.pushRobot();
 
@@ -68,15 +68,7 @@ implements FetchBot {
                 if (arduinoComm != null){
                     if (arduinoComm.getRobotValue("f") != -1) {
                         if (arduinoComm.getRobotValue("f") != currentSensorFront) {
-                            try {
-                                currentSensorFront = arduinoComm.getRobotValue("f");
-                            }
-                            catch (NumberFormatException e) {
-                                log.error(e, "There was an issue with formatting a number!");
-                            }
-                            catch (Exception e) {
-                                log.error(e, "There was an unknown issue!");
-                            }
+                            currentSensorFront = arduinoComm.getRobotValue("f");
                             log.info("Arduino - [f: " + currentSensorFront + "] received.");
                         }
                         interfaceComm.setInterfaceValue("f", "" + currentSensorFront);
@@ -111,8 +103,8 @@ implements FetchBot {
                                     interfaceComm.pushInterface();
                                     // Call Movement Class?
 
-                                    arduinoComm.setArduinoValue(0);
-                                    arduinoComm.pushRobot();
+                                    arduinoComm.setArduinoValue("Stop");
+                                    arduinoComm.pushArduino();
 
                                     interfaceComm.setRobotValue("move", "Stop");
                                     interfaceComm.pushRobot();

@@ -33,7 +33,7 @@ implements FetchBot {
         serial = SerialFactory.createInstance();
         serialConfig = new SerialConfig();
         serialConfig.device(SERIAL_PORT)
-            .baud(Baud._38400)
+            .baud(Baud._9600)
             .dataBits(DataBits._8)
             .parity(Parity.NONE)
             .stopBits(StopBits._1)
@@ -42,6 +42,7 @@ implements FetchBot {
         serial.addListener(new SerialDataEventListener() {
            @Override
            public void dataReceived(SerialDataEvent event) {
+
                try {
                     buffer = event.getAsciiString();
                }
@@ -76,6 +77,7 @@ implements FetchBot {
     private final void open() {
         try {
             if (!serial.isOpen()) {
+Logger.info("ArduinoCommunication - Opening serial on " + SERIAL_PORT + ".");
                 serial.open(serialConfig);
             }
         }
@@ -107,7 +109,7 @@ implements FetchBot {
     private final void write() {
         try {
             if (serial.isOpen()) {
-                serial.write((byte)getArduinoValue("m"));
+                serial.write(getArduinoValue("m"));
             }
         }
         catch (IOException e) {
@@ -128,10 +130,10 @@ implements FetchBot {
         toArduinoData = new JSONObject();
         toRobotData = new JSONObject();
     }
-    public final int getArduinoValue(String key) {
-        int returnData = -1;
+    public final String getArduinoValue(String key) {
+        String returnData = null;
         try {
-            returnData = toArduinoData.getInt(key);
+            returnData = toArduinoData.getString(key);
         }
         catch (JSONException e) {
             Logger.error(e, "There was an issue with JSON!");
@@ -140,6 +142,7 @@ implements FetchBot {
             Logger.error(e, "There was an unknown issue!");
         }
         finally { }
+System.out.println("Sending to Arduino " + returnData);
         return returnData;
     }
     public final int getRobotValue(String key) {
@@ -156,22 +159,26 @@ implements FetchBot {
         finally { }
         return returnData;
     }
-    public final void pullArduino() {
-        open();
-        toArduinoData = read();
+    public final void pullToRobot() {
+        toRobotData = read();
     }
-    public final void pushRobot() {
+    public final void pushToArduino() {
+       open();
         write();
     }
     public final void reset() {
         clear();
-        setArduinoValue(0);
-        setRobotValue("f", 0);
-        setRobotValue("l", 0);
-        setRobotValue("r", 0);
+        setArduinoValue("Stop");
+        setRobotValue("f", -1);
+        setRobotValue("l", -1);
+        setRobotValue("r", -1);
+System.out.println(toArduinoData.get("m"));
     }
-    public final void setArduinoValue(int value) {
+    public final void setArduinoValue(String value) {
         try {
+if (toArduinoData == null) {
+	System.out.println("BS");
+}
             toArduinoData.put("m", value);
         }
         catch (JSONException e) {

@@ -17,7 +17,7 @@ float distance3;
 float duration1;
 float duration2;
 float duration3;
-int move;
+String move;
 
 void setup() {
     pinMode(trigPin1, OUTPUT);
@@ -32,16 +32,15 @@ void setup() {
     duration1 = 0;
     duration2 = 0;
     duration3 = 0;
-    move = 0;
+    move = "STOP";
     Serial.begin(9600);
 }
 
 void loop() {
     if (Serial.available() > 0) {
-        move = Serial.read();
-
+        move = Serial.readString();
         // Movement here...
-        move = 0;
+        move = "STOP";
 
         // For Sensor 1
         digitalWrite(trigPin1, LOW);
@@ -60,19 +59,19 @@ void loop() {
         duration2 = pulseIn(echoPin2, HIGH);
         duration3 = pulseIn(echoPin3, HIGH);
 
-        distance1 = (duration1*0.0343)/2;
-        distance2 = (duration2*0.0343)/2;
-        distance3 = (duration3*0.0343)/2;
+        distance1 = 1;// (duration1*0.0343)/2;
+        distance2 = 2;// (duration2*0.0343)/2;
+        distance3 = 3;// (duration3*0.0343)/2;
 
         const size_t bufferSize = JSON_OBJECT_SIZE(4);
         DynamicJsonBuffer jsonBuffer(bufferSize);
 
         JsonObject& root = jsonBuffer.createObject();
-        root["sf"] = distance1;
-        root["sl"] = distance2;
-        root["sr"] = distance3;
+        root["f"] = distance1;
+        root["l"] = distance2;
+        root["r"] = distance3;
 
         root.printTo(Serial);
-        delay(10);
+        delay(500);
     }
 }
