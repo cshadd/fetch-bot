@@ -77,23 +77,22 @@ implements FetchBot {
             interfaceComm.pullInterface();
             interfaceComm.pullRobot();
             arduinoComm.pullRobot();
-
-            delayThread(10);
+            delayThread(1000);
 
             if (interfaceComm != null) {
                 if (arduinoComm != null){
                     // Sensors
                     final float frontSensor = arduinoComm.getRobotValue("f");
-                    // if (frontSensor != -1) {
+                    if (frontSensor != -1) {
                         if (frontSensor != currentSensorFront) {
                             currentSensorFront = frontSensor;
                             log.info("Arduino - [f: " + currentSensorFront + "] received.");
                             interfaceComm.setInterfaceValue("sensor-front", "" + currentSensorFront);
                         }
-                    // }
-                    // else {
-                        // log.warn("Communication failure to Arduino.");
-                    // }
+                    }
+                    else {
+                        log.warn("Communication failure to Arduino.");
+                    }
 
                     // Mode
                     final String mode = interfaceComm.getRobotValue("mode");
@@ -127,11 +126,13 @@ implements FetchBot {
                                 if (!move.equals("Stop")) {
                                     interfaceComm.setInterfaceValue("emotion", "Happy");
 
-                                    delayThread(2000);
+                                    delayThread(1000);
 
                                     // Calculations
                                     arduinoComm.setArduinoValue("Stop");
                                     arduinoComm.pushArduino();
+
+                                    delayThread(1000);
 
                                     interfaceComm.setRobotValue("move", "Stop");
                                     interfaceComm.pushRobot();
