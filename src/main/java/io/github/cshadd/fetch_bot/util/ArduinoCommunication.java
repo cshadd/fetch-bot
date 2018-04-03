@@ -94,6 +94,7 @@ implements FetchBot {
         returnData.put("f", -1);
         returnData.put("l", -1);
         returnData.put("r", -1);
+        System.out.println("TEST: " + buffer);
         try {
             if (buffer.charAt(0) == '{') {
                 returnData = new JSONObject(buffer);
