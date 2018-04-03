@@ -177,7 +177,6 @@ implements FetchBot {
     public synchronized final void setArduinoValue(String value) {
         try {
             toArduinoData.put("m", value);
-            System.out.println(toArduinoData);
         }
         catch (JSONException e) {
             Logger.error(e, "There was an issue with JSON!");
