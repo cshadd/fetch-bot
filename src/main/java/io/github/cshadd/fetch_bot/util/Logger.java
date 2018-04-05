@@ -16,19 +16,11 @@ implements FetchBot {
     private static final String LOG_PATH = "FetchBot.log";
     private static final String TAG = "[FETCH BOT]";
 
-    // Private Static Instance/Property Fields
-    private static Logger instance;
-
     // Private Instance/Property Fields
     private static InterfaceCommunication interfaceComm;
 
     // Private Constructors
-    private Logger() {
-        this(null);
-    }
-    private Logger(InterfaceCommunication interfaceComm) {
-        this.interfaceComm = interfaceComm;
-    }
+    private Logger() { }
 
     // Private Static Methods
     private static String read()
@@ -57,7 +49,9 @@ implements FetchBot {
     private static void writeInterface(String msg, boolean append) {
         write(msg, append);
         try {
-            interfaceComm.setInterfaceValue("verbose", read());
+            if (interfaceComm) {
+                interfaceComm.setInterfaceValue("verbose", read());
+            }
         }
         catch (Exception e) {
             fatalError(e, "There was an unknown issue!");
@@ -66,15 +60,6 @@ implements FetchBot {
     }
 
     // Public Static Methods
-    public static Logger getInstance() {
-        return getInstance(null);
-    }
-    public static synchronized Logger getInstance(InterfaceCommunication interfaceComm) {
-        if (instance != null) {
-            return instance;
-        }
-        return new Logger(interfaceComm);
-    }
     public static void clear() {
         File input = null;
         try {
@@ -119,6 +104,9 @@ implements FetchBot {
         msg = TAG + " [INFO] " + msg;
         System.out.println(msg);
         writeInterface(msg, append);
+    }
+    public static void setInterfaceCommunications(InterfaceCommunication comm) {
+        interfaceComm = comm;
     }
     public static void warn(String msg) {
         warn(msg, true);
