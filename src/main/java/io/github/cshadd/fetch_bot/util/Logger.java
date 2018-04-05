@@ -10,7 +10,7 @@ import java.util.TimeZone;
 import org.apache.commons.io.FileUtils;
 
 // Main
-public final class Logger
+public class Logger
 implements FetchBot {
     // Private Constant Instance/Property Fields
     private static final String LOG_PATH = "FetchBot.log";
@@ -30,8 +30,14 @@ implements FetchBot {
         this.interfaceComm = interfaceComm;
     }
 
-    // Private Static Final Methods
-    private static final void write(String msg, boolean append) {
+    // Private Static Methods
+    private static String read()
+    throws IOException {
+        File input = new File(LOG_PATH);
+        String returnData = FileUtils.readFileToString(input, "UTF-8");
+        return returnData;
+    }
+    private static void write(String msg, boolean append) {
         File input = null;
         SimpleDateFormat localTime = null;
         SimpleDateFormat time = null;
@@ -48,12 +54,10 @@ implements FetchBot {
         }
         finally { }
     }
-    private static final void writeInterface(String msg, boolean append) {
+    private static void writeInterface(String msg, boolean append) {
         write(msg, append);
         try {
-            // if (interfaceComm != null) {
-                interfaceComm.setInterfaceValue("verbose", read());
-            // }
+            interfaceComm.setInterfaceValue("verbose", read());
         }
         catch (Exception e) {
             fatalError(e, "There was an unknown issue!");
@@ -61,17 +65,17 @@ implements FetchBot {
         finally { }
     }
 
-    // Public Static Final Methods
-    public static final Logger getInstance() {
+    // Public Static Methods
+    public static Logger getInstance() {
         return getInstance(null);
     }
-    public static final synchronized Logger getInstance(InterfaceCommunication interfaceComm) {
+    public static synchronized Logger getInstance(InterfaceCommunication interfaceComm) {
         if (instance != null) {
             return instance;
         }
         return new Logger(interfaceComm);
     }
-    public static final void clear() {
+    public static void clear() {
         File input = null;
         try {
             input = new File(LOG_PATH);
@@ -82,55 +86,49 @@ implements FetchBot {
         }
         finally { }
     }
-    public static final void error(String msg) {
+    public static void error(String msg) {
         error(msg, true);
     }
-    public static final void error(Throwable e, String msg) {
-        final StringWriter errors = new StringWriter();
+    public static void error(Throwable e, String msg) {
+        StringWriter errors = new StringWriter();
         e.printStackTrace(new PrintWriter(errors));
         error(errors + "\n" + msg);
     }
-    public static final void error(String msg, boolean append) {
+    public static void error(String msg, boolean append) {
         msg = TAG + " [ERROR (SAFELY CAUGHT)] " + msg;
         System.err.println(msg + "\nPlease report this issue to the developers!");
         writeInterface(msg, append);
     }
-    public static final void fatalError(String msg) {
+    public static void fatalError(String msg) {
         fatalError(msg, true);
     }
-    public static final void fatalError(Throwable e, String msg) {
-        final StringWriter errors = new StringWriter();
+    public static void fatalError(Throwable e, String msg) {
+        StringWriter errors = new StringWriter();
         e.printStackTrace(new PrintWriter(errors));
         fatalError(errors + "\n" + msg);
     }
-    public static final void fatalError(String msg, boolean append) {
+    public static void fatalError(String msg, boolean append) {
         msg = TAG + " [FATAL ERROR (SAFELY CAUGHT)] " + msg;
         System.err.println(msg + "\nPlease report this issue to the developers!");
         write(msg, append);
     }
-    public static final void info(String msg) {
+    public static void info(String msg) {
         info(msg, true);
     }
-    public static final void info(String msg, boolean append) {
+    public static void info(String msg, boolean append) {
         msg = TAG + " [INFO] " + msg;
         System.out.println(msg);
         writeInterface(msg, append);
     }
-    public static final String read()
-    throws IOException {
-        File input = new File(LOG_PATH);
-        String returnData = FileUtils.readFileToString(input, "UTF-8");
-        return returnData;
-    }
-    public static final void warn(String msg) {
+    public static void warn(String msg) {
         warn(msg, true);
     }
-    public static final void warn(Throwable e, String msg) {
-        final StringWriter errors = new StringWriter();
+    public static void warn(Throwable e, String msg) {
+        StringWriter errors = new StringWriter();
         e.printStackTrace(new PrintWriter(errors));
         warn(errors + "\n" + msg);
     }
-    public static final void warn(String msg, boolean append) {
+    public static void warn(String msg, boolean append) {
         msg = TAG + " [WARN] " + msg;
         System.out.println(msg);
         writeInterface(msg, append);

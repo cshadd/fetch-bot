@@ -10,23 +10,23 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 // Main
-public final class VersionCheck
+public class VersionCheck
 implements FetchBot {
     // Private Constant Instance/Property Fields
     private static final int API_OBJECT = 0;
-    private static final String API_URL = "https://api.github.com/repos/cshadd/fetch-bot/releases";
-    private static final String API_VERSION_TAG = "tag_name";
+    private static final  String API_URL = "https://api.github.com/repos/cshadd/fetch-bot/releases";
+    private static final  String API_VERSION_TAG = "tag_name";
 
     // Private Constructors
     private VersionCheck() { }
 
-    // Public Static Final Methods
-    public static final void checkVersionMatch(String version) {
+    // Public Static Methods
+    public static void checkVersionMatch(String version) {
         JSONArray api = null;
         JSONObject apiData = null;
         String currentVersion = "";
         try {
-            final InputStream in = new URL(API_URL).openStream();
+            InputStream in = new URL(API_URL).openStream();
             api = new JSONArray(IOUtils.toString(in, "UTF-8"));
             apiData = api.getJSONObject(API_OBJECT);
             currentVersion = apiData.getString(API_VERSION_TAG);
@@ -35,13 +35,13 @@ implements FetchBot {
             }
         }
         catch (IOException e) {
-            Logger.fatalError(e, "There was an issue with IO!");
+            Logger.error(e, "There was an issue with IO!");
         }
         catch (JSONException e) {
-            Logger.fatalError(e, "There was an issue with JSON!");
+            Logger.error(e, "There was an issue with JSON!");
         }
         catch (Exception e) {
-            Logger.fatalError(e, "There was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
         finally { }
     }

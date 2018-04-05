@@ -37,7 +37,7 @@ void setup() {
 }
 
 void loop() {
-    if (Serial.available() > 0) {
+    if (Serial.available()) {
         const size_t bufferSize = JSON_OBJECT_SIZE(5);
         DynamicJsonBuffer jsonBuffer(bufferSize);
         JsonObject& root = jsonBuffer.createObject();
@@ -73,6 +73,6 @@ void loop() {
         root["r"] = distance3;
 
         root.printTo(Serial);
+        Serial.flush();
     }
-    delay(10);
 }
