@@ -97,7 +97,7 @@ implements FetchBot {
             Logger.error(e, "There was an issue with IO!");
         }
         catch (Exception e) {
-            Logger.fatalError(e, "There was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
         finally { }
     }
@@ -113,10 +113,10 @@ implements FetchBot {
             }
         }
         catch (JSONException e) {
-            Logger.fatalError(e, "There was an issue with JSON!");
+            Logger.error(e, "There was an issue with JSON!");
         }
         catch (Exception e) {
-            Logger.fatalError(e, "There was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
         finally {
             buffer = "{ }";
@@ -126,6 +126,7 @@ implements FetchBot {
     private void write() {
         try {
             if (serial.isOpen()) {
+                isSerialLocked = true;
                 serial.write(getArduinoValue("a"));
                 System.out.println("AV 2:" + serial.available());
                 serial.flush();
@@ -136,12 +137,18 @@ implements FetchBot {
             Logger.error(e, "There was an issue with IO!");
         }
         catch (JSONException e) {
-            Logger.fatalError(e, "There was an issue with JSON!");
+            Logger.error(e, "There was an issue with JSON!");
         }
         catch (Exception e) {
-            Logger.fatalError(e, "There was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
-        finally { }
+        finally {
+            synchronized (serialLock) {
+                while (!isSerialLocked) {
+                    serialLock.wait();
+                }
+            }
+        }
         
     }
 
