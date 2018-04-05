@@ -75,6 +75,13 @@ implements FetchBot {
                     public void dataReceived(SerialDataEvent event) {
                         try {
                             buffer = event.getAsciiString();
+                            synchronized (serialLock) {
+                                isSerialLocked = false;
+                                serialLock.notifyAll();
+                            }
+                        }
+                        catch (InterruptedException e) {
+                            Logger.warn(e, "Thread was interrupted.");
                         }
                         catch (IOException e) {
                             Logger.error(e, "There was an issue with IO!");
@@ -82,12 +89,7 @@ implements FetchBot {
                         catch (Exception e) {
                             Logger.error(e, "There was an unknown issue!");
                         }
-                        finally {
-                            synchronized (serialLock) {
-                                isSerialLocked = false;
-                                serialLock.notifyAll();
-                            }
-                        }
+                        finally { }
                     }
                 };
                 serial.addListener(serialListener);
@@ -107,7 +109,7 @@ implements FetchBot {
             returnData.put("f", -1);
             returnData.put("l", -1);
             returnData.put("r", -1);
-            System.out.println("AV 3:" + serial.available());
+            System.out.println("AV 3:" + serial.available()); // Test
             if (buffer.charAt(0) == '{' && !buffer.equals("{ }")) {
                 returnData = new JSONObject(buffer);
             }
@@ -128,10 +130,18 @@ implements FetchBot {
             if (serial.isOpen()) {
                 isSerialLocked = true;
                 serial.write(getArduinoValue("a"));
-                System.out.println("AV 2:" + serial.available());
+                System.out.println("AV 2:" + serial.available()); // Test
                 serial.flush();
-                System.out.println("AV 3:" + serial.available());
+                System.out.println("AV 3:" + serial.available()); // Test
+                synchronized (serialLock) {
+                    while (!isSerialLocked) {
+                        serialLock.wait();
+                    }
+                }
             }
+        }
+        catch (InterruptedException e) {
+            Logger.warn(e, "Thread was interrupted.");
         }
         catch (IOException e) {
             Logger.error(e, "There was an issue with IO!");
@@ -142,14 +152,7 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally {
-            synchronized (serialLock) {
-                while (!isSerialLocked) {
-                    serialLock.wait();
-                }
-            }
-        }
-        
+        finally { }
     }
 
     // Public Methods
