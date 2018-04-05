@@ -22,15 +22,18 @@ implements FetchBot {
 
     // Private Instance/Property Fields
     private String buffer;
+    private boolean isSerialProcessing;
     private Serial serial;
     private SerialConfig serialConfig;
     private SerialDataEventListener serialListener;
+    private Object serialLock;
     private JSONObject toArduinoData;
     private JSONObject toRobotData;
 
     // Public Constructors
     public ArduinoCommunication() {
         buffer = "{ }";
+        isSerialProcessing = false;
         serial = SerialFactory.createInstance();
         serialConfig = new SerialConfig();
         serialConfig.device(SERIAL_PORT);
@@ -39,6 +42,7 @@ implements FetchBot {
         serialConfig.parity(Parity.NONE);
         serialConfig.stopBits(StopBits._1);
         serialConfig.flowControl(FlowControl.NONE);
+        serialLock = new Object(); // Messy locking?
         toArduinoData = new JSONObject();
         toRobotData = new JSONObject();
     }
@@ -48,8 +52,9 @@ implements FetchBot {
         try {
             if (serial.isOpen()) {
                 serial.discardInput();
-                // serial.removeListener(serialListener);
+                serial.removeListener(serialListener);
                 serial.close();
+                SerialFactory.Shutdown();
             }
         }
         catch (IOException e) {
@@ -77,10 +82,15 @@ implements FetchBot {
                         catch (Exception e) {
                             Logger.error(e, "There was an unknown issue!");
                         }
-                        finally { }
+                        finally {
+                            synchronized (serialLock) {
+                                isSerialLocked = false;
+                                serialLock.notifyAll();
+                            }
+                        }
                     }
                 };
-                // serial.addListener(serialListener);
+                serial.addListener(serialListener);
             }
         }
         catch (IOException e) {
@@ -132,6 +142,7 @@ implements FetchBot {
             Logger.fatalError(e, "There was an unknown issue!");
         }
         finally { }
+        
     }
 
     // Public Methods
