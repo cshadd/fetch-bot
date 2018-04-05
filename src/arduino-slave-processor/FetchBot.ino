@@ -17,7 +17,7 @@ float distance3;
 float duration1;
 float duration2;
 float duration3;
-String move;
+String action;
 
 void setup() {
     pinMode(trigPin1, OUTPUT);
@@ -32,7 +32,7 @@ void setup() {
     duration1 = 0;
     duration2 = 0;
     duration3 = 0;
-    move = "Stop";
+    action = "Stop";
     Serial.begin(9600);
 }
 
@@ -42,12 +42,13 @@ void loop() {
         DynamicJsonBuffer jsonBuffer(bufferSize);
         JsonObject& root = jsonBuffer.createObject();
 
-        move = Serial.readString();
+        action = Serial.readString();
+        
         // Movement here...
-        root["m"] = move;
-        move = "Stop";
+        
+        root["a"] = action;
+        action = "Stop";
 
-        // For Sensor 1
         digitalWrite(trigPin1, LOW);
         digitalWrite(trigPin2, LOW);
         digitalWrite(trigPin3, LOW);
