@@ -22,18 +22,15 @@ implements FetchBot {
 
     // Private Instance/Property Fields
     private String buffer;
-    private boolean isSerialProcessing;
     private Serial serial;
     private SerialConfig serialConfig;
     private SerialDataEventListener serialListener;
-    private Object serialLock;
     private JSONObject toArduinoData;
     private JSONObject toRobotData;
 
     // Public Constructors
     public ArduinoCommunication() {
         buffer = "{ }";
-        isSerialProcessing = false;
         serial = SerialFactory.createInstance();
         serialConfig = new SerialConfig();
         serialConfig.device(SERIAL_PORT);
@@ -42,7 +39,6 @@ implements FetchBot {
         serialConfig.parity(Parity.NONE);
         serialConfig.stopBits(StopBits._1);
         serialConfig.flowControl(FlowControl.NONE);
-        serialLock = new Object(); // Messy locking?
         toArduinoData = new JSONObject();
         toRobotData = new JSONObject();
     }
@@ -54,7 +50,7 @@ implements FetchBot {
                 serial.discardInput();
                 serial.removeListener(serialListener);
                 serial.close();
-                SerialFactory.Shutdown();
+                SerialFactory.shutdown();
             }
         }
         catch (IOException e) {
@@ -75,13 +71,6 @@ implements FetchBot {
                     public void dataReceived(SerialDataEvent event) {
                         try {
                             buffer = event.getAsciiString();
-                            synchronized (serialLock) {
-                                isSerialLocked = false;
-                                serialLock.notifyAll();
-                            }
-                        }
-                        catch (InterruptedException e) {
-                            Logger.warn(e, "Thread was interrupted.");
                         }
                         catch (IOException e) {
                             Logger.error(e, "There was an issue with IO!");
@@ -109,7 +98,6 @@ implements FetchBot {
             returnData.put("f", -1);
             returnData.put("l", -1);
             returnData.put("r", -1);
-            System.out.println("AV 3:" + serial.available()); // Test
             if (buffer.charAt(0) == '{' && !buffer.equals("{ }")) {
                 returnData = new JSONObject(buffer);
             }
@@ -120,28 +108,15 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally {
-            buffer = "{ }";
-        }
+        finally { }
         return returnData;
     }
     private void write() {
         try {
             if (serial.isOpen()) {
-                isSerialLocked = true;
                 serial.write(getArduinoValue("a"));
-                System.out.println("AV 2:" + serial.available()); // Test
                 serial.flush();
-                System.out.println("AV 3:" + serial.available()); // Test
-                synchronized (serialLock) {
-                    while (!isSerialLocked) {
-                        serialLock.wait();
-                    }
-                }
             }
-        }
-        catch (InterruptedException e) {
-            Logger.warn(e, "Thread was interrupted.");
         }
         catch (IOException e) {
             Logger.error(e, "There was an issue with IO!");
@@ -158,6 +133,7 @@ implements FetchBot {
     // Public Methods
     public void clear() {
         close();
+	buffer = "{ }";
         toArduinoData = new JSONObject();
         toRobotData = new JSONObject();
     }

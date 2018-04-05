@@ -1,4 +1,5 @@
 package io.github.cshadd.fetch_bot.util;
+import com.pi4j.util.Console;
 import io.github.cshadd.fetch_bot.FetchBot;
 import java.io.File;
 import java.io.IOException;
@@ -13,11 +14,14 @@ import org.apache.commons.io.FileUtils;
 public class Logger
 implements FetchBot {
     // Private Constant Instance/Property Fields
-    private static final String LOG_PATH = "FetchBot.log";
     private static final String TAG = "[FETCH BOT]";
+
+    // Public Constant Instance/Property Fields
+    public static final String LOG_PATH = "FetchBot.log";
 
     // Private Instance/Property Fields
     private static InterfaceCommunication interfaceComm;
+    private static Console console;
 
     // Private Constructors
     private Logger() { }
@@ -49,7 +53,7 @@ implements FetchBot {
     private static void writeInterface(String msg, boolean append) {
         write(msg, append);
         try {
-            if (interfaceComm) {
+            if (interfaceComm != null) {
                 interfaceComm.setInterfaceValue("verbose", read());
             }
         }
@@ -61,6 +65,8 @@ implements FetchBot {
 
     // Public Static Methods
     public static void clear() {
+        console = new Console();
+        console.title("--- Fetch Bot ---", "https://cshadd.github.io/fetch-bot/");
         File input = null;
         try {
             input = new File(LOG_PATH);
@@ -75,26 +81,28 @@ implements FetchBot {
         error(msg, true);
     }
     public static void error(Throwable e, String msg) {
-        StringWriter errors = new StringWriter();
+        final StringWriter errors = new StringWriter();
         e.printStackTrace(new PrintWriter(errors));
         error(errors + "\n" + msg);
     }
     public static void error(String msg, boolean append) {
-        msg = TAG + " [ERROR (SAFELY CAUGHT)] " + msg;
-        System.err.println(msg + "\nPlease report this issue to the developers!");
+        msg = "\u001B[331" + TAG + " [ERROR (SAFELY CAUGHT)] " + msg;
+        console.println(msg + "\nPlease report this issue to the developers!\u001B[0m");
         writeInterface(msg, append);
     }
+public static void exit() {
+console.promptForExit();}
     public static void fatalError(String msg) {
         fatalError(msg, true);
     }
     public static void fatalError(Throwable e, String msg) {
-        StringWriter errors = new StringWriter();
+        final StringWriter errors = new StringWriter();
         e.printStackTrace(new PrintWriter(errors));
         fatalError(errors + "\n" + msg);
     }
     public static void fatalError(String msg, boolean append) {
-        msg = TAG + " [FATAL ERROR (SAFELY CAUGHT)] " + msg;
-        System.err.println(msg + "\nPlease report this issue to the developers!");
+        msg = "\u001B[31m" + TAG + " [FATAL ERROR (SAFELY CAUGHT)] " + msg;
+        console.println(msg + "\nPlease report this issue to the developers!\u001B[0m");
         write(msg, append);
     }
     public static void info(String msg) {
@@ -102,7 +110,7 @@ implements FetchBot {
     }
     public static void info(String msg, boolean append) {
         msg = TAG + " [INFO] " + msg;
-        System.out.println(msg);
+        console.println(msg);
         writeInterface(msg, append);
     }
     public static void setInterfaceCommunications(InterfaceCommunication comm) {
@@ -112,13 +120,13 @@ implements FetchBot {
         warn(msg, true);
     }
     public static void warn(Throwable e, String msg) {
-        StringWriter errors = new StringWriter();
+        final StringWriter errors = new StringWriter();
         e.printStackTrace(new PrintWriter(errors));
         warn(errors + "\n" + msg);
     }
     public static void warn(String msg, boolean append) {
-        msg = TAG + " [WARN] " + msg;
-        System.out.println(msg);
+        msg = "\u001B[33m" + TAG + " [WARN] " + msg;
+        console.println(msg + "\u001B[0m");
         writeInterface(msg, append);
     }
 }

@@ -37,17 +37,18 @@ void setup() {
 }
 
 void loop() {
-    if (Serial.available()) {
+    // if (Serial.available()) {
         const size_t bufferSize = JSON_OBJECT_SIZE(5);
         DynamicJsonBuffer jsonBuffer(bufferSize);
         JsonObject& root = jsonBuffer.createObject();
+if (Serial.available()) {
+	action = Serial.readString();
+}
+	root["a"] = action;
 
-        action = Serial.readString();
-        
         // Movement here...
-        
-        root["a"] = action;
-        action = "Stop";
+
+ 	action = "Stop";
 
         digitalWrite(trigPin1, LOW);
         digitalWrite(trigPin2, LOW);
@@ -60,7 +61,7 @@ void loop() {
         digitalWrite(trigPin1, LOW);
         digitalWrite(trigPin2, LOW);
         digitalWrite(trigPin3, LOW);
-
+	delay(10);
         duration1 = pulseIn(echoPin1, HIGH);
         duration2 = pulseIn(echoPin2, HIGH);
         duration3 = pulseIn(echoPin3, HIGH);
@@ -75,5 +76,5 @@ void loop() {
 
         root.printTo(Serial);
         Serial.flush();
-    }
+    // }
 }
