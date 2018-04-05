@@ -14,7 +14,6 @@ implements FetchBot {
     // Private Static Instance/Property Fields
     private static ArduinoCommunication arduinoComm;
     private static InterfaceCommunication interfaceComm;
-    private static Logger log;
 
     // Public Static Methods
     public static void delayThread(long millis) {
@@ -22,19 +21,20 @@ implements FetchBot {
             Thread.sleep(millis);
         }
         catch (InterruptedException e) {
-            log.warn(e, "Thread was interrupted.");
+            Logger.warn(e, "Thread was interrupted.");
         }
         catch (Exception e) {
-            log.error(e, "There was an unknown issue!");
+            Logger.error(e, "There was an unknown issue!");
         }
+        finally { }
     }
     // Entry Point
     public static void main(String[] args) {
         // Start console
         final Console console = new Console();
-        console.title("--- Fetch Bot ---", "https://cshadd.github.io/fetch-bot/");
+        console.title("--- Fetch Bot " + version + " ---", "https://cshadd.github.io/fetch-bot/");
 
-        // Assign first vars
+        // Assign first variables
         String currentMode = "Idle";
         String currentMove = "Stop";
         float currentSensorFront = -1;
@@ -49,11 +49,11 @@ implements FetchBot {
         interfaceComm = new InterfaceCommunication();
 
         // Initiate logging
-        log = Logger.getInstance(interfaceComm);
-        log.clear();
+        Logger.setInterfaceCommunications(interfaceComm);
+        Logger.clear();
 
         // Show user that we started
-        log.info("Fetch Bot " + version + " preparing!");
+        Logger.info("Fetch Bot preparing!");
 
         // Version check
         VersionCheck.checkVersionMatch(version);
@@ -68,7 +68,7 @@ implements FetchBot {
         arduinoComm.reset();
         arduinoComm.pushArduino();
 
-        log.info("Fetch Bot started!");
+        Logger.info("Fetch Bot started!");
 
         while (true) {
             // Pull data from communications
@@ -76,16 +76,16 @@ implements FetchBot {
             interfaceComm.pullRobot();
             arduinoComm.pullRobot();
 
-            delayThread(1000);
-
             if (interfaceComm != null) {
                 if (arduinoComm != null){
                     // Sensors
                     final float frontSensor = arduinoComm.getRobotValue("f");
+                    final float leftSensor = arduinoComm.getRobotValue("l");
+                    final float rightSensor = arduinoComm.getRobotValue("r");
                     if (frontSensor != -1) {
                         if (frontSensor != currentSensorFront) {
                             currentSensorFront = frontSensor;
-                            log.info("Arduino - [f: " + currentSensorFront + "] received.");
+                            Logger.info("Arduino - [f: " + currentSensorFront + "] received.");
                             interfaceComm.setInterfaceValue("sensor-front", "" + currentSensorFront);
                         }
                     }
@@ -98,7 +98,7 @@ implements FetchBot {
                     if (mode != null) {
                         if (!mode.equals(currentMode)) {
                             currentMode = mode;
-                            log.info("Interface - [mode: " + currentMode + "] command received.");
+                            Logger.info("Interface - [mode: " + currentMode + "] command received.");
                         }
                         interfaceComm.setInterfaceValue("mode", currentMode);
 
@@ -117,7 +117,7 @@ implements FetchBot {
                             final String move = interfaceComm.getRobotValue("move");
                             if (!move.equals(currentMove)) {
                                 currentMove = move;
-                                log.info("Interface - [move: " + currentMove + "] command received.");
+                                Logger.info("Interface - [move: " + currentMove + "] command received.");
 
                                 arduinoComm.setArduinoValue(currentMove);
                                 arduinoComm.pushArduino();
@@ -125,7 +125,7 @@ implements FetchBot {
                                 if (!move.equals("Stop")) {
                                     interfaceComm.setInterfaceValue("emotion", "Happy");
 
-                                    delayThread(1000);
+                                    // delayThread(1000);
 
                                     // Calculations
 
@@ -138,32 +138,31 @@ implements FetchBot {
                             }
                         }
                         else {
-                            log.warn("[mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
+                            Logger.warn("[mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
                             interfaceComm.setRobotValue("mode", "Idle");
                         }
                     }
                     else {
-                        log.warn("Communication failure to interface.");
+                        Logger.warn("Communication failure to interface.");
                     }
                 }
                 else {
-                    log.warn("Communication failure to Arduino.");
+                    Logger.warn("Communication failure to Arduino.");
                 }
 
                 // Push data to communications
                 interfaceComm.pushInterface();
             }
             else {
-                log.warn("Communication failure to interface.");
+                Logger.warn("Communication failure to interface.");
             }
             delayThread(1000);
         }
 
         // Termination
-        log.info("Fetch Bot terminating! Log file: ./FetchBot.log.");
+        Logger.info("Fetch Bot terminating! Log file: ./FetchBot.log.");
         arduinoComm.setArduinoValue("Stop");
         arduinoComm.pushArduino();
-        delayThread(1000);
         arduinoComm.clear();
         interfaceComm.clear();
         interfaceComm.pushInterface();
