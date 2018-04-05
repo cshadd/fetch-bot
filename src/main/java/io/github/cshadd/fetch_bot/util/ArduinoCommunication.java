@@ -63,8 +63,8 @@ implements FetchBot {
     private void open() {
         try {
             if (!serial.isOpen()) {
-                Logger.info("ArduinoCommunication - Opening serial on " + SERIAL_PORT + ".");
                 serial.open(serialConfig);
+                Logger.info("ArduinoCommunication - Opened serial on " + SERIAL_PORT + ".");
                 serialListener = new SerialDataEventListener() {
                     @Override
                     public void dataReceived(SerialDataEvent event) {
