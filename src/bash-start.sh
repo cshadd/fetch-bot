@@ -6,6 +6,6 @@ xset -display :0 -dpms
 xset -display :0 s noblank
 sudo pkill java
 cd ~/bin/
-sudo java -jar fetch-bot-v0.13.0.jar "v0.13.0" &
+sudo java -jar fetch-bot-v0.14.0.jar "v0.14.0" &
 /usr/bin/chromium-browser --incognito --start-maximized --kiosk http://localhost/FetchBot/face.html
 unclutter

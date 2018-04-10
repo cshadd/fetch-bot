@@ -25,7 +25,7 @@ This repository may be used for your own robot.
     - x1 Elecrow RPA05010R HDMI 5-Inch 800x480 TFT LCD Display with Touch Screen Monitor for Raspberry Pi B+/2B/3B
     - x2 Adafruit Stepper Motor NEMA17 12V 350mA
     - x2 Mounting Bracket for Nema 17 Stepper Motor (Geared Stepper) Hobby CNC/3D Printer
-    - ~~x3~~ x2 58mm Omni Wheel With Hubs For DIY Arduino Robot Competition Car Supporting LEGO
+    - "Omni Wheels"
     - x1 Arduino Uno
     - x1 Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
     - x1 Non-Soldering Breadboard
@@ -35,7 +35,6 @@ This repository may be used for your own robot.
     - x1 15000mAh Dual USB Output and 2A Input Battery Pack
 * Optional:
     - x1 Raspberry Pi Case Kit
-    - ~~x1 2x20-pin Extra Tall Female Stacking Header 0.1"~~
 
 ### Assembly
 Great care is needed to assemble this robot.
