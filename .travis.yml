@@ -22,7 +22,7 @@ install:
     - sudo cp ./ArduinoJson.h /usr/share/arduino/libraries/ArduinoJson.h
     - cd ..
     - cd ./src/arduino-slave-processor/
-    - -make upload
+    - make upload -s
     - cd ..
     - cd ..
 script:
