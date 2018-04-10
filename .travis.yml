@@ -17,11 +17,12 @@ install:
     - sudo mkdir -p /usr/share/arduino/libraries/
     - sudo cp -R ./ArduinoJson/ /usr/share/arduino/libraries/
     - sudo cp ./ArduinoJson.h /usr/share/arduino/libraries/ArduinoJson.h
-script:
+    - sudo cp -R ./src/www /var/www/html/FetchBot
+    - sudo mkdir -p /var/www/html/
     - cd ..
     - cd ./src/arduino-slave-processor/
+script:
     - make upload
     - cd ..
     - cd ..
     - mvn clean package -Dmaven.javadoc.skip=false -DskipTests=true
-    - sudo cp -R ./src/www /var/www/html/FetchBot
