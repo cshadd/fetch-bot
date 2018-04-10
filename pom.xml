@@ -88,7 +88,6 @@
     <!-- BUILD PROPERTIES -->
     <properties>
         <!-- DEPENDENCY VERSIONS -->
-        <junit.version>4.12</junit.version>
         <cshadd-java-data-structures.version>v1.0.0-alpha.1</cshadd-java-data-structures.version>
         <commons-io.version>2.6</commons-io.version>
         <json.version>20180130</json.version>
@@ -120,12 +119,6 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>com.github.cshadd</groupId>
                 <artifactId>cshadd-java-data-structures</artifactId>
                 <version>${cshadd-java-data-structures.version}</version>
@@ -150,10 +143,6 @@
 
     <!-- GLOBAL DEPENDENCIES -->
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.github.cshadd</groupId>
             <artifactId>cshadd-java-data-structures</artifactId>
@@ -267,21 +256,6 @@
 
         <!-- GLOBAL BUILD PLUGINS (used when building all modules) -->
         <plugins>
-            <!-- REMOVE TRAILING WHITESPACE AUTOMATICALLY -->
-            <plugin>
-                <groupId>com.github.dantwining.whitespace-maven-plugin</groupId>
-                <artifactId>whitespace-maven-plugin</artifactId>
-                <version>1.0.4</version>
-                <executions>
-                    <execution>
-                        <phase>process-sources</phase>
-                        <goals>
-                            <goal>trim</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- COPY DEPENDENCIES -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
