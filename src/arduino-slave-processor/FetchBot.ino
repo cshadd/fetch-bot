@@ -17,7 +17,7 @@ float distance3;
 float duration1;
 float duration2;
 float duration3;
-int move;
+String action;
 
 void setup() {
     pinMode(trigPin1, OUTPUT);
@@ -32,54 +32,49 @@ void setup() {
     duration1 = 0;
     duration2 = 0;
     duration3 = 0;
-    move = 0;
+    action = "Stop";
     Serial.begin(9600);
 }
 
 void loop() {
-    if (Serial.available() > 0) {
-        move = Serial.read();
-
-        // For Sensor 1
-        digitalWrite(trigPin1, LOW);
-        delayMicroseconds(2);
-        digitalWrite(trigPin1, HIGH);
-        delayMicroseconds(10);
-        digitalWrite(trigPin1, LOW);
-
-        duration1 = pulseIn(echoPin1, HIGH);
-        distance1 = (duration1*0.0343)/2;
-
-        // For Sensor 2
-        digitalWrite(trigPin2, LOW);
-        delayMicroseconds(2);
-        digitalWrite(trigPin2, HIGH);
-        delayMicroseconds(10);
-        digitalWrite(trigPin2, LOW);
-
-        duration2 = pulseIn(echoPin2, HIGH);
-        distance2 = (duration2*0.0343)/2;
-
-        // For Sensor 3
-        digitalWrite(trigPin3, LOW);
-        delayMicroseconds(2);
-        digitalWrite(trigPin3, HIGH);
-        delayMicroseconds(10);
-        digitalWrite(trigPin3, LOW);
-
-        duration3 = pulseIn(echoPin3, HIGH);
-        distance3 = (duration3*0.0343)/2;
-
-        const size_t bufferSize = JSON_OBJECT_SIZE(4);
+    // if (Serial.available()) {
+        const size_t bufferSize = JSON_OBJECT_SIZE(5);
         DynamicJsonBuffer jsonBuffer(bufferSize);
-
         JsonObject& root = jsonBuffer.createObject();
-        root["sf"] = distance1;
-        root["sl"] = distance2;
-        root["sr"] = distance3;
+if (Serial.available()) {
+	action = Serial.readString();
+}
+	root["a"] = action;
 
         // Movement here...
-        move = 0;
+
+ 	action = "Stop";
+
+        digitalWrite(trigPin1, LOW);
+        digitalWrite(trigPin2, LOW);
+        digitalWrite(trigPin3, LOW);
+        delay(10);
+        digitalWrite(trigPin1, HIGH);
+        digitalWrite(trigPin2, HIGH);
+        digitalWrite(trigPin3, HIGH);
+        delay(10);
+        digitalWrite(trigPin1, LOW);
+        digitalWrite(trigPin2, LOW);
+        digitalWrite(trigPin3, LOW);
+	delay(10);
+        duration1 = pulseIn(echoPin1, HIGH);
+        duration2 = pulseIn(echoPin2, HIGH);
+        duration3 = pulseIn(echoPin3, HIGH);
+
+        distance1 = (duration1*0.0343)/2;
+        distance2 = (duration2*0.0343)/2;
+        distance3 = (duration3*0.0343)/2;
+
+        root["f"] = distance1;
+        root["l"] = distance2;
+        root["r"] = distance3;
+
         root.printTo(Serial);
-    }
+        Serial.flush();
+    // }
 }
