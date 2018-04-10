@@ -2,11 +2,11 @@ package io.github.cshadd.fetch_bot;
 
 // Main
 public class FetchBotException
-extends Exception {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+extends Exception
+implements FetchBot {
+    // Private Constant Instance/Property Fields
+    private static final long serialVersionUID = 1L;
+    
 	// Public Constructors
     public FetchBotException() { }
     public FetchBotException(String message) {
