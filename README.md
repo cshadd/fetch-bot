@@ -26,6 +26,7 @@ This repository may be used for your own robot.
     - x2 Adafruit Stepper Motor NEMA17 12V 350mA
     - x2 Mounting Bracket for Nema 17 Stepper Motor (Geared Stepper) Hobby CNC/3D Printer
     - "Omni Wheels"
+    - "Back Wheel"
     - x1 Arduino Uno
     - x1 Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
     - x1 Non-Soldering Breadboard
