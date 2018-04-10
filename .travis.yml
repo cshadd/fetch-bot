@@ -5,6 +5,7 @@ os:
     - linux
 install:
     - sudo apt-get install picocom
+    - pip install --upgrade pip
     - pip install ino
     - cd ./git-submodules/ArduinoJson
     - git submodule init
