@@ -129,6 +129,7 @@ See [here](/docs/DevelopmentStandards.pdf).
 * [W3Schools](https://www.w3schools.com/)
 * [The PHP Group](https://php.net/)
 * [Microsoft](https://www.microsoft.com/)
+* [Travis CI](https://www.travis-ci.org/)
 
 [![<3 Raspberry Pi](https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png)](https://www.raspberrypi.org/)
 
