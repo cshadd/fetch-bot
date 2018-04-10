@@ -4,6 +4,8 @@ jdk:
 os:
     - linux
 install:
+    - sudo apt-get install picocom
+    - pip install ino
     - cd ./git-submodules/ArduinoJson
     - git submodule init
     - git submodule update
@@ -11,9 +13,11 @@ install:
     - sudo mkdir -p /usr/share/arduino/libraries/
     - sudo cp -R ./ArduinoJson/ /usr/share/arduino/libraries/
     - sudo cp ./ArduinoJson.h /usr/share/arduino/libraries/ArduinoJson.h
+script:
     - cd ..
     - cd ./src/arduino-slave-processor/
     - make upload
-    - sudo cp -R ./src/www /var/www/html/FetchBot
-script:
+    - cd ..
+    - cd ..
     - mvn clean package -Dmaven.javadoc.skip=false -DskipTests=true
+    - sudo cp -R ./src/www /var/www/html/FetchBot
