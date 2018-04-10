@@ -12,6 +12,8 @@ before_install:
     - sudo pip install --upgrade pip
     - sudo pip install ino
 install:
+    - sudo mkdir -p /var/www/html/
+    - sudo cp -R ./src/www /var/www/html/FetchBot
     - cd ./git-submodules/ArduinoJson
     - git submodule init
     - git submodule update
@@ -19,8 +21,6 @@ install:
     - sudo mkdir -p /usr/share/arduino/libraries/
     - sudo cp -R ./ArduinoJson/ /usr/share/arduino/libraries/
     - sudo cp ./ArduinoJson.h /usr/share/arduino/libraries/ArduinoJson.h
-    - sudo mkdir -p /var/www/html/
-    - sudo cp -R ./src/www /var/www/html/FetchBot
     - cd ..
     - cd ./src/arduino-slave-processor/
 script:
