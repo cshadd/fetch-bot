@@ -1,6 +1,5 @@
 package io.github.cshadd.fetch_bot.io;
 import io.github.cshadd.fetch_bot.FetchBot;
-import io.github.cshadd.fetch_bot.util.Logger;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
