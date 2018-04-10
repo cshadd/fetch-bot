@@ -1,5 +1,4 @@
 language:
-    - c
     - java
 jdk:
     - oraclejdk8
@@ -23,8 +22,8 @@ install:
     - sudo cp ./ArduinoJson.h /usr/share/arduino/libraries/ArduinoJson.h
     - cd ..
     - cd ./src/arduino-slave-processor/
-script:
     - make upload
     - cd ..
     - cd ..
+script:
     - mvn clean package -Dmaven.javadoc.skip=false -DskipTests=true
