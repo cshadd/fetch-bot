@@ -24,7 +24,7 @@ install:
     - cd ..
     - cd ./src/arduino-slave-processor/
 script:
-    - make upload
+    - make
     - cd ..
     - cd ..
     - mvn clean package -Dmaven.javadoc.skip=false -DskipTests=true
