@@ -1,7 +1,14 @@
 #!/bin/bash
 
 ./bash-uninstall.sh
-sudo cp -R submodules/ArduinoJson/ /usr/share/arduino/libraries/
+cd ./git-submodules/ArduinoJson
+git submodule init
+git submodule update
+cd ..
+sudo mkdir -p /usr/share/arduino/libraries/
+sudo cp -R ./ArduinoJson/ /usr/share/arduino/libraries/
+sudo cp ./ArduinoJson.h /usr/share/arduino/libraries/ArduinoJson.h
+cd ..
 cd ./src/arduino-slave-processor/
 make upload
 rm -f -r ./build-uno
