@@ -1,5 +1,4 @@
 package io.github.cshadd.fetch_bot.io;
-import io.github.cshadd.fetch_bot.FetchBot;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
@@ -8,7 +7,7 @@ import org.json.JSONObject;
 
 // Main
 public class InterfaceCommunication
-implements FetchBot {
+implements Communication {
     // Private Constant Instance/Property Fields
     private static final  String TO_INTERFACE_JSON_PATH = "/var/www/html/FetchBot/comms/toInterface.json";
     private static final  String TO_ROBOT_JSON_PATH = "/var/www/html/FetchBot/comms/toRobot.json";
@@ -25,96 +24,96 @@ implements FetchBot {
 
     // Private Methods
     private JSONObject read(String filePath)
-    throws InterfaceCommunicationException {
+    throws CommunicationException {
         JSONObject returnData = null;
         try {
             File input = new File(filePath);
             returnData = new JSONObject(FileUtils.readFileToString(input, "UTF-8"));
         }
         catch (IOException e) {
-            throw new InterfaceCommunicationException("There was an issue with IO!", e);
+            throw new CommunicationException("There was an issue with IO!", e);
         }
         catch (JSONException e) {
-            throw new InterfaceCommunicationException("There was an issue with JSON!", e);
+            throw new CommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            throw new InterfaceCommunicationException("There was an unknown issue!", e);
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
         return returnData;
     }
     private void write(JSONObject json, String filePath)
-    throws InterfaceCommunicationException {
+    throws CommunicationException {
         try {
             File input = new File(filePath);
             FileUtils.writeStringToFile(input, "" + json, "UTF-8");
         }
         catch (IOException e) {
-            throw new InterfaceCommunicationException("There was an issue with IO!", e);
+            throw new CommunicationException("There was an issue with IO!", e);
         }
         catch (JSONException e) {
-            throw new InterfaceCommunicationException("There was an issue with JSON!", e);
+            throw new CommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            throw new InterfaceCommunicationException("There was an unknown issue!", e);
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
     }
 
     // Public Methods
     public void clear()
-    throws InterfaceCommunicationException {
+    throws CommunicationException {
         toInterfaceData = new JSONObject();
         toRobotData = new JSONObject();
     }
     public String getInterfaceValue(String key)
-    throws InterfaceCommunicationException {
+    throws CommunicationException {
         String returnData = null;
         try {
             returnData = toInterfaceData.getString(key);
         }
         catch (JSONException e) {
-            throw new InterfaceCommunicationException("There was an issue with JSON!", e);
+            throw new CommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            throw new InterfaceCommunicationException("There was an unknown issue!", e);
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
         return returnData;
     }
     public String getRobotValue(String key)
-    throws InterfaceCommunicationException {
+    throws CommunicationException {
         String returnData = null;
         try {
             returnData = toRobotData.getString(key);
         }
         catch (JSONException e) {
-            throw new InterfaceCommunicationException("There was an issue with JSON!", e);
+            throw new CommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            throw new InterfaceCommunicationException("There was an unknown issue!", e);
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
         return returnData;
     }
     public void pullInterface()
-    throws InterfaceCommunicationException {
+    throws CommunicationException {
         toInterfaceData = read(TO_INTERFACE_JSON_PATH);
     }
     public void pullRobot()
-    throws InterfaceCommunicationException {
+    throws CommunicationException {
         toRobotData = read(TO_ROBOT_JSON_PATH);
     }
     public void pushInterface()
-    throws InterfaceCommunicationException {
+    throws CommunicationException {
         write(toInterfaceData, TO_INTERFACE_JSON_PATH);
     }
     public void pushRobot()
-    throws InterfaceCommunicationException {
+    throws CommunicationException {
         write(toRobotData, TO_ROBOT_JSON_PATH);
     }
     public void reset()
-    throws InterfaceCommunicationException {
+    throws CommunicationException {
         clear();
         setInterfaceValue("emotion", "Idle");
         setInterfaceValue("mode", "Idle");
@@ -132,28 +131,28 @@ implements FetchBot {
         setRobotValue("move", "Stop");
     }
     public void setInterfaceValue(String key, String value)
-    throws InterfaceCommunicationException {
+    throws CommunicationException {
         try {
             toInterfaceData.put(key, value);
         }
         catch (JSONException e) {
-            throw new InterfaceCommunicationException("There was an issue with JSON!", e);
+            throw new CommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            throw new InterfaceCommunicationException("There was an unknown issue!", e);
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
     }
     public void setRobotValue(String key, String value)
-    throws InterfaceCommunicationException {
+    throws CommunicationException {
         try {
             toRobotData.put(key, value);
         }
         catch (JSONException e) {
-            throw new InterfaceCommunicationException("There was an issue with JSON!", e);
+            throw new CommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            throw new InterfaceCommunicationException("There was an unknown issue!", e);
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
     }

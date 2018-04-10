@@ -91,10 +91,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.io", "fetch_bot.io", "{2BB1730C-447B-4DA8-9CFB-BCFD3835C7D0}"
 	ProjectSection(SolutionItems) = preProject
 		src\main\java\io\github\cshadd\fetch_bot\io\ArduinoCommunication.java = src\main\java\io\github\cshadd\fetch_bot\io\ArduinoCommunication.java
-		src\main\java\io\github\cshadd\fetch_bot\io\ArduinoCommunicationException.java = src\main\java\io\github\cshadd\fetch_bot\io\ArduinoCommunicationException.java
+		src\main\java\io\github\cshadd\fetch_bot\io\Communication.java = src\main\java\io\github\cshadd\fetch_bot\io\Communication.java
 		src\main\java\io\github\cshadd\fetch_bot\io\CommunicationException.java = src\main\java\io\github\cshadd\fetch_bot\io\CommunicationException.java
 		src\main\java\io\github\cshadd\fetch_bot\io\InterfaceCommunication.java = src\main\java\io\github\cshadd\fetch_bot\io\InterfaceCommunication.java
-		src\main\java\io\github\cshadd\fetch_bot\io\InterfaceCommunicationException.java = src\main\java\io\github\cshadd\fetch_bot\io\InterfaceCommunicationException.java
 	EndProjectSection
 EndProject
 Global

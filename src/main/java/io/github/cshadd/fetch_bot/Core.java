@@ -1,8 +1,7 @@
 package io.github.cshadd.fetch_bot;
 import io.github.cshadd.fetch_bot.io.ArduinoCommunication;
-import io.github.cshadd.fetch_bot.io.ArduinoCommunicationException;
+import io.github.cshadd.fetch_bot.io.CommunicationException;
 import io.github.cshadd.fetch_bot.io.InterfaceCommunication;
-import io.github.cshadd.fetch_bot.io.InterfaceCommunicationException;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.VersionCheck;
 import io.github.cshadd.fetch_bot.util.VersionCheckException;
@@ -71,7 +70,7 @@ implements FetchBot {
             Logger.warn("VersionCheck - [Version] mismatch (this: " + version + "; current: " + currentVersion + "), this version might be outdated!");
         }
 
-        // Initiate arduino communications
+        // Initiate Arduino communications
         arduinoComm = new ArduinoCommunication();
 
         // Reset communications
@@ -80,16 +79,14 @@ implements FetchBot {
             interfaceComm.pushInterface();
             interfaceComm.pushRobot();
             arduinoComm.reset();
+            Logger.info("ArduinoCommunication - Opened serial on " + ArduinoCommunication.SERIAL_PORT + ".");
             arduinoComm.pushArduino();
         }
-        catch (ArduinoCommunicationException e) {
-            Logger.error(e, "ArduinoCommunication encountered an error.");
-        }
-        catch (InterfaceCommunicationException e) {
-            Logger.error(e, "InterfaceCommunication encountered an error.");
+        catch (CommunicationException e) {
+            Logger.error(e, "Communication encountered an error.");
         }
         catch (Exception e) {
-            Logger.fatalError(e, "ArduinoCommunication encountered a fatal error.");
+            Logger.fatalError(e, "Communication encountered a fatal error.");
         }
         finally { }
 
@@ -174,14 +171,11 @@ implements FetchBot {
                 // Push data to communications
                 interfaceComm.pushInterface();
             }
-            catch (ArduinoCommunicationException e) {
-                Logger.error(e, "ArduinoCommunication encountered an error.");
-            }
-            catch (InterfaceCommunicationException e) {
-                Logger.error(e, "InterfaceCommunication encountered an error.");
+            catch (CommunicationException e) {
+                Logger.error(e, "Communication encountered an error.");
             }
             catch (Exception e) {
-                Logger.fatalError(e, "ArduinoCommunication encountered a fatal error.");
+                Logger.fatalError(e, "Communication encountered a fatal error.");
             }
             finally { }
 
@@ -199,14 +193,11 @@ implements FetchBot {
             interfaceComm.pushInterface();
             interfaceComm.pushRobot();
         }
-        catch (ArduinoCommunicationException e) {
-            Logger.error(e, "ArduinoCommunication encountered an error.");
-        }
-        catch (InterfaceCommunicationException e) {
-            Logger.error(e, "InterfaceCommunication encountered an error.");
+        catch (CommunicationException e) {
+            Logger.error(e, "Communication encountered an error.");
         }
         catch (Exception e) {
-            Logger.fatalError(e, "ArduinoCommunication encountered a fatal error.");
+            Logger.fatalError(e, "Communication encountered a fatal error.");
         }
         finally { }
         Logger.close();
