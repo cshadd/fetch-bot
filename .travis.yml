@@ -4,6 +4,8 @@ jdk:
 os:
     - linux
 install:
+    - sudo apt-get arduino-core
+    - sudo apt-get arduino-mk
     - sudo apt-get install picocom
     - pip install --upgrade pip
     - pip install ino
