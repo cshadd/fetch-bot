@@ -96,7 +96,6 @@ implements FetchBot {
         Logger.info("Fetch Bot started!");
 
         while (true) {
-            
             try {
                 // Pull data from communications
                 interfaceComm.pullInterface();
