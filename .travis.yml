@@ -1,0 +1,19 @@
+language: java
+jdk:
+    - oraclejdk8
+os:
+    - linux
+install:
+    - cd ./git-submodules/ArduinoJson
+    - git submodule init
+    - git submodule update
+    - cd ..
+    - sudo mkdir -p /usr/share/arduino/libraries/
+    - sudo cp -R ./ArduinoJson/ /usr/share/arduino/libraries/
+    - sudo cp ./ArduinoJson.h /usr/share/arduino/libraries/ArduinoJson.h
+    - cd ..
+    - cd ./src/arduino-slave-processor/
+    - make upload
+    - sudo cp -R ./src/www /var/www/html/FetchBot
+script:
+    - mvn clean package -Dmaven.javadoc.skip=false -DskipTests=true
