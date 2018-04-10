@@ -2,6 +2,7 @@
 
 [![Release](https://img.shields.io/github/release/cshadd/fetch-bot/all.svg)](https://github.com/cshadd/fetch-bot/releases)
 [![License](https://img.shields.io/github/license/cshadd/fetch-bot.svg)](LICENSE)
+[![Travis CI Build Status](https://www.travis-ci.org/cshadd/fetch-bot.svg?branch=master)](https://www.travis-ci.org/cshadd/fetch-bot)
 
 # Fetch Bot
 This is a repository of an AI based robot that uses image processing and data structures to transverse an area.
