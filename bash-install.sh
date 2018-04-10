@@ -7,7 +7,6 @@ git submodule update
 cd ..
 sudo mkdir -p /usr/share/arduino/libraries/
 sudo cp -R ./ArduinoJson/ /usr/share/arduino/libraries/
-sudo cp ./ArduinoJson.h /usr/share/arduino/libraries/ArduinoJson.h
 cd ..
 cd ./src/arduino-slave-processor/
 make upload
