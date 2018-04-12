@@ -1,13 +1,12 @@
 #!/bin/bash
 
 ./bash-uninstall.sh
-cd ./git-submodules/ArduinoJson
-git submodule init
-git submodule update
-cd ..
 sudo mkdir -p /usr/share/arduino/libraries/
-sudo cp -R ./ArduinoJson/ /usr/share/arduino/libraries/
-cd ..
+wget https://github.com/bblanchon/ArduinoJson/releases/download/v5.13.1/ArduinoJson-v5.13.1.zip
+unzip ArduinoJson-v5.13.1.zip
+rm ArduinoJson-v5.13.1.zip
+sudo cp -r ./ArduinoJson /usr/share/arduino/libraries/
+rm -f -r ./ArduinoJson;
 cd ./src/arduino-slave-processor/
 make upload
 rm -f -r ./build-uno
