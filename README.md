@@ -2,7 +2,7 @@
 
 [![Release](https://img.shields.io/github/release/cshadd/fetch-bot/all.svg)](https://github.com/cshadd/fetch-bot/releases)
 [![License](https://img.shields.io/github/license/cshadd/fetch-bot.svg)](LICENSE)
-[![Travis CI Build Status](https://www.travis-ci.org/cshadd/fetch-bot.svg?branch=master)](https://www.travis-ci.org/cshadd/fetch-bot)
+[![Travis CI Build Status](https://www.travis-ci.org/cshadd/fetch-bot.svg)](https://www.travis-ci.org/cshadd/fetch-bot)
 
 # Fetch Bot
 This is a repository of an AI based robot that uses image processing and data structures to transverse an area.
@@ -63,8 +63,8 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
     - Apache Maven 3.5.2 or higher
     - Apache HTTP Server 2.4.25 or higher
     - PHP 7.0 or higher
-    - Packaged Apps (Bash):
-        - Unclutter
+    - Packaged Apps (apt-get):
+        - unclutter
         - arduino-core
         - arduino-mk
 * Recommended (Computer):
