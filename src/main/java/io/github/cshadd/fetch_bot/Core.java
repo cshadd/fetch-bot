@@ -5,9 +5,9 @@ import io.github.cshadd.fetch_bot.io.InterfaceCommunication;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.VersionCheck;
 import io.github.cshadd.fetch_bot.util.VersionCheckException;
-import nu.pattern.OpenCV; // Testing...
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
+// import nu.pattern.OpenCV; // Testing...
+// import org.opencv.core.CvType;
+// import org.opencv.core.Mat;
 
 // Main
 public class Core
@@ -34,9 +34,9 @@ implements FetchBot {
     }
     // Entry Point
     public static void main(String[] args) {
-        OpenCV.loadShared();
-        Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
-        System.out.println("OPENCV TEST: mat = " + mat.dump());
+        // OpenCV.loadShared();
+        // Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
+        // System.out.println("OPENCV TEST: mat = " + mat.dump());
 
         // Assign first variables
         String currentMode = "Idle";
@@ -113,6 +113,9 @@ implements FetchBot {
                 if (frontSensor != -1) {
                     if (frontSensor != currentSensorFront) {
                         currentSensorFront = frontSensor;
+                        if (currentSensorFront <= 15) {
+                            interfaceComm.setInterfaceValue("emotion", "Angry");
+                        }
                         Logger.info("Arduino - [f: " + currentSensorFront + "] received.");
                         interfaceComm.setInterfaceValue("sensor-front", "" + currentSensorFront);
                     }
@@ -145,7 +148,7 @@ implements FetchBot {
                         interfaceComm.setInterfaceValue("emotion", "Neutral");
                     }
                     else if (currentMode.equals("Idle")) {
-                        interfaceComm.setInterfaceValue("emotion", "Idle");
+                        // interfaceComm.setInterfaceValue("emotion", "Idle");
                     }
                     else if (currentMode.equals("Off")) {
                         break;
@@ -162,10 +165,10 @@ implements FetchBot {
                             arduinoComm.pushArduino();
 
                             if (!move.equals("Stop")) {
+                                currentMove = "Stop";
                                 interfaceComm.setInterfaceValue("emotion", "Happy");
                                 interfaceComm.setRobotValue("move", "Stop");
                                 interfaceComm.pushRobot();
-                                currentMove = "Stop";
                             }
                         }
                     }

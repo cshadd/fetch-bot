@@ -6,7 +6,7 @@ wget https://github.com/bblanchon/ArduinoJson/releases/download/v5.13.1/ArduinoJ
 unzip ArduinoJson-v5.13.1.zip
 rm ArduinoJson-v5.13.1.zip
 sudo cp -r ./ArduinoJson /usr/share/arduino/libraries/
-rm -f -r ./ArduinoJson;
+rm -f -r ./ArduinoJson
 cd ./src/arduino-slave-processor/
 make upload
 rm -f -r ./build-uno

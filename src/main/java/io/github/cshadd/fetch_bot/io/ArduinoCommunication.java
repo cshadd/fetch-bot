@@ -56,6 +56,7 @@ implements Communication {
                 serial.close();
                 SerialFactory.shutdown();
             }
+            isSerialLocked = false;
         }
         catch (IOException e) {
             throw new CommunicationException("There was an issue with IO!", e);
