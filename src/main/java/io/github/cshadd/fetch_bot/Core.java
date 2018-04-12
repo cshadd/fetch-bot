@@ -34,7 +34,7 @@ implements FetchBot {
     }
     // Entry Point
     public static void main(String[] args) {
-        nu.pattern.OpenCV.loadShared();
+        OpenCV.loadShared();
         Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
         System.out.println("OPENCV TEST: mat = " + mat.dump());
 
