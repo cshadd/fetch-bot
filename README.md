@@ -25,6 +25,7 @@ This repository may be used for your own robot.
     - x1 Male to Male HDMI Cable
     - x1 Elecrow RPA05010R HDMI 5-Inch 800x480 TFT LCD Display with Touch Screen Monitor for Raspberry Pi B+/2B/3B
     - x2 Adafruit Stepper Motor NEMA17 12V 350mA
+    - "Motor Controllers"
     - x2 Mounting Bracket for Nema 17 Stepper Motor (Geared Stepper) Hobby CNC/3D Printer
     - "Omni Wheels"
     - "Back Wheel"
