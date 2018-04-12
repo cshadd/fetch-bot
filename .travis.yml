@@ -8,14 +8,12 @@ os:
 before_install:
     - sudo apt-get update
     - sudo pip install --upgrade pip
-    - sudo pkill java
     - sudo rm -f -r /var/www/html/FetchBot
     - find ~/bin -name 'fetch-bot*.jar' -exec rm -f {} \;
     - rm -f -r ~/bin/libs/fetch-bot
     - rm -f ~/bin/StartFetchBot.sh
 install:
-    - sudo apt-get install apache2 php libapache2-mod-php5 arduino-core arduino-mk picocom
-    - sudo /etc/init.d/apache2 restart
+    - sudo apt-get install arduino-core arduino-mk picocom
     - sudo pip install ino
 before_script:
     - cd ./git-submodules/ArduinoJson
