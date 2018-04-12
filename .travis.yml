@@ -1,10 +1,7 @@
-language:
-    - c
-    - java
-jdk:
-    - oraclejdk8
 os:
     - linux
+jdk:
+    - oraclejdk8
 before_install:
     - sudo apt-get update
     - sudo pip install --upgrade pip
@@ -23,13 +20,20 @@ before_script:
     - sudo cp -r ./ArduinoJson /usr/share/arduino/libraries/
     - rm -f -r ./ArduinoJson
     - cd ./src/arduino-slave-processor/
-script:
-    - make
-    - rm -f -r ./build-uno
-    - cd ..
-    - cd ..
-    - mkdir -p ~/bin
-    - mvn clean package -Dmaven.javadoc.skip=false -DskipTests=true
+
+
+matrix:
+    include:
+        - language: c
+        script:
+            - make
+            - rm -f -r ./build-uno
+        - language: java
+        script:
+            - cd ..
+            - cd ..
+            - mkdir -p ~/bin
+            - mvn clean package -Dmaven.javadoc.skip=false -DskipTests=true
 before_cache:
 after_success:
 after_failure:
