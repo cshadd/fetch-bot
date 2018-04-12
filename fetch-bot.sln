@@ -76,8 +76,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main", "Main", "{678A9F65-D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03}"
 	ProjectSection(SolutionItems) = preProject
-		docs\DevelopmentStandards.Base.docx = docs\DevelopmentStandards.Base.docx
-		docs\DevelopmentStandards.pdf = docs\DevelopmentStandards.pdf
 		docs\FullLogo.png = docs\FullLogo.png
 		docs\index.html = docs\index.html
 		docs\Logo.png = docs\Logo.png
@@ -89,6 +87,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.io", "fetch_bot.i
 		src\main\java\io\github\cshadd\fetch_bot\io\Communication.java = src\main\java\io\github\cshadd\fetch_bot\io\Communication.java
 		src\main\java\io\github\cshadd\fetch_bot\io\CommunicationException.java = src\main\java\io\github\cshadd\fetch_bot\io\CommunicationException.java
 		src\main\java\io\github\cshadd\fetch_bot\io\InterfaceCommunication.java = src\main\java\io\github\cshadd\fetch_bot\io\InterfaceCommunication.java
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "development-standards", "development-standards", "{51278AAE-8783-498B-B16E-694513C8E66C}"
+	ProjectSection(SolutionItems) = preProject
+		docs\development-standards\DevelopmentStandards.Base.docx = docs\development-standards\DevelopmentStandards.Base.docx
+		docs\development-standards\DevelopmentStandards.pdf = docs\development-standards\DevelopmentStandards.pdf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eclipse_Config", "Eclipse_Config", "{ED42A66C-9B91-49CA-883A-323AEE96F595}"
+	ProjectSection(SolutionItems) = preProject
+		.classpath = .classpath
+		.project = .project
 	EndProjectSection
 EndProject
 Global
@@ -108,6 +118,8 @@ Global
 		{678A9F65-DA68-4368-AE51-59B334A2E5EF} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{2BB1730C-447B-4DA8-9CFB-BCFD3835C7D0} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
+		{51278AAE-8783-498B-B16E-694513C8E66C} = {3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03}
+		{ED42A66C-9B91-49CA-883A-323AEE96F595} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8F99668-DE84-4451-95F0-312B7F0E1A3C}

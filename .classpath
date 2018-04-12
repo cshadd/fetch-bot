@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="lib" path="target/libs/fetch-bot/commons-io-2.6.jar"/>
+	<classpathentry kind="lib" path="target/libs/fetch-bot/cshadd-java-data-structures-v1.0.0-alpha.1.jar"/>
+	<classpathentry kind="lib" path="target/libs/fetch-bot/json-20180130.jar"/>
+	<classpathentry kind="lib" path="target/libs/fetch-bot/pi4j-core-1.1.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

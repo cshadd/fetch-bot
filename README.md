@@ -71,6 +71,7 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
     - Text Editor/IDE
 * Optional (Computer):
     - Visual Studio 2017 or higher
+    - Eclipse Oxygen or higher
 
 ### Installing
 Clone/fork this repository and save it. Then use ``./bash-install.sh`` to install to your system (Bash).
@@ -94,6 +95,9 @@ To run or stop it you will need to use the web server.
 ### Visual Studio Solution (Optional)
 You may use Visual Studio 2017 or higher as an editor. ``fetch-bot.sln`` is the solution file.
 
+### Eclipse Oxygen (Optional)
+You may use Eclipse Oxygen or higher as an editor. ``.project`` is the project file.
+
 ## Contributing
 See [here](CONTRIBUTING.md).
 
@@ -113,7 +117,7 @@ And the [contributers](https://github.com/cshadd/fetch-bot/graphs/contributors).
 See [here](LICENSE).
 
 ## Development Standards
-See [here](/docs/DevelopmentStandards.pdf).
+See [here](/docs/development-standards/DevelopmentStandards.pdf).
 
 ## Acknowledgements
 * [Raspberry Pi](https://www.raspberrypi.org/)
@@ -129,6 +133,7 @@ See [here](/docs/DevelopmentStandards.pdf).
 * [W3Schools](https://www.w3schools.com/)
 * [The PHP Group](https://php.net/)
 * [Microsoft](https://www.microsoft.com/)
+* [Eclipse](https://www.eclipse.org/)
 * [Travis CI](https://www.travis-ci.org/)
 
 [![<3 Raspberry Pi](https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png)](https://www.raspberrypi.org/)
