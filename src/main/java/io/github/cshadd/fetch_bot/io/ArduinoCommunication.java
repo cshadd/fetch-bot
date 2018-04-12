@@ -21,15 +21,18 @@ implements Communication {
 
     // Private Instance/Property Fields
     private String buffer;
+    private boolean isSerialLocked;
     private Serial serial;
     private SerialConfig serialConfig;
     private SerialDataEventListener serialListener;
+    private Object serialLock;
     private JSONObject toArduinoData;
     private JSONObject toRobotData;
 
     // Public Constructors
     public ArduinoCommunication() {
         buffer = "{ }";
+        isSerialLocked = false;
         serial = SerialFactory.createInstance();
         serialConfig = new SerialConfig();
         serialConfig.device(SERIAL_PORT);
@@ -38,6 +41,7 @@ implements Communication {
         serialConfig.parity(Parity.NONE);
         serialConfig.stopBits(StopBits._1);
         serialConfig.flowControl(FlowControl.NONE);
+        serialLock = new Object();
         toArduinoData = new JSONObject();
         toRobotData = new JSONObject();
     }
@@ -71,6 +75,10 @@ implements Communication {
                     public void dataReceived(SerialDataEvent event) {
                         try {
                             buffer = event.getAsciiString();
+                            synchronized (serialLock) {
+                            	isSerialLocked = false;
+                            	serialLock.notifyAll();
+                            }
                         }
                         catch (Exception e) { } // Suppressed
                         finally { }
@@ -172,6 +180,16 @@ implements Communication {
     public void pushArduino()
     throws CommunicationException {
         write();
+        isSerialLocked = true;
+        synchronized (serialLock) {
+            try {
+            	while (isSerialLocked) {
+                    serialLock.wait();
+                }
+            }
+            catch (Exception e) { } // Suppressed
+            finally { }
+        }
     }
     public void reset()
     throws CommunicationException {
