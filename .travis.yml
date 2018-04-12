@@ -8,26 +8,16 @@ os:
 before_install:
     - sudo apt-get update
     - sudo pip install --upgrade pip
-before_install:
-    - sudo apt-get install apache2 php libapache2-mod-php5 arduino-core arduino-mk picocom
-    - sudo pip install ino
-install:
-    - sudo mkdir -p /var/www/html/
-    - sudo cp -R ./src/www /var/www/html/FetchBot
-    - cd ./git-submodules/ArduinoJson
-    - git submodule init
-    - git submodule update
-    - cd ..
-    - sudo mkdir -p /usr/share/arduino/libraries/
-    - sudo cp -R ./ArduinoJson/ /usr/share/arduino/libraries/
-    - cd ..
-    - cd ./src/arduino-slave-processor/
-before_script:
     - sudo pkill java
     - sudo rm -f -r /var/www/html/FetchBot
     - find ~/bin -name 'fetch-bot*.jar' -exec rm -f {} \;
     - rm -f -r ~/bin/libs/fetch-bot
     - rm -f ~/bin/StartFetchBot.sh
+install:
+    - sudo apt-get install apache2 php libapache2-mod-php5 arduino-core arduino-mk picocom
+    - sudo /etc/init.d/apache2 restart
+    - sudo pip install ino
+before_script:
     - cd ./git-submodules/ArduinoJson
     - git submodule init
     - git submodule update
