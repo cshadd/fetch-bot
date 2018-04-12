@@ -126,6 +126,8 @@ See [here](/docs/development-standards/DevelopmentStandards.pdf).
 * [Ino](http://inotool.org/)
 * [Adafruit](https://www.adafruit.com/)
 * [Oracle](https://www.oracle.com/)
+* [OpenCV](https://www.opencv.org/)
+* [OpenPnP](http://www.openpnp.org/)
 * [The Pi4J Project](http://pi4j.com/)
 * [Apache](https://www.apache.org/)
 * [JitPack](https://www.jitpack.io/)
