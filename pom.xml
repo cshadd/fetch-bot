@@ -91,7 +91,6 @@
         <cshadd-java-data-structures.version>v1.0.0-alpha.1</cshadd-java-data-structures.version>
         <commons-io.version>2.6</commons-io.version>
         <json.version>20180130</json.version>
-        <opencv.version>3.2.0-1</opencv.version>
         <pi4j-core.version>1.1</pi4j-core.version>
 
         <!-- MAVEN COMPILER PROPERTIES -->
@@ -135,11 +134,6 @@
                 <version>${json.version}</version>
             </dependency>
             <dependency>
-              <groupId>org.openpnp</groupId>
-              <artifactId>opencv</artifactId>
-              <version>${opencv.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.pi4j</groupId>
                 <artifactId>pi4j-core</artifactId>
                 <version>${pi4j-core.version}</version>
@@ -160,10 +154,6 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.openpnp</groupId>
-          <artifactId>opencv</artifactId>
         </dependency>
         <dependency>
             <groupId>com.pi4j</groupId>
