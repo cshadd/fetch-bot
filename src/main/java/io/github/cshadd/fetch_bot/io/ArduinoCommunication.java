@@ -76,6 +76,7 @@ implements Communication {
                     public void dataReceived(SerialDataEvent event) {
                         try {
                             buffer = event.getAsciiString();
+                            System.out.println(buffer);
                             synchronized (serialLock) {
                             	isSerialLocked = false;
                             	serialLock.notifyAll();
