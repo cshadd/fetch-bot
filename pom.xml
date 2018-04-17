@@ -139,11 +139,11 @@
                 <artifactId>pi4j-core</artifactId>
                 <version>${pi4j-core.version}</version>
             </dependency>
-            <dependency>
+            <!-- <dependency>
                 <groupId>opencv</groupId>
                 <artifactId>opencv</artifactId>
                 <version>${opencv.version}</version>
-            </dependency>
+            </dependency> -->
         </dependencies>
     </dependencyManagement>
 
@@ -165,10 +165,10 @@
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>opencv</groupId>
             <artifactId>opencv</artifactId>
-        </dependency>
+        </dependency> -->
     </dependencies>
 
     <!-- BUILD PROFILES -->

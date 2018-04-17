@@ -5,8 +5,8 @@ import io.github.cshadd.fetch_bot.io.InterfaceCommunication;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.VersionCheck;
 import io.github.cshadd.fetch_bot.util.VersionCheckException;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
+// import org.opencv.core.CvType;
+// import org.opencv.core.Mat;
 
 // Main
 public class Core
@@ -33,7 +33,7 @@ implements FetchBot {
     }
     // Entry Point
     public static void main(String[] args) {
-        System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+        // System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
         /*Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
         System.out.println("OPENCV TEST: mat = " + mat.dump());*/
 
@@ -141,16 +141,13 @@ implements FetchBot {
                         if (!move.equals(currentMove)) {
                             currentMove = move;
                             Logger.info("Interface - [move: " + currentMove + "] command received.");
-
+                            // Check ultrasonic
                             arduinoComm.setArduinoValue(currentMove);
                             arduinoComm.pushArduino();
-
-                            if (!move.equals("Stop")) {
-                                currentMove = "Stop";
-                                interfaceComm.setInterfaceValue("emotion", "Happy");
-                                interfaceComm.setRobotValue("move", "Stop");
-                                interfaceComm.pushRobot();
-                            }
+                            interfaceComm.setInterfaceValue("emotion", "Happy");
+                            currentMove = "Stop";
+                            interfaceComm.setRobotValue("move", "Stop");
+                            interfaceComm.pushRobot();
                         }
                     }
                     else {

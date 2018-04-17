@@ -47,9 +47,9 @@ void loop() {
     if (communication.equals("Forward")) {
         moveStepperMotors(-1, 1);
     }
-    else if (communication.equals("Back")) {
+    /*else if (communication.equals("Back")) {
         moveStepperMotors(1, -1);
-    }
+    }*/
     else if (communication.equals("Right")) {
         moveStepperMotors(-1, -1);
     }
@@ -57,7 +57,7 @@ void loop() {
         moveStepperMotors(1, 1);
     }
     else {
-        moveStepperMotors(0, 0);  
+        moveStepperMotors(0, 0);
     }
     communication = "Stop";
 
