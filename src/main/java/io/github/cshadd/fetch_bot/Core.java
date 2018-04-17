@@ -41,7 +41,7 @@ implements FetchBot {
         String currentMode = "Idle";
         String currentMove = "Stop";
         String currentVersion = "v0.0.0";
-        float currentUltrasonicSensor = -1;
+        int currentUltrasonicSensor = -1;
         String version = "v0.0.0";
 
         if (args.length >= 1) {
@@ -104,7 +104,7 @@ implements FetchBot {
                 arduinoComm.pullRobot();
 
                 // Sensors
-                final float ultrasonicSensor = arduinoComm.getRobotValue("s");
+                final int ultrasonicSensor = (int)arduinoComm.getRobotValue("s");
                 if (ultrasonicSensor != -1) {
                     if (ultrasonicSensor != currentUltrasonicSensor) {
                         currentUltrasonicSensor = ultrasonicSensor;
