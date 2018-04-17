@@ -115,6 +115,7 @@ implements FetchBot {
                         interfaceComm.setInterfaceValue("ultrasonic", "" + currentUltrasonicSensor);
                     }
                 }
+                System.out.println(currentUltrasonicSensor);
 
                 // Mode
                 final String mode = interfaceComm.getRobotValue("mode");
