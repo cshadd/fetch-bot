@@ -34,8 +34,8 @@ implements FetchBot {
     // Entry Point
     public static void main(String[] args) {
         System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
-        Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
-        System.out.println("OPENCV TEST: mat = " + mat.dump());
+        /*Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
+        System.out.println("OPENCV TEST: mat = " + mat.dump());*/
 
         // Assign first variables
         String currentMode = "Idle";
