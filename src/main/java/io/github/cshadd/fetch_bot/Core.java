@@ -105,8 +105,8 @@ implements FetchBot {
 
                 // Sensors
                 final float ultrasonicSensor = arduinoComm.getRobotValue("s");
-                if (currentUltrasonicSensor != -1) {
-                    if (currentUltrasonicSensor != ultrasonicSensor) {
+                if (ultrasonicSensor != -1) {
+                    if (ultrasonicSensor != currentUltrasonicSensor) {
                         currentUltrasonicSensor = ultrasonicSensor;
                         Logger.info("Arduino - [s: " + currentUltrasonicSensor + "] received.");
                         if (currentUltrasonicSensor <= 15) { // To move later...
@@ -115,7 +115,6 @@ implements FetchBot {
                         interfaceComm.setInterfaceValue("ultrasonic", "" + currentUltrasonicSensor);
                     }
                 }
-                System.out.println(currentUltrasonicSensor);
 
                 // Mode
                 final String mode = interfaceComm.getRobotValue("mode");
