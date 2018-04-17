@@ -108,10 +108,10 @@ implements FetchBot {
                 if (currentUltrasonicSensor != -1) {
                     if (currentUltrasonicSensor != ultrasonicSensor) {
                         currentUltrasonicSensor = ultrasonicSensor;
+                        Logger.info("Arduino - [s: " + currentUltrasonicSensor + "] received.");
                         if (currentUltrasonicSensor <= 15) { // To move later...
                             interfaceComm.setInterfaceValue("emotion", "Angry");
                         }
-                        Logger.info("Arduino - [s: " + currentUltrasonicSensor + "] received.");
                         interfaceComm.setInterfaceValue("ultrasonic", "" + currentUltrasonicSensor);
                     }
                 }
@@ -142,7 +142,7 @@ implements FetchBot {
                             currentMove = move;
                             Logger.info("Interface - [move: " + currentMove + "] command received.");
                             // Check ultrasonic
-                            arduinoComm.setArduinoValue(currentMove);
+                            arduinoComm.setArduinoValue("a", currentMove);
                             arduinoComm.pushArduino();
                             interfaceComm.setInterfaceValue("emotion", "Happy");
                             currentMove = "Stop";

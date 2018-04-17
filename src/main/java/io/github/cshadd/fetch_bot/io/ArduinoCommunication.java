@@ -197,10 +197,10 @@ implements Communication {
         setArduinoValue("Stop");
         setRobotValue("s", -1);
     }
-    public void setArduinoValue(String value)
+    public void setArduinoValue(String key, String value)
     throws CommunicationException {
         try {
-            toArduinoData.put("a", value);
+            toArduinoData.put(key, value);
         }
         catch (JSONException e) {
             throw new CommunicationException("There was an issue with JSON!", e);
