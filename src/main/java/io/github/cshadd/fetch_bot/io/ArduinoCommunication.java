@@ -20,7 +20,7 @@ implements Communication {
     public static final String SERIAL_PORT = "/dev/ttyACM0";
 
     // Private Instance/Property Fields
-    private String buffer;
+    private synchronized String buffer;
     private boolean isSerialLocked;
     private Serial serial;
     private SerialConfig serialConfig;
@@ -76,7 +76,6 @@ implements Communication {
                     public void dataReceived(SerialDataEvent event) {
                         try {
                             buffer = event.getAsciiString();
-                            System.out.println(buffer);
                             synchronized (serialLock) {
                             	isSerialLocked = false;
                             	serialLock.notifyAll();
@@ -99,6 +98,7 @@ implements Communication {
     }
     private JSONObject read()
     throws CommunicationException {
+        System.out.println(buffer);
         JSONObject returnData = new JSONObject();
         try {
             returnData.put("s", -1);
