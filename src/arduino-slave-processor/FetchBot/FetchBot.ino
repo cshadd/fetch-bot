@@ -2,7 +2,7 @@
 #include <Stepper.h>
 
 // Define Constants
-#define STEPPER_STEPS 200
+#define STEPPER_STEPS 50
 #define ULTRASONIC_SENSOR_ECHO_PIN 6
 #define ULTRASONIC_SENSOR_TRIGGER_PIN 7
 
@@ -12,8 +12,8 @@ const size_t COMMUNICATION_JSON_BUFFER_SIZE = JSON_OBJECT_SIZE(3);
 // Instances
 DynamicJsonBuffer communicationJsonBuffer(COMMUNICATION_JSON_BUFFER_SIZE);
 JsonObject& communicationJsonReturn = communicationJsonBuffer.createObject();
-Stepper stepperL(STEPPER_STEPS, 3, 4, 5, 6);
-Stepper stepperR(STEPPER_STEPS, 8, 9, 10, 11);
+Stepper stepperL(STEPPER_STEPS, 8, 9, 10, 11);
+Stepper stepperR(STEPPER_STEPS, 2, 3, 4, 5);
 
 // Data
 float ultrasonicSensorDistance;
@@ -26,7 +26,16 @@ void setup() {
     ultrasonicSensorDistance = 0;
     ultrasonicSensorDuration = 0;
     communication = "Stop";
+    stepperL.setSpeed(90);
+    stepperR.setSpeed(90);
     Serial.begin(9600);
+}
+
+void moveStepperMotors(int l, int r) {
+    for (int i = 0; i < STEPPER_STEPS; i++) {
+      stepperL.step(l);
+      stepperR.step(r);
+    }
 }
 
 void loop() {
@@ -65,11 +74,4 @@ void loop() {
     communicationJsonReturn["s"] = ultrasonicSensorDistance;
     communicationJsonReturn.printTo(Serial);
     Serial.flush();
-}
-
-void moveStepperMotors(int l, int r) {
-    for (int i = 0; i < STEPPER_STEPS; i++) {
-      stepperL.step(l);
-      stepperR.step(r);
-    }
 }
