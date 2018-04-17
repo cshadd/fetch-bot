@@ -174,7 +174,7 @@ implements FetchBot {
         // Termination
         Logger.info("Fetch Bot terminating! Log file: " + Logger.LOG_PATH);
         try {
-            arduinoComm.setArduinoValue("Stop");
+            arduinoComm.setArduinoValue("a", "Stop");
             arduinoComm.pushArduino();
             arduinoComm.clear();
             interfaceComm.clear();
