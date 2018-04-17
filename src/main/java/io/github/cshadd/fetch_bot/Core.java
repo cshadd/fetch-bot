@@ -5,9 +5,8 @@ import io.github.cshadd.fetch_bot.io.InterfaceCommunication;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.VersionCheck;
 import io.github.cshadd.fetch_bot.util.VersionCheckException;
-// import nu.pattern.OpenCV; // Testing...
-// import org.opencv.core.CvType;
-// import org.opencv.core.Mat;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
 
 // Main
 public class Core
@@ -34,9 +33,9 @@ implements FetchBot {
     }
     // Entry Point
     public static void main(String[] args) {
-        // OpenCV.loadShared();
-        // Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
-        // System.out.println("OPENCV TEST: mat = " + mat.dump());
+        System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+        Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
+        System.out.println("OPENCV TEST: mat = " + mat.dump());
 
         // Assign first variables
         String currentMode = "Idle";

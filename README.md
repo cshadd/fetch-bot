@@ -62,6 +62,7 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
     - Java SE Runtime Environment 8.0 or higher
     - Ino 0.3 or higher
     - Apache Maven 3.5.2 or higher
+    - OpenCV 3.4.1 or higher
     - Apache HTTP Server 2.4.25 or higher
     - PHP 7.0 or higher
     - Packaged Apps (apt-get):
@@ -128,7 +129,6 @@ See [here](/docs/development-standards/DevelopmentStandards.pdf).
 * [Adafruit](https://www.adafruit.com/)
 * [Oracle](https://www.oracle.com/)
 * [OpenCV](https://www.opencv.org/)
-* [OpenPnP](http://www.openpnp.org/)
 * [The Pi4J Project](http://pi4j.com/)
 * [Apache](https://www.apache.org/)
 * [JitPack](https://www.jitpack.io/)
