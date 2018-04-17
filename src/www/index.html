@@ -23,7 +23,7 @@
                 $("#status-curr-coord").text("Current Coordinates: (" + data.x + ", " + data.y + ")");
                 $("#status-curr-rot").text("Current Rotation: " + data.rot + " Degrees");
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
-                $("#status-sensors").text("Sensors: {F: " + data['sensor-front'] + "; L: " + data['sensor-left'] + "; R: " + data['sensor-right'] + "}");
+                $("#status-ultrasonic").text("Front Ultrasonic Sensor: " + data['ultrasonic'] + "cm");
                 $("#status-verbose").text(data.verbose);
 
                 if (data.mode == "Auto") {
@@ -57,7 +57,7 @@
                     $("#status-curr-coord").text("Current Coordinates:");
                     $("#status-curr-rot").text("Current Rotation:");
                     $("#status-curr-emotion").text("Current Emotion:");
-                    $("#status-sensors").text("Sensors:");
+                    $("#status-ultrasonic").text("Front Ultrasonic Sensor:");
                     $("#status-verbose").text("...");
                     $("#btn-auto").hide();
                     $("#btn-idle").hide();
@@ -74,7 +74,7 @@
                 $("#status-curr-coord").text("Current Coordinates:");
                 $("#status-curr-rot").text("Current Rotation:");
                 $("#status-curr-emotion").text("Current Emotion:");
-                $("#status-sensors").text("Sensors:");
+                $("#status-ultrasonic").text("Front Ultrasonic Sensor:");
                 $("#status-verbose").text("...");
                 $("#btn-auto").hide();
                 $("#btn-idle").hide();
@@ -158,7 +158,7 @@
                             <p id="status-curr-coord"></p>
                             <p id="status-curr-rot"></p>
                             <p id="status-curr-emotion"></p>
-                            <p id="status-sensors"></p>
+                            <p id="status-ultrasonic"></p>
                             <input data-toggle="collapse" data-target="#status-verbose" class="btn btn-primary" type="button" value="Show/Hide Verbose" />
                             <textarea id="status-verbose" class="collapse" readonly="readonly"></textarea>
                         </div>
