@@ -194,7 +194,7 @@ implements Communication {
     throws CommunicationException {
         clear();
         open();
-        setArduinoValue("Stop");
+        setArduinoValue("a", "Stop");
         setRobotValue("s", -1);
     }
     public void setArduinoValue(String key, String value)
