@@ -1,6 +1,7 @@
 package io.github.cshadd.fetch_bot.util;
 import com.pi4j.util.Console;
 import io.github.cshadd.fetch_bot.FetchBot;
+import io.github.cshadd.fetch_bot.io.InterfaceCommunication;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -77,6 +78,9 @@ implements FetchBot {
         }
         finally { }
     }
+    public static void close() {
+        console.promptForExit();
+    }
     public static void error(String msg) {
         error(msg, true);
     }
@@ -90,8 +94,6 @@ implements FetchBot {
         console.println(msg + "\nPlease report this issue to the developers!\u001B[0m");
         writeInterface(msg, append);
     }
-public static void exit() {
-console.promptForExit();}
     public static void fatalError(String msg) {
         fatalError(msg, true);
     }

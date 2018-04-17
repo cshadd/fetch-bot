@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.cshadd</groupId>
     <artifactId>fetch-bot</artifactId>
-    <version>v0.13.0</version>
+    <version>v0.14.0</version>
     <name>Fetch Bot</name>
     <description>AI based robot with image processing.</description>
     <url>https://www.github.com/cshadd/fetch-bot</url>
@@ -92,6 +92,7 @@
         <commons-io.version>2.6</commons-io.version>
         <json.version>20180130</json.version>
         <pi4j-core.version>1.1</pi4j-core.version>
+        <opencv.version>3.4.1</opencv.version>
 
         <!-- MAVEN COMPILER PROPERTIES -->
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -138,6 +139,11 @@
                 <artifactId>pi4j-core</artifactId>
                 <version>${pi4j-core.version}</version>
             </dependency>
+            <dependency>
+                <groupId>opencv</groupId>
+                <artifactId>opencv</artifactId>
+                <version>${opencv.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -158,6 +164,10 @@
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>opencv</groupId>
+            <artifactId>opencv</artifactId>
         </dependency>
     </dependencies>
 

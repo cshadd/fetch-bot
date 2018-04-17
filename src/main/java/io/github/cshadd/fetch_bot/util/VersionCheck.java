@@ -20,28 +20,27 @@ implements FetchBot {
     private VersionCheck() { }
 
     // Public Static Methods
-    public static void checkVersionMatch(String version) {
+    public static String getCurrentVersion()
+    throws VersionCheckException {
+        String returnData = "v0.0.0";
         JSONArray api = null;
         JSONObject apiData = null;
-        String currentVersion = "";
         try {
             InputStream in = new URL(API_URL).openStream();
             api = new JSONArray(IOUtils.toString(in, "UTF-8"));
             apiData = api.getJSONObject(API_OBJECT);
-            currentVersion = apiData.getString(API_VERSION_TAG);
-            if (!version.equals(currentVersion)) {
-                Logger.warn("VersionCheck - [Version] mismatch (this: " + version + "; current: " + currentVersion + "), this version might be outdated!");
-            }
+            returnData = apiData.getString(API_VERSION_TAG);
         }
         catch (IOException e) {
-            Logger.error(e, "There was an issue with IO!");
+            throw new VersionCheckException("There was an issue with IO!", e);
         }
         catch (JSONException e) {
-            Logger.error(e, "There was an issue with JSON!");
+            throw new VersionCheckException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
+            throw new VersionCheckException("There was an unknown issue!", e);
         }
         finally { }
+        return returnData;
     }
 }
