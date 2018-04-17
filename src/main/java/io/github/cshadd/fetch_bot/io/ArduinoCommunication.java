@@ -98,13 +98,13 @@ implements Communication {
     }
     private JSONObject read()
     throws CommunicationException {
-        System.out.println(buffer);
         JSONObject returnData = new JSONObject();
         try {
             returnData.put("s", -1);
             if (buffer.charAt(0) == '{' && !buffer.equals("{ }")) {
                 returnData = new JSONObject(buffer);
             }
+            System.out.println(returnData);
         }
         catch (JSONException e) {
             throw new CommunicationException("There was an issue with JSON!", e);
