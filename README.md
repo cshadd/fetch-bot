@@ -15,6 +15,7 @@ This repository may be used for your own robot.
     - x1 Computer
     - x1 Ethernet Cable
     - x1 Tool Kit
+    - x1 Glue
 * Recommended:
     - x1 Raspberry Pi 3 Model B
     - x1 JBtek Raspberry Pi Micro USB Cable with ON / OFF Switch - Easy Start / Reboot
@@ -25,9 +26,10 @@ This repository may be used for your own robot.
     - x1 Male to Male HDMI Cable
     - x1 Elecrow RPA05010R HDMI 5-Inch 800x480 TFT LCD Display with Touch Screen Monitor for Raspberry Pi B+/2B/3B
     - x2 Adafruit Stepper Motor NEMA17 12V 350mA
-    - "Motor Controllers"
+    - x2 Adafruit TB6612 1.2A DC/Stepper Motor Driver Breakout Board
     - x2 Mounting Bracket for Nema 17 Stepper Motor (Geared Stepper) Hobby CNC/3D Printer
-    - "Omni Wheels"
+    - x2 RB-Nex-75 60mm Aluminum Omni Wheel
+    - "Omni Wheel Mounting Hubs"
     - "Back Wheel"
     - x1 Arduino Uno
     - x1 Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
