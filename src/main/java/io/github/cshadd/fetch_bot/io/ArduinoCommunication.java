@@ -20,7 +20,7 @@ implements Communication {
     public static final String SERIAL_PORT = "/dev/ttyACM0";
 
     // Private Instance/Property Fields
-    private synchronized String buffer;
+    private String buffer;
     private boolean isSerialLocked;
     private Serial serial;
     private SerialConfig serialConfig;
