@@ -1,4 +1,4 @@
-package io.github.cshadd.fetch_bot.util;
+package io.github.cshadd.fetch_bot.io;
 import com.pi4j.io.serial.Baud;
 import com.pi4j.io.serial.DataBits;
 import com.pi4j.io.serial.FlowControl;
@@ -9,28 +9,30 @@ import com.pi4j.io.serial.SerialFactory;
 import com.pi4j.io.serial.SerialDataEventListener;
 import com.pi4j.io.serial.SerialDataEvent;
 import com.pi4j.io.serial.StopBits;
-import io.github.cshadd.fetch_bot.FetchBot;
 import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 // Main
 public class ArduinoCommunication
-implements FetchBot {
-    // Private Constant Instance/Property Fields
-    private static final String SERIAL_PORT = "/dev/ttyACM0";
+implements Communication {
+    // Public Constant Instance/Property Fields
+    public static final String SERIAL_PORT = "/dev/ttyACM0";
 
     // Private Instance/Property Fields
     private String buffer;
+    private boolean isSerialLocked;
     private Serial serial;
     private SerialConfig serialConfig;
     private SerialDataEventListener serialListener;
+    private Object serialLock;
     private JSONObject toArduinoData;
     private JSONObject toRobotData;
 
     // Public Constructors
     public ArduinoCommunication() {
         buffer = "{ }";
+        isSerialLocked = false;
         serial = SerialFactory.createInstance();
         serialConfig = new SerialConfig();
         serialConfig.device(SERIAL_PORT);
@@ -39,12 +41,14 @@ implements FetchBot {
         serialConfig.parity(Parity.NONE);
         serialConfig.stopBits(StopBits._1);
         serialConfig.flowControl(FlowControl.NONE);
+        serialLock = new Object();
         toArduinoData = new JSONObject();
         toRobotData = new JSONObject();
     }
 
     // Private Methods
-    private void close() {
+    private void close()
+    throws CommunicationException {
         try {
             if (serial.isOpen()) {
                 serial.discardInput();
@@ -52,32 +56,32 @@ implements FetchBot {
                 serial.close();
                 SerialFactory.shutdown();
             }
+            isSerialLocked = false;
         }
         catch (IOException e) {
-            Logger.error(e, "There was an issue with IO!");
+            throw new CommunicationException("There was an issue with IO!", e);
         }
         catch (Exception e) {
-            Logger.fatalError(e, "There was an unknown issue!");
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
     }
-    private void open() {
+    private void open()
+    throws CommunicationException {
         try {
             if (!serial.isOpen()) {
                 serial.open(serialConfig);
-                Logger.info("ArduinoCommunication - Opened serial on " + SERIAL_PORT + ".");
                 serialListener = new SerialDataEventListener() {
                     @Override
                     public void dataReceived(SerialDataEvent event) {
                         try {
                             buffer = event.getAsciiString();
+                            synchronized (serialLock) {
+                            	isSerialLocked = false;
+                            	serialLock.notifyAll();
+                            }
                         }
-                        catch (IOException e) {
-                            Logger.error(e, "There was an issue with IO!");
-                        }
-                        catch (Exception e) {
-                            Logger.error(e, "There was an unknown issue!");
-                        }
+                        catch (Exception e) { } // Suppressed
                         finally { }
                     }
                 };
@@ -85,14 +89,15 @@ implements FetchBot {
             }
         }
         catch (IOException e) {
-            Logger.error(e, "There was an issue with IO!");
+            throw new CommunicationException("There was an issue with IO!", e);
         }
         catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
     }
-    private JSONObject read() {
+    private JSONObject read()
+    throws CommunicationException {
         JSONObject returnData = new JSONObject();
         try {
             returnData.put("f", -1);
@@ -103,15 +108,16 @@ implements FetchBot {
             }
         }
         catch (JSONException e) {
-            Logger.error(e, "There was an issue with JSON!");
+            throw new CommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
         return returnData;
     }
-    private void write() {
+    private void write()
+    throws CommunicationException {
         try {
             if (serial.isOpen()) {
                 serial.write(getArduinoValue("a"));
@@ -119,59 +125,75 @@ implements FetchBot {
             }
         }
         catch (IOException e) {
-            Logger.error(e, "There was an issue with IO!");
+            throw new CommunicationException("There was an issue with IO!", e);
         }
         catch (JSONException e) {
-            Logger.error(e, "There was an issue with JSON!");
+            throw new CommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
     }
 
     // Public Methods
-    public void clear() {
+    public void clear()
+    throws CommunicationException {
         close();
-	buffer = "{ }";
+        buffer = "{ }";
         toArduinoData = new JSONObject();
         toRobotData = new JSONObject();
     }
-    public String getArduinoValue(String key) {
+    public String getArduinoValue(String key)
+    throws CommunicationException {
         String returnData = null;
         try {
             returnData = toArduinoData.getString(key);
         }
         catch (JSONException e) {
-            Logger.error(e, "There was an issue with JSON!");
+            throw new CommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
         return returnData;
     }
-    public float getRobotValue(String key) {
+    public float getRobotValue(String key)
+    throws CommunicationException {
         float returnData = -1;
         try {
             returnData = toRobotData.getFloat(key);
         }
         catch (JSONException e) {
-            Logger.error(e, "There was an issue with JSON!");
+            throw new CommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
         return returnData;
     }
-    public void pullRobot() {
+    public void pullRobot()
+    throws CommunicationException {
         toRobotData = read();
     }
-    public void pushArduino() {
+    public void pushArduino()
+    throws CommunicationException {
         write();
+        isSerialLocked = true;
+        synchronized (serialLock) {
+            try {
+            	while (isSerialLocked) {
+                    serialLock.wait();
+                }
+            }
+            catch (Exception e) { } // Suppressed
+            finally { }
+        }
     }
-    public void reset() {
+    public void reset()
+    throws CommunicationException {
         clear();
         open();
         setArduinoValue("Stop");
@@ -179,27 +201,29 @@ implements FetchBot {
         setRobotValue("l", -1);
         setRobotValue("r", -1);
     }
-    public void setArduinoValue(String value) {
+    public void setArduinoValue(String value)
+    throws CommunicationException {
         try {
             toArduinoData.put("a", value);
         }
         catch (JSONException e) {
-            Logger.error(e, "There was an issue with JSON!");
+            throw new CommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
     }
-    public void setRobotValue(String key, float value) {
+    public void setRobotValue(String key, float value)
+    throws CommunicationException {
         try {
             toRobotData.put(key, value);
         }
         catch (JSONException e) {
-            Logger.error(e, "There was an issue with JSON!");
+            throw new CommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
+            throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
     }

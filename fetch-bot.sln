@@ -22,11 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{793C99
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5EEBD627-B341-4886-AACA-63966B6153F4}"
-	ProjectSection(SolutionItems) = preProject
-		src\test\java\ProgramTest.java = src\test\java\ProgramTest.java
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "www", "www", "{02363110-681E-43A5-97B8-091F67393A6A}"
 	ProjectSection(SolutionItems) = preProject
 		src\www\face.html = src\www\face.html
@@ -56,14 +51,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot", "fetch_bot", "{
 	ProjectSection(SolutionItems) = preProject
 		src\main\java\io\github\cshadd\fetch_bot\Core.java = src\main\java\io\github\cshadd\fetch_bot\Core.java
 		src\main\java\io\github\cshadd\fetch_bot\FetchBot.java = src\main\java\io\github\cshadd\fetch_bot\FetchBot.java
+		src\main\java\io\github\cshadd\fetch_bot\FetchBotException.java = src\main\java\io\github\cshadd\fetch_bot\FetchBotException.java
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.util", "fetch_bot.util", "{42F06F5E-3498-4C15-B013-B2CAFB48F39C}"
 	ProjectSection(SolutionItems) = preProject
-		src\main\java\io\github\cshadd\fetch_bot\util\ArduinoCommunication.java = src\main\java\io\github\cshadd\fetch_bot\util\ArduinoCommunication.java
-		src\main\java\io\github\cshadd\fetch_bot\util\InterfaceCommunication.java = src\main\java\io\github\cshadd\fetch_bot\util\InterfaceCommunication.java
 		src\main\java\io\github\cshadd\fetch_bot\util\Logger.java = src\main\java\io\github\cshadd\fetch_bot\util\Logger.java
 		src\main\java\io\github\cshadd\fetch_bot\util\VersionCheck.java = src\main\java\io\github\cshadd\fetch_bot\util\VersionCheck.java
+		src\main\java\io\github\cshadd\fetch_bot\util\VersionCheckException.java = src\main\java\io\github\cshadd\fetch_bot\util\VersionCheckException.java
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "arduino-slave-processor", "arduino-slave-processor", "{60C4203F-A524-49E6-A778-D332C9E7C5A2}"
@@ -81,11 +76,32 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main", "Main", "{678A9F65-D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03}"
 	ProjectSection(SolutionItems) = preProject
-		docs\DevelopmentStandards.Base.docx = docs\DevelopmentStandards.Base.docx
-		docs\DevelopmentStandards.pdf = docs\DevelopmentStandards.pdf
 		docs\FullLogo.png = docs\FullLogo.png
 		docs\index.html = docs\index.html
 		docs\Logo.png = docs\Logo.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.io", "fetch_bot.io", "{2BB1730C-447B-4DA8-9CFB-BCFD3835C7D0}"
+	ProjectSection(SolutionItems) = preProject
+		src\main\java\io\github\cshadd\fetch_bot\io\ArduinoCommunication.java = src\main\java\io\github\cshadd\fetch_bot\io\ArduinoCommunication.java
+		src\main\java\io\github\cshadd\fetch_bot\io\Communication.java = src\main\java\io\github\cshadd\fetch_bot\io\Communication.java
+		src\main\java\io\github\cshadd\fetch_bot\io\CommunicationException.java = src\main\java\io\github\cshadd\fetch_bot\io\CommunicationException.java
+		src\main\java\io\github\cshadd\fetch_bot\io\InterfaceCommunication.java = src\main\java\io\github\cshadd\fetch_bot\io\InterfaceCommunication.java
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "development-standards", "development-standards", "{51278AAE-8783-498B-B16E-694513C8E66C}"
+	ProjectSection(SolutionItems) = preProject
+		docs\development-standards\DevelopmentStandards.Base.docx = docs\development-standards\DevelopmentStandards.Base.docx
+		docs\development-standards\DevelopmentStandards.pdf = docs\development-standards\DevelopmentStandards.pdf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eclipse_Config", "Eclipse_Config", "{ED42A66C-9B91-49CA-883A-323AEE96F595}"
+	ProjectSection(SolutionItems) = preProject
+		.classpath = .classpath
+		.project = .project
+		.settings\org.eclipse.core.resources.prefs = .settings\org.eclipse.core.resources.prefs
+		.settings\org.eclipse.jdt.core.prefs = .settings\org.eclipse.jdt.core.prefs
+		.settings\org.eclipse.m2e.core.prefs = .settings\org.eclipse.m2e.core.prefs
 	EndProjectSection
 EndProject
 Global
@@ -95,7 +111,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3D8194ED-68FA-499F-ADA0-70C4CA0405F2} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{793C9952-564A-493C-8956-47B8D90F1879} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
-		{5EEBD627-B341-4886-AACA-63966B6153F4} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
 		{02363110-681E-43A5-97B8-091F67393A6A} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
 		{ED0D80B0-76CB-4F5F-857F-19F4E67A0905} = {02363110-681E-43A5-97B8-091F67393A6A}
 		{D0E4C96A-7D47-4314-8005-F49BD335F4E4} = {02363110-681E-43A5-97B8-091F67393A6A}
@@ -105,6 +120,9 @@ Global
 		{60C4203F-A524-49E6-A778-D332C9E7C5A2} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
 		{678A9F65-DA68-4368-AE51-59B334A2E5EF} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{2BB1730C-447B-4DA8-9CFB-BCFD3835C7D0} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
+		{51278AAE-8783-498B-B16E-694513C8E66C} = {3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03}
+		{ED42A66C-9B91-49CA-883A-323AEE96F595} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8F99668-DE84-4451-95F0-312B7F0E1A3C}

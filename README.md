@@ -2,6 +2,7 @@
 
 [![Release](https://img.shields.io/github/release/cshadd/fetch-bot/all.svg)](https://github.com/cshadd/fetch-bot/releases)
 [![License](https://img.shields.io/github/license/cshadd/fetch-bot.svg)](LICENSE)
+[![Travis CI Build Status](https://www.travis-ci.org/cshadd/fetch-bot.svg)](https://www.travis-ci.org/cshadd/fetch-bot)
 
 # Fetch Bot
 This is a repository of an AI based robot that uses image processing and data structures to transverse an area.
@@ -24,8 +25,10 @@ This repository may be used for your own robot.
     - x1 Male to Male HDMI Cable
     - x1 Elecrow RPA05010R HDMI 5-Inch 800x480 TFT LCD Display with Touch Screen Monitor for Raspberry Pi B+/2B/3B
     - x2 Adafruit Stepper Motor NEMA17 12V 350mA
+    - "Motor Controllers"
     - x2 Mounting Bracket for Nema 17 Stepper Motor (Geared Stepper) Hobby CNC/3D Printer
     - "Omni Wheels"
+    - "Back Wheel"
     - x1 Arduino Uno
     - x1 Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
     - x1 Non-Soldering Breadboard
@@ -59,16 +62,18 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
     - Java SE Runtime Environment 8.0 or higher
     - Ino 0.3 or higher
     - Apache Maven 3.5.2 or higher
+    - OpenCV 3.4.1 or higher
     - Apache HTTP Server 2.4.25 or higher
     - PHP 7.0 or higher
-    - Packaged Apps (Bash):
-        - Unclutter
+    - Packaged Apps (apt-get):
+        - unclutter
         - arduino-core
         - arduino-mk
 * Recommended (Computer):
     - Text Editor/IDE
 * Optional (Computer):
     - Visual Studio 2017 or higher
+    - Eclipse Oxygen or higher
 
 ### Installing
 Clone/fork this repository and save it. Then use ``./bash-install.sh`` to install to your system (Bash).
@@ -92,6 +97,9 @@ To run or stop it you will need to use the web server.
 ### Visual Studio Solution (Optional)
 You may use Visual Studio 2017 or higher as an editor. ``fetch-bot.sln`` is the solution file.
 
+### Eclipse Oxygen (Optional)
+You may use Eclipse Oxygen or higher as an editor. ``.project`` is the project file.
+
 ## Contributing
 See [here](CONTRIBUTING.md).
 
@@ -111,7 +119,7 @@ And the [contributers](https://github.com/cshadd/fetch-bot/graphs/contributors).
 See [here](LICENSE).
 
 ## Development Standards
-See [here](/docs/DevelopmentStandards.pdf).
+See [here](/docs/development-standards/DevelopmentStandards.pdf).
 
 ## Acknowledgements
 * [Raspberry Pi](https://www.raspberrypi.org/)
@@ -120,6 +128,7 @@ See [here](/docs/DevelopmentStandards.pdf).
 * [Ino](http://inotool.org/)
 * [Adafruit](https://www.adafruit.com/)
 * [Oracle](https://www.oracle.com/)
+* [OpenCV](https://www.opencv.org/)
 * [The Pi4J Project](http://pi4j.com/)
 * [Apache](https://www.apache.org/)
 * [JitPack](https://www.jitpack.io/)
@@ -127,6 +136,8 @@ See [here](/docs/DevelopmentStandards.pdf).
 * [W3Schools](https://www.w3schools.com/)
 * [The PHP Group](https://php.net/)
 * [Microsoft](https://www.microsoft.com/)
+* [Eclipse](https://www.eclipse.org/)
+* [Travis CI](https://www.travis-ci.org/)
 
 [![<3 Raspberry Pi](https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png)](https://www.raspberrypi.org/)
 

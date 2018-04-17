@@ -37,44 +37,37 @@ void setup() {
 }
 
 void loop() {
-    // if (Serial.available()) {
-        const size_t bufferSize = JSON_OBJECT_SIZE(5);
-        DynamicJsonBuffer jsonBuffer(bufferSize);
-        JsonObject& root = jsonBuffer.createObject();
-if (Serial.available()) {
-	action = Serial.readString();
-}
-	root["a"] = action;
+    const size_t bufferSize = JSON_OBJECT_SIZE(5);
+    DynamicJsonBuffer jsonBuffer(bufferSize);
+    JsonObject& root = jsonBuffer.createObject();
+    action = Serial.readString();
+    root["a"] = action;
 
-        // Movement here...
+    // Movement here...
+    action = "Stop";
 
- 	action = "Stop";
+    digitalWrite(trigPin1, LOW);
+    digitalWrite(trigPin2, LOW);
+    digitalWrite(trigPin3, LOW);
+    delay(2);
+    digitalWrite(trigPin1, HIGH);
+    digitalWrite(trigPin2, HIGH);
+    digitalWrite(trigPin3, HIGH);
+    delay(10);
+    digitalWrite(trigPin1, LOW);
+    digitalWrite(trigPin2, LOW);
+    digitalWrite(trigPin3, LOW);
+    duration1 = pulseIn(echoPin1, HIGH);
+    duration2 = pulseIn(echoPin2, HIGH);
+    duration3 = pulseIn(echoPin3, HIGH);
 
-        digitalWrite(trigPin1, LOW);
-        digitalWrite(trigPin2, LOW);
-        digitalWrite(trigPin3, LOW);
-        delay(10);
-        digitalWrite(trigPin1, HIGH);
-        digitalWrite(trigPin2, HIGH);
-        digitalWrite(trigPin3, HIGH);
-        delay(10);
-        digitalWrite(trigPin1, LOW);
-        digitalWrite(trigPin2, LOW);
-        digitalWrite(trigPin3, LOW);
-	delay(10);
-        duration1 = pulseIn(echoPin1, HIGH);
-        duration2 = pulseIn(echoPin2, HIGH);
-        duration3 = pulseIn(echoPin3, HIGH);
+    distance1 = (duration1*0.0343)/2;
+    distance2 = (duration2*0.0343)/2;
+    distance3 = (duration3*0.0343)/2;
 
-        distance1 = (duration1*0.0343)/2;
-        distance2 = (duration2*0.0343)/2;
-        distance3 = (duration3*0.0343)/2;
-
-        root["f"] = distance1;
-        root["l"] = distance2;
-        root["r"] = distance3;
-
-        root.printTo(Serial);
-        Serial.flush();
-    // }
+    root["f"] = distance1;
+    root["l"] = distance2;
+    root["r"] = distance3;
+    root.printTo(Serial);
+    Serial.flush();
 }
