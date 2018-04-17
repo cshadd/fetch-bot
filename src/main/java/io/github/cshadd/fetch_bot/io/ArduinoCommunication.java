@@ -100,9 +100,7 @@ implements Communication {
     throws CommunicationException {
         JSONObject returnData = new JSONObject();
         try {
-            returnData.put("f", -1);
-            returnData.put("l", -1);
-            returnData.put("r", -1);
+            returnData.put("s", -1);
             if (buffer.charAt(0) == '{' && !buffer.equals("{ }")) {
                 returnData = new JSONObject(buffer);
             }
@@ -197,9 +195,7 @@ implements Communication {
         clear();
         open();
         setArduinoValue("Stop");
-        setRobotValue("f", -1);
-        setRobotValue("l", -1);
-        setRobotValue("r", -1);
+        setRobotValue("s", -1);
     }
     public void setArduinoValue(String value)
     throws CommunicationException {
