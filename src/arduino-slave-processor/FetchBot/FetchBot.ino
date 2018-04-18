@@ -46,14 +46,22 @@ void loop() {
     // Movement
     if (communication.equals("Forward")) {
         moveStepperMotors(-1, 1);
+        moveStepperMotors(-1, 1);
+        moveStepperMotors(-1, 1);
     }
     /*else if (communication.equals("Back")) {
+        moveStepperMotors(1, -1);
+        moveStepperMotors(1, -1);
         moveStepperMotors(1, -1);
     }*/
     else if (communication.equals("Right")) {
         moveStepperMotors(-1, -1);
+        moveStepperMotors(-1, -1);
+        moveStepperMotors(-1, -1);
     }
     else if (communication.equals("Left")) {
+        moveStepperMotors(1, 1);
+        moveStepperMotors(1, 1);
         moveStepperMotors(1, 1);
     }
     else {
