@@ -64,10 +64,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.util", "fetch_bot
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "arduino-slave-processor", "arduino-slave-processor", "{60C4203F-A524-49E6-A778-D332C9E7C5A2}"
-	ProjectSection(SolutionItems) = preProject
-		src\arduino-slave-processor\FetchBot.ino = src\arduino-slave-processor\FetchBot.ino
-		src\arduino-slave-processor\Makefile = src\arduino-slave-processor\Makefile
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main", "Main", "{678A9F65-DA68-4368-AE51-59B334A2E5EF}"
 	ProjectSection(SolutionItems) = preProject
@@ -113,6 +109,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "software-requirements-speci
 		docs\software-requirements-specification\SoftwareRequirementsSpecification.pdf = docs\software-requirements-specification\SoftwareRequirementsSpecification.pdf
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FetchBot", "FetchBot", "{508DA01D-22B2-4199-9A37-99C514811E94}"
+	ProjectSection(SolutionItems) = preProject
+		src\arduino-slave-processor\FetchBot\FetchBot.ino = src\arduino-slave-processor\FetchBot\FetchBot.ino
+		src\arduino-slave-processor\FetchBot\Makefile = src\arduino-slave-processor\FetchBot\Makefile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,6 +135,7 @@ Global
 		{51278AAE-8783-498B-B16E-694513C8E66C} = {3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03}
 		{ED42A66C-9B91-49CA-883A-323AEE96F595} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
 		{E9E695BF-3043-42B9-81F5-1DB2103012DF} = {3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03}
+		{508DA01D-22B2-4199-9A37-99C514811E94} = {60C4203F-A524-49E6-A778-D332C9E7C5A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8F99668-DE84-4451-95F0-312B7F0E1A3C}
