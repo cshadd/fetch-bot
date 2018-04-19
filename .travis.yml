@@ -12,7 +12,7 @@ before_install:
     - rm -f -r ~/bin/libs/fetch-bot
     - rm -f ~/bin/StartFetchBot.sh
 install:
-    - sudo apt-get install arduino-core arduino-mk picocom cmake git build-essential libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev python-dev python-numpy
+    - sudo apt-get install arduino-core arduino-mk picocom cmake git build-essential libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev python-dev python-numpy
     - sudo pip install ino
 before_script:
     - cd ..
@@ -25,8 +25,10 @@ before_script:
     - mkdir -p build
     - cd build
     - cmake -D CMAKE_BUILD_TYPE=RELEASE -D WITH_OPENCL=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=/usr/local ..
-    - make -j4
-    - sudo make -j4 install
+    - make
+    - sudo make install
+    - sudo sh -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'
+    - sudo ldconfig
     - mvn install:install-file -Dfile=/usr/local/share/OpenCV/java/opencv-341.jar -DgroupId=opencv -DartifactId=opencv -Dversion=3.4.1 -Dpackaging=jar
     - sudo mkdir -p /usr/share/arduino/libraries/
     - wget https://github.com/bblanchon/ArduinoJson/releases/download/v5.13.1/ArduinoJson-v5.13.1.zip
