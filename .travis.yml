@@ -6,19 +6,17 @@ os:
     - linux
 before_install:
     - sudo apt-get update
-    - sudo pip install --upgrade pip
+    - export ANT_HOME=/usr/share/ant/
+    - export PATH=${PATH}:${ANT_HOME}/bin
     - sudo rm -f -r /var/www/html/FetchBot
     - find ~/bin -name 'fetch-bot*.jar' -exec rm -f {} \;
     - rm -f -r ~/bin/libs/fetch-bot
     - rm -f ~/bin/StartFetchBot.sh
-    - export ANT_HOME=/usr/share/ant/
-    - export PATH=${PATH}:${ANT_HOME}/bin
 install:
     - sudo apt-get install ant build-essential cmake git pkg-config
     - sudo apt-get install python-dev python-numpy
-    - sudo apt-get install libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
-    - sudo apt-get install arduino-core arduino-mk picocom
-    - sudo pip install ino
+    - sudo apt-get install libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+    - sudo apt-get install arduino-core arduino-mk
 before_script:
     - wget https://github.com/opencv/opencv/archive/3.4.1.zip
     - unzip 3.4.1.zip
