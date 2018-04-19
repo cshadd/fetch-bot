@@ -52,11 +52,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot", "fetch_bot", "{
 		src\main\java\io\github\cshadd\fetch_bot\Core.java = src\main\java\io\github\cshadd\fetch_bot\Core.java
 		src\main\java\io\github\cshadd\fetch_bot\FetchBot.java = src\main\java\io\github\cshadd\fetch_bot\FetchBot.java
 		src\main\java\io\github\cshadd\fetch_bot\FetchBotException.java = src\main\java\io\github\cshadd\fetch_bot\FetchBotException.java
+		src\main\java\io\github\cshadd\fetch_bot\package.html = src\main\java\io\github\cshadd\fetch_bot\package.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.util", "fetch_bot.util", "{42F06F5E-3498-4C15-B013-B2CAFB48F39C}"
 	ProjectSection(SolutionItems) = preProject
 		src\main\java\io\github\cshadd\fetch_bot\util\Logger.java = src\main\java\io\github\cshadd\fetch_bot\util\Logger.java
+		src\main\java\io\github\cshadd\fetch_bot\util\package.html = src\main\java\io\github\cshadd\fetch_bot\util\package.html
 		src\main\java\io\github\cshadd\fetch_bot\util\VersionCheck.java = src\main\java\io\github\cshadd\fetch_bot\util\VersionCheck.java
 		src\main\java\io\github\cshadd\fetch_bot\util\VersionCheckException.java = src\main\java\io\github\cshadd\fetch_bot\util\VersionCheckException.java
 	EndProjectSection
@@ -87,6 +89,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.io", "fetch_bot.i
 		src\main\java\io\github\cshadd\fetch_bot\io\Communication.java = src\main\java\io\github\cshadd\fetch_bot\io\Communication.java
 		src\main\java\io\github\cshadd\fetch_bot\io\CommunicationException.java = src\main\java\io\github\cshadd\fetch_bot\io\CommunicationException.java
 		src\main\java\io\github\cshadd\fetch_bot\io\InterfaceCommunication.java = src\main\java\io\github\cshadd\fetch_bot\io\InterfaceCommunication.java
+		src\main\java\io\github\cshadd\fetch_bot\io\package.html = src\main\java\io\github\cshadd\fetch_bot\io\package.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "development-standards", "development-standards", "{51278AAE-8783-498B-B16E-694513C8E66C}"
@@ -102,6 +105,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eclipse_Config", "Eclipse_C
 		.settings\org.eclipse.core.resources.prefs = .settings\org.eclipse.core.resources.prefs
 		.settings\org.eclipse.jdt.core.prefs = .settings\org.eclipse.jdt.core.prefs
 		.settings\org.eclipse.m2e.core.prefs = .settings\org.eclipse.m2e.core.prefs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "software-requirments-specification", "software-requirments-specification", "{E9E695BF-3043-42B9-81F5-1DB2103012DF}"
+	ProjectSection(SolutionItems) = preProject
+		docs\software-requirments-specification\SoftwareRequirementsSpecification.Base.docx = docs\software-requirments-specification\SoftwareRequirementsSpecification.Base.docx
+		docs\software-requirments-specification\SoftwareRequirementsSpecification.pdf = docs\software-requirments-specification\SoftwareRequirementsSpecification.pdf
 	EndProjectSection
 EndProject
 Global
@@ -123,6 +132,7 @@ Global
 		{2BB1730C-447B-4DA8-9CFB-BCFD3835C7D0} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
 		{51278AAE-8783-498B-B16E-694513C8E66C} = {3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03}
 		{ED42A66C-9B91-49CA-883A-323AEE96F595} = {6082E4AE-8549-4C62-9A27-DA0CC34A16DB}
+		{E9E695BF-3043-42B9-81F5-1DB2103012DF} = {3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8F99668-DE84-4451-95F0-312B7F0E1A3C}

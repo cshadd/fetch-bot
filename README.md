@@ -15,7 +15,7 @@ This repository may be used for your own robot.
     - x1 Computer
     - x1 Ethernet Cable
     - x1 Tool Kit
-    - x1 Glue
+    - x1 Pack of Glue/Tape/Screws
 * Recommended:
     - x1 Raspberry Pi 3 Model B
     - x1 JBtek Raspberry Pi Micro USB Cable with ON / OFF Switch - Easy Start / Reboot
@@ -29,7 +29,7 @@ This repository may be used for your own robot.
     - x2 Adafruit TB6612 1.2A DC/Stepper Motor Driver Breakout Board
     - x2 Mounting Bracket for Nema 17 Stepper Motor (Geared Stepper) Hobby CNC/3D Printer
     - x2 RB-Nex-75 60mm Aluminum Omni Wheel
-    - "Omni Wheel Mounting Hubs"
+    - x2 5mm Aluminum Mounting Hub
     - "Back Wheel"
     - x1 Arduino Uno
     - x1 Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
@@ -57,21 +57,20 @@ If you want to use a full tower as a robot brain, go ahead. But the Pi and Uno i
 Proceeding forward, we will be specifically talking about the Pi and Uno unless otherwise. The system and Bash command lines will rely on the Pi.
 
 ### Prerequisites
-* Recommended (Raspberry Pi):
+* Recommended (Raspberry Pi/Computer):
     - Raspbian OS Stretch or higher
     - Chromium Browser
     - Java SE Development Kit 8.0 or higher
     - Java SE Runtime Environment 8.0 or higher
     - Ino 0.3 or higher
     - Apache Maven 3.5.2 or higher
-    - OpenCV 3.4.1 or higher
+    - OpenCV 3.4.1
     - Apache HTTP Server 2.4.25 or higher
     - PHP 7.0 or higher
     - Packaged Apps (apt-get):
         - unclutter
         - arduino-core
         - arduino-mk
-* Recommended (Computer):
     - Text Editor/IDE
 * Optional (Computer):
     - Visual Studio 2017 or higher
@@ -109,12 +108,12 @@ See [here](CONTRIBUTING.md).
 ## Versioning
 We use [SemVer](http://semver.org/) for versioning. For the versions avalible, see the [tags on this repository](https://github.com/cshadd/fetch-bot/tags).
 
-## Authors
-* [Christian Shadd](https://github.com/cshadd)
-* [Maria Verna Aquino](https://github.com/anrev09)
-* [Thanh Vu](https://github.com/Vu-Thanh)
-* [walterk4](https://github.com/walterk4)
-* [gio-oro](https://github.com/gio-oro)
+## Owners/Authors/Developers/Contributors
+* Project Owner, Main Author, Leader Developer - [Christian Shadd](https://github.com/cshadd)
+* Author, Hardware Developer, Documentation - [Maria Verna Aquino](https://github.com/anrev09)
+* Author, Hardware Developer - [Thanh Vu](https://github.com/Vu-Thanh)
+* Author, Hardware Developer, Software Developer - [Joseph Damian](https://github.com/walterk4)
+* Author, Software Developer - [Giovanni Orozco](https://github.com/gio-oro)
 
 And the [contributers](https://github.com/cshadd/fetch-bot/graphs/contributors).
 
@@ -123,6 +122,9 @@ See [here](LICENSE).
 
 ## Development Standards
 See [here](/docs/development-standards/DevelopmentStandards.pdf).
+
+## Software Requirements Specification 
+See [here](/docs/software-requirements-specification/SoftwareRequirementsSpecification.pdf).
 
 ## Acknowledgements
 * [Raspberry Pi](https://www.raspberrypi.org/)
