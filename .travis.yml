@@ -15,16 +15,7 @@ install:
     - sudo apt-get install arduino-core arduino-mk picocom python-dev python-numpy
     - sudo pip install ino
 before_script:
-    - wget https://github.com/opencv/opencv/archive/3.4.1.zip
-    - unzip 3.4.1.zip
-    - rm -f 3.4.1.zip
-    - cd opencv-3.4.1
-    - mkdir -p build
-    - cd build
-    - cmake ..
-    - make -j4
-    - sudo make -j4 install
-    - mvn install:install-file -Dfile=/usr/local/share/OpenCV/java/opencv-341.jar -DgroupId=opencv -DartifactId=opencv -Dversion=3.4.1 -Dpackaging=jar
+
     - cd ..
     - cd ..
     - rm -f -r ./opencv-3.4.1
