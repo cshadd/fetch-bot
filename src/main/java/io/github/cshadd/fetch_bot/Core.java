@@ -13,12 +13,15 @@ public class Core
 implements FetchBot {
     // Private Constant Instance/Property Fields
     // private static final int COLLISION_DISTANCE = 15;
-
+    
     // Private Static Instance/Property Fields
     private static ArduinoCommunication arduinoComm;
     private static InterfaceCommunication interfaceComm;
 
     // Public Static Methods
+    static {
+        System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+    }
     public static void delayThread(long millis) {
         try {
             Thread.sleep(millis);
@@ -33,17 +36,14 @@ implements FetchBot {
     }
     // Entry Point
     public static void main(String[] args) {
-        System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
-        /*Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
-        System.out.println("OPENCV TEST: mat = " + mat.dump());*/
+        Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
+        System.out.println("OPENCV TEST: mat = " + mat.dump());
 
         // Assign first variables
         String currentMode = "Idle";
         String currentMove = "Stop";
         String currentVersion = "v0.0.0";
-        float currentSensorFront = -1;
-        float currentSensorLeft = -1;
-        float currentSensorRight = -1;
+        int currentUltrasonicSensor = -1;
         String version = "v0.0.0";
 
         if (args.length >= 1) {
@@ -106,31 +106,15 @@ implements FetchBot {
                 arduinoComm.pullRobot();
 
                 // Sensors
-                final float frontSensor = arduinoComm.getRobotValue("f");
-                final float leftSensor = arduinoComm.getRobotValue("l");
-                final float rightSensor = arduinoComm.getRobotValue("r");
-                if (frontSensor != -1) {
-                    if (frontSensor != currentSensorFront) {
-                        currentSensorFront = frontSensor;
-                        if (currentSensorFront <= 15) {
+                final int ultrasonicSensor = (int)arduinoComm.getRobotValue("s");
+                if (ultrasonicSensor != -1) {
+                    if (ultrasonicSensor != currentUltrasonicSensor) {
+                        currentUltrasonicSensor = ultrasonicSensor;
+                        Logger.info("Arduino - [s: " + currentUltrasonicSensor + "] received.");
+                        if (currentUltrasonicSensor <= 15) { // To move later...
                             interfaceComm.setInterfaceValue("emotion", "Angry");
                         }
-                        Logger.info("Arduino - [f: " + currentSensorFront + "] received.");
-                        interfaceComm.setInterfaceValue("sensor-front", "" + currentSensorFront);
-                    }
-                }
-                if (leftSensor != -1) {
-                    if (leftSensor != currentSensorLeft) {
-                        currentSensorLeft = leftSensor;
-                        Logger.info("Arduino - [l: " + currentSensorLeft + "] received.");
-                        interfaceComm.setInterfaceValue("sensor-left", "" + currentSensorLeft);
-                    }
-                }
-                if (rightSensor != -1) {
-                    if (rightSensor != currentSensorRight) {
-                        currentSensorRight = rightSensor;
-                        Logger.info("Arduino - [r: " + currentSensorRight + "] received.");
-                        interfaceComm.setInterfaceValue("sensor-right", "" + currentSensorRight);
+                        interfaceComm.setInterfaceValue("ultrasonic", "" + currentUltrasonicSensor);
                     }
                 }
 
@@ -147,7 +131,7 @@ implements FetchBot {
                         interfaceComm.setInterfaceValue("emotion", "Neutral");
                     }
                     else if (currentMode.equals("Idle")) {
-                        // interfaceComm.setInterfaceValue("emotion", "Idle");
+                        interfaceComm.setInterfaceValue("emotion", "Idle");
                     }
                     else if (currentMode.equals("Off")) {
                         break;
@@ -159,16 +143,13 @@ implements FetchBot {
                         if (!move.equals(currentMove)) {
                             currentMove = move;
                             Logger.info("Interface - [move: " + currentMove + "] command received.");
-
-                            arduinoComm.setArduinoValue(currentMove);
+                            // Check ultrasonic
+                            arduinoComm.setArduinoValue("a", currentMove);
                             arduinoComm.pushArduino();
-
-                            if (!move.equals("Stop")) {
-                                currentMove = "Stop";
-                                interfaceComm.setInterfaceValue("emotion", "Happy");
-                                interfaceComm.setRobotValue("move", "Stop");
-                                interfaceComm.pushRobot();
-                            }
+                            interfaceComm.setInterfaceValue("emotion", "Happy");
+                            currentMove = "Stop";
+                            interfaceComm.setRobotValue("move", "Stop");
+                            interfaceComm.pushRobot();
                         }
                     }
                     else {
@@ -195,7 +176,7 @@ implements FetchBot {
         // Termination
         Logger.info("Fetch Bot terminating! Log file: " + Logger.LOG_PATH);
         try {
-            arduinoComm.setArduinoValue("Stop");
+            arduinoComm.setArduinoValue("a", "Stop");
             arduinoComm.pushArduino();
             arduinoComm.clear();
             interfaceComm.clear();
