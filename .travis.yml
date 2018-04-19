@@ -16,9 +16,7 @@ install:
     - sudo pip install ino
 before_script:
 
-    - cd ..
-    - cd ..
-    - rm -f -r ./opencv-3.4.1
+
     - sudo mkdir -p /usr/share/arduino/libraries/
     - wget https://github.com/bblanchon/ArduinoJson/releases/download/v5.13.1/ArduinoJson-v5.13.1.zip
     - unzip ArduinoJson-v5.13.1.zip
