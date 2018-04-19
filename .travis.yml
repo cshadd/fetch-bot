@@ -13,12 +13,6 @@ before_install:
     - rm -f ~/bin/StartFetchBot.sh
     - export ANT_HOME=/usr/share/ant/
     - export PATH=${PATH}:${ANT_HOME}/bin
-    - wget https://github.com/opencv/opencv/archive/3.4.1.zip
-    - unzip 3.4.1.zip
-    - rm -f 3.4.1.zip
-    - wget https://github.com/opencv/opencv_contrib/archive/3.4.1.zip
-    - unzip 3.4.1.zip
-    - rm -f 3.4.1.zip
 install:
     - sudo apt-get install ant build-essential cmake git pkg-config
     - sudo apt-get install python-dev python-numpy
@@ -26,6 +20,12 @@ install:
     - sudo apt-get install arduino-core arduino-mk picocom
     - sudo pip install ino
 before_script:
+    - wget https://github.com/opencv/opencv/archive/3.4.1.zip
+    - unzip 3.4.1.zip
+    - rm -f 3.4.1.zip
+    - wget https://github.com/opencv/opencv_contrib/archive/3.4.1.zip
+    - unzip 3.4.1.zip
+    - rm -f 3.4.1.zip
     - cd opencv-3.4.1
     - mkdir -p build
     - cd build
