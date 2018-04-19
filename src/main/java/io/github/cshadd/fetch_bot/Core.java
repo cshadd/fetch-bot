@@ -13,12 +13,15 @@ public class Core
 implements FetchBot {
     // Private Constant Instance/Property Fields
     // private static final int COLLISION_DISTANCE = 15;
-
+    
     // Private Static Instance/Property Fields
     private static ArduinoCommunication arduinoComm;
     private static InterfaceCommunication interfaceComm;
 
     // Public Static Methods
+    static {
+        System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+    }
     public static void delayThread(long millis) {
         try {
             Thread.sleep(millis);
@@ -33,9 +36,8 @@ implements FetchBot {
     }
     // Entry Point
     public static void main(String[] args) {
-        System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
-        /*Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
-        System.out.println("OPENCV TEST: mat = " + mat.dump());*/
+        Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
+        System.out.println("OPENCV TEST: mat = " + mat.dump());
 
         // Assign first variables
         String currentMode = "Idle";
