@@ -11,16 +11,18 @@ before_install:
     - find ~/bin -name 'fetch-bot*.jar' -exec rm -f {} \;
     - rm -f -r ~/bin/libs/fetch-bot
     - rm -f ~/bin/StartFetchBot.sh
-install:
-    - sudo apt-get install arduino-core arduino-mk picocom cmake git build-essential libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev python-dev python-numpy
-    - sudo pip install ino
-before_script:
+    - export ANT_HOME=/usr/share/ant/
+    - export PATH=${PATH}:${ANT_HOME}/bin
     - wget https://github.com/opencv/opencv/archive/3.4.1.zip
     - unzip 3.4.1.zip
     - rm -f 3.4.1.zip
     - wget https://github.com/opencv/opencv_contrib/archive/3.4.1.zip
     - unzip 3.4.1.zip
     - rm -f 3.4.1.zip
+install:
+    - sudo apt-get install arduino-core arduino-mk picocom cmake git build-essential libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev python-dev python-numpy
+    - sudo pip install ino
+before_script:
     - cd opencv-3.4.1
     - mkdir -p build
     - cd build
