@@ -62,7 +62,6 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
     - Chromium Browser
     - Java SE Development Kit 8.0 or higher
     - Java SE Runtime Environment 8.0 or higher
-    - Ino 0.3 or higher
     - Apache Maven 3.5.2 or higher
     - OpenCV 3.4.1
     - Apache HTTP Server 2.4.25 or higher
@@ -130,7 +129,6 @@ See [here](/docs/software-requirements-specification/SoftwareRequirementsSpecifi
 * [Raspberry Pi](https://www.raspberrypi.org/)
 * [Arduino](https://www.arduino.cc/)
 * [Ed's Blog](http://pblog.ebaker.me.uk/)
-* [Ino](http://inotool.org/)
 * [Adafruit](https://www.adafruit.com/)
 * [Oracle](https://www.oracle.com/)
 * [OpenCV](https://www.opencv.org/)
