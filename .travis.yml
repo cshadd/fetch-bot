@@ -20,7 +20,10 @@ before_install:
     - unzip 3.4.1.zip
     - rm -f 3.4.1.zip
 install:
-    - sudo apt-get install arduino-core arduino-mk picocom cmake git build-essential libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev python-dev python-numpy
+    - sudo apt-get install ant build-essential cmake git pkg-config
+    - sudo apt-get install python-dev python-numpy
+    - sudo apt-get install libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+    - sudo apt-get install arduino-core arduino-mk picocom
     - sudo pip install ino
 before_script:
     - cd opencv-3.4.1
