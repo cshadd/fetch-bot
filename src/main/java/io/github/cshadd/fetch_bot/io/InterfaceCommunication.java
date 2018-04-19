@@ -118,9 +118,7 @@ implements Communication {
         setInterfaceValue("emotion", "Idle");
         setInterfaceValue("mode", "Idle");
         setInterfaceValue("rot", "0");
-        setInterfaceValue("sensor-front", "0");
-        setInterfaceValue("sensor-left", "0");
-        setInterfaceValue("sensor-right", "0");
+        setInterfaceValue("ultrasonic", "0");
         setInterfaceValue("verbose", "...");
         setInterfaceValue("x", "0");
         setInterfaceValue("x-max", "0");
