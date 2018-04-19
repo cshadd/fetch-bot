@@ -107,10 +107,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eclipse_Config", "Eclipse_C
 		.settings\org.eclipse.m2e.core.prefs = .settings\org.eclipse.m2e.core.prefs
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "software-requirments-specification", "software-requirments-specification", "{E9E695BF-3043-42B9-81F5-1DB2103012DF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "software-requirements-specification", "software-requirements-specification", "{E9E695BF-3043-42B9-81F5-1DB2103012DF}"
 	ProjectSection(SolutionItems) = preProject
-		docs\software-requirments-specification\SoftwareRequirementsSpecification.Base.docx = docs\software-requirments-specification\SoftwareRequirementsSpecification.Base.docx
-		docs\software-requirments-specification\SoftwareRequirementsSpecification.pdf = docs\software-requirments-specification\SoftwareRequirementsSpecification.pdf
+		docs\software-requirements-specification\SoftwareRequirementsSpecification.Base.docx = docs\software-requirements-specification\SoftwareRequirementsSpecification.Base.docx
+		docs\software-requirements-specification\SoftwareRequirementsSpecification.pdf = docs\software-requirements-specification\SoftwareRequirementsSpecification.pdf
 	EndProjectSection
 EndProject
 Global
