@@ -62,10 +62,10 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
     - Chromium Browser
     - Java SE Development Kit 8.0 or higher
     - Java SE Runtime Environment 8.0 or higher
-    - Apache Maven 3.5.2 or higher
+    - Apache Maven 3.5.3 or higher
     - OpenCV 3.4.1
     - Apache HTTP Server 2.4.25 or higher
-    - PHP 7.0 or higher
+    - PHP 7.0.27 or higher
     - Packaged Apps (apt-get):
         - unclutter
         - arduino-core
