@@ -67,9 +67,9 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
     - Apache HTTP Server 2.4.25 or higher
     - PHP 7.0.27 or higher
     - Packaged Apps (apt-get):
-        - unclutter
         - arduino-core
         - arduino-mk
+        - unclutter
     - Text Editor/IDE
 * Optional (Computer):
     - Visual Studio 2017 or higher
