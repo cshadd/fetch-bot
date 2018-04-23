@@ -13,10 +13,11 @@ before_install:
     - rm -f -r ~/bin/libs/fetch-bot
     - rm -f ~/bin/StartFetchBot.sh
 install:
-    - sudo apt-get install ant build-essential cmake git pkg-config
-    - sudo apt-get install python-dev python-numpy
-    - sudo apt-get install libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
-    - sudo apt-get install arduino-core arduino-mk
+    - sudo apt-get install -y ant build-essential cmake git pkg-config
+    - sudo apt-get install -y apache2 php libapache2-mod-php
+    - sudo apt-get install -y python-dev python-numpy
+    - sudo apt-get install -y libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+    - sudo apt-get install -y arduino-core arduino-mk
 before_script:
     - wget https://github.com/opencv/opencv/archive/3.4.1.zip
     - unzip 3.4.1.zip
