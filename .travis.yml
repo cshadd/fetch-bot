@@ -5,6 +5,7 @@ jdk:
 os:
     - linux
 before_install:
+    - sudo apt-add-repository ppa:ondrej/php
     - sudo apt-get update
     - export ANT_HOME=/usr/share/ant/
     - export PATH=${PATH}:${ANT_HOME}/bin
