@@ -14,7 +14,7 @@ before_install:
     - rm -f ~/bin/StartFetchBot.sh
 install:
     - sudo apt-get install -y ant build-essential cmake git pkg-config
-    - sudo apt-get install -y apache2 php libapache2-mod-php
+    - sudo apt-get install -y apache2 php7.0 libapache2-mod-php7.0
     - sudo apt-get install -y python-dev python-numpy
     - sudo apt-get install -y libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
     - sudo apt-get install -y arduino-core arduino-mk
