@@ -17,7 +17,12 @@ install:
     - sudo apt-get install -y ant build-essential cmake git pkg-config
     - sudo apt-get install -y apache2 php7.0 libapache2-mod-php7.0
     - sudo apt-get install -y python-dev python-numpy
-    - sudo apt-get install -y libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+    - sudo apt-get install -y libpng12-0 libpng12-dev libpng++-dev libpng12
+    - sudo apt-get install -y libpnglite-dev zlib1g-dbg zlib1g zlib1g-dev pngtools libtiff5-dev
+    - sudo apt-get install -y libtiff4 libtiffxx0c2 libtiff-tools libjpeg8 libjpeg8-dev libjpeg8-dbg libjpeg-progs ffmpeg libavcodec-dev
+    - sudo apt-get install -y libavcodec53 libavformat53 libavformat-dev libgstreamer0.10-0-dbg libgstreamer0.10-0  libgstreamer0.10-dev
+    - sudo apt-get install -y libxine2-ffmpeg  libxine2-dev libxine2-bin libunicap2 libunicap2-dev libdc1394-22-dev libdc1394-22 libdc1394-utils
+    - sudo apt-get install -y swig libv4l-0 libv4l-dev
     - sudo apt-get install -y arduino-core arduino-mk
     - sudo apt-get install -y unclutter
 before_script:
