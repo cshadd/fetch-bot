@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.cshadd</groupId>
     <artifactId>fetch-bot</artifactId>
-    <version>v0.14.0</version>
+    <version>v0.15.0</version>
     <name>Fetch Bot</name>
     <description>AI based robot with image processing.</description>
     <url>https://www.github.com/cshadd/fetch-bot</url>
@@ -18,15 +18,16 @@
         </license>
     </licenses>
 
-    <!-- DEVELOPERS/CONTRIBUTORS -->
+    <!-- OWNERS/AUTHORS/DEVELOPERS/CONTRIBUTORS -->
     <developers>
         <developer>
             <name>Christian Shadd</name>
             <email>christian.v.t.shadd@gmail.com</email>
             <url>https://cshadd.github.io</url>
             <roles>
+                <role>Project Owner</role>
                 <role>Main Author</role>
-                <role>Developer</role>
+                <role>Lead Developer</role>
             </roles>
         </developer>
         <developer>
@@ -35,7 +36,8 @@
             <url>https://github.com/anrev09</url>
             <roles>
                 <role>Author</role>
-                <role>Developer</role>
+                <role>Hardware Developer</role>
+                <role>Documentation</role>
             </roles>
         </developer>
         <developer>
@@ -44,22 +46,26 @@
             <roles>
                 <role>Author</role>
                 <role>Developer</role>
+                <role>Hardware Developer</role>
             </roles>
         </developer>
         <developer>
-            <name>walterk4</name>
+            <name>Joseph Damian</name>
             <url>https://github.com/walterk4</url>
             <roles>
                 <role>Author</role>
                 <role>Developer</role>
+                <role>Hardware Developer</role>
+                <role>Software Developer</role>
             </roles>
         </developer>
         <developer>
-            <name>gio-oro</name>
+            <name>Giovanni Orozco</name>
             <url>https://github.com/gio-oro</url>
             <roles>
                 <role>Author</role>
                 <role>Developer</role>
+                <role>Software Developer</role>
             </roles>
         </developer>
     </developers>
