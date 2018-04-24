@@ -17,7 +17,7 @@ install:
     - sudo apt-get install -y ant build-essential cmake git pkg-config
     - sudo apt-get install -y apache2 php7.0 libapache2-mod-php7.0
     - sudo apt-get install -y python-dev python-numpy
-    - sudo apt-get install -y libpng12-0 libpng12-dev libpng++-dev libpng12
+    - sudo apt-get install -y libpng12-0 libpng12-dev libpng++-dev
     - sudo apt-get install -y libpnglite-dev zlib1g-dbg zlib1g zlib1g-dev pngtools libtiff5-dev
     - sudo apt-get install -y libtiff4 libtiffxx0c2 libtiff-tools libjpeg8 libjpeg8-dev libjpeg8-dbg libjpeg-progs ffmpeg libavcodec-dev
     - sudo apt-get install -y libavcodec53 libavformat53 libavformat-dev libgstreamer0.10-0-dbg libgstreamer0.10-0  libgstreamer0.10-dev
