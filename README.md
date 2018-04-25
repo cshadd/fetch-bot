@@ -78,7 +78,7 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
 
 ### Installing
 Clone/fork this repository and save it. Then use ``./bash-install.sh`` to install to your system (Bash).
-``~/bin/StartFetchBot.sh`` is the launcher.
+``~/bin/StartFetchBot.sh`` is the launcher (Bash).
 ``/var/www/html/FetchBot/`` is the webserver.
 
 ### Further Considerations
@@ -91,7 +91,7 @@ You may want to:
 ## Deployment
 
 ### Recommended Deployment
-``~/bin/StartFetchBot.sh`` (Bash) is the launcher that you use to deploy the application.
+``~/bin/StartFetchBot.sh`` is the launcher that you use to deploy the application (Bash).
 To run or stop it you will need to use the web server.
 ``/var/www/html/FetchBot/`` is the web server that you can access at http://localhost/FetchBot. You may need to disable the cache.
 
