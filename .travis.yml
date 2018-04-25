@@ -7,8 +7,6 @@ os:
 before_install:
     - sudo apt-add-repository -y ppa:ondrej/php
     - sudo apt-get update -y
-    - export ANT_HOME=/usr/share/ant/
-    - export PATH=${PATH}:${ANT_HOME}/bin
     - sudo rm -f -r /var/www/html/FetchBot
     - find ~/bin -name 'fetch-bot*.jar' -exec rm -f {} \;
     - rm -f -r ~/bin/libs/fetch-bot
