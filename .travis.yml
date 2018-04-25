@@ -34,7 +34,7 @@ before_script:
     - sudo cp /usr/local/share/OpenCV/java/libopencv_java341.so $JAVA_HOME/jre/lib/amd64/libopencv_java341.so
     - sudo sh -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'
     - sudo ldconfig
-    - mvn install:install-file -Dfile=/usr/local/share/OpenCV/java/opencv-341.jar -DgroupId=opencv -DartifactId=opencv -Dversion=3.4.1 -Dpackaging=jar
+    - mvn clean install:install-file -Dfile=/usr/local/share/OpenCV/java/opencv-341.jar -DgroupId=opencv -DartifactId=opencv -Dversion=3.4.1 -Dpackaging=jar
     - cd ..
     - cd ..
     - rm -f -r ./opencv-3.4.1
