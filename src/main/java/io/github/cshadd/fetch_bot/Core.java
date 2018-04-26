@@ -144,7 +144,7 @@ implements FetchBot {
                                 webInterfaceComm.setRobotValue("move", "Stop");
                                 webInterfaceComm.pushRobot();
                             }
-                            else {
+                            else if (!move.equals("Stop")) {
                                 currentMove = move;
                                 Logger.info("WebInterface - [move: " + currentMove + "] command received.");
                                 arduinoComm.setSourceValue("a", currentMove);
