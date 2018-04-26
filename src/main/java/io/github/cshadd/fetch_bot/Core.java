@@ -154,7 +154,7 @@ implements FetchBot {
                 }
                 
                 // Send data to Web Interface
-                webInterfaceComm.pushRobot();
+                webInterfaceComm.pushSource();
             }
             catch (CommunicationException e) {
                 Logger.error(e, "Communication encountered an error.");
