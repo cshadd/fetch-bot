@@ -182,16 +182,6 @@ implements ArduinoCommunication {
         toRobotData = read();
     }
     @Override
-    public void pullSource()
-    throws CommunicationException {
-    	throw new CommunicationException("Not implemented!");
-    }
-    @Override
-    public void pushRobot()
-    throws CommunicationException {
-    	throw new CommunicationException("Not implemented!");
-    }
-    @Override
     public void pushSource()
     throws CommunicationException {
         write();

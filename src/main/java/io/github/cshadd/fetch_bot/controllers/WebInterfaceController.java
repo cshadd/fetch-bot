@@ -1,20 +1,5 @@
 package io.github.cshadd.fetch_bot.controllers;
-import io.github.cshadd.fetch_bot.io.CommunicationException;
-import io.github.cshadd.fetch_bot.io.WebInterfaceCommunication;
-import io.github.cshadd.fetch_bot.io.WebInterfaceCommunicationImpl;
 
 // Main
-public class WebInterfaceController
-implements Controller {
-    // Private Instance/Property Fields
-	private WebInterfaceCommunication webInterfaceComm;
-
-	// Public Constructors
-	public WebInterfaceController() {
-		webInterfaceComm = new WebInterfaceCommunicationImpl();
-	}
-	
-	// Private Methods
-
-	// Public Methods
-}
+public abstract interface WebInterfaceController
+extends Controller { }
