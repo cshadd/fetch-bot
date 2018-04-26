@@ -11,7 +11,7 @@ import io.github.cshadd.fetch_bot.util.VersionCheckException;
 // Main
 public class Core
 implements FetchBot {
-    // Private Constant Instance/Property Fields
+    // Private Static Instance/Property Fields
     private static ArduinoCommunication arduinoComm;
     private static WebInterfaceCommunication webInterfaceComm;
 
