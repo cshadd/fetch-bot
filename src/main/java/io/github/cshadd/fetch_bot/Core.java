@@ -37,10 +37,10 @@ implements FetchBot {
         int currentUltrasonicSensor = -1;
         String programMode = "Normal";
         String programVersion = "v0.0.0";
-        
+
         if (args.length == 1) {
             programVersion = args[0];
-        }        
+        }
         if (args.length == 2) {
             programMode = args[1];
         }
@@ -110,7 +110,6 @@ implements FetchBot {
                         currentUltrasonicSensor = ultrasonicSensor;
                         Logger.debug("Arduino - [s: " + currentUltrasonicSensor + "] received.");
                         webInterfaceComm.setSourceValue("ultrasonic", "" + currentUltrasonicSensor);
-                        webInterfaceComm.pushSource();
                     }
                 }
 
@@ -122,14 +121,11 @@ implements FetchBot {
                         Logger.info("WebInterface - [mode: " + currentMode + "] command received.");
                     }
                     webInterfaceComm.setSourceValue("mode", currentMode);
-                    webInterfaceComm.pushSource();
                     if (currentMode.equals("Auto")) {
                         webInterfaceComm.setSourceValue("emotion", "Neutral");
-                        webInterfaceComm.pushSource();
                     }
                     else if (currentMode.equals("Idle")) {
                         webInterfaceComm.setSourceValue("emotion", "Idle");
-                        webInterfaceComm.pushSource();
                     }
                     else if (currentMode.equals("Off")) {
                         break;
@@ -138,27 +134,23 @@ implements FetchBot {
                         final String move = webInterfaceComm.getRobotValue("move");
                         if (currentUltrasonicSensor <= 15) {
                             webInterfaceComm.setSourceValue("emotion", "Angry");
-                            webInterfaceComm.pushSource();
                             if (!move.equals(currentMove)) {
                             	currentMove = move;
                                 if (move.equals("Forward")) {
                                 	Logger.warn("Arduino - Sensor is blocked, refusing to move.");
-                                    webInterfaceComm.setRobotValue("move", "Stop");
-                                    webInterfaceComm.pushRobot();
                                 }
                                 else if (!move.equals("Stop")) {
                                     Logger.info("WebInterface - [move: " + currentMove + "] command received.");
                                     arduinoComm.setSourceValue("a", currentMove);
                                     arduinoComm.pushSource();
-                                    webInterfaceComm.setRobotValue("move", "Stop");
-                                    webInterfaceComm.pushRobot();
                                     Logger.info("WebInterface - [move: Stop] command received.");
                                 }
+                                webInterfaceComm.setRobotValue("move", "Stop");
+                                webInterfaceComm.pushRobot();
                             }
                         }
                         else {
                         	webInterfaceComm.setSourceValue("emotion", "Happy");
-                        	webInterfaceComm.pushSource();
                             if (!move.equals(currentMove)) {
                                 currentMove = move;
                                 Logger.info("WebInterface - [move: " + currentMove + "] command received.");
@@ -175,6 +167,7 @@ implements FetchBot {
                         webInterfaceComm.pushRobot();
                     }
                 }
+                webInterfaceComm.pushSource();
             }
             catch (CommunicationException e) {
                 Logger.error(e, "Communication encountered an error.");
