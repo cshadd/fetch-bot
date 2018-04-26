@@ -57,6 +57,7 @@ implements FetchBot {
         try {
             if (webInterfaceComm != null) {
             	webInterfaceComm.setSourceValue("verbose", read());
+                webInterfaceComm.pushSource();
             }
         }
         catch (Exception e) {
