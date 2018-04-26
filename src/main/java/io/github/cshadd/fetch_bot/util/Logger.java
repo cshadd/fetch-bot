@@ -1,7 +1,6 @@
 package io.github.cshadd.fetch_bot.util;
 import com.pi4j.util.Console;
 import io.github.cshadd.fetch_bot.FetchBot;
-import io.github.cshadd.fetch_bot.io.Communication;
 import io.github.cshadd.fetch_bot.io.WebInterfaceCommunication;
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +22,7 @@ implements FetchBot {
 
     // Private Instance/Property Fields
     private static boolean debug;
-    private static Communication interfaceComm;
+    private static WebInterfaceCommunication webInterfaceComm;
     private static Console console;
 
     // Private Constructors
@@ -56,8 +55,8 @@ implements FetchBot {
     private static void writeInterface(String msg, boolean append) {
         write(msg, append);
         try {
-            if (interfaceComm != null) {
-                interfaceComm.setSourceValue("verbose", read());
+            if (webInterfaceComm != null) {
+            	webInterfaceComm.setSourceValue("verbose", read());
             }
         }
         catch (Exception e) {
@@ -128,7 +127,7 @@ implements FetchBot {
         writeInterface(msg, append);
     }
     public static void setWebInterfaceCommunications(WebInterfaceCommunication comm) {
-        interfaceComm = comm;
+    	webInterfaceComm = comm;
     }
     public static void setToDebugMode() {
         debug = true;

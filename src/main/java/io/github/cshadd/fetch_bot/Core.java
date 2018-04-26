@@ -1,8 +1,9 @@
 package io.github.cshadd.fetch_bot;
 import io.github.cshadd.fetch_bot.io.ArduinoCommunication;
+import io.github.cshadd.fetch_bot.io.ArduinoCommunicationImpl;
 import io.github.cshadd.fetch_bot.io.CommunicationException;
-import io.github.cshadd.fetch_bot.io.Communication;
 import io.github.cshadd.fetch_bot.io.WebInterfaceCommunication;
+import io.github.cshadd.fetch_bot.io.WebInterfaceCommunicationImpl;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.VersionCheck;
 import io.github.cshadd.fetch_bot.util.VersionCheckException;
@@ -13,8 +14,8 @@ import org.opencv.core.Mat;
 public class Core
 implements FetchBot {
     // Private Static Instance/Property Fields
-    private static Communication arduinoComm;
-    private static Communication webInterfaceComm;
+    private static ArduinoCommunication arduinoComm;
+    private static WebInterfaceCommunication webInterfaceComm;
 
     // Public Static Methods
     static {
@@ -53,10 +54,10 @@ implements FetchBot {
         }
 
         // Initiate interface communications
-        webInterfaceComm = new WebInterfaceCommunication();
+        webInterfaceComm = new WebInterfaceCommunicationImpl();
 
         // Initiate logging
-        Logger.setWebInterfaceCommunications((WebInterfaceCommunication)webInterfaceComm);
+        Logger.setWebInterfaceCommunications(webInterfaceComm);
         if (programMode.equals("debug")) {
         	Logger.setToDebugMode();
         }
@@ -82,7 +83,7 @@ implements FetchBot {
         }
 
         // Initiate Arduino communications
-        arduinoComm = new ArduinoCommunication();
+        arduinoComm = new ArduinoCommunicationImpl();
 
         // Reset communications
         try {
@@ -90,7 +91,7 @@ implements FetchBot {
             webInterfaceComm.pushSource();
             webInterfaceComm.pushRobot();
             arduinoComm.reset();
-            Logger.info("ArduinoCommunication - Opened serial on " + ArduinoCommunication.SERIAL_PORT + ".");
+            Logger.info("ArduinoCommunication - Opened serial on " + ArduinoCommunicationImpl.SERIAL_PORT + ".");
             arduinoComm.pushSource();
         }
         catch (CommunicationException e) {
