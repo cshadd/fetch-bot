@@ -9,8 +9,8 @@ import org.json.JSONObject;
 public class InterfaceCommunication
 implements Communication {
     // Private Constant Instance/Property Fields
-    private static final  String TO_INTERFACE_JSON_PATH = "/var/www/html/FetchBot/comms/toInterface.json";
-    private static final  String TO_ROBOT_JSON_PATH = "/var/www/html/FetchBot/comms/toRobot.json";
+    private static final  String TO_INTERFACE_JSON_PATH = "/var/www/html/FetchBot/comms/toInterface.json"; // Change if needed
+    private static final  String TO_ROBOT_JSON_PATH = "/var/www/html/FetchBot/comms/toRobot.json"; // Change if needed
 
     // Private Instance/Property Fields
     private JSONObject toInterfaceData;
