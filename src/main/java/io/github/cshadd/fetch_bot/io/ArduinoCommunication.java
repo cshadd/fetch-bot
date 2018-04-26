@@ -9,6 +9,7 @@ import com.pi4j.io.serial.SerialFactory;
 import com.pi4j.io.serial.SerialDataEventListener;
 import com.pi4j.io.serial.SerialDataEvent;
 import com.pi4j.io.serial.StopBits;
+
 import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -118,7 +119,7 @@ implements Communication {
     throws CommunicationException {
         try {
             if (serial.isOpen()) {
-                serial.write(getArduinoValue("a"));
+                serial.write(getSourceValue("a"));
                 serial.flush();
             }
         }
@@ -134,7 +135,8 @@ implements Communication {
         finally { }
     }
 
-    // Public Methods
+    // Public Methods (Overrided)
+    @Override
     public void clear()
     throws CommunicationException {
         close();
@@ -142,7 +144,24 @@ implements Communication {
         toArduinoData = new JSONObject();
         toRobotData = new JSONObject();
     }
-    public String getArduinoValue(String key)
+    @Override
+    public String getRobotValue(String key)
+    throws CommunicationException {
+        String returnData = "-1";
+        try {
+            returnData = "" + toRobotData.getFloat(key);
+        }
+        catch (JSONException e) {
+            throw new CommunicationException("There was an issue with JSON!", e);
+        }
+        catch (Exception e) {
+            throw new CommunicationException("There was an unknown issue!", e);
+        }
+        finally { }
+        return returnData;
+    }
+    @Override
+    public String getSourceValue(String key)
     throws CommunicationException {
         String returnData = null;
         try {
@@ -157,26 +176,23 @@ implements Communication {
         finally { }
         return returnData;
     }
-    public float getRobotValue(String key)
-    throws CommunicationException {
-        float returnData = -1;
-        try {
-            returnData = toRobotData.getFloat(key);
-        }
-        catch (JSONException e) {
-            throw new CommunicationException("There was an issue with JSON!", e);
-        }
-        catch (Exception e) {
-            throw new CommunicationException("There was an unknown issue!", e);
-        }
-        finally { }
-        return returnData;
-    }
+    @Override
     public void pullRobot()
     throws CommunicationException {
         toRobotData = read();
     }
-    public void pushArduino()
+    @Override
+    public void pullSource()
+    throws CommunicationException {
+    	throw new CommunicationException("Not implemented!");
+    }
+    @Override
+    public void pushRobot()
+    throws CommunicationException {
+    	throw new CommunicationException("Not implemented!");
+    }
+    @Override
+    public void pushSource()
     throws CommunicationException {
         write();
         isSerialLocked = true;
@@ -190,30 +206,37 @@ implements Communication {
             finally { }
         }
     }
+    @Override
     public void reset()
     throws CommunicationException {
         clear();
         open();
-        setArduinoValue("a", "Stop");
-        setRobotValue("s", -1);
+        setRobotValue("s", "-1");
+
+        setSourceValue("a", "Stop");
     }
-    public void setArduinoValue(String key, String value)
+    @Override
+    public void setRobotValue(String key, String value)
     throws CommunicationException {
         try {
-            toArduinoData.put(key, value);
+            toRobotData.put(key, Float.parseFloat(value));
         }
         catch (JSONException e) {
             throw new CommunicationException("There was an issue with JSON!", e);
+        }
+        catch (NumberFormatException e) {
+            throw new CommunicationException("There was an issue with Number Format!", e);
         }
         catch (Exception e) {
             throw new CommunicationException("There was an unknown issue!", e);
         }
         finally { }
     }
-    public void setRobotValue(String key, float value)
+    @Override
+    public void setSourceValue(String key, String value)
     throws CommunicationException {
         try {
-            toRobotData.put(key, value);
+            toArduinoData.put(key, value);
         }
         catch (JSONException e) {
             throw new CommunicationException("There was an issue with JSON!", e);
