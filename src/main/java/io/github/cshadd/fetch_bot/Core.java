@@ -110,6 +110,7 @@ implements FetchBot {
                         currentUltrasonicSensor = ultrasonicSensor;
                         Logger.debug("Arduino - [s: " + currentUltrasonicSensor + "] received.");
                         webInterfaceComm.setSourceValue("ultrasonic", "" + currentUltrasonicSensor);
+                        webInterfaceComm.pushSource();
                     }
                 }
 
@@ -121,12 +122,14 @@ implements FetchBot {
                         Logger.info("WebInterface - [mode: " + currentMode + "] command received.");
                     }
                     webInterfaceComm.setSourceValue("mode", currentMode);
-                    
+                    webInterfaceComm.pushSource();
                     if (currentMode.equals("Auto")) {
                         webInterfaceComm.setSourceValue("emotion", "Neutral");
+                        webInterfaceComm.pushSource();
                     }
                     else if (currentMode.equals("Idle")) {
                         webInterfaceComm.setSourceValue("emotion", "Idle");
+                        webInterfaceComm.pushSource();
                     }
                     else if (currentMode.equals("Off")) {
                         break;
@@ -135,9 +138,11 @@ implements FetchBot {
                         final String move = webInterfaceComm.getRobotValue("move");
                         if (currentUltrasonicSensor <= 15) {
                             webInterfaceComm.setSourceValue("emotion", "Angry");
+                            webInterfaceComm.pushSource();
                         }
                         else {
                         	webInterfaceComm.setSourceValue("emotion", "Happy");
+                        	webInterfaceComm.pushSource();
                             if (!move.equals(currentMove)) {
                                 currentMove = move;
                                 Logger.info("WebInterface - [move: " + currentMove + "] command received.");
@@ -154,7 +159,6 @@ implements FetchBot {
                         webInterfaceComm.pushRobot();
                     }
                 }
-                webInterfaceComm.pushSource();
             }
             catch (CommunicationException e) {
                 Logger.error(e, "Communication encountered an error.");
