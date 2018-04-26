@@ -144,6 +144,7 @@ implements FetchBot {
                                 arduinoComm.pushSource();
                                 webInterfaceComm.setSourceValue("emotion", "Happy");
                                 webInterfaceComm.setRobotValue("move", "Stop");
+                                webInterfaceComm.pushRobot();
                             }
                         }
                     }
