@@ -81,8 +81,8 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
 ### IDEs
 You may use any IDE of your choice to edit project files. We have included files for importing the project into Visual Studio 2017 or higher and Eclipse Oxygen or higher. These would be ``fetch-bot.sln`` and ``.project`` respectively.
 
-## Installing
-Before installing this software, you must make sure that you have installed all the dependencies necessary and have assembled the hardware correctly.
+## Installing The Project Software
+Before installing this project, you must make sure that you have installed all the dependencies necessary and have assembled the hardware correctly.
 
 ### Easy Install
 Execute
@@ -133,7 +133,7 @@ sudo chown -R $USER:www-data <LOCATION OF APACHE HTTP FOLDER>/FetchBot
 sudo chmod -R 776 <LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot
 ```
 
-## Uninstalling
+## Uninstalling The Project Software
 
 ### Easy Uninstall
 Only do this if you did the Easy Install!
