@@ -137,12 +137,12 @@ implements FetchBot {
                             webInterfaceComm.setSourceValue("emotion", "Angry");
                         }
                         else {
+                        	webInterfaceComm.setSourceValue("emotion", "Happy");
                             if (!move.equals(currentMove)) {
                                 currentMove = move;
                                 Logger.info("WebInterface - [move: " + currentMove + "] command received.");
                                 arduinoComm.setSourceValue("a", currentMove);
                                 arduinoComm.pushSource();
-                                webInterfaceComm.setSourceValue("emotion", "Happy");
                                 webInterfaceComm.setRobotValue("move", "Stop");
                                 webInterfaceComm.pushRobot();
                             }
@@ -151,10 +151,9 @@ implements FetchBot {
                     else {
                         Logger.warn("[mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
                         webInterfaceComm.setRobotValue("mode", "Idle");
+                        webInterfaceComm.pushRobot();
                     }
                 }
-                
-                // Send data to Web Interface
                 webInterfaceComm.pushSource();
             }
             catch (CommunicationException e) {
