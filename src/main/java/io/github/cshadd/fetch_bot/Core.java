@@ -139,6 +139,12 @@ implements FetchBot {
                         if (currentUltrasonicSensor <= 15) {
                             webInterfaceComm.setSourceValue("emotion", "Angry");
                             webInterfaceComm.pushSource();
+                            if (!move.equals(currentMove)) {
+                            	currentMove = move;
+                            	Logger.warn("Arduino - Sensor is blocked, refusing to move.");
+                                webInterfaceComm.setRobotValue("move", "Stop");
+                                webInterfaceComm.pushRobot();
+                            }
                         }
                         else {
                         	webInterfaceComm.setSourceValue("emotion", "Happy");
@@ -154,7 +160,7 @@ implements FetchBot {
                         }
                     }
                     else {
-                        Logger.warn("[mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
+                        Logger.warn("WebInterface - [mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
                         webInterfaceComm.setRobotValue("mode", "Idle");
                         webInterfaceComm.pushRobot();
                     }
