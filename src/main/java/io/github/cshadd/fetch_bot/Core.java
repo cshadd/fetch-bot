@@ -167,6 +167,10 @@ implements FetchBot {
                         webInterfaceComm.pushRobot();
                     }
                 }
+                else {
+                    // Delay for safety
+                    delayThread(1000);
+                }
                 webInterfaceComm.pushSource();
             }
             catch (CommunicationException e) {
