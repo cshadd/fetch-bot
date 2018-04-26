@@ -112,7 +112,6 @@ implements PathfindController {
 		return getCoordinateFromDefault(Math.sin(a), Math.cos(a));
 	}
 	private CartesianCoordinate getCoordinateFromDefault(double x, double y) {
-		final double a = currentDirection*((Math.PI)/180);
 		CartesianCoordinate returnData = null;
 		for (int i = 0; i < defaultCoords.size(); i++) {
 			CartesianCoordinate coord = defaultCoords.get(i);
