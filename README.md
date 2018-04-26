@@ -5,12 +5,11 @@
 [![Travis CI Build Status](https://www.travis-ci.org/cshadd/fetch-bot.svg)](https://www.travis-ci.org/cshadd/fetch-bot)
 
 # Fetch Bot
-This is a repository of an AI based robot that uses image processing and data structures to transverse an area.
+AI based robot with image processing.
 
 ## Getting Started
-This repository may be used for your own robot.
 
-### Items
+### Hardware Dependencies
 * Setup:
     - x1 Computer
     - x1 Ethernet Cable
@@ -30,7 +29,7 @@ This repository may be used for your own robot.
     - x2 Mounting Bracket for Nema 17 Stepper Motor (Geared Stepper) Hobby CNC/3D Printer
     - x2 RB-Nex-75 60mm Aluminum Omni Wheel
     - x2 5mm Aluminum Mounting Hub
-    - "Back Wheel"
+    - x1 "Back Wheel"
     - x1 Arduino Uno
     - x1 Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
     - x1 Non-Soldering Breadboard
@@ -41,7 +40,7 @@ This repository may be used for your own robot.
 * Optional:
     - x1 Raspberry Pi Case Kit
 
-### Assembly
+### Hardware Assembly
 Great care is needed to assemble this robot.
 We specifically chose these parts for our robot but it is up to you to decide which ones you will use.
 ```
@@ -52,54 +51,118 @@ We specifically chose these parts for our robot but it is up to you to decide wh
 Let's face it. In our day and age of the 21st century, we want lightweight mobile systems for robots. The Pi and Uno is perfect for it.
 We cannot stress enough about the power of the Pi and Uno. The features on the Pi contains preinstalled software such as ``git``.
 It is easy to setup and use as it is virtually a computer itself.
-We built this robot specifically on the Pi and Uno but made it as modular as possible to accomodate other systems.
+We built this robot specifically on the Pi and Uno but made it as modular as possible to accommodate other systems.
 If you want to use a full tower as a robot brain, go ahead. But the Pi and Uno is much simpler.
 Proceeding forward, we will be specifically talking about the Pi and Uno unless otherwise. The system and Bash command lines will rely on the Pi.
 
-### Prerequisites
-* Recommended (Raspberry Pi/Computer):
-    - Raspbian OS Stretch or higher
-    - Chromium Browser
-    - Java SE Development Kit 8.0 or higher
-    - Java SE Runtime Environment 8.0 or higher
-    - Apache Maven 3.5.3 or higher
-    - OpenCV 3.4.1
-    - Apache HTTP Server 2.4.25 or higher
-    - PHP 7.0.27 or higher
-    - Packaged Apps (apt-get):
+### Software Dependencies
+* Recommended (Raspberry Pi):
+    - OS: Raspbian Stretch or higher
+    - Software:
+        - Apache HTTP Server 2.4.25 or higher
+        - Apache Maven 3.5.3 or higher
+        - ArduinoJson 5.13.1 or higher
+        - Basic Linux Software (``apt-get``, ``bash``, ``git``, ``wget``, etc.)
+        - Chromium Browser
+        - Java SE Development Kit 8.0 or higher
+        - Java SE Runtime Environment 8.0 or higher
+        - OpenCV 3.4.1
+        - PHP 7.0.27 or higher
+    - Packaged Software (apt-get):
         - arduino-core
         - arduino-mk
         - unclutter
-    - Text Editor/IDE
 * Optional (Computer):
-    - Visual Studio 2017 or higher
-    - Eclipse Oxygen or higher
-    - Arduino IDE 1.8.5 or higher
+    - OS: Any
+        - Visual Studio 2017 or higher
+        - Eclipse Oxygen or higher
+        - Arduino IDE 1.8.5 or higher
 
-### Installing
-Clone/fork this repository and save it. Then use ``./bash-install.sh`` to install to your system (Bash).
-``~/bin/StartFetchBot.sh`` is the launcher (Bash).
-``/var/www/html/FetchBot/`` is the webserver.
+### IDEs
+You may use any IDE of your choice to edit project files. We have included files for importing the project into Visual Studio 2017 or higher and Eclipse Oxygen or higher. These would be ``fetch-bot.sln`` and ``.project`` respectively.
 
-### Further Considerations
-You may want to:
-* Configure remote SSH.
-* Configure serial access.
-* Check the serial ports when connecting the Arduino to the Raspberry Pi and change them if necessary in accordance with this program.
-* Check the wiring when connecting the sensors and motors to the Arduino and change them if necessary in accordance with this program.
+## Installing
+Before installing this software, you must make sure that you have installed all the dependencies necessary and have assembled the hardware correctly.
 
-## Deployment
+### Easy Install
+Execute
+```bash
+cd <PROJECT DIRECTORY>
+./bash-install.sh
+```
+in a Bash terminal.
 
-### Recommended Deployment
-``~/bin/StartFetchBot.sh`` is the launcher that you use to deploy the application (Bash).
-To run or stop it you will need to use the web server.
-``/var/www/html/FetchBot/`` is the web server that you can access at http://localhost/FetchBot. You may need to disable the cache.
+### Building From Source (Custom Build)
+Make sure you uninstall the project if you have installed it before.
+You need to first upload the Arduino Sketch to the Arduino. You may change the Arduino code before you upload it.
+```bash
+cd <PROJECT DIRECTORY>
+cd ./src/arduino-slave-processor/FetchBot
+rm -f -r ./build-uno
+make upload
+```
+You should make sure that the directory is clean.
+```bash
+cd <PROJECT DIRECTORY>
+mvn clean
+```
+You may now make any changes to the java project that you desire. Once you are done it is time to compile the project.
+```bash
+mvn compile
+```
+After that you will package the main java code into a jar.
+```bash
+mvn package
+```
+For the web interface you may make any changes you desire.
+Proceed to the next section to install the build.
 
-### Visual Studio Solution (Optional)
-You may use Visual Studio 2017 or higher as an editor. ``fetch-bot.sln`` is the solution file.
+### Installing From Custom Build
+To install the project into your system we first copy the needed directories and files to the appropriate locations.
+```bash
+cd <PROJECT DIRECTORY>
+cp -r ./target/libs <DESIRED LOCATION OF PROGRAM>
+cp ./target/fetch-bot-v0.16.0.jar <LOCATION OF PROGRAM>/fetch-bot-v0.16.0.jar
+cp ./src/bash-start.sh <DESIRED LOCATION OF PROGRAM>/StartFetchBot.sh
+sudo cp -R ./src/www <LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot
+```
+Then we need to set permissions and ownership.
+```bash
+sudo chmod 764 <DESIRED LOCATION OF PROGRAM>/StartFetchBot.sh
+sudo chown -R $USER:www-data <LOCATION OF APACHE HTTP FOLDER>/FetchBot
+sudo chmod -R 776 <LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot
+```
 
-### Eclipse Oxygen (Optional)
-You may use Eclipse Oxygen or higher as an editor. ``.project`` is the project file.
+## Uninstalling
+
+### Easy Uninstall
+**Only do this if you did the Easy Install!**
+Execute
+```bash
+cd <PROJECT DIRECTORY>
+./bash-uninstall.sh
+```
+in a Bash terminal.
+
+### Manual Uninstall
+Execute
+```bash
+sudo pkill java
+sudo rm -f -r <LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot
+find <CURRENT LOCATION OF PROGRAM> -name 'fetch-bot*.jar' -exec rm -f {} \;
+rm -f -r <CURRENT LOCATION OF PROGRAM>/libs/fetch-bot
+rm -f <CURRENT LOCATION OF PROGRAM>/StartFetchBot.sh
+```
+in a Bash terminal.
+
+## Usage
+To run, execute
+```bash
+cd <DESIRED LOCATION OF PROGRAM>
+./StartFetchBot.sh
+```
+in a Bash terminal.
+To control and terminate the application, you must use the web interface. The address to the web interface depends on your Apache configuration. Normally it would just be http://localhost/FetchBot.
 
 ## Contributing
 See [here](CONTRIBUTING.md).
@@ -122,7 +185,7 @@ See [here](LICENSE).
 ## Development Standards
 See [here](/docs/development-standards/DevelopmentStandards.pdf).
 
-## Software Requirements Specification 
+## Software Requirements Specification
 See [here](/docs/software-requirements-specification/SoftwareRequirementsSpecification.pdf).
 
 ## Acknowledgements
