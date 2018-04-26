@@ -17,7 +17,7 @@ import org.json.JSONObject;
 public class ArduinoCommunication
 implements Communication {
     // Public Constant Instance/Property Fields
-    public static final String SERIAL_PORT = "/dev/ttyACM0";
+    public static final String SERIAL_PORT = "/dev/ttyACM0"; // Change if needed
 
     // Private Instance/Property Fields
     private String buffer;
