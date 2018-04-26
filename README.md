@@ -75,12 +75,12 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
 * Optional (Computer):
     - OS: Any
     - Software:
-        - Visual Studio 2017 or higher
-        - Eclipse Oxygen or higher
         - Arduino IDE 1.8.5 or higher
+        - Eclipse Oxygen or higher
+        - Visual Studio 2017 or higher
 
 ### IDEs
-You may use any IDE of your choice to edit project files. We have included files for importing the project into Visual Studio 2017 or higher and Eclipse Oxygen or higher. These would be ``fetch-bot.sln`` and ``.project`` respectively.
+You may use any IDE of your choice to edit project files. We have included files for importing the project into Eclipse Oxygen or higher and Visual Studio 2017 or higher. These would be ``.project`` and ``fetch-bot.sln`` respectively.
 
 ## Installing The Project Software
 Before installing this project, you must make sure that you have installed all the dependencies necessary and have assembled the hardware correctly.
@@ -92,47 +92,62 @@ cd <PROJECT DIRECTORY>
 ./bash-install.sh
 ```
 in a Bash terminal.
+The main files will be located in ``~/bin``.
+Web interface files will be located in ``<LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot``.
 
 ### Building From Source (Custom Build)
 Make sure you uninstall the project if you have installed it before.
 You need to first upload the Arduino Sketch to the Arduino. You may change the Arduino code before you upload it.
+Execute
 ```bash
 cd <PROJECT DIRECTORY>
 cd ./src/arduino-slave-processor/FetchBot
 rm -f -r ./build-uno
 make upload
 ```
+in a Bash terminal.
 You should make sure that the directory is clean.
+Execute
 ```bash
 cd <PROJECT DIRECTORY>
 mvn clean
 ```
-You may now make any changes to the java project that you desire. Once you are done it is time to compile the project.
+in a Bash terminal.
+You may now make any changes to the Java project that you desire. Once you are done it is time to compile the project.
+Execute
 ```bash
 mvn compile
 ```
-After that you will package the main java code into a jar.
-```bash
-mvn package
-```
+in a Bash terminal.
+
 For the web interface you may make any changes you desire.
 Proceed to the next section to install the build.
 
 ### Installing From Custom Build
-To install the project into your system we first copy the needed directories and files to the appropriate locations.
+You will package the main Java code into a jar.
+Execute
+```bash
+mvn package
+```
+in a Bash terminal.
+Then copy the needed directories and files to the appropriate locations.
+Execute
 ```bash
 cd <PROJECT DIRECTORY>
 cp -r ./target/libs <DESIRED LOCATION OF PROGRAM>
-cp ./target/fetch-bot-v0.16.0.jar <LOCATION OF PROGRAM>/fetch-bot-v0.16.0.jar
+cp ./target/fetch-bot-vx.x.x.jar <LOCATION OF PROGRAM>/fetch-bot-vx.x.x.jar
 cp ./src/bash-start.sh <DESIRED LOCATION OF PROGRAM>/StartFetchBot.sh
 sudo cp -R ./src/www <LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot
 ```
-Then we need to set permissions and ownership.
+in a Bash terminal.
+Then you need to set permissions and ownership.
+Execute
 ```bash
 sudo chmod 764 <DESIRED LOCATION OF PROGRAM>/StartFetchBot.sh
-sudo chown -R $USER:www-data <LOCATION OF APACHE HTTP FOLDER>/FetchBot
-sudo chmod -R 776 <LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot
+sudo chown -R $USER:www-data <LOCATION OF APACHE HTTP FOLDER>/<DESIRED LOCATION OF WEB INTERFACE>
+sudo chmod -R 776 <LOCATION OF APACHE HTTP SERVER FOLDER>/<DESIRED LOCATION OF WEB INTERFACE>
 ```
+in a Bash terminal.
 
 ## Uninstalling The Project Software
 
@@ -149,7 +164,7 @@ in a Bash terminal.
 Execute
 ```bash
 sudo pkill java
-sudo rm -f -r <LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot
+sudo rm -f -r <LOCATION OF APACHE HTTP SERVER FOLDER>/<DESIRED LOCATION OF WEB INTERFACE>
 find <CURRENT LOCATION OF PROGRAM> -name 'fetch-bot*.jar' -exec rm -f {} \;
 rm -f -r <CURRENT LOCATION OF PROGRAM>/libs/fetch-bot
 rm -f <CURRENT LOCATION OF PROGRAM>/StartFetchBot.sh
@@ -164,6 +179,9 @@ cd <DESIRED LOCATION OF PROGRAM>
 ```
 in a Bash terminal.
 To control and terminate the application, you must use the web interface. The address to the web interface depends on your Apache configuration. Normally it would just be http://localhost/FetchBot.
+
+## Web Page
+https://cshadd.github.io/fetch-bot/
 
 ## Contributing
 See [here](CONTRIBUTING.md).
