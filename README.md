@@ -141,7 +141,7 @@ Execute
 ```bash
 cd <PROJECT DIRECTORY>
 cp -r ./target/libs <DESIRED LOCATION OF PROGRAM>
-cp ./target/fetch-bot-vx.x.x.jar <LOCATION OF PROGRAM>/fetch-bot-vx.x.x.jar
+cp ./target/fetch-bot-vx.x.x.jar <DESIRED LOCATION OF PROGRAM>/fetch-bot-vx.x.x.jar
 cp ./src/bash-start.sh <DESIRED LOCATION OF PROGRAM>/StartFetchBot.sh
 sudo cp -R ./src/www <LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot
 ```
@@ -183,7 +183,7 @@ in a Bash terminal.
 ## Usage
 To run, execute
 ```bash
-cd <DESIRED LOCATION OF PROGRAM>
+cd <CURRENT LOCATION OF PROGRAM>
 ./StartFetchBot.sh
 ```
 in a Bash terminal.
