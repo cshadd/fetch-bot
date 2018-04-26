@@ -189,21 +189,21 @@ See [here](/docs/development-standards/DevelopmentStandards.pdf).
 See [here](/docs/software-requirements-specification/SoftwareRequirementsSpecification.pdf).
 
 ## Acknowledgements
-* [Raspberry Pi](https://www.raspberrypi.org/)
-* [Arduino](https://www.arduino.cc/)
-* [Ed's Blog](http://pblog.ebaker.me.uk/)
 * [Adafruit](https://www.adafruit.com/)
-* [Oracle](https://www.oracle.com/)
-* [OpenCV](https://www.opencv.org/)
-* [The Pi4J Project](http://pi4j.com/)
 * [Apache](https://www.apache.org/)
-* [JitPack](https://www.jitpack.io/)
-* [ZenHub](https://www.zenhub.com/)
-* [W3Schools](https://www.w3schools.com/)
-* [The PHP Group](https://php.net/)
-* [Microsoft](https://www.microsoft.com/)
+* [Arduino](https://www.arduino.cc/)
 * [Eclipse](https://www.eclipse.org/)
+* [Ed's Blog](http://pblog.ebaker.me.uk/)
+* [JitPack](https://www.jitpack.io/)
+* [Microsoft](https://www.microsoft.com/)
+* [OpenCV](https://www.opencv.org/)
+* [Oracle](https://www.oracle.com/)
+* [Raspberry Pi](https://www.raspberrypi.org/)
+* [The PHP Group](https://php.net/)
+* [The Pi4J Project](http://pi4j.com/)
 * [Travis CI](https://www.travis-ci.org/)
+* [W3Schools](https://www.w3schools.com/)
+* [ZenHub](https://www.zenhub.com/)
 
 [![<3 Raspberry Pi](https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png)](https://www.raspberrypi.org/)
 
