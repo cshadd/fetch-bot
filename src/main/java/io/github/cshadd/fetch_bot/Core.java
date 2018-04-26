@@ -139,18 +139,21 @@ implements FetchBot {
                         if (currentUltrasonicSensor <= 15) {
                             webInterfaceComm.setSourceValue("emotion", "Angry");
                             webInterfaceComm.pushSource();
-                            if (move.equals("Forward")) {
-                            	Logger.warn("Arduino - Sensor is blocked, refusing to move.");
-                                webInterfaceComm.setRobotValue("move", "Stop");
-                                webInterfaceComm.pushRobot();
-                            }
-                            else if (!move.equals("Stop")) {
-                                Logger.info("WebInterface - [move: " + currentMove + "] command received.");
-                                arduinoComm.setSourceValue("a", currentMove);
-                                arduinoComm.pushSource();
-                                webInterfaceComm.setRobotValue("move", "Stop");
-                                webInterfaceComm.pushRobot();
-                                Logger.info("WebInterface - [move: " + currentMove + "] command received.");
+                            if (!move.equals(currentMove)) {
+                            	currentMove = move;
+                                if (move.equals("Forward")) {
+                                	Logger.warn("Arduino - Sensor is blocked, refusing to move.");
+                                    webInterfaceComm.setRobotValue("move", "Stop");
+                                    webInterfaceComm.pushRobot();
+                                }
+                                else if (!move.equals("Stop")) {
+                                    Logger.info("WebInterface - [move: " + currentMove + "] command received.");
+                                    arduinoComm.setSourceValue("a", currentMove);
+                                    arduinoComm.pushSource();
+                                    webInterfaceComm.setRobotValue("move", "Stop");
+                                    webInterfaceComm.pushRobot();
+                                    Logger.info("WebInterface - [move: " + currentMove + "] command received.");
+                                }
                             }
                         }
                         else {
