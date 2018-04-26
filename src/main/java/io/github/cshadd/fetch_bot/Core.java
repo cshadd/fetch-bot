@@ -139,7 +139,7 @@ implements FetchBot {
                         if (currentUltrasonicSensor <= 15) {
                             webInterfaceComm.setSourceValue("emotion", "Angry");
                             webInterfaceComm.pushSource();
-                            if (!move.equals("Stop")) {
+                            if (move.equals("Forward")) {
                             	Logger.warn("Arduino - Sensor is blocked, refusing to move.");
                                 webInterfaceComm.setRobotValue("move", "Stop");
                                 webInterfaceComm.pushRobot();
