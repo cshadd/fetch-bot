@@ -74,6 +74,7 @@ Proceeding forward, we will be specifically talking about the Pi and Uno unless 
         - unclutter
 * Optional (Computer):
     - OS: Any
+    - Software:
         - Visual Studio 2017 or higher
         - Eclipse Oxygen or higher
         - Arduino IDE 1.8.5 or higher
