@@ -12,9 +12,5 @@ implements AIController {
 	// Public Static Methods
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-    }	
-	
-	// Private Methods
-
-	// Public Methods
+    }
 }

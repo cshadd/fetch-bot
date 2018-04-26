@@ -131,10 +131,6 @@ implements WebInterfaceCommunication {
         setSourceValue("rot", "0");
         setSourceValue("ultrasonic", "0");
         setSourceValue("verbose", "...");
-        setSourceValue("x", "0");
-        setSourceValue("x-max", "0");
-        setSourceValue("y", "0");
-        setSourceValue("y-max", "0");
     }
     @Override
     public void setRobotValue(String key, String value)
