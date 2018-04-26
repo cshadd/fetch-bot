@@ -41,19 +41,13 @@ AI based robot with image processing.
     - x1 Raspberry Pi Case Kit
 
 ### Hardware Assembly
-Great care is needed to assemble this robot.
-We specifically chose these parts for our robot but it is up to you to decide which ones you will use.
+Great care is needed to assemble this robot. We specifically chose these parts for our robot but it is up to you to decide which ones you will use.
 ```
 1. Assemble the chassis with the...
 ```
 
 ### Why Raspberry Pi and Arduino Uno?
-Let's face it. In our day and age of the 21st century, we want lightweight mobile systems for robots. The Pi and Uno is perfect for it.
-We cannot stress enough about the power of the Pi and Uno. The features on the Pi contains preinstalled software such as ``git``.
-It is easy to setup and use as it is virtually a computer itself.
-We built this robot specifically on the Pi and Uno but made it as modular as possible to accommodate other systems.
-If you want to use a full tower as a robot brain, go ahead. But the Pi and Uno is much simpler.
-Proceeding forward, we will be specifically talking about the Pi and Uno unless otherwise. The system and Bash command lines will rely on the Pi.
+Let's face it. In our day and age of the 21st century, we want lightweight mobile systems for robots. The Pi and Uno is perfect for it. We cannot stress enough about the power of the Pi and Uno. The features on the Pi contains preinstalled software such as ``git``.It is easy to setup and use as it is virtually a computer itself. We built this robot specifically on the Pi and Uno but made it as modular as possible to accommodate other systems. If you want to use a full tower as a robot brain, go ahead. But the Pi and Uno is much simpler. Proceeding forward, we will be specifically talking about the Pi and Uno unless otherwise. The system and Bash command lines will rely on the Pi.
 
 ### Software Dependencies
 * Recommended (Raspberry Pi):
@@ -92,12 +86,16 @@ cd <PROJECT DIRECTORY>
 ./bash-install.sh
 ```
 in a Bash terminal.
+
 The main files will be located in ``~/bin``.
+
 Web interface files will be located in ``<LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot``.
 
 ### Building From Source (Custom Build)
 Make sure you uninstall the project if you have installed it before.
+
 You need to first upload the Arduino Sketch to the Arduino. You may change the Arduino code before you upload it.
+
 Execute
 ```bash
 cd <PROJECT DIRECTORY>
@@ -106,14 +104,18 @@ rm -f -r ./build-uno
 make upload
 ```
 in a Bash terminal.
+
 You should make sure that the directory is clean.
+
 Execute
 ```bash
 cd <PROJECT DIRECTORY>
 mvn clean
 ```
 in a Bash terminal.
+
 You may now make any changes to the Java project that you desire. Once you are done it is time to compile the project.
+
 Execute
 ```bash
 mvn compile
@@ -121,16 +123,20 @@ mvn compile
 in a Bash terminal.
 
 For the web interface you may make any changes you desire.
+
 Proceed to the next section to install the build.
 
 ### Installing From Custom Build
 You will package the main Java code into a jar.
+
 Execute
 ```bash
 mvn package
 ```
 in a Bash terminal.
+
 Then copy the needed directories and files to the appropriate locations.
+
 Execute
 ```bash
 cd <PROJECT DIRECTORY>
@@ -140,7 +146,9 @@ cp ./src/bash-start.sh <DESIRED LOCATION OF PROGRAM>/StartFetchBot.sh
 sudo cp -R ./src/www <LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot
 ```
 in a Bash terminal.
+
 Then you need to set permissions and ownership.
+
 Execute
 ```bash
 sudo chmod 764 <DESIRED LOCATION OF PROGRAM>/StartFetchBot.sh
@@ -153,6 +161,7 @@ in a Bash terminal.
 
 ### Easy Uninstall
 Only do this if you did the Easy Install!
+
 Execute
 ```bash
 cd <PROJECT DIRECTORY>
@@ -178,6 +187,7 @@ cd <DESIRED LOCATION OF PROGRAM>
 ./StartFetchBot.sh
 ```
 in a Bash terminal.
+
 To control and terminate the application, you must use the web interface. The address to the web interface depends on your Apache configuration. Normally it would just be http://localhost/FetchBot.
 
 ## Web Page
