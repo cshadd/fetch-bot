@@ -136,7 +136,7 @@ sudo chmod -R 776 <LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot
 ## Uninstalling
 
 ### Easy Uninstall
-**Only do this if you did the Easy Install!**
+Only do this if you did the Easy Install!
 Execute
 ```bash
 cd <PROJECT DIRECTORY>
