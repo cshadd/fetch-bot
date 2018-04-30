@@ -3,8 +3,7 @@ import io.github.cshadd.fetch_bot.FetchBotException;
 
 // Main
 public class CommunicationException
-extends FetchBotException
-implements Communication {
+extends FetchBotException {
     // Private Constant Instance/Property Fields
     private static final long serialVersionUID = 1L;
 
