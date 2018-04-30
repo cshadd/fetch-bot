@@ -6,20 +6,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 // Main
-public class WebInterfaceCommunicationImpl
-implements WebInterfaceCommunication {
+public class InterfaceCommunication
+implements Communication {
     // Private Constant Instance/Property Fields
-    private static final  String TO_ROBOT_JSON_PATH = "/var/www/html/FetchBot/comms/toRobot.json"; // Change if needed
-    private static final  String TO_WEB_INTERFACE_JSON_PATH = "/var/www/html/FetchBot/comms/toInterface.json"; // Change if needed
-    
+    private static final  String TO_INTERFACE_JSON_PATH = "/var/www/html/FetchBot/comms/toInterface.json";
+    private static final  String TO_ROBOT_JSON_PATH = "/var/www/html/FetchBot/comms/toRobot.json";
+
     // Private Instance/Property Fields
+    private JSONObject toInterfaceData;
     private JSONObject toRobotData;
-    private JSONObject toWebInterfaceData;
 
     // Public Constructors
-    public WebInterfaceCommunicationImpl() {
+    public InterfaceCommunication() {
+        toInterfaceData = new JSONObject();
         toRobotData = new JSONObject();
-        toWebInterfaceData = new JSONObject();
     }
 
     // Private Methods
@@ -60,14 +60,27 @@ implements WebInterfaceCommunication {
         finally { }
     }
 
-    // Public Methods (Overrided)
-    @Override
+    // Public Methods
     public void clear()
     throws CommunicationException {
-        toWebInterfaceData = new JSONObject();
+        toInterfaceData = new JSONObject();
         toRobotData = new JSONObject();
     }
-    @Override
+    public String getInterfaceValue(String key)
+    throws CommunicationException {
+        String returnData = null;
+        try {
+            returnData = toInterfaceData.getString(key);
+        }
+        catch (JSONException e) {
+            throw new CommunicationException("There was an issue with JSON!", e);
+        }
+        catch (Exception e) {
+            throw new CommunicationException("There was an unknown issue!", e);
+        }
+        finally { }
+        return returnData;
+    }
     public String getRobotValue(String key)
     throws CommunicationException {
         String returnData = null;
@@ -83,60 +96,42 @@ implements WebInterfaceCommunication {
         finally { }
         return returnData;
     }
-    @Override
-    public String getSourceValue(String key)
+    public void pullInterface()
     throws CommunicationException {
-        String returnData = null;
-        try {
-            returnData = toWebInterfaceData.getString(key);
-        }
-        catch (JSONException e) {
-            throw new CommunicationException("There was an issue with JSON!", e);
-        }
-        catch (Exception e) {
-            throw new CommunicationException("There was an unknown issue!", e);
-        }
-        finally { }
-        return returnData;
+        toInterfaceData = read(TO_INTERFACE_JSON_PATH);
     }
-    @Override
     public void pullRobot()
     throws CommunicationException {
         toRobotData = read(TO_ROBOT_JSON_PATH);
     }
-    @Override
-    public void pullSource()
+    public void pushInterface()
     throws CommunicationException {
-        toWebInterfaceData = read(TO_WEB_INTERFACE_JSON_PATH);
+        write(toInterfaceData, TO_INTERFACE_JSON_PATH);
     }
-    @Override
     public void pushRobot()
     throws CommunicationException {
         write(toRobotData, TO_ROBOT_JSON_PATH);
     }
-    @Override
-    public void pushSource()
-    throws CommunicationException {
-        write(toWebInterfaceData, TO_WEB_INTERFACE_JSON_PATH);
-    }
-    @Override
     public void reset()
     throws CommunicationException {
         clear();
+        setInterfaceValue("emotion", "Idle");
+        setInterfaceValue("mode", "Idle");
+        setInterfaceValue("rot", "0");
+        setInterfaceValue("ultrasonic", "0");
+        setInterfaceValue("verbose", "...");
+        setInterfaceValue("x", "0");
+        setInterfaceValue("x-max", "0");
+        setInterfaceValue("y", "0");
+        setInterfaceValue("y-max", "0");
+
         setRobotValue("mode", "Idle");
         setRobotValue("move", "Stop");
-        
-        setSourceValue("emotion", "Idle");
-        setSourceValue("mode", "Idle");
-        setSourceValue("rot", "0");
-        setSourceValue("ultrasonic", "0");
-        setSourceValue("verbose", "...");
     }
-    @Override
-    public void setRobotValue(String key, String value)
+    public void setInterfaceValue(String key, String value)
     throws CommunicationException {
         try {
-            toRobotData.put(key, value);
+            toInterfaceData.put(key, value);
         }
         catch (JSONException e) {
             throw new CommunicationException("There was an issue with JSON!", e);
@@ -146,11 +141,10 @@ implements WebInterfaceCommunication {
         }
         finally { }
     }
-    @Override
-    public void setSourceValue(String key, String value)
+    public void setRobotValue(String key, String value)
     throws CommunicationException {
         try {
-            toWebInterfaceData.put(key, value);
+            toRobotData.put(key, value);
         }
         catch (JSONException e) {
             throw new CommunicationException("There was an issue with JSON!", e);
