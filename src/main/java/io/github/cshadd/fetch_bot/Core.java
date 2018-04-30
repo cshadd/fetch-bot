@@ -12,8 +12,6 @@ import org.opencv.core.Mat;
 public class Core
 implements FetchBot {
     // Private Constant Instance/Property Fields
-    // private static final int COLLISION_DISTANCE = 15;
-    
     // Private Static Instance/Property Fields
     private static ArduinoCommunication arduinoComm;
     private static InterfaceCommunication interfaceComm;
@@ -44,10 +42,14 @@ implements FetchBot {
         String currentMove = "Stop";
         String currentVersion = "v0.0.0";
         int currentUltrasonicSensor = -1;
-        String version = "v0.0.0";
-
-        if (args.length >= 1) {
-            version = args[0];
+        String programMode = "Normal";
+        String programVersion = "v0.0.0";
+        
+        if (args.length == 1) {
+            programVersion = args[0];
+        }        
+        if (args.length == 2) {
+            programMode = args[1];
         }
 
         // Initiate interface communications
@@ -106,7 +108,7 @@ implements FetchBot {
                 arduinoComm.pullRobot();
 
                 // Sensors
-                final int ultrasonicSensor = (int)arduinoComm.getRobotValue("s");
+                final int ultrasonicSensor = Integer.parseInt(arduinoComm.getRobotValue("s"));
                 if (ultrasonicSensor != -1) {
                     if (ultrasonicSensor != currentUltrasonicSensor) {
                         currentUltrasonicSensor = ultrasonicSensor;
@@ -125,8 +127,7 @@ implements FetchBot {
                         currentMode = mode;
                         Logger.info("Interface - [mode: " + currentMode + "] command received.");
                     }
-                    interfaceComm.setInterfaceValue("mode", currentMode);
-
+                    webInterfaceComm.setSourceValue("mode", currentMode);
                     if (currentMode.equals("Auto")) {
                         interfaceComm.setInterfaceValue("emotion", "Neutral");
                     }
@@ -137,29 +138,29 @@ implements FetchBot {
                         break;
                     }
                     else if (currentMode.equals("Manual")) {
-                        interfaceComm.setInterfaceValue("emotion", "Neutral");
-                        // Movement (to be revised)
-                        final String move = interfaceComm.getRobotValue("move");
-                        if (!move.equals(currentMove)) {
-                            currentMove = move;
-                            Logger.info("Interface - [move: " + currentMove + "] command received.");
-                            // Check ultrasonic
-                            arduinoComm.setArduinoValue("a", currentMove);
-                            arduinoComm.pushArduino();
-                            interfaceComm.setInterfaceValue("emotion", "Happy");
-                            currentMove = "Stop";
-                            interfaceComm.setRobotValue("move", "Stop");
-                            interfaceComm.pushRobot();
+                        final String move = webInterfaceComm.getRobotValue("move");
+                        if (currentUltrasonicSensor <= 15) {
+                            webInterfaceComm.setSourceValue("emotion", "Angry");
+                        }
+                        else {
+                            if (!move.equals(currentMove)) {
+                                currentMove = move;
+                                Logger.info("WebInterface - [move: " + currentMove + "] command received.");
+                                arduinoComm.setSourceValue("a", currentMove);
+                                arduinoComm.pushSource();
+                                webInterfaceComm.setSourceValue("emotion", "Happy");
+                                webInterfaceComm.setRobotValue("move", "Stop");
+                            }
                         }
                     }
                     else {
                         Logger.warn("[mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
-                        interfaceComm.setRobotValue("mode", "Idle");
+                        webInterfaceComm.setRobotValue("mode", "Idle");
                     }
                 }
-
-                // Push data to communications
-                interfaceComm.pushInterface();
+                
+                // Send data to Web Interface
+                webInterfaceComm.pushRobot();
             }
             catch (CommunicationException e) {
                 Logger.error(e, "Communication encountered an error.");
