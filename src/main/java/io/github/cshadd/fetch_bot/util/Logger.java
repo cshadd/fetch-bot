@@ -1,7 +1,7 @@
 package io.github.cshadd.fetch_bot.util;
 import com.pi4j.util.Console;
 import io.github.cshadd.fetch_bot.FetchBot;
-import io.github.cshadd.fetch_bot.io.WebInterfaceCommunication;
+import io.github.cshadd.fetch_bot.io.InterfaceCommunication;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,8 +21,7 @@ implements FetchBot {
     public static final String LOG_PATH = "FetchBot.log";
 
     // Private Instance/Property Fields
-    private static boolean debug;
-    private static WebInterfaceCommunication webInterfaceComm;
+    private static InterfaceCommunication interfaceComm;
     private static Console console;
 
     // Private Constructors
@@ -55,8 +54,8 @@ implements FetchBot {
     private static void writeInterface(String msg, boolean append) {
         write(msg, append);
         try {
-            if (webInterfaceComm != null) {
-            	webInterfaceComm.setSourceValue("verbose", read());
+            if (interfaceComm != null) {
+                interfaceComm.setInterfaceValue("verbose", read());
             }
         }
         catch (Exception e) {
@@ -81,16 +80,6 @@ implements FetchBot {
     }
     public static void close() {
         console.promptForExit();
-    }
-    public static void debug(String msg) {
-        debug(msg, true);
-    }
-    public static void debug(String msg, boolean append) {
-    	if (debug) {
-    		msg = TAG + " [DEBUG] " + msg;
-    		console.println(msg);
-    		writeInterface(msg, append);
-    	}
     }
     public static void error(String msg) {
         error(msg, true);
@@ -126,11 +115,8 @@ implements FetchBot {
         console.println(msg);
         writeInterface(msg, append);
     }
-    public static void setWebInterfaceCommunications(WebInterfaceCommunication comm) {
-    	webInterfaceComm = comm;
-    }
-    public static void setToDebugMode() {
-        debug = true;
+    public static void setInterfaceCommunications(InterfaceCommunication comm) {
+        interfaceComm = comm;
     }
     public static void warn(String msg) {
         warn(msg, true);
