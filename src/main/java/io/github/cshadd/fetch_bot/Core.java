@@ -11,7 +11,7 @@ import io.github.cshadd.fetch_bot.util.VersionCheckException;
 // Main
 public class Core
 implements FetchBot {
-    // Private Constant Instance/Property Fields
+    // Private Static Instance/Property Fields
     private static ArduinoCommunication arduinoComm;
     private static WebInterfaceCommunication webInterfaceComm;
 
@@ -37,10 +37,10 @@ implements FetchBot {
         int currentUltrasonicSensor = -1;
         String programMode = "Normal";
         String programVersion = "v0.0.0";
-        
+
         if (args.length == 1) {
             programVersion = args[0];
-        }        
+        }
         if (args.length == 2) {
             programMode = args[1];
         }
@@ -104,7 +104,7 @@ implements FetchBot {
                 arduinoComm.pullRobot();
 
                 // Sensors
-                final int ultrasonicSensor = Integer.parseInt(arduinoComm.getRobotValue("s"));
+                final int ultrasonicSensor = (int)Float.parseFloat(arduinoComm.getRobotValue("s"));
                 if (ultrasonicSensor != -1) {
                     if (ultrasonicSensor != currentUltrasonicSensor) {
                         currentUltrasonicSensor = ultrasonicSensor;
@@ -121,7 +121,6 @@ implements FetchBot {
                         Logger.info("WebInterface - [mode: " + currentMode + "] command received.");
                     }
                     webInterfaceComm.setSourceValue("mode", currentMode);
-                    
                     if (currentMode.equals("Auto")) {
                         webInterfaceComm.setSourceValue("emotion", "Neutral");
                     }
@@ -135,26 +134,44 @@ implements FetchBot {
                         final String move = webInterfaceComm.getRobotValue("move");
                         if (currentUltrasonicSensor <= 15) {
                             webInterfaceComm.setSourceValue("emotion", "Angry");
+                            if (!move.equals(currentMove)) {
+                            	currentMove = move;
+                                if (move.equals("Forward")) {
+                                	Logger.warn("Arduino - Sensor is blocked, refusing to move.");
+                                }
+                                else if (!move.equals("Stop")) {
+                                    Logger.info("WebInterface - [move: " + currentMove + "] command received.");
+                                    arduinoComm.setSourceValue("a", currentMove);
+                                    arduinoComm.pushSource();
+                                    Logger.info("WebInterface - [move: Stop] command received.");
+                                }
+                                webInterfaceComm.setRobotValue("move", "Stop");
+                                webInterfaceComm.pushRobot();
+                            }
                         }
                         else {
+                        	webInterfaceComm.setSourceValue("emotion", "Happy");
                             if (!move.equals(currentMove)) {
                                 currentMove = move;
                                 Logger.info("WebInterface - [move: " + currentMove + "] command received.");
                                 arduinoComm.setSourceValue("a", currentMove);
                                 arduinoComm.pushSource();
-                                webInterfaceComm.setSourceValue("emotion", "Happy");
                                 webInterfaceComm.setRobotValue("move", "Stop");
+                                webInterfaceComm.pushRobot();
                             }
                         }
                     }
                     else {
-                        Logger.warn("[mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
+                        Logger.warn("WebInterface - [mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
                         webInterfaceComm.setRobotValue("mode", "Idle");
+                        webInterfaceComm.pushRobot();
                     }
                 }
-                
-                // Send data to Web Interface
-                webInterfaceComm.pushRobot();
+                else {
+                    // Delay for safety
+                    delayThread(1000);
+                }
+                webInterfaceComm.pushSource();
             }
             catch (CommunicationException e) {
                 Logger.error(e, "Communication encountered an error.");

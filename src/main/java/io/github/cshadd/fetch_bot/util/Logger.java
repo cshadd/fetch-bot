@@ -101,8 +101,8 @@ implements FetchBot {
         error(errors + "\n" + msg);
     }
     public static void error(String msg, boolean append) {
-        msg = "\u001B[331" + TAG + " [ERROR (SAFELY CAUGHT)] " + msg;
-        console.println(msg + "\nPlease report this issue to the developers!\u001B[0m");
+        msg = TAG + " [ERROR (SAFELY CAUGHT)] " + msg;
+        console.println("\u001B[331" + msg + "\nPlease report this issue to the developers!\u001B[0m");
         writeInterface(msg, append);
     }
     public static void fatalError(String msg) {
@@ -114,8 +114,8 @@ implements FetchBot {
         fatalError(errors + "\n" + msg);
     }
     public static void fatalError(String msg, boolean append) {
-        msg = "\u001B[31m" + TAG + " [FATAL ERROR (SAFELY CAUGHT)] " + msg;
-        console.println(msg + "\nPlease report this issue to the developers!\u001B[0m");
+        msg = TAG + " [FATAL ERROR (SAFELY CAUGHT)] " + msg;
+        console.println("\u001B[31m" + msg + "\nPlease report this issue to the developers!\u001B[0m");
         write(msg, append);
     }
     public static void info(String msg) {
@@ -141,8 +141,8 @@ implements FetchBot {
         warn(errors + "\n" + msg);
     }
     public static void warn(String msg, boolean append) {
-        msg = "\u001B[33m" + TAG + " [WARN] " + msg;
-        console.println(msg + "\u001B[0m");
+        msg = TAG + " [WARN] " + msg;
+        console.println("\u001B[33m" + msg + "\u001B[0m");
         writeInterface(msg, append);
     }
 }
