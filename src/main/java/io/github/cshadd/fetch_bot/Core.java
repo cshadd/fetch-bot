@@ -1,21 +1,27 @@
 package io.github.cshadd.fetch_bot;
 import io.github.cshadd.fetch_bot.io.ArduinoCommunication;
-import io.github.cshadd.fetch_bot.io.ArduinoCommunicationImpl;
 import io.github.cshadd.fetch_bot.io.CommunicationException;
-import io.github.cshadd.fetch_bot.io.WebInterfaceCommunication;
-import io.github.cshadd.fetch_bot.io.WebInterfaceCommunicationImpl;
+import io.github.cshadd.fetch_bot.io.InterfaceCommunication;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.VersionCheck;
 import io.github.cshadd.fetch_bot.util.VersionCheckException;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
 
 // Main
 public class Core
 implements FetchBot {
+    // Private Constant Instance/Property Fields
+    // private static final int COLLISION_DISTANCE = 15;
+    
     // Private Static Instance/Property Fields
     private static ArduinoCommunication arduinoComm;
-    private static WebInterfaceCommunication webInterfaceComm;
+    private static InterfaceCommunication interfaceComm;
 
     // Public Static Methods
+    static {
+        System.loadLibrary(org.opencv.core.Core.NATIVE_LIBRARY_NAME);
+    }
     public static void delayThread(long millis) {
         try {
             Thread.sleep(millis);
@@ -30,33 +36,29 @@ implements FetchBot {
     }
     // Entry Point
     public static void main(String[] args) {
+        Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
+        System.out.println("OPENCV TEST: mat = " + mat.dump());
+
         // Assign first variables
         String currentMode = "Idle";
         String currentMove = "Stop";
         String currentVersion = "v0.0.0";
         int currentUltrasonicSensor = -1;
-        String programMode = "Normal";
-        String programVersion = "v0.0.0";
+        String version = "v0.0.0";
 
-        if (args.length == 1) {
-            programVersion = args[0];
-        }
-        if (args.length == 2) {
-            programMode = args[1];
+        if (args.length >= 1) {
+            version = args[0];
         }
 
         // Initiate interface communications
-        webInterfaceComm = new WebInterfaceCommunicationImpl();
+        interfaceComm = new InterfaceCommunication();
 
         // Initiate logging
-        Logger.setWebInterfaceCommunications(webInterfaceComm);
-        if (programMode.equals("debug")) {
-        	Logger.setToDebugMode();
-        }
+        Logger.setInterfaceCommunications(interfaceComm);
         Logger.clear();
 
         // Show user that we started
-        Logger.info("Fetch Bot " + programVersion + " preparing!");
+        Logger.info("Fetch Bot " + version + " preparing!");
 
         // Version check
         try {
@@ -70,21 +72,21 @@ implements FetchBot {
         }
         finally { }
 
-        if (!programVersion.equals(currentVersion)) {
-            Logger.warn("VersionCheck - [Version] mismatch (this: " + programVersion + "; current: " + currentVersion + "), this version might be outdated!");
+        if (!version.equals(currentVersion)) {
+            Logger.warn("VersionCheck - [Version] mismatch (this: " + version + "; current: " + currentVersion + "), this version might be outdated!");
         }
 
         // Initiate Arduino communications
-        arduinoComm = new ArduinoCommunicationImpl();
+        arduinoComm = new ArduinoCommunication();
 
         // Reset communications
         try {
-            webInterfaceComm.reset();
-            webInterfaceComm.pushSource();
-            webInterfaceComm.pushRobot();
+            interfaceComm.reset();
+            interfaceComm.pushInterface();
+            interfaceComm.pushRobot();
             arduinoComm.reset();
-            Logger.info("ArduinoCommunication - Opened serial on " + ArduinoCommunicationImpl.SERIAL_PORT + ".");
-            arduinoComm.pushSource();
+            Logger.info("ArduinoCommunication - Opened serial on " + ArduinoCommunication.SERIAL_PORT + ".");
+            arduinoComm.pushArduino();
         }
         catch (CommunicationException e) {
             Logger.error(e, "Communication encountered an error.");
@@ -99,79 +101,65 @@ implements FetchBot {
         while (true) {
             try {
                 // Pull data from communications
-                webInterfaceComm.pullSource();
-                webInterfaceComm.pullRobot();
+                interfaceComm.pullInterface();
+                interfaceComm.pullRobot();
                 arduinoComm.pullRobot();
 
                 // Sensors
-                final int ultrasonicSensor = (int)Float.parseFloat(arduinoComm.getRobotValue("s"));
+                final int ultrasonicSensor = (int)arduinoComm.getRobotValue("s");
                 if (ultrasonicSensor != -1) {
                     if (ultrasonicSensor != currentUltrasonicSensor) {
                         currentUltrasonicSensor = ultrasonicSensor;
-                        Logger.debug("Arduino - [s: " + currentUltrasonicSensor + "] received.");
-                        webInterfaceComm.setSourceValue("ultrasonic", "" + currentUltrasonicSensor);
+                        Logger.info("Arduino - [s: " + currentUltrasonicSensor + "] received.");
+                        if (currentUltrasonicSensor <= 15) { // To move later...
+                            interfaceComm.setInterfaceValue("emotion", "Angry");
+                        }
+                        interfaceComm.setInterfaceValue("ultrasonic", "" + currentUltrasonicSensor);
                     }
                 }
 
                 // Mode
-                final String mode = webInterfaceComm.getRobotValue("mode");
+                final String mode = interfaceComm.getRobotValue("mode");
                 if (mode != null) {
                     if (!mode.equals(currentMode)) {
                         currentMode = mode;
-                        Logger.info("WebInterface - [mode: " + currentMode + "] command received.");
+                        Logger.info("Interface - [mode: " + currentMode + "] command received.");
                     }
-                    webInterfaceComm.setSourceValue("mode", currentMode);
+                    interfaceComm.setInterfaceValue("mode", currentMode);
+
                     if (currentMode.equals("Auto")) {
-                        webInterfaceComm.setSourceValue("emotion", "Neutral");
+                        interfaceComm.setInterfaceValue("emotion", "Neutral");
                     }
                     else if (currentMode.equals("Idle")) {
-                        webInterfaceComm.setSourceValue("emotion", "Idle");
+                        interfaceComm.setInterfaceValue("emotion", "Idle");
                     }
                     else if (currentMode.equals("Off")) {
                         break;
                     }
                     else if (currentMode.equals("Manual")) {
-                        final String move = webInterfaceComm.getRobotValue("move");
-                        if (currentUltrasonicSensor <= 15) {
-                            webInterfaceComm.setSourceValue("emotion", "Angry");
-                            if (!move.equals(currentMove)) {
-                            	currentMove = move;
-                                if (move.equals("Forward")) {
-                                	Logger.warn("Arduino - Sensor is blocked, refusing to move.");
-                                }
-                                else if (!move.equals("Stop")) {
-                                    Logger.info("WebInterface - [move: " + currentMove + "] command received.");
-                                    arduinoComm.setSourceValue("a", currentMove);
-                                    arduinoComm.pushSource();
-                                    Logger.info("WebInterface - [move: Stop] command received.");
-                                }
-                                webInterfaceComm.setRobotValue("move", "Stop");
-                                webInterfaceComm.pushRobot();
-                            }
-                        }
-                        else {
-                        	webInterfaceComm.setSourceValue("emotion", "Happy");
-                            if (!move.equals(currentMove)) {
-                                currentMove = move;
-                                Logger.info("WebInterface - [move: " + currentMove + "] command received.");
-                                arduinoComm.setSourceValue("a", currentMove);
-                                arduinoComm.pushSource();
-                                webInterfaceComm.setRobotValue("move", "Stop");
-                                webInterfaceComm.pushRobot();
-                            }
+                        interfaceComm.setInterfaceValue("emotion", "Neutral");
+                        // Movement (to be revised)
+                        final String move = interfaceComm.getRobotValue("move");
+                        if (!move.equals(currentMove)) {
+                            currentMove = move;
+                            Logger.info("Interface - [move: " + currentMove + "] command received.");
+                            // Check ultrasonic
+                            arduinoComm.setArduinoValue("a", currentMove);
+                            arduinoComm.pushArduino();
+                            interfaceComm.setInterfaceValue("emotion", "Happy");
+                            currentMove = "Stop";
+                            interfaceComm.setRobotValue("move", "Stop");
+                            interfaceComm.pushRobot();
                         }
                     }
                     else {
-                        Logger.warn("WebInterface - [mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
-                        webInterfaceComm.setRobotValue("mode", "Idle");
-                        webInterfaceComm.pushRobot();
+                        Logger.warn("[mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
+                        interfaceComm.setRobotValue("mode", "Idle");
                     }
                 }
-                else {
-                    // Delay for safety
-                    delayThread(1000);
-                }
-                webInterfaceComm.pushSource();
+
+                // Push data to communications
+                interfaceComm.pushInterface();
             }
             catch (CommunicationException e) {
                 Logger.error(e, "Communication encountered an error.");
@@ -188,12 +176,12 @@ implements FetchBot {
         // Termination
         Logger.info("Fetch Bot terminating! Log file: " + Logger.LOG_PATH);
         try {
-            arduinoComm.setSourceValue("a", "Stop");
-            arduinoComm.pushSource();
+            arduinoComm.setArduinoValue("a", "Stop");
+            arduinoComm.pushArduino();
             arduinoComm.clear();
-            webInterfaceComm.clear();
-            webInterfaceComm.pushSource();
-            webInterfaceComm.pushRobot();
+            interfaceComm.clear();
+            interfaceComm.pushInterface();
+            interfaceComm.pushRobot();
         }
         catch (CommunicationException e) {
             Logger.error(e, "Communication encountered an error.");

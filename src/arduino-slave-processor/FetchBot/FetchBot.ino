@@ -2,7 +2,6 @@
 #include <Stepper.h>
 
 // Define Constants
-#define STEPPER_SPEED 10
 #define STEPPER_STEPS 200
 #define ULTRASONIC_SENSOR_ECHO_PIN 6
 #define ULTRASONIC_SENSOR_TRIGGER_PIN 7
@@ -27,8 +26,8 @@ void setup() {
     ultrasonicSensorDistance = 0;
     ultrasonicSensorDuration = 0;
     communication = "Stop";
-    stepperL.setSpeed(STEPPER_SPEED);
-    stepperR.setSpeed(STEPPER_SPEED);
+    stepperL.setSpeed(30);
+    stepperR.setSpeed(30);
     Serial.begin(9600);
 }
 
@@ -47,12 +46,23 @@ void loop() {
     // Movement
     if (communication.equals("Forward")) {
         moveStepperMotors(-1, 1);
+        // moveStepperMotors(-1, 1);
+        // moveStepperMotors(-1, 1);
     }
+    /*else if (communication.equals("Back")) {
+        moveStepperMotors(1, -1);
+        // moveStepperMotors(1, -1);
+        // moveStepperMotors(1, -1);
+    }*/
     else if (communication.equals("Right")) {
         moveStepperMotors(-1, -1);
+        // moveStepperMotors(-1, -1);
+        // moveStepperMotors(-1, -1);
     }
     else if (communication.equals("Left")) {
         moveStepperMotors(1, 1);
+        // moveStepperMotors(1, 1);
+        // moveStepperMotors(1, 1);
     }
     else {
         moveStepperMotors(0, 0);

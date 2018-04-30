@@ -19,6 +19,8 @@
             if (data != null && data2 != null) {
                 $("#connection-offline").hide();
                 $("#status-curr-mode").text("Current Mode: " + data.mode);
+                $("#status-max-coord").text("Max Coordinates: ([-" + data['x-max'] + "],[" + data['x-max'] + "], [-" + data['y-max'] + "],[" + data['y-max'] + "])");
+                $("#status-curr-coord").text("Current Coordinates: (" + data.x + ", " + data.y + ")");
                 $("#status-curr-rot").text("Current Rotation: " + data.rot + " Degrees");
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
                 $("#status-ultrasonic").text("Ultrasonic Sensor: " + data.ultrasonic + "cm");
@@ -51,6 +53,8 @@
                 else {
                     $("#connection-offline").show();
                     $("#status-curr-mode").text("Current Mode:");
+                    $("#status-max-coord").text("Max Coordinates:");
+                    $("#status-curr-coord").text("Current Coordinates:");
                     $("#status-curr-rot").text("Current Rotation:");
                     $("#status-curr-emotion").text("Current Emotion:");
                     $("#status-ultrasonic").text("Ultrasonic Sensor:");
@@ -66,6 +70,8 @@
             else {
                 $("#connection-offline").show();
                 $("#status-curr-mode").text("Current Mode:");
+                $("#status-max-coord").text("Max Coordinates:");
+                $("#status-curr-coord").text("Current Coordinates:");
                 $("#status-curr-rot").text("Current Rotation:");
                 $("#status-curr-emotion").text("Current Emotion:");
                 $("#status-ultrasonic").text("Ultrasonic Sensor:");
@@ -90,6 +96,28 @@
                 },
                 success: function () { }
             });
+        }
+
+        function resetCoordinates() {
+            // $("#max-coord-x").val(0);
+            // $("#max-coord-y").val(0);
+            /*sendToRobot({
+                coordinates: {
+                    xmax: 0,
+                    ymax: 0
+                }
+            });*/
+        }
+
+        function setCoordinates() {
+            $("#max-coord-x").val(Math.abs($("#max-coord-x").val()));
+            $("#max-coord-y").val(Math.abs($("#max-coord-y").val()));
+            /*sendToRobot({
+                coordinates: {
+                    xmax: $("#max-coord-x").val(),
+                    ymax: $("#max-coord-y").val()
+                }
+            });*/
         }
 
         function setMode(mode) {
@@ -144,7 +172,12 @@
                             <input id="btn-idle" class="btn btn-warning" type="button" value="Idle" onclick="setMode('Idle')" />
                             <input id="btn-manual" class="btn btn-warning" type="button" value="Manual" onclick="setMode('Manual')" /><br /><br />
                             <div id="controls-auto">
-                                <!-- TODO -->
+                                <label for="max-coord-x">Maximum X Coordinate: </label>
+                                <input id="max-coord-x" type="number" name="max-coord-x" value="0" />
+                                <label for="max-coord-y">Maximum Y Coordinate: </label>
+                                <input id="max-coord-y" type="number" name="max-coord-y" value="0" /><br /><br />
+                                <!--<input id="btn-max-coord" class="btn btn-primary" type="button" value="Set Max Coordinates" onclick="setCoordinates()" /><br /><br />
+                                <input id="btn-max-coord-reset" class="btn btn-danger" type="button" value="Reset Max Coordinates" onclick="resetCoordinates()" /><br />-->
                             </div>
                             <div id="controls-manual">
                                 <div class="row">
