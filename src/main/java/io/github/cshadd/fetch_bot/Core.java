@@ -84,8 +84,7 @@ implements FetchBot {
                     }
                     else if (currentMode.equals("Idle")) {
                         webInterfaceComm.setRobotValue("trackclass", "None");
-                        webInterfaceComm.pushRobot();
-                        
+
                         webInterfaceComm.setSourceValue("emotion", "Idle");
                     }
                     else if (currentMode.equals("Off")) {
@@ -93,7 +92,6 @@ implements FetchBot {
                     }
                     else if (currentMode.equals("Manual")) {
                         webInterfaceComm.setRobotValue("trackclass", "None");
-                        webInterfaceComm.pushRobot();
                         
                         // Manual move
                         final String move = webInterfaceComm.getRobotValue("move");
@@ -109,9 +107,7 @@ implements FetchBot {
                                         Logger.warn("Arduino - Safety cut due to imminent collision.");
                                         webInterfaceComm.setRobotValue("move", "Stop");
                                         arduinoComm.setSourceValue("a", "Stop");
-                                        arduinoComm.pushSource();
                                     }
-                                    webInterfaceComm.pushRobot();
                                 }
                                 else if (currentUltrasonicSensor <= 30) {
                                     webInterfaceComm.setSourceValue("emotion", "Angry");
@@ -125,7 +121,6 @@ implements FetchBot {
                                         else {
                                             arduinoComm.setSourceValue("a", currentMove);
                                         }
-                                        arduinoComm.pushSource();
                                     }
                                     webInterfaceComm.pushRobot();
                                 }
@@ -134,8 +129,6 @@ implements FetchBot {
                                     
                                     webInterfaceComm.setRobotValue("move", "Stop");
                                     arduinoComm.setSourceValue("a", currentMove);
-                                    arduinoComm.pushSource();
-                                    webInterfaceComm.pushRobot();                                    
                                 }
                             }
                         }
@@ -143,10 +136,11 @@ implements FetchBot {
                     else {
                         Logger.warn("WebInterface - [mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
                         webInterfaceComm.setRobotValue("mode", "Idle");
-                        webInterfaceComm.pushRobot();
                     }
                 }
                 webInterfaceComm.pushSource();
+                webInterfaceComm.pushRobot();
+                arduinoComm.pushSource();
             }
             catch (CommunicationException e) {
                 Logger.error(e, "Communication encountered an error.");
