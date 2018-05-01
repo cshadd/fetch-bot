@@ -103,10 +103,10 @@ implements FetchBot {
                                 Logger.debug("WebInterface - [move: " + currentMove + "] command received.");
 
                                 if (currentUltrasonicSensor <= 15) {
-                                    Logger.warn("Arduino - Safety cut due to imminent collision.");
                                     webInterfaceComm.setSourceValue("emotion", "Sad");
                                     
                                     if (!move.equals("Stop")) {
+                                        Logger.warn("Arduino - Safety cut due to imminent collision.");
                                         webInterfaceComm.setRobotValue("move", "Stop");
                                         arduinoComm.setSourceValue("a", "Stop");
                                         arduinoComm.pushSource();
@@ -114,12 +114,13 @@ implements FetchBot {
                                     webInterfaceComm.pushRobot();
                                 }
                                 else if (currentUltrasonicSensor <= 30) {
-                                    Logger.warn("Arduino - Imminent collision.");
                                     webInterfaceComm.setSourceValue("emotion", "Angry");
                                     
                                     if (!move.equals("Stop")) {
+                                        Logger.warn("Arduino - Imminent collision.");
                                         webInterfaceComm.setRobotValue("move", "Stop");
                                         if (move.equals("Forward")) {
+                                            Logger.warn("Arduino - Safety cut due to imminent collision.");
                                             arduinoComm.setSourceValue("a", "Stop");
                                         }
                                         else {
