@@ -52,7 +52,7 @@ implements FetchBot {
 
                 // Sensors
                 final int ultrasonicSensor = (int)Float.parseFloat(arduinoComm.getRobotValue("s"));
-                if (ultrasonicSensor != -1) {
+                if (ultrasonicSensor != -1 && ultrasonicSensor < 1000) {
                     if (ultrasonicSensor != currentUltrasonicSensor) {
                         currentUltrasonicSensor = ultrasonicSensor;
                         Logger.debug("Arduino - [s: " + currentUltrasonicSensor + "] received.");
