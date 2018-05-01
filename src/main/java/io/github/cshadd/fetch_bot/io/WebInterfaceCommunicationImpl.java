@@ -125,10 +125,12 @@ implements WebInterfaceCommunication {
         clear();
         setRobotValue("mode", "Idle");
         setRobotValue("move", "Stop");
+        setRobotValue("trackclass", "None");
         
         setSourceValue("emotion", "Idle");
         setSourceValue("mode", "Idle");
         setSourceValue("rot", "0");
+        setSourceValue("trackclass", "None");
         setSourceValue("ultrasonic", "0");
         setSourceValue("verbose", "...");
     }

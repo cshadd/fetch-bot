@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html itemtype="http://schema.org/WebPage" itemscope="" lang="en-US">
 <head>
     <meta charset="utf-8" />
@@ -18,9 +18,10 @@
         setInterval(function () {
             if (data != null && data2 != null) {
                 $("#connection-offline").hide();
+                $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
                 $("#status-curr-mode").text("Current Mode: " + data.mode);
                 $("#status-curr-rot").text("Current Rotation: " + data.rot + " Degrees");
-                $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
+                $("#status-curr-trackclass").text("Current Track Class: " + data.trackclass);
                 $("#status-ultrasonic").text("Ultrasonic Sensor: " + data.ultrasonic + "cm");
                 $("#status-verbose").text(data.verbose);
 
@@ -49,33 +50,35 @@
                     $("#controls-manual").hide();
                 }
                 else {
-                    $("#connection-offline").show();
-                    $("#status-curr-mode").text("Current Mode:");
-                    $("#status-curr-rot").text("Current Rotation:");
-                    $("#status-curr-emotion").text("Current Emotion:");
-                    $("#status-ultrasonic").text("Ultrasonic Sensor:");
-                    $("#status-verbose").text("...");
                     $("#btn-auto").hide();
                     $("#btn-idle").hide();
                     $("#btn-kill").hide();
                     $("#btn-manual").hide();
+                    $("#connection-offline").show();
                     $("#controls-auto").hide();
                     $("#controls-manual").hide();
+                    $("#status-curr-emotion").text("Current Emotion:");
+                    $("#status-curr-mode").text("Current Mode:");
+                    $("#status-curr-rot").text("Current Rotation:");
+                    $("#status-curr-trackclass").text("Current Track Class:");
+                    $("#status-ultrasonic").text("Ultrasonic Sensor:");
+                    $("#status-verbose").text("...");
                 }
             }
             else {
-                $("#connection-offline").show();
-                $("#status-curr-mode").text("Current Mode:");
-                $("#status-curr-rot").text("Current Rotation:");
-                $("#status-curr-emotion").text("Current Emotion:");
-                $("#status-ultrasonic").text("Ultrasonic Sensor:");
-                $("#status-verbose").text("...");
                 $("#btn-auto").hide();
                 $("#btn-idle").hide();
                 $("#btn-kill").hide();
                 $("#btn-manual").hide();
+                $("#connection-offline").show();
                 $("#controls-auto").hide();
                 $("#controls-manual").hide();
+                $("#status-curr-emotion").text("Current Emotion:");
+                $("#status-curr-mode").text("Current Mode:");
+                $("#status-curr-rot").text("Current Rotation:");
+                $("#status-curr-trackclass").text("Current Track Class:");
+                $("#status-ultrasonic").text("Ultrasonic Sensor:");
+                $("#status-verbose").text("...");
             }
         }, 1000);
 
@@ -103,7 +106,8 @@
         }
 
         function setObjectClass(){
-            data2.class = $("#class-obj-txt").val();
+            data2.class = $("#txt-trackclass").val();
+            $("#txt-trackclass").val("");
             sendToRobot();
         }
 
@@ -132,13 +136,14 @@
                         <div class="panel-heading">Status</div>
                         <div class="panel-body">
                             <p id="status-curr-mode"></p>
-                            <p id="status-max-coord"></p>
-                            <p id="status-curr-coord"></p>
-                            <p id="status-curr-rot"></p>
+                            <p id="status-curr-trackclass"></p>
                             <p id="status-curr-emotion"></p>
+                            <p id="status-curr-rot"></p>
                             <p id="status-ultrasonic"></p>
                             <input data-toggle="collapse" data-target="#status-verbose" class="btn btn-primary" type="button" value="Show/Hide Verbose" />
-                            <textarea id="status-verbose" class="collapse" readonly="readonly"></textarea>
+                            <div class="form-group">
+                                <textarea id="status-verbose" class="collapse form-control" readonly="readonly"></textarea>
+                            </div>
                         </div>
                     </div>
 
@@ -151,9 +156,10 @@
                             <input id="btn-manual" class="btn btn-warning" type="button" value="Manual" onclick="setMode('Manual')" /><br />
                             <div id="controls-auto">
                                 <!-- TODO -->
-                                <input id="class-obj-txt" type="text" name="class-obj-txt" /><br />
-                                <input id="class-obj-btn" class="btn btn-primary class-button" type="button" value="Class Object" name="class-obj-btn" onclick="setObjectClass()" />
-
+                                <div class="form-group">
+                                    <input id="txt-trackclass" class="form-control" type="text" />
+                                </div>
+                                <input id="btn-trackclass" class="btn btn-primary" type="button" value="Set Track Class" onclick="setObjectClass()" />
                             </div>
                             <div id="controls-manual">
                                 <div class="row">

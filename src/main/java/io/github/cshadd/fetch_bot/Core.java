@@ -36,8 +36,9 @@ implements FetchBot {
         // Assign first variables
         String currentMode = "Idle";
         String currentMove = "Stop";
-        String currentVersion = "v0.0.0";
+        String currentTrackClass = "None";
         int currentUltrasonicSensor = -1;
+        String currentVersion = "v0.0.0";
         String programMode = "Normal";
 
         if (args.length > 1) {
@@ -102,6 +103,16 @@ implements FetchBot {
                 webInterfaceComm.pullRobot();
                 arduinoComm.pullRobot();
 
+                // Tracking Class
+                final String trackClass = webInterfaceComm.getRobotValue("trackclass");
+                if (trackClass != null) {
+                    if (trackClass != currentTrackClass) {
+                        currentTrackClass = trackClass;
+                        Logger.debug("WebInterface - [trackclass: " + currentTrackClass + "] received.");
+                        webInterfaceComm.setSourceValue("trackclass", "" + currentTrackClass);
+                    }
+                }
+
                 // Sensors
                 final int ultrasonicSensor = (int)Float.parseFloat(arduinoComm.getRobotValue("s"));
                 if (ultrasonicSensor != -1) {
@@ -124,25 +135,29 @@ implements FetchBot {
                         webInterfaceComm.setSourceValue("emotion", "Neutral");
                     }
                     else if (currentMode.equals("Idle")) {
+                        webInterfaceComm.setRobotValue("trackclass", "None");
+                        webInterfaceComm.pushRobot();
                         webInterfaceComm.setSourceValue("emotion", "Idle");
                     }
                     else if (currentMode.equals("Off")) {
                         break;
                     }
                     else if (currentMode.equals("Manual")) {
+                        webInterfaceComm.setRobotValue("trackclass", "None");
+                        webInterfaceComm.pushRobot();
                         final String move = webInterfaceComm.getRobotValue("move");
                         if (currentUltrasonicSensor <= 15) {
                             webInterfaceComm.setSourceValue("emotion", "Angry");
                             if (!move.equals(currentMove)) {
-                            	currentMove = move;
+                                currentMove = move;
                                 if (move.equals("Forward")) {
-                                	Logger.warn("Arduino - Sensor is blocked, refusing to move.");
+                                    Logger.warn("Arduino - Sensor is blocked, refusing to move.");
                                 }
                                 else if (!move.equals("Stop")) {
-                                    Logger.info("WebInterface - [move: " + currentMove + "] command received.");
+                                    Logger.debug("WebInterface - [move: " + currentMove + "] command received.");
                                     arduinoComm.setSourceValue("a", currentMove);
                                     arduinoComm.pushSource();
-                                    Logger.info("WebInterface - [move: Stop] command received.");
+                                    Logger.debug("WebInterface - [move: Stop] command received.");
                                 }
                                 webInterfaceComm.setRobotValue("move", "Stop");
                                 webInterfaceComm.pushRobot();
@@ -152,7 +167,7 @@ implements FetchBot {
                         	webInterfaceComm.setSourceValue("emotion", "Happy");
                             if (!move.equals(currentMove)) {
                                 currentMove = move;
-                                Logger.info("WebInterface - [move: " + currentMove + "] command received.");
+                                Logger.debug("WebInterface - [move: " + currentMove + "] command received.");
                                 arduinoComm.setSourceValue("a", currentMove);
                                 arduinoComm.pushSource();
                                 webInterfaceComm.setRobotValue("move", "Stop");
@@ -166,10 +181,6 @@ implements FetchBot {
                         webInterfaceComm.pushRobot();
                     }
                 }
-                else {
-                    // Delay for safety
-                    delayThread(1000);
-                }
                 webInterfaceComm.pushSource();
             }
             catch (CommunicationException e) {
@@ -178,10 +189,10 @@ implements FetchBot {
             catch (Exception e) {
                 Logger.fatalError(e, "Communication encountered a fatal error.");
             }
-            finally { }
-
-            // Delay for safety
-            delayThread(1000);
+            finally {
+                // Delay for safety
+                delayThread(1000);
+            }
         }
 
         // Termination
