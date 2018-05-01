@@ -6,10 +6,10 @@ public class AIControllerImpl
 implements AIController {
     // Private Instance/Property Fields
     
-	// Public Constructors
-	public AIControllerImpl() { }
-	
-	// Public Static Methods
+    // Public Constructors
+    public AIControllerImpl() { }
+
+    // Public Static Methods
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }

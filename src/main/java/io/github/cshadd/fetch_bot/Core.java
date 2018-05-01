@@ -11,6 +11,9 @@ import io.github.cshadd.fetch_bot.util.VersionCheckException;
 // Main
 public class Core
 implements FetchBot {
+    // Public Constant Instance/Property Fields
+    public static final String VERSION = "v1.0.0-alpha";
+
     // Private Static Instance/Property Fields
     private static ArduinoCommunication arduinoComm;
     private static WebInterfaceCommunication webInterfaceComm;
@@ -36,13 +39,9 @@ implements FetchBot {
         String currentVersion = "v0.0.0";
         int currentUltrasonicSensor = -1;
         String programMode = "Normal";
-        String programVersion = "v0.0.0";
 
-        if (args.length == 1) {
-            programVersion = args[0];
-        }
-        if (args.length == 2) {
-            programMode = args[1];
+        if (args.length > 1) {
+            programMode = args[0];
         }
 
         // Initiate interface communications
@@ -56,7 +55,7 @@ implements FetchBot {
         Logger.clear();
 
         // Show user that we started
-        Logger.info("Fetch Bot " + programVersion + " preparing!");
+        Logger.info("Fetch Bot " + VERSION + " preparing!");
 
         // Version check
         try {
@@ -70,8 +69,8 @@ implements FetchBot {
         }
         finally { }
 
-        if (!programVersion.equals(currentVersion)) {
-            Logger.warn("VersionCheck - [Version] mismatch (this: " + programVersion + "; current: " + currentVersion + "), this version might be outdated!");
+        if (!VERSION.equals(currentVersion)) {
+            Logger.warn("VersionCheck - [Version] mismatch (this: " + VERSION + "; current: " + currentVersion + "), this version might be outdated!");
         }
 
         // Initiate Arduino communications
