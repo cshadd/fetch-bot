@@ -1,4 +1,5 @@
 package io.github.cshadd.fetch_bot.io;
+import io.github.cshadd.fetch_bot.Component;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
@@ -6,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 // Main
+@Component("Communication")
 public class WebInterfaceCommunicationImpl
 implements WebInterfaceCommunication {
     // Private Constant Instance/Property Fields

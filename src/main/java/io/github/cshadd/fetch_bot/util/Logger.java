@@ -1,5 +1,6 @@
 package io.github.cshadd.fetch_bot.util;
 import com.pi4j.util.Console;
+import io.github.cshadd.fetch_bot.Component;
 import io.github.cshadd.fetch_bot.FetchBot;
 import io.github.cshadd.fetch_bot.io.WebInterfaceCommunication;
 import java.io.File;
@@ -12,6 +13,7 @@ import java.util.TimeZone;
 import org.apache.commons.io.FileUtils;
 
 // Main
+@Component("Util")
 public class Logger
 implements FetchBot {
     // Private Constant Instance/Property Fields

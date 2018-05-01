@@ -1,15 +1,14 @@
 package io.github.cshadd.fetch_bot.controllers;
 import io.github.cshadd.cshadd_java_data_structures.util.Graph;
 import io.github.cshadd.cshadd_java_data_structures.util.UndirectedGraph;
+import io.github.cshadd.fetch_bot.Component;
 import java.util.ArrayList;
 import java.util.List;
 
 // Main
+@Component("AI")
 public class PathfindControllerImpl
 implements PathfindController {
-    // Private Constant Instance/Property Fields
-    
-    
     // Private Final Instance/Property Fields
     private final Graph<CartesianCoordinate> cartesianSystem;
     private final List<CartesianCoordinate> defaultCoords;

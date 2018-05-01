@@ -9,12 +9,13 @@ import com.pi4j.io.serial.SerialFactory;
 import com.pi4j.io.serial.SerialDataEventListener;
 import com.pi4j.io.serial.SerialDataEvent;
 import com.pi4j.io.serial.StopBits;
-
+import io.github.cshadd.fetch_bot.Component;
 import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 // Main
+@Component("Communication")
 public class ArduinoCommunicationImpl
 implements ArduinoCommunication {
     // Public Constant Instance/Property Fields

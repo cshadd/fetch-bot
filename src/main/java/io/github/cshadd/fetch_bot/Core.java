@@ -13,6 +13,7 @@ import io.github.cshadd.fetch_bot.util.VersionCheck;
 import io.github.cshadd.fetch_bot.util.VersionCheckException;
 
 // Main
+@Component("Core")
 public class Core
 implements FetchBot {
     // Public Constant Instance/Property Fields

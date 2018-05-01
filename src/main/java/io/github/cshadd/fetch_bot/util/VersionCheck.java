@@ -1,4 +1,5 @@
 package io.github.cshadd.fetch_bot.util;
+import io.github.cshadd.fetch_bot.Component;
 import io.github.cshadd.fetch_bot.FetchBot;
 import java.io.InputStream;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 // Main
+@Component("Util")
 public class VersionCheck
 implements FetchBot {
     // Private Constant Instance/Property Fields
