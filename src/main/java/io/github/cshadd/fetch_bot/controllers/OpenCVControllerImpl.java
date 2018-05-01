@@ -118,7 +118,9 @@ implements OpenCVController {
                         catch (Exception e) {
                             Logger.warn(e, "There was an unknown issue!");                            
                         }
-                        finally { }
+                        finally {
+                            delayThread(500);
+                        }
                     }
                 }
             }

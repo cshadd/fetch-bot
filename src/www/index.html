@@ -16,6 +16,7 @@
     <script src="readCommunications.js"></script>
     <script>
         setInterval(function () {
+            $("#ext-camera").attr("src", "comms/stream.png?refresh=" + new Date().getTime());
             if (data != null && data2 != null) {
                 $("#connection-offline").hide();
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
@@ -180,7 +181,7 @@
                 </form>
             </div>
             <div class="col-sm-4">
-                <iframe class="ext-display" src=""></iframe>
+                <iframe id="ext-camera" class="ext-display" src=""></iframe>
             </div>
         </div>
         <br />
