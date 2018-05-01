@@ -20,11 +20,11 @@ public class OpenCVControllerImpl
 implements OpenCVController {
     // Public Constant Instance/Property Fields
     public static final int CAMERA_PORT = 0; // Change if needed
-    public static final int FOURCC = VideoWriter.fourcc('X','V','I','D');
-    public static final String STREAM_PATH = WebInterfaceCommunicationImpl.TO_WEB_COMM_PATH + "/stream.mp4";
+    public static final String STREAM_PATH = WebInterfaceCommunicationImpl.TO_WEB_COMM_PATH + "/stream.avi";
 
     // Private Final Instance/Property Fields
-    private final VideoCapture camera;    
+    private final VideoCapture camera;
+    private final int fourcc;
     
     // Private Instance/Property Fields
     // private BufferedImage cameraBufferImage;
@@ -41,6 +41,7 @@ implements OpenCVController {
         cameraFrame = new Mat();
         cameraRunnable = null;
         cameraThread = null;
+        fourcc = VideoWriter.fourcc('M','J','P','G');
     }
     
     // Protected Final Nested Classes
