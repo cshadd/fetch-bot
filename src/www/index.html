@@ -15,9 +15,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="readCommunications.js"></script>
     <script>
+        var cameraLoaded = false;
         setInterval(function () {
-            $("#ext-camera").attr("src", "comms/stream.png?refresh=" + new Date().getTime());
             if (data != null && data2 != null) {
+                if (cameraLoaded == false) {
+                    $("#ext-camera").attr("src", "comms/stream.avi?refresh=" + new Date().getTime());
+                    cameraLoaded = true;
+                }
                 $("#connection-offline").hide();
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
                 $("#status-curr-mode").text("Current Mode: " + data.mode);

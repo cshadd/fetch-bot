@@ -20,7 +20,7 @@ public class OpenCVControllerImpl
 implements OpenCVController {
     // Public Constant Instance/Property Fields
     public static final int CAMERA_PORT = 0; // Change if needed
-    public static final String STREAM_PATH = WebInterfaceCommunicationImpl.TO_WEB_COMM_PATH + "/stream.avi";
+    public static final String STREAM_PATH = WebInterfaceCommunicationImpl.TO_WEB_COMM_PATH + "/stream.mp4";
 
     // Private Final Instance/Property Fields
     private final VideoCapture camera;
@@ -101,7 +101,7 @@ implements OpenCVController {
             if (camera.isOpened()) {
                 if (camera.read(cameraFrame)) {
                     running = true;
-                    cameraWriter = new VideoWriter(STREAM_PATH, fourcc, 60, cameraFrame.size(), true);
+                    cameraWriter = new VideoWriter(STREAM_PATH, fourcc, 20, cameraFrame.size(), true);
                     if (cameraWriter.isOpened()) {
                         while (running) {
                             if (camera.read(cameraFrame)) {
