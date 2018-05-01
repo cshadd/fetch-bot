@@ -117,7 +117,6 @@ implements FetchBot {
                                     webInterfaceComm.setSourceValue("emotion", "Angry");
                                     
                                     if (!move.equals("Stop")) {
-                                        Logger.warn("Arduino - Imminent collision.");
                                         webInterfaceComm.setRobotValue("move", "Stop");
                                         if (move.equals("Forward")) {
                                             Logger.warn("Arduino - Safety cut due to imminent collision.");
