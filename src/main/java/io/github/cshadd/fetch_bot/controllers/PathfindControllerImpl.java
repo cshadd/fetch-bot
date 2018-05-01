@@ -15,7 +15,6 @@ implements PathfindController {
     private final List<CartesianCoordinate> defaultCoords;
 
     // Private Instance/Property Fields
-    private CartesianCoordinate currentCoord;
     private int currentDirection;
     
     // Public Constructors
@@ -31,7 +30,6 @@ implements PathfindController {
         defaultCoords.add(new CartesianCoordinate(0, -1));
         defaultCoords.add(new CartesianCoordinate(0, 1));
 
-        currentCoord = defaultCoords.get(2);
         currentDirection = 0;
         cartesianSystem.addEdge(defaultCoords.get(0), defaultCoords.get(2));
         cartesianSystem.addEdge(defaultCoords.get(1), defaultCoords.get(2));
@@ -123,15 +121,57 @@ implements PathfindController {
         }
         return returnData;
     }
-    private CartesianCoordinate calculateNextCoordinate() { // Algorithm?
-        CartesianCoordinate ourCoordinate = currentCoord; // Store our current coord
-        currentCoord = defaultCoords.get(2); // Set current coord to 0
-        CartesianCoordinate directedCoordinate = directionCoordinate(); // Get a directionCoordinate
-        // Maybe block the inverted coordinate unless it is 0
-        // Check if the next coordinate via direction coordinate is blocked, if not then proceed, if it is, calculate another direction
-        // If all else fails just stop trying?
-        
-        // We will need more math for this...
-        return null;
+    
+    // Public Methods
+    public void block(boolean state) {
+        final CartesianCoordinate coord = directionCoordinate();
+        coord.setBlocked(state);
+    }
+    public void process() { // Algorithm?
+        /*
+         * If directionCoordinate is not blocked
+         *      If directionCoordinate is not visited on graph
+         *          If found
+         *              Happy
+         *              Stop
+         *              End
+         *          Else
+         *              Unvisit all
+         *              Marked inverse of directionCoordinate as visited on graph
+         *              Neutral
+         *              Move forward
+         *              Stop
+         *              Unblock all
+         *      Else
+         *          If found
+         *              Happy
+         *              Stop
+         *              End
+         *          Else
+         *              If all are visited
+         *                  Sad
+         *                  Stop
+         *                  End
+         *              Else
+         *                  Sad
+         *                  Stop
+         *                  Choose another directionCoordinate
+         *                  Rotate to directionCoordinate
+         * Else if blocked
+         *      If found
+         *          Happy
+         *          Stop
+         *          End
+         *      Else
+         *          If all are blocked
+         *              Angry
+         *              Stop
+         *              End
+         *          Else
+         *              Angry
+         *              Stop
+         *              Choose another directionCoordinate
+         *              Rotate to directionCoordinate
+         */
     }
 }
