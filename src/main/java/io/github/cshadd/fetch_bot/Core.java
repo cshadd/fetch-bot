@@ -1,6 +1,8 @@
 package io.github.cshadd.fetch_bot;
 import io.github.cshadd.fetch_bot.controllers.AIController;
 import io.github.cshadd.fetch_bot.controllers.AIControllerImpl;
+import io.github.cshadd.fetch_bot.controllers.OpenCVController;
+import io.github.cshadd.fetch_bot.controllers.OpenCVControllerImpl;
 import io.github.cshadd.fetch_bot.controllers.PathfindController;
 import io.github.cshadd.fetch_bot.controllers.PathfindControllerImpl;
 import io.github.cshadd.fetch_bot.io.ArduinoCommunication;
@@ -20,24 +22,13 @@ implements FetchBot {
     public static final String VERSION = "v1.0.0-alpha";
 
     // Private Static Instance/Property Fields
-    private static AIController ai;
+    private static AIController aiControl;
     private static ArduinoCommunication arduinoComm;
-    private static PathfindController pathfind;
+    private static OpenCVController openCVControl;
+    private static PathfindController pathfindControl;
     private static WebInterfaceCommunication webInterfaceComm;
 
     // Private Static Methods
-    private static void delayThread(long millis) {
-        try {
-            Thread.sleep(millis);
-        }
-        catch (InterruptedException e) {
-            Logger.warn(e, "Thread was interrupted.");
-        }
-        catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
-        }
-        finally { }
-    }
     private static void run() {
         String currentMode = "Idle";
         String currentMove = "Stop";
@@ -157,8 +148,8 @@ implements FetchBot {
         }
         
         // Initiate communications
-        webInterfaceComm = new WebInterfaceCommunicationImpl();
         arduinoComm = new ArduinoCommunicationImpl();
+        webInterfaceComm = new WebInterfaceCommunicationImpl();
         Logger.setWebInterfaceCommunications(webInterfaceComm);
         Logger.clear();
         if (runAs.equals("debug")) {
@@ -196,8 +187,10 @@ implements FetchBot {
         finally { }
         
         // Initiate controllers
-        ai = new AIControllerImpl();
-        pathfind = new PathfindControllerImpl();
+        aiControl = new AIControllerImpl();
+        openCVControl = new OpenCVControllerImpl();
+        pathfindControl = new PathfindControllerImpl();
+        openCVControl.startCamera();
     }
     private static void terminate() {
         Logger.info("Fetch Bot terminating! Log file: " + Logger.LOG_PATH);
@@ -237,6 +230,18 @@ implements FetchBot {
     }
 
     // Public Static Methods
+    public static void delayThread(long millis) {
+        try {
+            Thread.sleep(millis);
+        }
+        catch (InterruptedException e) {
+            Logger.warn(e, "Thread was interrupted.");
+        }
+        catch (Exception e) {
+            Logger.error(e, "There was an unknown issue!");
+        }
+        finally { }
+    }
     // Entry Point
     public static void main(String[] args) {
         // Setup
