@@ -100,7 +100,7 @@ implements OpenCVController {
             if (camera.isOpened()) {
                 if (camera.read(cameraFrame)) {
                     running = true;
-                    cameraWriter = new VideoWriter(STREAM_PATH, FOURCC, 20, cameraFrame.size(), true);
+                    cameraWriter = new VideoWriter(STREAM_PATH, fourcc, 20, cameraFrame.size(), true);
                     while (running) {
                         if (camera.read(cameraFrame)) {
                             if (!cameraWriter.isOpened()) {
