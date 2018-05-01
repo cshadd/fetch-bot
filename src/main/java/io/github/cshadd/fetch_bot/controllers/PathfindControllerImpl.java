@@ -122,11 +122,13 @@ implements PathfindController {
         return returnData;
     }
     
-    // Public Methods
+    // Public Methods (Overrided)
+    @Override
     public void block(boolean state) {
         final CartesianCoordinate coord = directionCoordinate();
         coord.setBlocked(state);
     }
+    @Override
     public void process() { // Algorithm?
         /*
          * If directionCoordinate is not blocked
