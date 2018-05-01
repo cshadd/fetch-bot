@@ -41,7 +41,7 @@ implements FetchBot {
         String currentVersion = "v0.0.0";
         String programMode = "Normal";
 
-        if (args.length > 1) {
+        if (args.length > 0) {
             programMode = args[0];
         }
 
@@ -51,7 +51,7 @@ implements FetchBot {
         // Initiate logging
         Logger.setWebInterfaceCommunications(webInterfaceComm);
         if (programMode.equals("debug")) {
-        	Logger.setToDebugMode();
+            Logger.setToDebugMode();
         }
         Logger.clear();
 

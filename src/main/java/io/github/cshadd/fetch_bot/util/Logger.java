@@ -86,11 +86,11 @@ implements FetchBot {
         debug(msg, true);
     }
     public static void debug(String msg, boolean append) {
-    	if (debug) {
-    		msg = TAG + " [DEBUG] " + msg;
-    		console.println(msg);
-    		writeInterface(msg, append);
-    	}
+        if (debug) {
+            msg = TAG + " [DEBUG] " + msg;
+            console.println(msg);
+            writeInterface(msg, append);
+        }
     }
     public static void error(String msg) {
         error(msg, true);
@@ -127,7 +127,7 @@ implements FetchBot {
         writeInterface(msg, append);
     }
     public static void setWebInterfaceCommunications(WebInterfaceCommunication comm) {
-    	webInterfaceComm = comm;
+        webInterfaceComm = comm;
     }
     public static void setToDebugMode() {
         debug = true;
