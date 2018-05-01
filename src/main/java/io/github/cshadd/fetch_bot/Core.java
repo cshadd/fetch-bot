@@ -102,18 +102,16 @@ implements FetchBot {
 
                                 if (currentUltrasonicSensor <= 15) {
                                     webInterfaceComm.setSourceValue("emotion", "Sad");
-                                    
+                                    webInterfaceComm.setRobotValue("move", "Stop");
                                     if (!move.equals("Stop")) {
                                         Logger.warn("Arduino - Safety cut due to imminent collision.");
-                                        webInterfaceComm.setRobotValue("move", "Stop");
                                         arduinoComm.setSourceValue("a", "Stop");
                                     }
                                 }
                                 else if (currentUltrasonicSensor <= 30) {
                                     webInterfaceComm.setSourceValue("emotion", "Angry");
-                                    
+                                    webInterfaceComm.setRobotValue("move", "Stop");                                    
                                     if (!move.equals("Stop")) {
-                                        webInterfaceComm.setRobotValue("move", "Stop");
                                         if (move.equals("Forward")) {
                                             Logger.warn("Arduino - Safety cut due to imminent collision.");
                                             arduinoComm.setSourceValue("a", "Stop");
@@ -122,11 +120,9 @@ implements FetchBot {
                                             arduinoComm.setSourceValue("a", currentMove);
                                         }
                                     }
-                                    webInterfaceComm.pushRobot();
                                 }
                                 else {
                                     webInterfaceComm.setSourceValue("emotion", "Happy");
-                                    
                                     webInterfaceComm.setRobotValue("move", "Stop");
                                     arduinoComm.setSourceValue("a", currentMove);
                                 }
