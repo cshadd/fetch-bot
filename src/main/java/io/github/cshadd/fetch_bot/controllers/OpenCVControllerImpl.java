@@ -1,21 +1,18 @@
 package io.github.cshadd.fetch_bot.controllers;
-import static io.github.cshadd.fetch_bot.Core.delayThread;
+// import static io.github.cshadd.fetch_bot.Core.delayThread;
 import io.github.cshadd.fetch_bot.Component;
 import io.github.cshadd.fetch_bot.io.WebInterfaceCommunicationImpl;
-import io.github.cshadd.fetch_bot.util.Logger;
-
+// import io.github.cshadd.fetch_bot.util.Logger;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
-import org.json.JSONException;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.videoio.VideoCapture;
+import org.opencv.videoio.VideoWriter;
 
 //Main
 @Component("OpenCV")
@@ -23,12 +20,15 @@ public class OpenCVControllerImpl
 implements OpenCVController {
     // Public Constant Instance/Property Fields
     public static final int CAMERA_PORT = 0; // Change if needed
+    public static final int FOURCC = VideoWriter.fourcc('m','j','p','g');
+    public static final String STREAM_PATH = WebInterfaceCommunicationImpl.TO_WEB_COMM_PATH + "/stream.avi";
 
     // Private Final Instance/Property Fields
     private final VideoCapture camera;    
     
     // Private Instance/Property Fields
-    private BufferedImage cameraBufferImage;
+    // private BufferedImage cameraBufferImage;
+    private VideoWriter cameraWriter;
     private Mat cameraFrame;
     private Thread cameraThread;
     private CameraThread cameraRunnable;
@@ -36,7 +36,8 @@ implements OpenCVController {
     // Public Constructors
     public OpenCVControllerImpl() {
         camera = new VideoCapture(CAMERA_PORT);
-        cameraBufferImage = null;
+        cameraWriter = null;
+        // cameraBufferImage = null;
         cameraFrame = new Mat();
         cameraRunnable = null;
         cameraThread = null;
@@ -45,20 +46,11 @@ implements OpenCVController {
     // Protected Final Nested Classes
     protected final class CameraThread
     implements Runnable {
-        // Private Final Instance/Property Fields
-        private final VideoCapture camera;
-        
         // Private Instance/Property Fields
         private volatile boolean running;
 
         // Private Constructors
-        private CameraThread() {
-            this(null, null);
-        }
-        
-        // Public Constructors
-        public CameraThread(VideoCapture camera, Mat cameraFrame) {
-            this.camera = camera;
+        public CameraThread() {
             running = false;
         }
         
@@ -104,8 +96,20 @@ implements OpenCVController {
         // Public Methods (Overrided)
         @Override
         public void run() {
-            running = true;
-            while (running) {
+            if (camera.isOpened()) {
+                if (camera.read(cameraFrame)) {
+                    running = true;
+                    cameraWriter = new VideoWriter(STREAM_PATH, FOURCC, 20, cameraFrame.size(), true);
+                    while (running) {
+                        if (camera.read(cameraFrame)) {
+                            if (!cameraWriter.isOpened()) {
+                                cameraWriter.write(cameraFrame);
+                            }
+                        }
+                    }
+                }
+            }
+            /*(while (running) {
                 if (camera.isOpened()) {
                     if (camera.read(cameraFrame)) {
                         cameraBufferImage = MatToBufferedImage(cameraFrame);
@@ -123,7 +127,7 @@ implements OpenCVController {
                         }
                     }
                 }
-            }
+            }*/
         }
     }
     
@@ -135,7 +139,7 @@ implements OpenCVController {
     // Public Methods (Overrided)
     @Override
     public void startCamera() {
-        cameraRunnable = new CameraThread(camera, cameraFrame);
+        cameraRunnable = new CameraThread();
         cameraThread = new Thread(cameraRunnable);
         cameraThread.start();
     }
