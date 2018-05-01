@@ -101,6 +101,12 @@
             data2.move = direction;
             sendToRobot();
         }
+
+        function setObjectClass(){
+            data2.class = $("#class-obj-txt").val();
+            sendToRobot();
+        }
+
     </script>
     <title>Fetch Bot Web Interface</title>
 </head>
@@ -142,9 +148,12 @@
                             <input id="btn-kill" class="btn btn-danger" type="button" value="Kill" onclick="setMode('Off')" /><br /><br />
                             <input id="btn-auto" class="btn btn-warning" type="button" value="Auto" onclick="setMode('Auto')" />
                             <input id="btn-idle" class="btn btn-warning" type="button" value="Idle" onclick="setMode('Idle')" />
-                            <input id="btn-manual" class="btn btn-warning" type="button" value="Manual" onclick="setMode('Manual')" /><br /><br />
+                            <input id="btn-manual" class="btn btn-warning" type="button" value="Manual" onclick="setMode('Manual')" /><br />
                             <div id="controls-auto">
                                 <!-- TODO -->
+                                <input id="class-obj-txt" type="text" name="class-obj-txt" /><br />
+                                <input id="class-obj-btn" class="btn btn-primary class-button" type="button" value="Class Object" name="class-obj-btn" onclick="setObjectClass()" />
+
                             </div>
                             <div id="controls-manual">
                                 <div class="row">
