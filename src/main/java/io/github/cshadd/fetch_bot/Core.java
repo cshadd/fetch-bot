@@ -191,9 +191,19 @@ implements FetchBot {
         finally { }
 
         // Startup logging
-        Logger.info("Fetch Bot " + VERSION + " started in " + runAs + " mode!");
-        Logger.info("ArduinoCommunication - Opened serial on " + ArduinoCommunicationImpl.SERIAL_PORT + ".");    
-
+        try {
+            Logger.info("Fetch Bot " + VERSION + " started in " + runAs + " mode!");
+            Logger.info("ArduinoCommunication - Opened serial on " + ArduinoCommunicationImpl.SERIAL_PORT + ".");
+            webInterfaceComm.pushSource();
+        }
+        catch (CommunicationException e) {
+            Logger.error(e, "Communication encountered an error.");
+        }
+        catch (Exception e) {
+            Logger.fatalError(e, "Communication encountered a fatal error.");
+        }
+        finally { }
+        
         // Initiate controllers
         ai = new AIControllerImpl();
         pathfind = new PathfindControllerImpl();
