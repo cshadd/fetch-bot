@@ -1,13 +1,13 @@
 package io.github.cshadd.fetch_bot;
 import io.github.cshadd.fetch_bot.controllers.AIController;
 import io.github.cshadd.fetch_bot.controllers.AIControllerImpl;
+import io.github.cshadd.fetch_bot.controllers.CommunicationException;
 import io.github.cshadd.fetch_bot.controllers.OpenCVController;
 import io.github.cshadd.fetch_bot.controllers.OpenCVControllerImpl;
 import io.github.cshadd.fetch_bot.controllers.PathfindController;
 import io.github.cshadd.fetch_bot.controllers.PathfindControllerImpl;
 import io.github.cshadd.fetch_bot.io.ArduinoCommunication;
 import io.github.cshadd.fetch_bot.io.ArduinoCommunicationImpl;
-import io.github.cshadd.fetch_bot.io.CommunicationException;
 import io.github.cshadd.fetch_bot.io.WebInterfaceCommunication;
 import io.github.cshadd.fetch_bot.io.WebInterfaceCommunicationImpl;
 import io.github.cshadd.fetch_bot.util.Logger;

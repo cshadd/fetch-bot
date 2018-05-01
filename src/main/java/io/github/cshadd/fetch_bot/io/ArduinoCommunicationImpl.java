@@ -10,6 +10,8 @@ import com.pi4j.io.serial.SerialDataEventListener;
 import com.pi4j.io.serial.SerialDataEvent;
 import com.pi4j.io.serial.StopBits;
 import io.github.cshadd.fetch_bot.Component;
+import io.github.cshadd.fetch_bot.controllers.CommunicationException;
+
 import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;

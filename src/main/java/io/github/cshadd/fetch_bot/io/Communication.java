@@ -1,5 +1,6 @@
 package io.github.cshadd.fetch_bot.io;
 import io.github.cshadd.fetch_bot.FetchBot;
+import io.github.cshadd.fetch_bot.controllers.CommunicationException;
 
 // Main
 public abstract interface Communication

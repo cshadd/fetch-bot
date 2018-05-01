@@ -5,4 +5,5 @@ public abstract interface OpenCVController
 extends Controller {
     // Public Abstract Methods
     public abstract void startCamera();
+    public abstract void stopCamera() throws InterruptedException;
 }

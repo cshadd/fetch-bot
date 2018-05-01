@@ -1,5 +1,7 @@
 package io.github.cshadd.fetch_bot.io;
 import io.github.cshadd.fetch_bot.Component;
+import io.github.cshadd.fetch_bot.controllers.CommunicationException;
+
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
@@ -10,9 +12,10 @@ import org.json.JSONObject;
 @Component("Communication")
 public class WebInterfaceCommunicationImpl
 implements WebInterfaceCommunication {
-    // Private Constant Instance/Property Fields
-    private static final  String TO_ROBOT_JSON_PATH = "/var/www/html/FetchBot/comms/toRobot.json"; // Change if needed
-    private static final  String TO_WEB_INTERFACE_JSON_PATH = "/var/www/html/FetchBot/comms/toInterface.json"; // Change if needed
+    // Public Constant Instance/Property Fields
+    public static final String TO_WEB_COMM_PATH = "/var/www/html/FetchBot/comms/";
+    public static final String TO_ROBOT_JSON_PATH = TO_WEB_COMM_PATH + "toRobot.json"; // Change if needed
+    public static final String TO_WEB_INTERFACE_JSON_PATH = TO_WEB_COMM_PATH + "toInterface.json"; // Change if needed
     
     // Private Instance/Property Fields
     private JSONObject toRobotData;

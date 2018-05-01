@@ -1,4 +1,4 @@
-package io.github.cshadd.fetch_bot.io;
+package io.github.cshadd.fetch_bot.controllers;
 import io.github.cshadd.fetch_bot.FetchBotException;
 
 // Main
