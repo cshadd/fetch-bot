@@ -1,13 +1,13 @@
 package io.github.cshadd.fetch_bot.controllers;
 import io.github.cshadd.fetch_bot.Component;
 import io.github.cshadd.fetch_bot.io.WebInterfaceCommunicationImpl;
-import io.github.cshadd.fetch_bot.util.Logger;
+// import io.github.cshadd.fetch_bot.util.Logger;
 // import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.WritableRaster;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+// import java.awt.image.DataBufferByte;
+// import java.awt.image.WritableRaster;
+// import java.io.File;
+// import java.io.IOException;
+// import javax.imageio.ImageIO;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.videoio.VideoCapture;
@@ -19,8 +19,8 @@ public class OpenCVControllerImpl
 implements OpenCVController {
     // Public Constant Instance/Property Fields
     public static final int CAMERA_PORT = 0; // Change if needed
+    public static final String CAMERA_STREAM = WebInterfaceCommunicationImpl.TO_WEB_COMM_PATH + "/cam-stream.mp4";
     public static final int CAMERA_STREAM_FPS = 60;
-    public static final String CAMERA_STREAM_PATH = WebInterfaceCommunicationImpl.TO_WEB_COMM_PATH + "/cam-stream.mp4";
 
     // Private Final Instance/Property Fields
     private final VideoCapture camera;
@@ -41,7 +41,7 @@ implements OpenCVController {
         cameraFrame = new Mat();
         cameraRunnable = null;
         cameraThread = null;
-        fourcc = VideoWriter.fourcc('h','2','6','4');
+        fourcc = VideoWriter.fourcc('X','2','6','4');
     }
     
     // Protected Final Nested Classes
@@ -58,8 +58,6 @@ implements OpenCVController {
         // Public Methods
         public void terminate() {
             running = false;
-            camera.release();
-            // cameraWriter.release();
         }
 
         // Public Methods
@@ -116,13 +114,15 @@ implements OpenCVController {
                             finally { }   
                         }
                     }*/
-                    cameraWriter = new VideoWriter(CAMERA_STREAM_PATH, fourcc, CAMERA_STREAM_FPS, cameraFrame.size(), true);
+                    cameraWriter = new VideoWriter(CAMERA_STREAM, fourcc, CAMERA_STREAM_FPS, cameraFrame.size(), true);
                     if (cameraWriter.isOpened()) {
                         while (running) {
                             if (camera.read(cameraFrame)) {
                                 cameraWriter.write(cameraFrame);
                             }
                         }
+                        camera.release();
+                        cameraWriter.release();
                     }
                 }
             }
