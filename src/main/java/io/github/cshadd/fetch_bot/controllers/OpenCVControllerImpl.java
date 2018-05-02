@@ -2,7 +2,7 @@ package io.github.cshadd.fetch_bot.controllers;
 import io.github.cshadd.fetch_bot.Component;
 import io.github.cshadd.fetch_bot.io.WebInterfaceCommunicationImpl;
 import io.github.cshadd.fetch_bot.util.Logger;
-import java.awt.image.BufferedImage;
+// import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.File;
@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.videoio.VideoCapture;
-// import org.opencv.videoio.VideoWriter;
+import org.opencv.videoio.VideoWriter;
 
 //Main
 @Component("OpenCV")
@@ -20,15 +20,15 @@ implements OpenCVController {
     // Public Constant Instance/Property Fields
     public static final int CAMERA_PORT = 0; // Change if needed
     public static final int CAMERA_STREAM_FPS = 60;
-    public static final String CAMERA_STREAM_PATH = WebInterfaceCommunicationImpl.TO_WEB_COMM_PATH + "/cam-stream.mjpg";
+    public static final String CAMERA_STREAM_PATH = WebInterfaceCommunicationImpl.TO_WEB_COMM_PATH + "/cam-stream.mp4";
 
     // Private Final Instance/Property Fields
     private final VideoCapture camera;
-    // private final int fourcc;
+    private final int fourcc;
     
     // Private Instance/Property Fields
-    private BufferedImage cameraBufferImage;
-    // private VideoWriter cameraWriter;
+    // private BufferedImage cameraBufferImage;
+    private VideoWriter cameraWriter;
     private Mat cameraFrame;
     private Thread cameraThread;
     private CameraThread cameraRunnable;
@@ -36,12 +36,12 @@ implements OpenCVController {
     // Public Constructors
     public OpenCVControllerImpl() {
         camera = new VideoCapture(CAMERA_PORT);
-        // cameraWriter = null;
+        cameraWriter = null;
         // cameraBufferImage = null;
         cameraFrame = new Mat();
         cameraRunnable = null;
         cameraThread = null;
-        // fourcc = VideoWriter.fourcc('M','J','P','G');
+        fourcc = VideoWriter.fourcc('h','2','6','4');
     }
     
     // Protected Final Nested Classes
@@ -63,7 +63,7 @@ implements OpenCVController {
         }
 
         // Public Methods
-        public BufferedImage MatToBufferedImage(Mat frame) {
+        /*public BufferedImage MatToBufferedImage(Mat frame) {
             int type = 0;
             if (frame.channels() == 1) {
                 type = BufferedImage.TYPE_BYTE_GRAY;
@@ -93,7 +93,7 @@ implements OpenCVController {
                 throw new ControllerException("There was an unknown issue!", e);
             }
             finally { }
-        }
+        }*/
         
         // Public Methods (Overrided)
         @Override
@@ -101,7 +101,7 @@ implements OpenCVController {
             if (camera.isOpened()) {
                 if (camera.read(cameraFrame)) {
                     running = true;
-                    cameraBufferImage = MatToBufferedImage(cameraFrame);
+                    /*cameraBufferImage = MatToBufferedImage(cameraFrame);
                     while (running) {
                         if (camera.read(cameraFrame)) {
                             try {
@@ -115,25 +115,17 @@ implements OpenCVController {
                             }
                             finally { }   
                         }
-                    }
-                    /*cameraWriter = new VideoWriter(CAMERA_STREAM_PATH, fourcc, CAMERA_STREAM_FPS, cameraFrame.size(), true);
+                    }*/
+                    cameraWriter = new VideoWriter(CAMERA_STREAM_PATH, fourcc, CAMERA_STREAM_FPS, cameraFrame.size(), true);
                     if (cameraWriter.isOpened()) {
                         while (running) {
                             if (camera.read(cameraFrame)) {
                                 cameraWriter.write(cameraFrame);
                             }
                         }
-                    }*/
-                }
-            }
-            /*(
-                if (camera.isOpened()) {
-                    
-                        cameraBufferImage = MatToBufferedImage(cameraFrame);
-
                     }
                 }
-            }*/
+            }
         }
     }
     

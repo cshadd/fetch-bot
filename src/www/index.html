@@ -19,7 +19,7 @@
         setInterval(function () {
             if (data != null && data2 != null) {
                 if (cameraLoaded == false) {
-                    $("#ext-camera").attr("src", "comms/cam-stream.mjpg?refresh=" + new Date().getTime());
+                    $("#ext-camera-source").attr("src", "comms/cam-stream.mp4?refresh=" + new Date().getTime());
                     cameraLoaded = true;
                 }
                 $("#connection-offline").hide();
@@ -56,7 +56,7 @@
                 }
                 else {
                     cameraLoaded = false;
-                    $("#ext-camera").attr("src", "");
+                    $("#ext-camera-source").attr("src", "");
 
                     $("#btn-auto").hide();
                     $("#btn-idle").hide();
@@ -75,7 +75,7 @@
             }
             else {
                 cameraLoaded = false;
-                $("#ext-camera").attr("src", "");
+                $("#ext-camera-source").attr("src", "");
 
                 $("#btn-auto").hide();
                 $("#btn-idle").hide();
@@ -191,7 +191,9 @@
                 </form>
             </div>
             <div class="col-sm-4">
-                <img id="ext-camera" class="ext-display" src="" alt="Camera Stream" />
+                <video id="ext-camera" class="ext-display" controls="controls">
+                    <source id="ext-camera-source" src="comms/cam-stream.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
         <br />
