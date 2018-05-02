@@ -1,5 +1,4 @@
 package io.github.cshadd.fetch_bot.controllers;
-// import static io.github.cshadd.fetch_bot.Core.delayThread;
 import io.github.cshadd.fetch_bot.Component;
 import io.github.cshadd.fetch_bot.io.WebInterfaceCommunicationImpl;
 // import io.github.cshadd.fetch_bot.util.Logger;
@@ -12,7 +11,7 @@ import javax.imageio.ImageIO;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.videoio.VideoCapture;
-import org.opencv.videoio.VideoWriter;
+// import org.opencv.videoio.VideoWriter;
 
 //Main
 @Component("OpenCV")
@@ -20,15 +19,16 @@ public class OpenCVControllerImpl
 implements OpenCVController {
     // Public Constant Instance/Property Fields
     public static final int CAMERA_PORT = 0; // Change if needed
-    public static final String STREAM_PATH = WebInterfaceCommunicationImpl.TO_WEB_COMM_PATH + "/stream.avi";
+    public static final int CAMERA_STREAM_FPS = 60;
+    public static final String CAMERA_STREAM_PATH = WebInterfaceCommunicationImpl.TO_WEB_COMM_PATH + "/cam-stream.mjpg";
 
     // Private Final Instance/Property Fields
     private final VideoCapture camera;
-    private final int fourcc;
+    // private final int fourcc;
     
     // Private Instance/Property Fields
-    // private BufferedImage cameraBufferImage;
-    private VideoWriter cameraWriter;
+    private BufferedImage cameraBufferImage;
+    // private VideoWriter cameraWriter;
     private Mat cameraFrame;
     private Thread cameraThread;
     private CameraThread cameraRunnable;
@@ -36,12 +36,12 @@ implements OpenCVController {
     // Public Constructors
     public OpenCVControllerImpl() {
         camera = new VideoCapture(CAMERA_PORT);
-        cameraWriter = null;
+        // cameraWriter = null;
         // cameraBufferImage = null;
         cameraFrame = new Mat();
         cameraRunnable = null;
         cameraThread = null;
-        fourcc = VideoWriter.fourcc('M','J','P','G');
+        // fourcc = VideoWriter.fourcc('M','J','P','G');
     }
     
     // Protected Final Nested Classes
@@ -59,7 +59,7 @@ implements OpenCVController {
         public void terminate() {
             running = false;
             camera.release();
-            cameraWriter.release();
+            // cameraWriter.release();
         }
 
         // Public Methods
@@ -83,8 +83,8 @@ implements OpenCVController {
         throws ControllerException {
             File imageFile = null;
             try {
-                imageFile = new File(WebInterfaceCommunicationImpl.TO_WEB_COMM_PATH + "/stream.png");
-                ImageIO.write(cameraBufferImage, "png", imageFile);
+                imageFile = new File(CAMERA_STREAM_PATH);
+                ImageIO.write(cameraBufferImage, "jpg", imageFile);
             }
             catch (IOException e) {
                 throw new ControllerException("There was an issue with IO!", e);
@@ -101,14 +101,15 @@ implements OpenCVController {
             if (camera.isOpened()) {
                 if (camera.read(cameraFrame)) {
                     running = true;
-                    cameraWriter = new VideoWriter(STREAM_PATH, fourcc, 20, cameraFrame.size(), true);
+                    cameraBufferImage = MatToBufferedImage(cameraFrame);
+                    /*cameraWriter = new VideoWriter(CAMERA_STREAM_PATH, fourcc, CAMERA_STREAM_FPS, cameraFrame.size(), true);
                     if (cameraWriter.isOpened()) {
                         while (running) {
                             if (camera.read(cameraFrame)) {
                                 cameraWriter.write(cameraFrame);
                             }
                         }
-                    }
+                    }*/
                 }
             }
             /*(while (running) {

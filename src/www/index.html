@@ -19,7 +19,7 @@
         setInterval(function () {
             if (data != null && data2 != null) {
                 if (cameraLoaded == false) {
-                    $("#ext-camera").attr("src", "comms/stream.avi?refresh=" + new Date().getTime());
+                    $("#ext-camera").attr("src", "comms/cam-stream.mjpg?refresh=" + new Date().getTime());
                     cameraLoaded = true;
                 }
                 $("#connection-offline").hide();
@@ -71,6 +71,9 @@
                 }
             }
             else {
+                cameraLoaded = false;
+                $("#ext-camera").attr("src", "");
+
                 $("#btn-auto").hide();
                 $("#btn-idle").hide();
                 $("#btn-kill").hide();
@@ -185,7 +188,7 @@
                 </form>
             </div>
             <div class="col-sm-4">
-                <iframe id="ext-camera" class="ext-display" src=""></iframe>
+                <img id="ext-camera" class="ext-display" src="" alt="Camera Stream" />
             </div>
         </div>
         <br />
