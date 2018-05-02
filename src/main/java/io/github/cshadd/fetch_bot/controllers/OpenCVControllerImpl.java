@@ -1,7 +1,7 @@
 package io.github.cshadd.fetch_bot.controllers;
 import io.github.cshadd.fetch_bot.Component;
 import io.github.cshadd.fetch_bot.io.WebInterfaceCommunicationImpl;
-// import io.github.cshadd.fetch_bot.util.Logger;
+import io.github.cshadd.fetch_bot.util.Logger;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
@@ -102,6 +102,20 @@ implements OpenCVController {
                 if (camera.read(cameraFrame)) {
                     running = true;
                     cameraBufferImage = MatToBufferedImage(cameraFrame);
+                    while (running) {
+                        if (camera.read(cameraFrame)) {
+                            try {
+                                saveImage(cameraBufferImage);
+                            }
+                            catch (ControllerException e) {
+                                Logger.warn(e, "There was an issue with Controller.");
+                            }
+                            catch (Exception e) {
+                                Logger.warn(e, "There was an unknown issue!");                            
+                            }
+                            finally { }   
+                        }
+                    }
                     /*cameraWriter = new VideoWriter(CAMERA_STREAM_PATH, fourcc, CAMERA_STREAM_FPS, cameraFrame.size(), true);
                     if (cameraWriter.isOpened()) {
                         while (running) {
@@ -112,22 +126,11 @@ implements OpenCVController {
                     }*/
                 }
             }
-            /*(while (running) {
+            /*(
                 if (camera.isOpened()) {
-                    if (camera.read(cameraFrame)) {
+                    
                         cameraBufferImage = MatToBufferedImage(cameraFrame);
-                        try {
-                            saveImage(cameraBufferImage);
-                        }
-                        catch (ControllerException e) {
-                            Logger.warn(e, "There was an issue with Controller.");
-                        }
-                        catch (Exception e) {
-                            Logger.warn(e, "There was an unknown issue!");                            
-                        }
-                        finally {
-                            delayThread(500);
-                        }
+
                     }
                 }
             }*/
