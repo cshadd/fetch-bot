@@ -49,6 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Maven_Config", "Maven_Confi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot", "fetch_bot", "{BDA2E018-42A9-4ADF-B5EA-919D6CF25D1C}"
 	ProjectSection(SolutionItems) = preProject
+		src\main\java\io\github\cshadd\fetch_bot\Component.java = src\main\java\io\github\cshadd\fetch_bot\Component.java
 		src\main\java\io\github\cshadd\fetch_bot\Core.java = src\main\java\io\github\cshadd\fetch_bot\Core.java
 		src\main\java\io\github\cshadd\fetch_bot\FetchBot.java = src\main\java\io\github\cshadd\fetch_bot\FetchBot.java
 		src\main\java\io\github\cshadd\fetch_bot\FetchBotException.java = src\main\java\io\github\cshadd\fetch_bot\FetchBotException.java
@@ -122,6 +123,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.controllers", "fe
 		src\main\java\io\github\cshadd\fetch_bot\controllers\AIController.java = src\main\java\io\github\cshadd\fetch_bot\controllers\AIController.java
 		src\main\java\io\github\cshadd\fetch_bot\controllers\AIControllerImpl.java = src\main\java\io\github\cshadd\fetch_bot\controllers\AIControllerImpl.java
 		src\main\java\io\github\cshadd\fetch_bot\controllers\Controller.java = src\main\java\io\github\cshadd\fetch_bot\controllers\Controller.java
+		src\main\java\io\github\cshadd\fetch_bot\controllers\ControllerException.java = src\main\java\io\github\cshadd\fetch_bot\controllers\ControllerException.java
+		src\main\java\io\github\cshadd\fetch_bot\controllers\OpenCVController.java = src\main\java\io\github\cshadd\fetch_bot\controllers\OpenCVController.java
+		src\main\java\io\github\cshadd\fetch_bot\controllers\OpenCVControllerImpl.java = src\main\java\io\github\cshadd\fetch_bot\controllers\OpenCVControllerImpl.java
 		src\main\java\io\github\cshadd\fetch_bot\controllers\package.html = src\main\java\io\github\cshadd\fetch_bot\controllers\package.html
 		src\main\java\io\github\cshadd\fetch_bot\controllers\PathfindController.java = src\main\java\io\github\cshadd\fetch_bot\controllers\PathfindController.java
 		src\main\java\io\github\cshadd\fetch_bot\controllers\PathfindControllerImpl.java = src\main\java\io\github\cshadd\fetch_bot\controllers\PathfindControllerImpl.java
