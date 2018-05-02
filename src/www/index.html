@@ -147,10 +147,12 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Controls</div>
                     <div class="panel-body">
-                        <input id="btn-kill" class="btn btn-danger" type="button" value="Kill" onclick="setMode('Off')" /><br /><br />
-                        <input id="btn-auto" class="btn btn-warning" type="button" value="Auto" onclick="setMode('Auto')" />
-                        <input id="btn-idle" class="btn btn-warning" type="button" value="Idle" onclick="setMode('Idle')" />
-                        <input id="btn-manual" class="btn btn-warning" type="button" value="Manual" onclick="setMode('Manual')" /><br />
+                        <div>
+                            <input id="btn-kill" class="btn btn-danger" type="button" value="Kill" onclick="setMode('Off')" /><br /><br />
+                            <input id="btn-auto" class="btn btn-warning" type="button" value="Auto" onclick="setMode('Auto')" />
+                            <input id="btn-idle" class="btn btn-warning" type="button" value="Idle" onclick="setMode('Idle')" />
+                            <input id="btn-manual" class="btn btn-warning" type="button" value="Manual" onclick="setMode('Manual')" />
+                        </div>
                         <div id="controls-auto">
                             <div class="form-group">
                                 <input id="txt-trackclass" class="form-control" type="text" />
@@ -180,7 +182,7 @@
                     <div class="panel-body">
                         <input data-toggle="collapse" data-target="#status-verbose" class="btn btn-primary" type="button" value="Show/Hide" />
                         <div class="form-group">
-                            <textarea id="status-verbose" class="collapse form-control" readonly="readonly"></textarea>
+                            <textarea id="status-verbose" class="collapse form-control" rows="10" readonly="readonly">...</textarea>
                         </div>
                     </div>
                 </div>
