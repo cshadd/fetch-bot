@@ -1,7 +1,5 @@
 package io.github.cshadd.fetch_bot.io;
 import io.github.cshadd.fetch_bot.Component;
-import io.github.cshadd.fetch_bot.controllers.CommunicationException;
-
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;

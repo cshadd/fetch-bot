@@ -1,13 +1,11 @@
 package io.github.cshadd.fetch_bot;
-import io.github.cshadd.fetch_bot.controllers.AIController;
-import io.github.cshadd.fetch_bot.controllers.AIControllerImpl;
-import io.github.cshadd.fetch_bot.controllers.CommunicationException;
 import io.github.cshadd.fetch_bot.controllers.OpenCVController;
 import io.github.cshadd.fetch_bot.controllers.OpenCVControllerImpl;
 import io.github.cshadd.fetch_bot.controllers.PathfindController;
 import io.github.cshadd.fetch_bot.controllers.PathfindControllerImpl;
 import io.github.cshadd.fetch_bot.io.ArduinoCommunication;
 import io.github.cshadd.fetch_bot.io.ArduinoCommunicationImpl;
+import io.github.cshadd.fetch_bot.io.CommunicationException;
 import io.github.cshadd.fetch_bot.io.WebInterfaceCommunication;
 import io.github.cshadd.fetch_bot.io.WebInterfaceCommunicationImpl;
 import io.github.cshadd.fetch_bot.util.Logger;
@@ -22,7 +20,6 @@ implements FetchBot {
     public static final String VERSION = "v1.0.0-alpha";
 
     // Private Static Instance/Property Fields
-    private static AIController aiControl;
     private static ArduinoCommunication arduinoComm;
     private static OpenCVController openCVControl;
     private static PathfindController pathfindControl;
@@ -187,7 +184,6 @@ implements FetchBot {
         finally { }
         
         // Initiate controllers
-        aiControl = new AIControllerImpl();
         openCVControl = new OpenCVControllerImpl();
         pathfindControl = new PathfindControllerImpl();
         openCVControl.startCamera();
@@ -209,8 +205,9 @@ implements FetchBot {
         catch (Exception e) {
             Logger.fatalError(e, "Communication encountered a fatal error.");
         }
-        finally { }
-        Logger.close();
+        finally {
+            Logger.close();
+        }
     }
     private static void versionCheck() {
         String currentVersion = "v0.0.0";
@@ -230,8 +227,8 @@ implements FetchBot {
         }
     }
 
-    // Public Static Methods
-    public static void delayThread(long millis) {
+    // Public Static Final Methods
+    public static final void delayThread(long millis) {
         try {
             Thread.sleep(millis);
         }
@@ -243,6 +240,8 @@ implements FetchBot {
         }
         finally { }
     }
+
+    // Public Static Methods
     // Entry Point
     public static void main(String[] args) {
         // Setup

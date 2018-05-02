@@ -1,10 +1,20 @@
+/* Global Elements */
+* { }
+
+body {
+    position: relative;
+}
+
+html { }
+
+/* Specific Elements */
 .connection-progress-bar {
     width: 100%;
 }
 
-.ext-display {
-    height: 500px;
-    width: 100%;
+.fit {
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .logo {
@@ -16,4 +26,8 @@
 
 .move-button {
     width: 100%;
+}
+
+.title {
+    text-align: center;
 }

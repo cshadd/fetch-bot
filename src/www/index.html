@@ -15,19 +15,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="readCommunications.js"></script>
     <script>
-        var cameraLoaded = false;
         setInterval(function () {
             if (data != null && data2 != null) {
-                if (cameraLoaded == false) {
-                    $("#ext-camera-source").attr("src", "comms/cam-stream.mp4?refresh=" + new Date().getTime());
-                    cameraLoaded = true;
-                }
                 $("#connection-offline").hide();
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
                 $("#status-curr-mode").text("Current Mode: " + data.mode);
                 $("#status-curr-rot").text("Current Rotation: " + data.rot + " Degrees");
                 $("#status-curr-trackclass").text("Current Track Class: " + data.trackclass);
-                $("#status-ultrasonic").text("Ultrasonic Sensor: " + data.ultrasonic + "cm");
+                $("#status-ultrasonic").text("Ultrasonic Sensor: ~" + data.ultrasonic + "cm");
                 $("#status-verbose").text(data.verbose);
 
                 if (data.mode == "Auto") {
@@ -55,9 +50,6 @@
                     $("#controls-manual").hide();
                 }
                 else {
-                    cameraLoaded = false;
-                    $("#ext-camera-source").attr("src", "");
-
                     $("#btn-auto").hide();
                     $("#btn-idle").hide();
                     $("#btn-kill").hide();
@@ -74,9 +66,6 @@
                 }
             }
             else {
-                cameraLoaded = false;
-                $("#ext-camera-source").attr("src", "");
-
                 $("#btn-auto").hide();
                 $("#btn-idle").hide();
                 $("#btn-kill").hide();
@@ -127,79 +116,81 @@
 </head>
 <body>
     <main>
-        <div id="connection-offline" class="alert alert-danger">
-            <div class="progress">
-                <div class="connection-progress-bar progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                    <p>Waiting for connection to robot.</p>
+        <div class="fit row">
+            <div id="connection-offline" class="alert alert-danger">
+                <div class="progress">
+                    <div class="connection-progress-bar progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                        <p>Waiting for connection to robot.</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <img class="logo" src="https://cshadd.github.io/fetch-bot/Logo.png" alt="Fetch Bot" />
-        <div class="row">
+        <div class="fit row">
+            <img class="logo" src="https://cshadd.github.io/fetch-bot/Logo.png" alt="Fetch Bot" />
+            <h1 class="title">Fetch Bot Web Interface</h1>
+            <hr />
+        </div>
+        <div class="fit row">
             <div class="col-sm-4">
-                <iframe class="ext-display" src="face.html"></iframe>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Status</div>
+                    <div class="panel-body">
+                        <p id="status-curr-mode"></p>
+                        <p id="status-curr-trackclass"></p>
+                        <p id="status-curr-emotion"></p>
+                        <p id="status-curr-rot"></p>
+                        <p id="status-ultrasonic"></p>
+                    </div>
+                </div>
             </div>
             <div class="col-sm-4">
-                <h1>Fetch Bot Web Interface</h1>
-                <hr />
-                <form action="#" method="post">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">Status</div>
-                        <div class="panel-body">
-                            <p id="status-curr-mode"></p>
-                            <p id="status-curr-trackclass"></p>
-                            <p id="status-curr-emotion"></p>
-                            <p id="status-curr-rot"></p>
-                            <p id="status-ultrasonic"></p>
-                            <input data-toggle="collapse" data-target="#status-verbose" class="btn btn-primary" type="button" value="Show/Hide Verbose" />
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Controls</div>
+                    <div class="panel-body">
+                        <input id="btn-kill" class="btn btn-danger" type="button" value="Kill" onclick="setMode('Off')" /><br /><br />
+                        <input id="btn-auto" class="btn btn-warning" type="button" value="Auto" onclick="setMode('Auto')" />
+                        <input id="btn-idle" class="btn btn-warning" type="button" value="Idle" onclick="setMode('Idle')" />
+                        <input id="btn-manual" class="btn btn-warning" type="button" value="Manual" onclick="setMode('Manual')" /><br />
+                        <div id="controls-auto">
                             <div class="form-group">
-                                <textarea id="status-verbose" class="collapse form-control" readonly="readonly"></textarea>
+                                <input id="txt-trackclass" class="form-control" type="text" />
                             </div>
+                            <input id="btn-trackclass" class="btn btn-primary" type="button" value="Set Track Class" onclick="setObjectClass()" />
+                        </div>
+                        <div id="controls-manual">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <input class="btn btn-primary move-button" type="button" name="move-left" value="Turn Left" onclick="setMove('Left')" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="btn btn-primary move-button" type="button" name="move-forward" value="Move Forward" onclick="setMove('Forward')" />
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="btn btn-primary move-button" type="button" name="move-right" value="Turn Right" onclick="setMove('Right')" />
+                                </div>
+                            </div>
+                            <br />
                         </div>
                     </div>
-
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">Controls</div>
-                        <div class="panel-body">
-                            <input id="btn-kill" class="btn btn-danger" type="button" value="Kill" onclick="setMode('Off')" /><br /><br />
-                            <input id="btn-auto" class="btn btn-warning" type="button" value="Auto" onclick="setMode('Auto')" />
-                            <input id="btn-idle" class="btn btn-warning" type="button" value="Idle" onclick="setMode('Idle')" />
-                            <input id="btn-manual" class="btn btn-warning" type="button" value="Manual" onclick="setMode('Manual')" /><br />
-                            <div id="controls-auto">
-                                <!-- TODO -->
-                                <div class="form-group">
-                                    <input id="txt-trackclass" class="form-control" type="text" />
-                                </div>
-                                <input id="btn-trackclass" class="btn btn-primary" type="button" value="Set Track Class" onclick="setObjectClass()" />
-                            </div>
-                            <div id="controls-manual">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="move-left" value="Turn Left" onclick="setMove('Left')" />
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="move-forward" value="Move Forward" onclick="setMove('Forward')" />
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input class="btn btn-primary move-button" type="button" name="move-right" value="Turn Right" onclick="setMove('Right')" />
-                                    </div>
-                                </div>
-                                <br />
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
             <div class="col-sm-4">
-                <video id="ext-camera" class="ext-display" controls="controls">
-                    <source id="ext-camera-source" src="comms/cam-stream.mp4" type="video/mp4">
-                </video>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Verbose</div>
+                    <div class="panel-body">
+                        <input data-toggle="collapse" data-target="#status-verbose" class="btn btn-primary" type="button" value="Show/Hide" />
+                        <div class="form-group">
+                            <textarea id="status-verbose" class="collapse form-control" readonly="readonly"></textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <br />
-        <a href="https://www.raspberrypi.org/">
-            <img src="https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png" alt="<3 Raspberry Pi" />
-        </a>
+        <div class="fit row">
+            <a href="https://www.raspberrypi.org/">
+                <img src="https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png" alt="<3 Raspberry Pi" />
+            </a>
+        </div>
     </main>
 </body>
 </html>
