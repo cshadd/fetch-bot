@@ -55,6 +55,9 @@
                     $("#controls-manual").hide();
                 }
                 else {
+                    cameraLoaded = false;
+                    $("#ext-camera").attr("src", "");
+
                     $("#btn-auto").hide();
                     $("#btn-idle").hide();
                     $("#btn-kill").hide();
