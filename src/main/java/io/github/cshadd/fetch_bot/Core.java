@@ -33,6 +33,7 @@ implements FetchBot {
         String currentMode = "Idle";
         String currentMove = "Stop";
         String currentTrackClass = "None";
+        boolean tracked = false;
         int currentUltrasonicSensor = -1;
         while (true) {
             try {
@@ -57,6 +58,7 @@ implements FetchBot {
                 if (trackClass != null) {
                     if (trackClass != currentTrackClass) {
                         currentTrackClass = trackClass;
+                        tracked = false;
                         Logger.debug("WebInterface - [trackclass: " + currentTrackClass + "] received.");
                         webInterfaceComm.setSourceValue("trackclass", "" + currentTrackClass);
                     }
@@ -72,7 +74,70 @@ implements FetchBot {
                     }
                     
                     if (currentMode.equals("Auto")) {
-                        webInterfaceComm.setSourceValue("emotion", "Neutral");
+                        if (currentTrackClass != null) {
+                            if (currentTrackClass != "None") {
+                                
+                                if (currentUltrasonicSensor <= 30) {
+                                    pathfindControl.blockNext();
+                                }
+                                
+                                if (pathfindControl.isNextTracked()) {
+                                    webInterfaceComm.setSourceValue("emotion", "Happy");
+                                    webInterfaceComm.setRobotValue("trackclass", "None");
+                                    arduinoComm.setSourceValue("a", "Stop");
+                                    currentTrackClass = "None";
+                                    tracked = true;
+                                }
+                                else if (!pathfindControl.isAnyAvailable()) {
+                                    webInterfaceComm.setSourceValue("emotion", "Sad");
+                                    webInterfaceComm.setRobotValue("trackclass", "None");
+                                    arduinoComm.setSourceValue("a", "Stop");
+                                    currentTrackClass = "None";
+                                    tracked = true;
+                                }
+                                else {
+                                    if (pathfindControl.isNextBlocked()) {
+                                        webInterfaceComm.setSourceValue("emotion", "Angry");
+                                        if (Math.abs(Math.random()) == 0) {
+                                            pathfindControl.rotateLeft();
+                                            arduinoComm.setSourceValue("a", "Left");
+                                        }
+                                        else {
+                                            pathfindControl.rotateRight();
+                                            arduinoComm.setSourceValue("a", "Right");
+                                        }
+                                    }
+                                    else if (pathfindControl.isNextVisited()) {
+                                        webInterfaceComm.setSourceValue("emotion", "Sad");
+                                        if (Math.abs(Math.random()) == 0) {
+                                            pathfindControl.rotateLeft();
+                                            arduinoComm.setSourceValue("a", "Left");
+                                        }
+                                        else {
+                                            pathfindControl.rotateRight();
+                                            arduinoComm.setSourceValue("a", "Right");
+                                        }
+                                    }
+                                    else {
+                                        webInterfaceComm.setSourceValue("emotion", "Neutral");
+                                        arduinoComm.setSourceValue("a", "Forward");
+                                        pathfindControl.goNext();
+                                        pathfindControl.visitNext();
+                                    }
+                                }
+                            }
+                            else {
+                                if (!tracked) {
+                                    webInterfaceComm.setSourceValue("emotion", "Neutral");
+                                }
+                                arduinoComm.setSourceValue("a", "Stop");
+                                pathfindControl.reset();
+                            }
+                            arduinoComm.pushSource();
+                        }
+                        else {
+                            webInterfaceComm.setSourceValue("emotion", "Neutral");
+                        }
                     }
                     else if (currentMode.equals("Idle")) {
                         webInterfaceComm.setRobotValue("trackclass", "None");

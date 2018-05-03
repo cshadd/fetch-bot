@@ -13,15 +13,27 @@ extends AbstractPathfindController {
     // Public Methods (Overrided)
     @Override
     public void blockNext() {
-        cartesianGraph.block(getNext());
+        cartesianGraph.blockCoord(getNext());
     }
     @Override
     public void goNext() {
         cartesianGraph.setCurrentCoord(getNext());
     }
     @Override
-    public boolean isNextAvalible() {
-        return cartesianGraph.isAvalible(getNext());
+    public boolean isAnyAvailable() {
+        return cartesianGraph.checkForAvailable(currentRot);
+    }
+    @Override
+    public boolean isNextBlocked() {
+        return cartesianGraph.isCoordBlocked(getNext());
+    }
+    @Override
+    public boolean isNextTracked() {
+        return false;
+    }
+    @Override
+    public boolean isNextVisited() {
+        return cartesianGraph.isCoordVisited(getNext());
     }
     @Override
     public void reset() {
@@ -37,93 +49,6 @@ extends AbstractPathfindController {
     }
     @Override
     public void visitNext() {
-        cartesianGraph.visit(getNext());
+        cartesianGraph.visitCoord(getNext());
     }
-
-    /* ALG 1:
-     * If track-class
-     *      If next-found
-     *          Happy
-     *          Stop
-     *          Reset
-     *          End
-     *      Else If all-visited or all-blocked
-     *          Sad
-     *          Stop
-     *          End
-     *      Else If next-out-of-bounds
-     *          Neutral
-     *          Stop
-     *          Reset
-     *      Else
-     *          Else If next-visited
-     *              Sad
-     *              rot-+90
-     *              Stop
-     *          Else If next-blocked
-     *              Angry
-     *              rot-+90
-     *              Stop
-     *          Else
-     *              Neutral
-     *              Forward
-     *              Stop
-     *              Visit
-     * Else
-     *      Idle
-     *      Stop
-     *      Reset
-     *      End
-     *          
-     * 
-     */
-    
-    
-    
-    /* ALG 2:
-     * If directionCoordinate is not blocked
-     *      If directionCoordinate is not visited on graph
-     *          If found
-     *              Happy
-     *              Stop
-     *              End
-     *          Else
-     *              Unvisit all
-     *              Marked inverse of directionCoordinate as visited on graph
-     *              Neutral
-     *              Move forward
-     *              Stop
-     *              Unblock all
-     *      Else
-     *          If found
-     *              Happy
-     *              Stop
-     *              End
-     *          Else
-     *              If all are visited
-     *                  Sad
-     *                  Stop
-     *                  End
-     *              Else
-     *                  Sad
-     *                  Stop
-     *                  Choose another directionCoordinate
-     *                  Rotate to directionCoordinate
-     * Else if blocked
-     *      If found
-     *          Happy
-     *          Stop
-     *          End
-     *      Else
-     *          If all are blocked
-     *              Angry
-     *              Stop
-     *              End
-     *          Else
-     *              Angry
-     *              Stop
-     *              Choose another directionCoordinate
-     *              Rotate to directionCoordinate
-     */    
-    
 }

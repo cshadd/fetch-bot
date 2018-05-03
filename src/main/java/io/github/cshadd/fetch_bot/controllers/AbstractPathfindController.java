@@ -1,23 +1,23 @@
 package io.github.cshadd.fetch_bot.controllers;
+import io.github.cshadd.cshadd_java_data_structures.util.DirectedGraph;
+import io.github.cshadd.cshadd_java_data_structures.util.UndirectedGraph;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.github.cshadd.cshadd_java_data_structures.util.UndirectedGraph;
 
 // Main
 public abstract class AbstractPathfindController
 extends AbstractController
 implements PathfindController {
     // protected Constant Instance/Property Fields
-    protected static final int COORD_MAX_RANGE = 10;
+    protected static final int COORD_MAX_RANGE = 1;
     protected static final int ROT_ADD = 90;
     protected static final int ROT_MAX_RANGE = 360;
     
     // Protected Final Instance/Property Fields
     protected final CartesianGraph cartesianGraph;
     
-    // Private Instance/Property Fields
-    private int currentRot;
+    // Protected Instance/Property Fields
+    protected int currentRot;
 
     // Protected Constructors
     protected AbstractPathfindController() {
@@ -26,12 +26,13 @@ implements PathfindController {
         currentRot = 0;
     }
     
-    // Protected Static Final Nested Classes
-    protected static final class CartesianGraph
+    // Public Static Final Nested Classes
+    public static final class CartesianGraph
     extends UndirectedGraph<CartesianGraph.CartesianCoordinate> {
         // Private Instance/Property Fields
         private List<CartesianCoordinate> blockedCoords;
         private CartesianCoordinate currentCoord;
+        private int maxRange;
         
         // Private Constructors
         private CartesianGraph() {
@@ -40,28 +41,7 @@ implements PathfindController {
         private CartesianGraph(int maxRange) {
             super();
             blockedCoords = new ArrayList<CartesianCoordinate>();
-            for (int i = -maxRange; i <= maxRange; i++) {
-                for (int i2 = -maxRange; i2 <= maxRange; i2++) {
-                    final CartesianCoordinate coord = new CartesianCoordinate(i, i2);
-                    addVertex(coord);
-                    if ((i + 1) <= maxRange) {
-                        addEdge(coord, coord.up());
-                    }
-                    if ((i - 1) >= -maxRange) {
-                        addEdge(coord, coord.down());                        
-                    }
-                    if ((i2 + 1) <= maxRange) {
-                        addEdge(coord, coord.right());
-                    }
-                    if ((i2 - 1) >= -maxRange) {
-                        addEdge(coord, coord.left());
-                    }
-                    if (i == 0 && i2 == 0) {
-                        setRoot(vertex(coord));
-                    }
-                }
-            }
-            currentCoord = getRoot().data();
+            this.maxRange = maxRange;
         }
         
         // Private Static Final Nested Classes
@@ -117,6 +97,10 @@ implements PathfindController {
                 }
                 return returnData;
             }
+            @Override
+            public String toString() {
+                return "(" + x + "," + y + ")";
+            }
         }
         
         // Public Property Accessor Methods
@@ -126,10 +110,26 @@ implements PathfindController {
 
         // Public Property Mutator Methods
         public void setCurrentCoord(CartesianCoordinate coord) {
+            coord = assignCoord(coord);
             currentCoord = coord;
         }
         
         // Private Static Methods
+        private CartesianCoordinate assignCoord(CartesianCoordinate coord) {
+            for (int i = 0; i < adjacencyList.size(); i++) {
+                final Vertex vertex = adjacencyList.get(i);
+                if (vertex != null) {
+                    final CartesianCoordinate vertexData = vertex.data();
+                    if (vertexData != null) {
+                        if (vertexData.x == coord.x && vertexData.y == coord.y) {
+                            return vertexData;
+                        }
+                    }
+                }
+            }
+            addVertex(coord);
+            return coord;
+        }
         private static CartesianCoordinate directionCoordinate(int rot) {
             final double rad = rot*((Math.PI)/180);
             return new CartesianCoordinate(Math.sin(rad), Math.cos(rad));
@@ -137,13 +137,37 @@ implements PathfindController {
         
         // Private Methods
         private CartesianCoordinate getNextCoordinateFromDirection(int rot) {
-            final CartesianCoordinate otherCoord = CartesianGraph.directionCoordinate(rot);
+            CartesianCoordinate otherCoord = CartesianGraph.directionCoordinate(rot);
+            otherCoord = assignCoord(otherCoord);
             return currentCoord.add(otherCoord.x, otherCoord.y);
         }
-        private boolean isBlocked(CartesianCoordinate coord) {
+        
+        // Protected Methods
+        protected boolean checkForAvailable(int rot) {
+            final CartesianGraph.CartesianCoordinate forward = getNextCoordinateFromDirection(rot);
+            final CartesianGraph.CartesianCoordinate left = getNextCoordinateFromDirection(rot - ROT_ADD);
+            final CartesianGraph.CartesianCoordinate right = getNextCoordinateFromDirection(rot + ROT_ADD);
+            
+            return (isCoordAvailable(forward) || isCoordAvailable(left) || isCoordAvailable(right));
+        }
+        
+        // Public Methods
+        public void blockCoord(CartesianCoordinate coord) {
+            coord = assignCoord(coord);
+            if (!isCoordBlocked(coord)) {
+                blockedCoords.add(coord);
+            }
+        }
+        public boolean isCoordAvailable(CartesianCoordinate coord) {
+            coord = assignCoord(coord);
+            return !(isCoordBlocked(coord) && isCoordVisited(coord));
+        }
+        public boolean isCoordBlocked(CartesianCoordinate coord) {
+            coord = assignCoord(coord);
             return blockedCoords.contains(coord);
         }
-        private boolean isVisited(CartesianCoordinate coord) {
+        public boolean isCoordVisited(CartesianCoordinate coord) {
+            coord = assignCoord(coord);
             boolean returnData = false;
             final Vertex v = vertex(coord);
             if (v != null) {
@@ -151,23 +175,36 @@ implements PathfindController {
             }
             return returnData;
         }
-        
-        // Public Methods
-        public void block(CartesianCoordinate coord) {
-            if (!isBlocked(coord)) {
-                blockedCoords.add(coord);
-            }
-        }
-        public boolean isAvalible(CartesianCoordinate coord) {
-            return !(isBlocked(coord) && isVisited(coord));
-        }
         public void reset() {
             unvisitAll();
             blockedCoords.clear();
+            for (int i = -maxRange; i <= maxRange; i++) {
+                for (int i2 = -maxRange; i2 <= maxRange; i2++) {
+                    final CartesianCoordinate coord = assignCoord(new CartesianCoordinate(i, i2));
+                    assignCoord(coord);
+                    if ((i + 1) <= maxRange) {
+                        addEdge(coord, assignCoord(coord.right()));
+                    }
+                    if ((i - 1) >= -maxRange) {
+                        addEdge(coord, assignCoord(coord.left()));
+                    }
+                    if ((i2 + 1) <= maxRange) {
+                        addEdge(coord, assignCoord(coord.up()));
+                    }
+                    if ((i2 - 1) >= -maxRange) {
+                        addEdge(coord, assignCoord(coord.down()));
+                    }
+                    if (i == 0 && i2 == 0) {
+                        setRoot(vertex(coord));
+                    }
+                }
+            }
             currentCoord = getRoot().data();
+            getRoot().visit();
         }
-        public void visit(CartesianCoordinate coord) {
-            if (!isVisited(coord)) {
+        public void visitCoord(CartesianCoordinate coord) {
+            coord = assignCoord(coord);
+            if (!isCoordVisited(coord)) {
                 final Vertex v = vertex(coord);
                 if (v != null) {
                     v.visit();
