@@ -188,6 +188,23 @@ implements FetchBot {
         openCVControl = new OpenCVControllerImpl();
         pathfindControl = new PathfindControllerImpl();
         openCVControl.startCamera();
+        
+        // Version check
+        String currentVersion = "v0.0.0";
+        try {
+            currentVersion = VersionCheck.getCurrentVersion();
+        }
+        catch (VersionCheckException e) {
+            Logger.error(e, "VersionCheck encountered an error.");
+        }
+        catch (Exception e) {
+            Logger.fatalError(e, "VersionCheck encountered a fatal error.");
+        }
+        finally { }
+
+        if (!VERSION.equals(currentVersion)) {
+            Logger.warn("VersionCheck - [Version] mismatch (this: " + VERSION + "; current: " + currentVersion + "), this version might be outdated!");
+        }
     }
     private static void terminate() {
         Logger.info("Fetch Bot terminating! Log file: " + Logger.LOG_PATH);
@@ -210,23 +227,6 @@ implements FetchBot {
             Logger.close();
         }
     }
-    private static void versionCheck() {
-        String currentVersion = "v0.0.0";
-        try {
-            currentVersion = VersionCheck.getCurrentVersion();
-        }
-        catch (VersionCheckException e) {
-            Logger.error(e, "VersionCheck encountered an error.");
-        }
-        catch (Exception e) {
-            Logger.fatalError(e, "VersionCheck encountered a fatal error.");
-        }
-        finally { }
-
-        if (!VERSION.equals(currentVersion)) {
-            Logger.warn("VersionCheck - [Version] mismatch (this: " + VERSION + "; current: " + currentVersion + "), this version might be outdated!");
-        }
-    }
 
     // Public Static Final Methods
     public static final void delayThread(long millis) {
@@ -247,9 +247,6 @@ implements FetchBot {
     public static void main(String[] args) {
         // Setup
         setup(args);
-
-        // Version check
-        versionCheck();
 
         // Run
         run();

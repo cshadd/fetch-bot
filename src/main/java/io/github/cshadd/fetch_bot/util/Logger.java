@@ -12,7 +12,6 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.SimpleFormatter;
-import java.util.TimeZone;
 import org.apache.commons.io.FileUtils;
 
 // Main
@@ -44,13 +43,7 @@ implements FetchBot {
         return returnData;
     }
     private static void write(Level level, String msg, boolean append, Throwable error) {
-        SimpleDateFormat localTime = null;
-        SimpleDateFormat time = null;
         try {
-            time = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-            localTime = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-            time.setTimeZone(TimeZone.getTimeZone("GMT"));
-            msg = localTime.parse(time.format(new Date())) + " " + msg + "\n";
             if (error != null) {
                 javaLogger.log(level, msg, error);
             }
