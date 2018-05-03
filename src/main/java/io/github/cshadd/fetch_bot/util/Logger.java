@@ -5,8 +5,6 @@ import io.github.cshadd.fetch_bot.FetchBot;
 import io.github.cshadd.fetch_bot.io.WebInterfaceCommunication;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
