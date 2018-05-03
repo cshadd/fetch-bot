@@ -42,7 +42,8 @@ implements FetchBot {
                 arduinoComm.pullRobot();
 
                 // Sensors
-                final int ultrasonicSensor = (int)arduinoComm.getRobotFloatValue("s");
+                final float rawUltrasonicSensor = arduinoComm.getRobotFloatValue("s");
+                final int ultrasonicSensor = (int)rawUltrasonicSensor;
                 if (ultrasonicSensor != -1) {
                     if (ultrasonicSensor != currentUltrasonicSensor) {
                         currentUltrasonicSensor = ultrasonicSensor;
@@ -91,17 +92,14 @@ implements FetchBot {
                                 currentMove = move;
                                 Logger.debug("WebInterface - [move: " + currentMove + "] command received.");
 
-                                if (currentUltrasonicSensor <= 15) {
-                                    webInterfaceComm.setSourceValue("emotion", "Sad");
-                                    webInterfaceComm.setRobotValue("move", "Stop");
-                                    if (!move.equals("Stop")) {
-                                        Logger.warn("Arduino - Safety cut due to imminent collision.");
-                                        arduinoComm.setSourceValue("a", "Stop");
+                                if (currentUltrasonicSensor <= 30) {
+                                    if (currentUltrasonicSensor <= 15) {
+                                        webInterfaceComm.setSourceValue("emotion", "Sad");
                                     }
-                                }
-                                else if (currentUltrasonicSensor <= 30) {
-                                    webInterfaceComm.setSourceValue("emotion", "Angry");
-                                    webInterfaceComm.setRobotValue("move", "Stop");                                    
+                                    else {
+                                        webInterfaceComm.setSourceValue("emotion", "Angry");   
+                                    }
+                                    webInterfaceComm.setRobotValue("move", "Stop");
                                     if (!move.equals("Stop")) {
                                         if (move.equals("Forward")) {
                                             Logger.warn("Arduino - Safety cut due to imminent collision.");

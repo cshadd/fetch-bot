@@ -10,8 +10,71 @@ extends AbstractPathfindController {
         super();
     }
 
+    // Public Methods (Overrided)
+    @Override
+    public void blockNext() {
+        cartesianGraph.block(getNext());
+    }
+    @Override
+    public void goNext() {
+        cartesianGraph.setCurrentCoord(getNext());
+    }
+    @Override
+    public boolean isNextAvalible() {
+        return cartesianGraph.isAvalible(getNext());
+    }
+    @Override
+    public void reset() {
+        cartesianGraph.reset();
+    }
+    @Override
+    public void rotateLeft() {
+        rotateNoNegative(-ROT_ADD);
+    }
+    @Override
+    public void rotateRight() {
+        rotateNoNegative(ROT_ADD);
+    }
+    @Override
+    public void visitNext() {
+        cartesianGraph.visit(getNext());
+    }
+
     /* ALG 1:
-     * 
+     * If track-class
+     *      If next-found
+     *          Happy
+     *          Stop
+     *          Reset
+     *          End
+     *      Else If all-visited or all-blocked
+     *          Sad
+     *          Stop
+     *          End
+     *      Else If next-out-of-bounds
+     *          Neutral
+     *          Stop
+     *          Reset
+     *      Else
+     *          Else If next-visited
+     *              Sad
+     *              rot-+90
+     *              Stop
+     *          Else If next-blocked
+     *              Angry
+     *              rot-+90
+     *              Stop
+     *          Else
+     *              Neutral
+     *              Forward
+     *              Stop
+     *              Visit
+     * Else
+     *      Idle
+     *      Stop
+     *      Reset
+     *      End
+     *          
      * 
      */
     
