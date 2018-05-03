@@ -1,6 +1,8 @@
 package io.github.cshadd.fetch_bot.controllers;
 import io.github.cshadd.cshadd_java_data_structures.util.DirectedGraph;
 import io.github.cshadd.cshadd_java_data_structures.util.UndirectedGraph;
+import io.github.cshadd.fetch_bot.util.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,8 +115,13 @@ implements PathfindController {
             coord = assignCoord(coord);
             currentCoord = coord;
         }
+
+        private static CartesianCoordinate directionCoordinate(int rot) {
+            final double rad = rot*((Math.PI)/180);
+            return new CartesianCoordinate((int)Math.sin(rad), (int)Math.cos(rad));
+        }
         
-        // Private Static Methods
+        // Private Methods
         private CartesianCoordinate assignCoord(CartesianCoordinate coord) {
             for (int i = 0; i < adjacencyList.size(); i++) {
                 final Vertex vertex = adjacencyList.get(i);
@@ -128,14 +135,8 @@ implements PathfindController {
                 }
             }
             addVertex(coord);
-            return coord;
+            return assignCoord(coord);
         }
-        private static CartesianCoordinate directionCoordinate(int rot) {
-            final double rad = rot*((Math.PI)/180);
-            return new CartesianCoordinate((int)Math.sin(rad), (int)Math.cos(rad));
-        }
-        
-        // Private Methods
         private CartesianCoordinate getNextCoordinateFromDirection(int rot) {
             CartesianCoordinate otherCoord = CartesianGraph.directionCoordinate(rot);
             return assignCoord(currentCoord.add(otherCoord.x, otherCoord.y));
@@ -146,7 +147,7 @@ implements PathfindController {
             final CartesianGraph.CartesianCoordinate forward = getNextCoordinateFromDirection(rot);
             final CartesianGraph.CartesianCoordinate left = getNextCoordinateFromDirection(rot - ROT_ADD);
             final CartesianGraph.CartesianCoordinate right = getNextCoordinateFromDirection(rot + ROT_ADD);
-            
+            Logger.info("" + forward + left + right + "");
             return (isCoordAvailable(forward) || isCoordAvailable(left) || isCoordAvailable(right));
         }
         
@@ -227,14 +228,15 @@ implements PathfindController {
         }
         return coord;
     }
-    protected void rotateNoNegative(int rot) {
-        currentRot = currentRot + rot;
-        if (currentRot == -ROT_ADD) {
-            currentRot = ROT_MAX_RANGE - ROT_ADD;
+    protected void rotateFix(int rot) {
+        rot = currentRot + rot;
+        if (rot == -ROT_ADD) {
+            rot = ROT_MAX_RANGE - ROT_ADD;
         }
         else if (currentRot == ROT_MAX_RANGE) {
-            currentRot = 0;
+            rot = 0;
         }
+        currentRot = rot;
     }
     
     // Public Methods (Override)

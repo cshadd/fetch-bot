@@ -41,11 +41,11 @@ extends AbstractPathfindController {
     }
     @Override
     public void rotateLeft() {
-        rotateNoNegative(-ROT_ADD);
+        rotateFix(-ROT_ADD);
     }
     @Override
     public void rotateRight() {
-        rotateNoNegative(ROT_ADD);
+        rotateFix(ROT_ADD);
     }
     @Override
     public void visitNext() {

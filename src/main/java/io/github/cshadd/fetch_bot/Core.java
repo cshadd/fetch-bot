@@ -257,6 +257,7 @@ implements FetchBot {
         // Initiate controllers
         openCVControl = new OpenCVControllerImpl();
         pathfindControl = new PathfindControllerImpl();
+        pathfindControl.reset();
         openCVControl.startCamera();
         
         // Version check
