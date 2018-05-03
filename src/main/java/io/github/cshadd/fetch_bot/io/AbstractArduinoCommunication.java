@@ -138,11 +138,11 @@ implements ArduinoCommunication {
     
     // Public Methods (Overrided)
     @Override
-    public float getRobotFloatValue(String key)
+    public String getRobotValue(String key)
     throws CommunicationException {
-        float returnData = -1;
+        String returnData = "";
         try {
-            returnData = toRobotData.getFloat(key);
+            returnData = "" + toRobotData.getFloat(key);
         }
         catch (JSONException e) {
             throw new CommunicationException("There was an issue with JSON!", e);
