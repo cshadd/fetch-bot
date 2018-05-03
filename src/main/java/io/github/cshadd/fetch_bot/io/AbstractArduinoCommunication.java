@@ -1,9 +1,5 @@
 package io.github.cshadd.fetch_bot.io;
 import java.io.IOException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.pi4j.io.serial.Baud;
 import com.pi4j.io.serial.DataBits;
 import com.pi4j.io.serial.FlowControl;
@@ -14,6 +10,8 @@ import com.pi4j.io.serial.SerialDataEvent;
 import com.pi4j.io.serial.SerialDataEventListener;
 import com.pi4j.io.serial.SerialFactory;
 import com.pi4j.io.serial.StopBits;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 // Main
 public abstract class AbstractArduinoCommunication
