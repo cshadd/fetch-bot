@@ -9,7 +9,7 @@ public abstract class AbstractPathfindController
 extends AbstractController
 implements PathfindController {
     // protected Constant Instance/Property Fields
-    protected static final int COORD_MAX_RANGE = 1;
+    protected static final int COORD_MAX_RANGE = 5;
     protected static final int ROT_ADD = 90;
     protected static final int ROT_MAX_RANGE = 360;
     
@@ -48,21 +48,21 @@ implements PathfindController {
         private static final class CartesianCoordinate
         implements Comparable<CartesianCoordinate> {
             // Private Instance/Property Fields
-            private double x;
-            private double y;
+            private int x;
+            private int y;
             
             // Private Constructors
             private CartesianCoordinate() { }
             
             // Public Constructors
-            public CartesianCoordinate(double x, double y) {
+            public CartesianCoordinate(int x, int y) {
                 this();
                 this.x = x;
                 this.y = y;
             }
             
             // Private Methods
-            private CartesianCoordinate add(double x, double y) {
+            private CartesianCoordinate add(int x, int y) {
                 return new CartesianCoordinate(this.x + x, this.y + y);
             }
             private CartesianCoordinate down() {
@@ -81,9 +81,9 @@ implements PathfindController {
             // Public Methods (Overrided)
             @Override
             public int compareTo(CartesianCoordinate coord) {
-                final double otherX = coord.x;
-                final double otherY = coord.y;
-                final double distance = Math.sqrt(((x - otherX)*(x - otherX)) + ((y - otherY)*(y - otherY)));
+                final int otherX = coord.x;
+                final int otherY = coord.y;
+                final int distance = (int)Math.sqrt(((x - otherX)*(x - otherX)) + ((y - otherY)*(y - otherY)));
                 int returnData = 0;
                 
                 if (distance < 0) {
@@ -132,14 +132,13 @@ implements PathfindController {
         }
         private static CartesianCoordinate directionCoordinate(int rot) {
             final double rad = rot*((Math.PI)/180);
-            return new CartesianCoordinate(Math.sin(rad), Math.cos(rad));
+            return new CartesianCoordinate((int)Math.sin(rad), (int)Math.cos(rad));
         }
         
         // Private Methods
         private CartesianCoordinate getNextCoordinateFromDirection(int rot) {
             CartesianCoordinate otherCoord = CartesianGraph.directionCoordinate(rot);
-            otherCoord = assignCoord(otherCoord);
-            return currentCoord.add(otherCoord.x, otherCoord.y);
+            return assignCoord(currentCoord.add(otherCoord.x, otherCoord.y));
         }
         
         // Protected Methods
@@ -211,6 +210,12 @@ implements PathfindController {
                 }
             }
         }
+        
+        // Public Methods (Override)
+        @Override
+        public String toString() {
+            return "" + currentCoord;
+        }
     }
     
     // Protected Methods    
@@ -230,5 +235,11 @@ implements PathfindController {
         else if (currentRot == ROT_MAX_RANGE) {
             currentRot = 0;
         }
+    }
+    
+    // Public Methods (Override)
+    @Override
+    public String toString() {
+        return "" + cartesianGraph;
     }
 }
