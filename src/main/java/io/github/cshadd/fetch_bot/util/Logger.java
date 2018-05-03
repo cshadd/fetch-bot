@@ -23,9 +23,9 @@ implements FetchBot {
     public static final String LOG_PATH = "FetchBot.log";
     
     // Private Instance/Property Fields
-    private static Console console;
+    private static final Console console;
     private static boolean debug;
-    private static final java.util.logging.Logger javaLogger;
+    private static java.util.logging.Logger javaLogger;
     private static FileHandler javaLoggerHandler;
     private static SimpleFormatter javaLoggerHandlerFormatter;
     private static WebInterfaceCommunication webInterfaceComm;
@@ -74,6 +74,7 @@ implements FetchBot {
     static {
         console = new Console();
         javaLogger = java.util.logging.Logger.getLogger(java.util.logging.Logger.GLOBAL_LOGGER_NAME);
+        javaLogger.setLevel(Level.ALL);
         javaLoggerHandlerFormatter = new SimpleFormatter();
         final java.util.logging.Logger javaRootLogger = java.util.logging.Logger.getLogger("");
         final Handler[] handlers = javaRootLogger.getHandlers();
@@ -98,7 +99,6 @@ implements FetchBot {
     }
     public static void close() {
         javaLogger.removeHandler(javaLoggerHandler);
-        javaLogger.setLevel(Level.INFO);
         console.promptForExit();
     }
     public static void debug(String msg) {
@@ -108,9 +108,7 @@ implements FetchBot {
         if (debug) {
             msg = TAG + " [DEBUG] " + msg;
             console.println(msg);
-            javaLogger.setLevel(Level.INFO);
-            javaLogger.info(msg);
-            writeInterface(Level.FINER, msg, append);
+            writeInterface(Level.INFO, msg, append);
         }
     }
     public static void error(Throwable e, String msg) {
