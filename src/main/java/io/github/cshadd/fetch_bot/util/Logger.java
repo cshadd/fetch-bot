@@ -51,8 +51,12 @@ implements FetchBot {
             localTime = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
             time.setTimeZone(TimeZone.getTimeZone("GMT"));
             msg = localTime.parse(time.format(new Date())) + " " + msg + "\n";
-            javaLogger.setLevel(level);
-            javaLogger.log(level, msg, error);
+            if (error != null) {
+                javaLogger.log(level, msg, error);
+            }
+            else {
+                javaLogger.log(level, msg);
+            }
         }
         catch (Exception e) {
             fatalError(e, "There was an unknown issue!");
@@ -119,7 +123,7 @@ implements FetchBot {
         }
     }
     public static void error(Throwable e, String msg) {
-        error(e, msg);
+        error(e, msg, true);
     }
     public static void error(Throwable e, String msg, boolean append) {
         msg = TAG + " [ERROR (SAFELY CAUGHT)] " + msg;
