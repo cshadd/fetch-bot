@@ -127,7 +127,7 @@ implements FetchBot {
     }
     public static void error(Throwable e, String msg, boolean append) {
         msg = TAG + " [ERROR (SAFELY CAUGHT)] " + msg;
-        console.println("\u001B[331" + msg + "\nPlease report this issue to the developers!\u001B[0m");
+        console.println("\u001B[31m" + msg + "\nPlease report this issue to the developers!\u001B[0m");
         writeInterface(Level.SEVERE, msg, append, e);
     }
     public static void fatalError(Throwable e, String msg) {
