@@ -42,8 +42,7 @@ implements FetchBot {
                 arduinoComm.pullRobot();
 
                 // Sensors
-                final float rawUltrasonicSensor = Float.parseFloat(arduinoComm.getRobotValue("s"));
-                final int ultrasonicSensor = (int)rawUltrasonicSensor;
+                final int ultrasonicSensor = (int)arduinoComm.getRobotFloatValue("s");
                 if (ultrasonicSensor != -1) {
                     if (ultrasonicSensor != currentUltrasonicSensor) {
                         currentUltrasonicSensor = ultrasonicSensor;
@@ -131,10 +130,10 @@ implements FetchBot {
                 arduinoComm.pushSource();
             }
             catch (CommunicationException e) {
-                Logger.error(e, "Communication encountered an error.");
+                Logger.error(e, "There was an issue with Communication!");
             }
             catch (Exception e) {
-                Logger.fatalError(e, "Communication encountered a fatal error.");
+                Logger.error(e, "There was an unknown issue!");
             }
             finally {
                 // Delay for safety
@@ -143,9 +142,14 @@ implements FetchBot {
         }
     }
     private static void setup(String[] args) {
-        String runAs = "Normal";
+        String profile = "Normal";
         if (args.length > 0) {
-            runAs = args[0];
+            profile = args[0];
+            if (profile.equals("Normal")) { }
+            else if (profile.equals("Debug")) { }
+            else {
+                profile = "Normal";
+            }
         }
         
         // Initiate communications
@@ -153,7 +157,7 @@ implements FetchBot {
         webInterfaceComm = new WebInterfaceCommunicationImpl();
         Logger.setWebInterfaceCommunications(webInterfaceComm);
         Logger.clear();
-        if (runAs.equals("debug")) {
+        if (profile.equals("debug")) {
             Logger.setToDebugMode();
         }
 
@@ -174,16 +178,16 @@ implements FetchBot {
         finally { }
 
         // Startup logging
+        Logger.info("Fetch Bot " + VERSION + " started as profile " + profile + "!");
+        Logger.info("ArduinoCommunication - Opened serial on " + ArduinoCommunicationImpl.SERIAL_PORT + ".");        
         try {
-            Logger.info("Fetch Bot " + VERSION + " started in " + runAs + " mode!");
-            Logger.info("ArduinoCommunication - Opened serial on " + ArduinoCommunicationImpl.SERIAL_PORT + ".");
             webInterfaceComm.pushSource();
         }
         catch (CommunicationException e) {
-            Logger.error(e, "Communication encountered an error.");
+            Logger.error(e, "There was an issue with Communication!");
         }
         catch (Exception e) {
-            Logger.fatalError(e, "Communication encountered a fatal error.");
+            Logger.error(e, "There was an unknown issue!");
         }
         finally { }
         
@@ -198,10 +202,10 @@ implements FetchBot {
             currentVersion = VersionCheck.getCurrentVersion();
         }
         catch (VersionCheckException e) {
-            Logger.error(e, "VersionCheck encountered an error.");
+            Logger.error(e, "There was an issue with VersionCheck!");
         }
         catch (Exception e) {
-            Logger.fatalError(e, "VersionCheck encountered a fatal error.");
+            Logger.error(e, "There was an unknown issue!");
         }
         finally { }
 
@@ -221,10 +225,10 @@ implements FetchBot {
             webInterfaceComm.pushRobot();
         }
         catch (CommunicationException e) {
-            Logger.error(e, "Communication encountered an error.");
+            Logger.error(e, "There was an issue with Communication!");
         }
         catch (Exception e) {
-            Logger.fatalError(e, "Communication encountered a fatal error.");
+            Logger.error(e, "There was an unknown issue!");
         }
         finally {
             Logger.close();
@@ -237,7 +241,7 @@ implements FetchBot {
             Thread.sleep(millis);
         }
         catch (InterruptedException e) {
-            Logger.warn(e, "Thread was interrupted.");
+            Logger.warn(e, "Thread was interrupted!");
         }
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");

@@ -61,10 +61,10 @@ implements ArduinoCommunication {
             isSerialLocked = false;
         }
         catch (IOException e) {
-            throw new CommunicationException("There was an issue with IO!", e);
+            throw new ArduinoCommunicationException("There was an issue with IO!", e);
         }
         catch (Exception e) {
-            throw new CommunicationException("There was an unknown issue!", e);
+            throw new ArduinoCommunicationException("There was an unknown issue!", e);
         }
         finally { }
     }
@@ -91,10 +91,10 @@ implements ArduinoCommunication {
             }
         }
         catch (IOException e) {
-            throw new CommunicationException("There was an issue with IO!", e);
+            throw new ArduinoCommunicationException("There was an issue with IO!", e);
         }
         catch (Exception e) {
-            throw new CommunicationException("There was an unknown issue!", e);
+            throw new ArduinoCommunicationException("There was an unknown issue!", e);
         }
         finally { }
     }
@@ -108,10 +108,10 @@ implements ArduinoCommunication {
             }
         }
         catch (JSONException e) {
-            throw new CommunicationException("There was an issue with JSON!", e);
+            throw new ArduinoCommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            throw new CommunicationException("There was an unknown issue!", e);
+            throw new ArduinoCommunicationException("There was an unknown issue!", e);
         }
         finally { }
         return returnData;
@@ -125,30 +125,30 @@ implements ArduinoCommunication {
             }
         }
         catch (IOException e) {
-            throw new CommunicationException("There was an issue with IO!", e);
+            throw new ArduinoCommunicationException("There was an issue with IO!", e);
         }
         catch (JSONException e) {
-            throw new CommunicationException("There was an issue with JSON!", e);
+            throw new ArduinoCommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            throw new CommunicationException("There was an unknown issue!", e);
+            throw new ArduinoCommunicationException("There was an unknown issue!", e);
         }
         finally { }
     }
     
     // Public Methods (Overrided)
     @Override
-    public String getRobotValue(String key)
+    public float getRobotFloatValue(String key)
     throws CommunicationException {
-        String returnData = "";
+        float returnData = -1;
         try {
-            returnData = "" + toRobotData.getFloat(key);
+            returnData = toRobotData.getFloat(key);
         }
         catch (JSONException e) {
-            throw new CommunicationException("There was an issue with JSON!", e);
+            throw new ArduinoCommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            throw new CommunicationException("There was an unknown issue!", e);
+            throw new ArduinoCommunicationException("There was an unknown issue!", e);
         }
         finally { }
         return returnData;

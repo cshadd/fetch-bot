@@ -41,18 +41,12 @@ implements FetchBot {
         return returnData;
     }
     private static void write(Level level, String msg, boolean append, Throwable error) {
-        try {
-            if (error != null) {
-                javaLogger.log(level, msg, error);
-            }
-            else {
-                javaLogger.log(level, msg);
-            }
+        if (error != null) {
+            javaLogger.log(level, msg, error);
         }
-        catch (Exception e) {
-            fatalError(e, "There was an unknown issue!");
+        else {
+            javaLogger.log(level, msg);
         }
-        finally { }
     }
     private static void writeInterface(Level level, String msg, boolean append) {
         writeInterface(level, msg, append, null);

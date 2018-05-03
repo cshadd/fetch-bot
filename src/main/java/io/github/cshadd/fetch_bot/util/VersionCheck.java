@@ -15,8 +15,8 @@ public class VersionCheck
 implements FetchBot {
     // Private Constant Instance/Property Fields
     private static final int API_OBJECT = 0;
-    private static final  String API_URL = "https://api.github.com/repos/cshadd/fetch-bot/releases";
-    private static final  String API_VERSION_TAG = "tag_name";
+    private static final String API_URL = "https://api.github.com/repos/cshadd/fetch-bot/releases";
+    private static final String API_VERSION_TAG = "tag_name";
 
     // Private Constructors
     private VersionCheck() { }

@@ -10,9 +10,9 @@ public abstract class AbstractWebInterfaceCommunication
 extends AbstractCommunication
 implements WebInterfaceCommunication {
     // Public Constant Instance/Property Fields
-    public static final String TO_WEB_COMM_PATH = "/var/www/html/FetchBot/comms/";
-    public static final String TO_ROBOT_JSON_PATH = TO_WEB_COMM_PATH + "toRobot.json"; // Change if needed
-    public static final String TO_WEB_INTERFACE_JSON_PATH = TO_WEB_COMM_PATH + "toInterface.json"; // Change if needed
+    public static final String TO_WEB_COMM_PATH = "/var/www/html/FetchBot/comms/"; // Change if needed
+    public static final String TO_ROBOT_JSON_PATH = TO_WEB_COMM_PATH + "toRobot.json";
+    public static final String TO_WEB_INTERFACE_JSON_PATH = TO_WEB_COMM_PATH + "toInterface.json";
 
     // Protected Constructors
     protected AbstractWebInterfaceCommunication() {
@@ -28,13 +28,13 @@ implements WebInterfaceCommunication {
             returnData = new JSONObject(FileUtils.readFileToString(input, "UTF-8"));
         }
         catch (IOException e) {
-            throw new CommunicationException("There was an issue with IO!", e);
+            throw new WebInterfaceCommunicationException("There was an issue with IO!", e);
         }
         catch (JSONException e) {
-            throw new CommunicationException("There was an issue with JSON!", e);
+            throw new WebInterfaceCommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            throw new CommunicationException("There was an unknown issue!", e);
+            throw new WebInterfaceCommunicationException("There was an unknown issue!", e);
         }
         finally { }
         return returnData;
@@ -46,13 +46,13 @@ implements WebInterfaceCommunication {
             FileUtils.writeStringToFile(input, "" + json, "UTF-8");
         }
         catch (IOException e) {
-            throw new CommunicationException("There was an issue with IO!", e);
+            throw new WebInterfaceCommunicationException("There was an issue with IO!", e);
         }
         catch (JSONException e) {
-            throw new CommunicationException("There was an issue with JSON!", e);
+            throw new WebInterfaceCommunicationException("There was an issue with JSON!", e);
         }
         catch (Exception e) {
-            throw new CommunicationException("There was an unknown issue!", e);
+            throw new WebInterfaceCommunicationException("There was an unknown issue!", e);
         }
         finally { }
     }
