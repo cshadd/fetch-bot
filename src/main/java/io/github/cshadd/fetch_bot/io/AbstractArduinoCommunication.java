@@ -34,6 +34,7 @@ implements ArduinoCommunication {
     
     // Protected Constructors
     protected AbstractArduinoCommunication() {
+        super();
         buffer = "{ }";
         isSerialLocked = false;
         serial = SerialFactory.createInstance();
