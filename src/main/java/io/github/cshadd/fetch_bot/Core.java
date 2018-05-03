@@ -25,6 +25,9 @@ implements FetchBot {
     private static PathfindController pathfindControl;
     private static WebInterfaceCommunication webInterfaceComm;
 
+    // Public Constructors
+    public Core() { }
+    
     // Private Static Methods
     private static void run() {
         String currentMode = "Idle";
