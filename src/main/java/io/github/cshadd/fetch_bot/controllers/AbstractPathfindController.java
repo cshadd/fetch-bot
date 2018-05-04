@@ -135,7 +135,7 @@ implements PathfindController {
                 }
             }
             addVertex(coord);
-            return assignCoord(coord);
+            return coord;
         }
         private CartesianCoordinate getNextCoordinateFromDirection(int rot) {
             CartesianCoordinate otherCoord = CartesianGraph.directionCoordinate(rot);
@@ -147,7 +147,7 @@ implements PathfindController {
             final CartesianGraph.CartesianCoordinate forward = getNextCoordinateFromDirection(rot);
             final CartesianGraph.CartesianCoordinate left = getNextCoordinateFromDirection(rot - ROT_ADD);
             final CartesianGraph.CartesianCoordinate right = getNextCoordinateFromDirection(rot + ROT_ADD);
-            Logger.info("" + forward + left + right + "");
+            Logger.debug("" + (isCoordAvailable(forward) || isCoordAvailable(left) || isCoordAvailable(right)));
             return (isCoordAvailable(forward) || isCoordAvailable(left) || isCoordAvailable(right));
         }
         

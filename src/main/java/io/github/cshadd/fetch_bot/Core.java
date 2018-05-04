@@ -76,7 +76,7 @@ implements FetchBot {
                     if (currentMode.equals("Auto")) {
                         if (currentTrackClass != null) {
                             if (currentTrackClass != "None") {
-                                
+                                delayThread(1000);
                                 if (currentUltrasonicSensor <= 30) {
                                     pathfindControl.blockNext();
                                 }
@@ -89,6 +89,7 @@ implements FetchBot {
                                     tracked = true;
                                 }
                                 else if (!pathfindControl.isAnyAvailable()) {
+                                    Logger.debug("Test A");
                                     webInterfaceComm.setSourceValue("emotion", "Sad");
                                     webInterfaceComm.setRobotValue("trackclass", "None");
                                     arduinoComm.setSourceValue("a", "Stop");
