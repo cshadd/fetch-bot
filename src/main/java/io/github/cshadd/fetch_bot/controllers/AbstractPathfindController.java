@@ -1,7 +1,5 @@
 package io.github.cshadd.fetch_bot.controllers;
-import io.github.cshadd.cshadd_java_data_structures.util.DirectedGraph;
 import io.github.cshadd.cshadd_java_data_structures.util.UndirectedGraph;
-import io.github.cshadd.fetch_bot.util.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +115,7 @@ implements PathfindController {
         }
 
         private static CartesianCoordinate directionCoordinate(int rot) {
-            final double rad = rot*((Math.PI)/180);
+            final double rad = Math.toRadians(rot);
             return new CartesianCoordinate((int)Math.sin(rad), (int)Math.cos(rad));
         }
         
@@ -147,7 +145,6 @@ implements PathfindController {
             final CartesianGraph.CartesianCoordinate forward = getNextCoordinateFromDirection(rot);
             final CartesianGraph.CartesianCoordinate left = getNextCoordinateFromDirection(rot - ROT_ADD);
             final CartesianGraph.CartesianCoordinate right = getNextCoordinateFromDirection(rot + ROT_ADD);
-            Logger.debug("" + (isCoordAvailable(forward) || isCoordAvailable(left) || isCoordAvailable(right)));
             return (isCoordAvailable(forward) || isCoordAvailable(left) || isCoordAvailable(right));
         }
         

@@ -77,6 +77,9 @@ implements FetchBot {
                         if (currentTrackClass != null) {
                             if (!currentTrackClass.equals("None")) {
                                 if (currentUltrasonicSensor <= 30) {
+                                    Logger.warn("Arduino - Safety cut due to imminent collision.");
+                                    arduinoComm.setSourceValue("a", "Stop");
+                                    arduinoComm.pushSource();
                                     pathfindControl.blockNext();
                                 }
                                 
@@ -103,7 +106,7 @@ implements FetchBot {
                                     if (pathfindControl.isNextBlocked()) {
                                         Logger.debug("Get out of my way!");
                                         webInterfaceComm.setSourceValue("emotion", "Angry");
-                                        if (Math.abs(Math.random()) == 0) {
+                                        if ((int)(Math.random()*2) == 0) {
                                             Logger.debug("Turning left!");
                                             pathfindControl.rotateLeft();
                                             arduinoComm.setSourceValue("a", "Left");
@@ -117,7 +120,7 @@ implements FetchBot {
                                     else if (pathfindControl.isNextVisited()) {
                                         Logger.debug("Wait I was just here.");
                                         webInterfaceComm.setSourceValue("emotion", "Sad");
-                                        if (Math.abs(Math.random()) == 0) {
+                                        if ((int)(Math.random()*2) == 0) {
                                             Logger.debug("Turning left!");
                                             pathfindControl.rotateLeft();
                                             arduinoComm.setSourceValue("a", "Left");
