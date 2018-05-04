@@ -1,7 +1,14 @@
+/* Global Elements */
+* { }
+
 body {
     background-color: #000;
+    position: relative;
 }
 
+html { }
+
+/* Specific Elements */
 .face {
     height: 100%;
     width: 100%;

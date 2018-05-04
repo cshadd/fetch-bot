@@ -96,6 +96,7 @@
         <!-- DEPENDENCY VERSIONS -->
         <cshadd-java-data-structures.version>v1.0.0-alpha.1</cshadd-java-data-structures.version>
         <commons-io.version>2.6</commons-io.version>
+        <junit.version>4.11</junit.version>
         <json.version>20180130</json.version>
         <pi4j-core.version>1.1</pi4j-core.version>
         <opencv.version>3.4.1</opencv.version>
@@ -136,6 +137,12 @@
                 <version>${commons-io.version}</version>
             </dependency>
             <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>  
+            <dependency>
                 <groupId>org.json</groupId>
                 <artifactId>json</artifactId>
                 <version>${json.version}</version>
@@ -162,6 +169,10 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>

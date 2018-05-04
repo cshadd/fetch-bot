@@ -29,7 +29,7 @@ AI based robot with image processing.
     - x2 Mounting Bracket for Nema 17 Stepper Motor (Geared Stepper) Hobby CNC/3D Printer
     - x2 RB-Nex-75 60mm Aluminum Omni Wheel
     - x2 5mm Aluminum Mounting Hub
-    - x1 "Back Wheel"
+    - x1 Standard Wheel Caster - Swivel
     - x1 Arduino Uno
     - x1 Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
     - x1 Non-Soldering Breadboard
@@ -200,7 +200,7 @@ See [here](CONTRIBUTING.md).
 We use [SemVer](http://semver.org/) for versioning. For the versions avalible, see the [tags on this repository](https://github.com/cshadd/fetch-bot/tags).
 
 ## Owners/Authors/Developers/Contributors
-* Project Owner, Main Author, Leader Developer - [Christian Shadd](https://github.com/cshadd)
+* Project Owner, Main Author, Lead Developer - [Christian Shadd](https://github.com/cshadd)
 * Author, Hardware Developer, Documentation - [Maria Verna Aquino](https://github.com/anrev09)
 * Author, Hardware Developer - [Thanh Vu](https://github.com/Vu-Thanh)
 * Author, Hardware Developer, Software Developer - [Joseph Damian](https://github.com/walterk4)
