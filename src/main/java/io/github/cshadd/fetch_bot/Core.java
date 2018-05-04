@@ -232,7 +232,7 @@ implements FetchBot {
         webInterfaceComm = new WebInterfaceCommunicationImpl();
         Logger.setWebInterfaceCommunications(webInterfaceComm);
         Logger.clear();
-        if (profile.equals("debug")) {
+        if (profile.equals("Debug")) {
             Logger.setToDebugMode();
         }
 
