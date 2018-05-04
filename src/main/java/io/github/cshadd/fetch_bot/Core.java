@@ -82,44 +82,55 @@ implements FetchBot {
                                 }
                                 
                                 if (pathfindControl.isNextTracked()) {
+                                    Logger.debug("Found you!");
                                     webInterfaceComm.setSourceValue("emotion", "Happy");
                                     webInterfaceComm.setRobotValue("trackclass", "None");
                                     arduinoComm.setSourceValue("a", "Stop");
                                     currentTrackClass = "None";
                                     tracked = true;
+                                    pathfindControl.reset();
                                 }
                                 else if (!pathfindControl.isAnyAvailable()) {
-                                    Logger.debug("Test A");
+                                    Logger.debug("I am stuck!");
                                     webInterfaceComm.setSourceValue("emotion", "Sad");
                                     webInterfaceComm.setRobotValue("trackclass", "None");
                                     arduinoComm.setSourceValue("a", "Stop");
                                     currentTrackClass = "None";
                                     tracked = true;
+                                    pathfindControl.reset();
                                 }
                                 else {
+                                    Logger.debug("Hmm... curious.");
                                     if (pathfindControl.isNextBlocked()) {
+                                        Logger.debug("Get out of my way!");
                                         webInterfaceComm.setSourceValue("emotion", "Angry");
                                         if (Math.abs(Math.random()) == 0) {
+                                            Logger.debug("Turning left!");
                                             pathfindControl.rotateLeft();
                                             arduinoComm.setSourceValue("a", "Left");
                                         }
                                         else {
+                                            Logger.debug("Turning right!");
                                             pathfindControl.rotateRight();
                                             arduinoComm.setSourceValue("a", "Right");
                                         }
                                     }
                                     else if (pathfindControl.isNextVisited()) {
+                                        Logger.debug("Wait I was just here.");
                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                         if (Math.abs(Math.random()) == 0) {
+                                            Logger.debug("Turning left!");
                                             pathfindControl.rotateLeft();
                                             arduinoComm.setSourceValue("a", "Left");
                                         }
                                         else {
+                                            Logger.debug("Turning right!");
                                             pathfindControl.rotateRight();
                                             arduinoComm.setSourceValue("a", "Right");
                                         }
                                     }
                                     else {
+                                        Logger.debug("Nothing yet.");
                                         webInterfaceComm.setSourceValue("emotion", "Neutral");
                                         arduinoComm.setSourceValue("a", "Forward");
                                         pathfindControl.goNext();
@@ -129,15 +140,16 @@ implements FetchBot {
                             }
                             else {
                                 if (!tracked) {
+                                    Logger.debug("Thinking...");
                                     webInterfaceComm.setSourceValue("emotion", "Neutral");
                                 }
                                 arduinoComm.setSourceValue("a", "Stop");
-                                pathfindControl.reset();
                             }
-                            arduinoComm.pushSource();
+                            // arduinoComm.pushSource();
                         }
                         else {
                             webInterfaceComm.setSourceValue("emotion", "Neutral");
+                            arduinoComm.setSourceValue("a", "Stop");
                         }
                     }
                     else if (currentMode.equals("Idle")) {
