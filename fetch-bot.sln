@@ -49,7 +49,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Maven_Config", "Maven_Confi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot", "fetch_bot", "{BDA2E018-42A9-4ADF-B5EA-919D6CF25D1C}"
 	ProjectSection(SolutionItems) = preProject
-		src\main\java\io\github\cshadd\fetch_bot\Component.java = src\main\java\io\github\cshadd\fetch_bot\Component.java
 		src\main\java\io\github\cshadd\fetch_bot\Core.java = src\main\java\io\github\cshadd\fetch_bot\Core.java
 		src\main\java\io\github\cshadd\fetch_bot\FetchBot.java = src\main\java\io\github\cshadd\fetch_bot\FetchBot.java
 		src\main\java\io\github\cshadd\fetch_bot\FetchBotException.java = src\main\java\io\github\cshadd\fetch_bot\FetchBotException.java
@@ -82,9 +81,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3CE22A40-1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.io", "fetch_bot.io", "{2BB1730C-447B-4DA8-9CFB-BCFD3835C7D0}"
 	ProjectSection(SolutionItems) = preProject
-		src\main\java\io\github\cshadd\fetch_bot\io\AbstractArduinoCommunication.java = src\main\java\io\github\cshadd\fetch_bot\io\AbstractArduinoCommunication.java
-		src\main\java\io\github\cshadd\fetch_bot\io\AbstractCommunication.java = src\main\java\io\github\cshadd\fetch_bot\io\AbstractCommunication.java
-		src\main\java\io\github\cshadd\fetch_bot\io\AbstractWebInterfaceCommunication.java = src\main\java\io\github\cshadd\fetch_bot\io\AbstractWebInterfaceCommunication.java
 		src\main\java\io\github\cshadd\fetch_bot\io\ArduinoCommunication.java = src\main\java\io\github\cshadd\fetch_bot\io\ArduinoCommunication.java
 		src\main\java\io\github\cshadd\fetch_bot\io\ArduinoCommunicationImpl.java = src\main\java\io\github\cshadd\fetch_bot\io\ArduinoCommunicationImpl.java
 		src\main\java\io\github\cshadd\fetch_bot\io\Communication.java = src\main\java\io\github\cshadd\fetch_bot\io\Communication.java
@@ -123,23 +119,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FetchBot", "FetchBot", "{50
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fetch_bot.controllers", "fetch_bot.controllers", "{169B5BE4-6DAD-411F-9145-ECE3C95B2B7C}"
 	ProjectSection(SolutionItems) = preProject
-		src\main\java\io\github\cshadd\fetch_bot\controllers\AbstractController.java = src\main\java\io\github\cshadd\fetch_bot\controllers\AbstractController.java
-		src\main\java\io\github\cshadd\fetch_bot\controllers\AbstractOpenCVController.java = src\main\java\io\github\cshadd\fetch_bot\controllers\AbstractOpenCVController.java
-		src\main\java\io\github\cshadd\fetch_bot\controllers\AbstractPathfindController.java = src\main\java\io\github\cshadd\fetch_bot\controllers\AbstractPathfindController.java
 		src\main\java\io\github\cshadd\fetch_bot\controllers\AIController.java = src\main\java\io\github\cshadd\fetch_bot\controllers\AIController.java
 		src\main\java\io\github\cshadd\fetch_bot\controllers\AIControllerImpl.java = src\main\java\io\github\cshadd\fetch_bot\controllers\AIControllerImpl.java
 		src\main\java\io\github\cshadd\fetch_bot\controllers\Controller.java = src\main\java\io\github\cshadd\fetch_bot\controllers\Controller.java
-		src\main\java\io\github\cshadd\fetch_bot\controllers\ControllerException.java = src\main\java\io\github\cshadd\fetch_bot\controllers\ControllerException.java
-		src\main\java\io\github\cshadd\fetch_bot\controllers\OpenCVController.java = src\main\java\io\github\cshadd\fetch_bot\controllers\OpenCVController.java
-		src\main\java\io\github\cshadd\fetch_bot\controllers\OpenCVControllerImpl.java = src\main\java\io\github\cshadd\fetch_bot\controllers\OpenCVControllerImpl.java
 		src\main\java\io\github\cshadd\fetch_bot\controllers\package.html = src\main\java\io\github\cshadd\fetch_bot\controllers\package.html
 		src\main\java\io\github\cshadd\fetch_bot\controllers\PathfindController.java = src\main\java\io\github\cshadd\fetch_bot\controllers\PathfindController.java
 		src\main\java\io\github\cshadd\fetch_bot\controllers\PathfindControllerImpl.java = src\main\java\io\github\cshadd\fetch_bot\controllers\PathfindControllerImpl.java
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5B2EF48B-66D9-4553-89E9-1FB07605549C}"
-	ProjectSection(SolutionItems) = preProject
-		src\test\java\AppTest.java = src\test\java\AppTest.java
 	EndProjectSection
 EndProject
 Global
@@ -164,7 +149,6 @@ Global
 		{E9E695BF-3043-42B9-81F5-1DB2103012DF} = {3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03}
 		{508DA01D-22B2-4199-9A37-99C514811E94} = {60C4203F-A524-49E6-A778-D332C9E7C5A2}
 		{169B5BE4-6DAD-411F-9145-ECE3C95B2B7C} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
-		{5B2EF48B-66D9-4553-89E9-1FB07605549C} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8F99668-DE84-4451-95F0-312B7F0E1A3C}
