@@ -29,7 +29,7 @@ AI based robot with image processing.
     - x2 Mounting Bracket for Nema 17 Stepper Motor (Geared Stepper) Hobby CNC/3D Printer
     - x2 RB-Nex-75 60mm Aluminum Omni Wheel
     - x2 5mm Aluminum Mounting Hub
-    - x1 "Back Wheel"
+    - x1 Standard Wheel Caster - Swivel
     - x1 Arduino Uno
     - x1 Keywish 5PCS HC-SR04 Ultrasonic Module Kit Distance Sensor for Arduino UNO, Mega, R3, Mega 2560, Nano, Duemilanove, Raspberry Pi 3
     - x1 Non-Soldering Breadboard
