@@ -2,10 +2,18 @@
 #include <Stepper.h>
 
 // Define Constants
+#define MOTORL_AIN1_PIN 9 // Change if needed
+#define MOTORL_AIN2_PIN 8 // Change if needed
+#define MOTORL_BIN1_PIN 10 // Change if needed
+#define MOTORL_BIN2_PIN 11 // Change if needed
+#define MOTORR_AIN1_PIN 3 // Change if needed
+#define MOTORR_AIN2_PIN 2 // Change if needed
+#define MOTORR_BIN1_PIN 4 // Change if needed
+#define MOTORR_BIN2_PIN 5 // Change if needed
 #define STEPPER_SPEED 10
 #define STEPPER_STEPS 200
-#define ULTRASONIC_SENSOR_ECHO_PIN 6
-#define ULTRASONIC_SENSOR_TRIGGER_PIN 7
+#define ULTRASONIC_SENSOR_ECHO_PIN 6 // Change if needed
+#define ULTRASONIC_SENSOR_TRIGGER_PIN 7 // Change if needed
 
 // Constants
 const size_t COMMUNICATION_JSON_BUFFER_SIZE = JSON_OBJECT_SIZE(3);
@@ -13,8 +21,8 @@ const size_t COMMUNICATION_JSON_BUFFER_SIZE = JSON_OBJECT_SIZE(3);
 // Instances
 DynamicJsonBuffer communicationJsonBuffer(COMMUNICATION_JSON_BUFFER_SIZE);
 JsonObject& communicationJsonReturn = communicationJsonBuffer.createObject();
-Stepper stepperL(STEPPER_STEPS, 8, 9, 10, 11);
-Stepper stepperR(STEPPER_STEPS, 2, 3, 4, 5);
+Stepper stepperL(STEPPER_STEPS, MOTORL_AIN2_PIN, MOTORL_AIN1_PIN, MOTORL_BIN1_PIN, MOTORL_BIN2_PIN);
+Stepper stepperR(STEPPER_STEPS, MOTORR_AIN2_PIN, MOTORR_AIN1_PIN, MOTORR_BIN1_PIN, MOTORR_BIN2_PIN);
 
 // Data
 float ultrasonicSensorDistance;
