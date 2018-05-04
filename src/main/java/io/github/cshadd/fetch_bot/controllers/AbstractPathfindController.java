@@ -202,8 +202,8 @@ implements PathfindController {
             currentCoord = getRoot().data();
             getRoot().visit();
         }
-        public void visitCoord(CartesianCoordinate coord) {
-            coord = assignCoord(coord);
+        public void visitCoord() {
+            CartesianCoordinate coord = assignCoord(currentCoord);
             if (!isCoordVisited(coord)) {
                 final Vertex v = vertex(coord);
                 if (v != null) {

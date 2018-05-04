@@ -48,7 +48,7 @@ extends AbstractPathfindController {
         rotateFix(ROT_ADD);
     }
     @Override
-    public void visitNext() {
-        cartesianGraph.visitCoord(getNext());
+    public void visit() {
+        cartesianGraph.visitCoord();
     }
 }
