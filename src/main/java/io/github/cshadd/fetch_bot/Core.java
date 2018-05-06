@@ -78,8 +78,6 @@ implements FetchBot {
                             if (!currentTrackClass.equals("None")) {
                                 if (currentUltrasonicSensor <= 30) {
                                     Logger.warn("Arduino - Safety cut due to imminent collision.");
-                                    arduinoComm.setSourceValue("a", "Stop");
-                                    arduinoComm.pushSource();
                                     pathfindControl.blockNext();
                                 }
                                 else {

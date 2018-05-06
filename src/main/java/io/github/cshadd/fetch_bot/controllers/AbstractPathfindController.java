@@ -142,10 +142,11 @@ implements PathfindController {
         
         // Protected Methods
         protected boolean checkForAvailable(int rot) {
+            final CartesianGraph.CartesianCoordinate back = getNextCoordinateFromDirection(rot + (ROT_ADD*2));
             final CartesianGraph.CartesianCoordinate forward = getNextCoordinateFromDirection(rot);
             final CartesianGraph.CartesianCoordinate left = getNextCoordinateFromDirection(rot - ROT_ADD);
             final CartesianGraph.CartesianCoordinate right = getNextCoordinateFromDirection(rot + ROT_ADD);
-            return (isCoordAvailable(forward) || isCoordAvailable(left) || isCoordAvailable(right));
+            return (isCoordAvailable(back) || isCoordAvailable(forward) || isCoordAvailable(left) || isCoordAvailable(right));
         }
         
         // Public Methods
