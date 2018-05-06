@@ -80,6 +80,9 @@ implements FetchBot {
                                     Logger.warn("Arduino - Safety cut due to imminent collision.");
                                     pathfindControl.blockNext();
                                 }
+                                else {
+                                    pathfindControl.unblockNext();
+                                }
                                 
                                 if (pathfindControl.isNextTracked()) {
                                     Logger.debug("Found you!");
