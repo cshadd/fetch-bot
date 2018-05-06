@@ -85,6 +85,7 @@ implements FetchBot {
                                 }
                                 
                                 if (pathfindControl.isNextTracked()) {
+                                    // TODO: PUT THAT IT WAS FOUND!
                                     Logger.debug("Found you!");
                                     webInterfaceComm.setSourceValue("emotion", "Happy");
                                     webInterfaceComm.setRobotValue("trackclass", "None");
