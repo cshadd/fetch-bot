@@ -82,6 +82,9 @@ implements FetchBot {
                                     arduinoComm.pushSource();
                                     pathfindControl.blockNext();
                                 }
+                                else {
+                                    pathfindControl.unblockNext();
+                                }
                                 
                                 if (pathfindControl.isNextTracked()) {
                                     Logger.debug("Found you!");

@@ -199,6 +199,12 @@ implements PathfindController {
             currentCoord = getRoot().data();
             getRoot().visit();
         }
+        public void unblockCoord(CartesianCoordinate coord) {
+            coord = assignCoord(coord);
+            if (isCoordBlocked(coord)) {
+                blockedCoords.remove(coord);
+            }
+        }
         public void visitCoord() {
             CartesianCoordinate coord = assignCoord(currentCoord);
             if (!isCoordVisited(coord)) {

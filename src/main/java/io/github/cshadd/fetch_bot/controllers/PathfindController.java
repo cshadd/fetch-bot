@@ -13,5 +13,6 @@ extends Controller {
     public abstract void reset();
     public abstract void rotateLeft();
     public abstract void rotateRight();
+    public abstract void unblockNext();
     public abstract void visit();
 }

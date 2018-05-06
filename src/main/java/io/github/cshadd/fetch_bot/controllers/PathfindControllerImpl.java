@@ -48,6 +48,10 @@ extends AbstractPathfindController {
         rotateFix(ROT_ADD);
     }
     @Override
+    public void unblockNext() {
+        cartesianGraph.unblockCoord(getNext());
+    }
+    @Override
     public void visit() {
         cartesianGraph.visitCoord();
     }
