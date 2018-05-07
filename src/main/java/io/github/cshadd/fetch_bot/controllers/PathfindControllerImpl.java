@@ -30,7 +30,7 @@ extends AbstractPathfindController {
     }
     @Override
     public boolean isNextTracked() {
-        return false; // TODO: PUT THAT IT WAS FOUND HERE!
+        return false; // TODO: PUT HOW IT WILL BE FOUND!
     }
     @Override
     public boolean isNextVisited() {

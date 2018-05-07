@@ -83,11 +83,11 @@ implements FetchBot {
                                 else {
                                     pathfindControl.unblockNext();
                                 }
-                                Logger.debug("PathfindController - Next blocked: " + pathfindControl.isNextBlocked() + ".");
                                 Logger.debug("PathfindController - " + pathfindControl + ".");
-                                
+                                Logger.debug("PathfindController - Next blocked: " + pathfindControl.isNextBlocked() + ".");
+
                                 if (pathfindControl.isNextTracked()) {
-                                    // TODO: PUT THAT IT WAS FOUND!
+                                    // TODO: PUT HOW IT WILL BE FOUND!
                                     Logger.info("Found you!");
                                     webInterfaceComm.setSourceValue("emotion", "Happy");
                                     webInterfaceComm.setRobotValue("trackclass", "None");
@@ -106,7 +106,7 @@ implements FetchBot {
                                     pathfindControl.reset();
                                 }
                                 else {
-                                    Logger.debug("Hmm... curious.");
+                                    Logger.info("Hmm... curious.");
                                     if (pathfindControl.isNextBlocked()) {
                                         Logger.info("Get out of my way!");
                                         webInterfaceComm.setSourceValue("emotion", "Angry");
@@ -124,8 +124,9 @@ implements FetchBot {
                                     else {
                                         Logger.info("Nothing yet.");
                                         webInterfaceComm.setSourceValue("emotion", "Neutral");
-                                        arduinoComm.setSourceValue("a", "Forward");
+                                        Logger.debug("Forward!");
                                         pathfindControl.goNext();
+                                        arduinoComm.setSourceValue("a", "Forward");
                                     }
                                 }
                             }
