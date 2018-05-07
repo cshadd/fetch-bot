@@ -137,7 +137,6 @@ implements FetchBot {
                                         Logger.debug("Nothing yet.");
                                         webInterfaceComm.setSourceValue("emotion", "Neutral");
                                         arduinoComm.setSourceValue("a", "Forward");
-                                        pathfindControl.visit();
                                         pathfindControl.goNext();
                                     }
                                 }

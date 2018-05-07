@@ -17,6 +17,7 @@ extends AbstractPathfindController {
     }
     @Override
     public void goNext() {
+        visit();
         cartesianGraph.setCurrentCoord(getNext());
     }
     @Override
@@ -37,6 +38,7 @@ extends AbstractPathfindController {
     }
     @Override
     public void reset() {
+        currentRot = 0;
         cartesianGraph.reset();
     }
     @Override
@@ -53,6 +55,6 @@ extends AbstractPathfindController {
     }
     @Override
     public void visit() {
-        cartesianGraph.visitCoord();
+        cartesianGraph.visitCoord(cartesianGraph.getCurrentCoord());
     }
 }
