@@ -128,7 +128,6 @@ implements PathfindController {
                     final CartesianCoordinate vertexData = vertex.data();
                     if (vertexData != null) {
                         if (vertexData.x == coord.x && vertexData.y == coord.y) {
-                            Logger.debug("PathfindController - Fetched coord: " + vertexData);
                             return vertexData;
                         }
                     }
@@ -146,13 +145,12 @@ implements PathfindController {
         
         // Protected Methods
         protected boolean checkForAvailable(int rot) {
-            Logger.debug("PathfindController - Rot: " + rot);
-            Logger.debug("PathfindController - Forward coord:");
             final CartesianGraph.CartesianCoordinate forward = getNextCoordinateFromDirection(rot);
-            Logger.debug("PathfindController - Left coord:");
             final CartesianGraph.CartesianCoordinate left = getNextCoordinateFromDirection(rot - ROT_ADD);
-            Logger.debug("PathfindController - Right coord:");
             final CartesianGraph.CartesianCoordinate right = getNextCoordinateFromDirection(rot + ROT_ADD);
+            Logger.debug("PathfindController - Forward coord: " + forward);
+            Logger.debug("PathfindController - Left coord:" + left);
+            Logger.debug("PathfindController - Right coord:" + right);
             return (isCoordAvailable(forward) || isCoordAvailable(left) || isCoordAvailable(right));
         }
         
@@ -236,7 +234,6 @@ implements PathfindController {
     
     // Protected Methods    
     protected CartesianGraph.CartesianCoordinate getNext() {
-        Logger.debug("PathfindController - Next coord:");
         CartesianGraph.CartesianCoordinate coord = cartesianGraph.getNextCoordinateFromDirection(currentRot);
         if (coord.x < -COORD_MAX_RANGE || coord.x > COORD_MAX_RANGE || coord.y < -COORD_MAX_RANGE || coord.y > COORD_MAX_RANGE) {
             cartesianGraph.reset();
@@ -253,11 +250,12 @@ implements PathfindController {
             rot = 0;
         }
         currentRot = rot;
+        Logger.debug("PathfindController - New rot: " + currentRot);
     }
     
     // Public Methods (Overrided)
     @Override
     public String toString() {
-        return "" + cartesianGraph.getCurrentCoord();
+        return "Current coord: " + cartesianGraph.getCurrentCoord() + "; Current rot: " + currentRot;
     }
 }

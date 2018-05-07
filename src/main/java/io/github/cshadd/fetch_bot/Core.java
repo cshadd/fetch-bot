@@ -76,7 +76,7 @@ implements FetchBot {
                     if (currentMode.equals("Auto")) {
                         if (currentTrackClass != null) {
                             if (!currentTrackClass.equals("None")) {
-                                Logger.debug("PathfindController - Current coord: " + pathfindControl);
+                                Logger.debug("PathfindController - " + pathfindControl);
                                 if (currentUltrasonicSensor <= 30) {
                                     Logger.warn("Arduino - Safety cut due to imminent collision.");
                                     pathfindControl.blockNext();
