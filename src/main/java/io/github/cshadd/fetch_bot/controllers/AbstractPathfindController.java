@@ -146,11 +146,12 @@ implements PathfindController {
         
         // Protected Methods
         protected boolean checkForAvailable(int rot) {
-            Logger.debug("PathfindController - Forward coord: ");
+            Logger.debug("PathfindController - Rot: " + rot);
+            Logger.debug("PathfindController - Forward coord:");
             final CartesianGraph.CartesianCoordinate forward = getNextCoordinateFromDirection(rot);
-            Logger.debug("PathfindController - Forward coord: ");
+            Logger.debug("PathfindController - Left coord:");
             final CartesianGraph.CartesianCoordinate left = getNextCoordinateFromDirection(rot - ROT_ADD);
-            Logger.debug("PathfindController - Forward coord: ");
+            Logger.debug("PathfindController - Right coord:");
             final CartesianGraph.CartesianCoordinate right = getNextCoordinateFromDirection(rot + ROT_ADD);
             return (isCoordAvailable(forward) || isCoordAvailable(left) || isCoordAvailable(right));
         }
@@ -163,8 +164,9 @@ implements PathfindController {
             }
         }
         public boolean isCoordAvailable(CartesianCoordinate coord) {
-            coord = fetchCoord(coord);
-            return !(isCoordBlocked(coord) && isCoordVisited(coord));
+            final boolean returnData = !(isCoordBlocked(coord) && isCoordVisited(coord));
+            Logger.debug("PathfindController - Avalible: " + returnData);
+            return returnData;
         }
         public boolean isCoordBlocked(CartesianCoordinate coord) {
             coord = fetchCoord(coord);
@@ -230,22 +232,16 @@ implements PathfindController {
                 }
             }
         }
-        
-        // Public Methods (Override)
-        @Override
-        public String toString() {
-            return "" + currentCoord;
-        }
     }
     
     // Protected Methods    
     protected CartesianGraph.CartesianCoordinate getNext() {
+        Logger.debug("PathfindController - Next coord:");
         CartesianGraph.CartesianCoordinate coord = cartesianGraph.getNextCoordinateFromDirection(currentRot);
         if (coord.x < -COORD_MAX_RANGE || coord.x > COORD_MAX_RANGE || coord.y < -COORD_MAX_RANGE || coord.y > COORD_MAX_RANGE) {
             cartesianGraph.reset();
             coord = cartesianGraph.currentCoord;
         }
-        Logger.debug("PathfindController - Next coord: " + coord);
         return coord;
     }
     protected void rotateFix(int rot) {
@@ -257,11 +253,5 @@ implements PathfindController {
             rot = 0;
         }
         currentRot = rot;
-    }
-    
-    // Public Methods (Override)
-    @Override
-    public String toString() {
-        return "" + cartesianGraph;
     }
 }
