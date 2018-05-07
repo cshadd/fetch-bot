@@ -148,9 +148,12 @@ implements PathfindController {
             final CartesianGraph.CartesianCoordinate left = getNextCoordinateFromDirection(rot - ROT_ADD);
             final CartesianGraph.CartesianCoordinate right = getNextCoordinateFromDirection(rot + ROT_ADD);
             Logger.debug("PathfindController - Forward coord: " + forward + ".");
+            Logger.debug("PathfindController - Avalible: " + isCoordAvailable(forward) + ".");
             Logger.debug("PathfindController - Left coord:" + left + ".");
+            Logger.debug("PathfindController - Avalible: " + isCoordAvailable(left) + ".");
             Logger.debug("PathfindController - Right coord:" + right + ".");
-            return (isCoordAvailable(forward) && isCoordAvailable(left) && isCoordAvailable(right));
+            Logger.debug("PathfindController - Avalible: " + isCoordAvailable(right) + ".");
+            return (isCoordAvailable(forward) || isCoordAvailable(left) || isCoordAvailable(right));
         }
         
         // Public Methods
@@ -162,7 +165,6 @@ implements PathfindController {
         }
         public boolean isCoordAvailable(CartesianCoordinate coord) {
             final boolean returnData = !(isCoordBlocked(coord) && isCoordVisited(coord));
-            Logger.debug("PathfindController - Avalible: " + returnData + ".");
             return returnData;
         }
         public boolean isCoordBlocked(CartesianCoordinate coord) {
