@@ -254,4 +254,10 @@ implements PathfindController {
         }
         currentRot = rot;
     }
+    
+    // Public Methods (Overrided)
+    @Override
+    public String toString() {
+        return "" + cartesianGraph.getCurrentCoord();
+    }
 }

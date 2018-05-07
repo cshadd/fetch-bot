@@ -86,7 +86,7 @@ implements FetchBot {
                                 
                                 if (pathfindControl.isNextTracked()) {
                                     // TODO: PUT THAT IT WAS FOUND!
-                                    Logger.debug("Found you!");
+                                    Logger.info("Found you!");
                                     webInterfaceComm.setSourceValue("emotion", "Happy");
                                     webInterfaceComm.setRobotValue("trackclass", "None");
                                     arduinoComm.setSourceValue("a", "Stop");
@@ -95,7 +95,7 @@ implements FetchBot {
                                     pathfindControl.reset();
                                 }
                                 else if (!pathfindControl.isAnyAvailable()) {
-                                    Logger.debug("I am stuck!");
+                                    Logger.info("I am stuck!");
                                     webInterfaceComm.setSourceValue("emotion", "Sad");
                                     webInterfaceComm.setRobotValue("trackclass", "None");
                                     arduinoComm.setSourceValue("a", "Stop");
@@ -106,35 +106,21 @@ implements FetchBot {
                                 else {
                                     Logger.debug("Hmm... curious.");
                                     if (pathfindControl.isNextBlocked()) {
-                                        Logger.debug("Get out of my way!");
+                                        Logger.info("Get out of my way!");
                                         webInterfaceComm.setSourceValue("emotion", "Angry");
-                                        if ((int)(Math.random()*2) == 0) {
-                                            Logger.debug("Turning left!");
-                                            pathfindControl.rotateLeft();
-                                            arduinoComm.setSourceValue("a", "Left");
-                                        }
-                                        else {
-                                            Logger.debug("Turning right!");
-                                            pathfindControl.rotateRight();
-                                            arduinoComm.setSourceValue("a", "Right");
-                                        }
+                                        Logger.debug("Turning left!");
+                                        pathfindControl.rotateLeft();
+                                        arduinoComm.setSourceValue("a", "Left");
                                     }
                                     else if (pathfindControl.isNextVisited()) {
-                                        Logger.debug("Wait I was just here.");
+                                        Logger.info("Wait I was just here.");
                                         webInterfaceComm.setSourceValue("emotion", "Sad");
-                                        if ((int)(Math.random()*2) == 0) {
-                                            Logger.debug("Turning left!");
-                                            pathfindControl.rotateLeft();
-                                            arduinoComm.setSourceValue("a", "Left");
-                                        }
-                                        else {
-                                            Logger.debug("Turning right!");
-                                            pathfindControl.rotateRight();
-                                            arduinoComm.setSourceValue("a", "Right");
-                                        }
+                                        Logger.debug("Turning right!");
+                                        pathfindControl.rotateRight();
+                                        arduinoComm.setSourceValue("a", "Right");
                                     }
                                     else {
-                                        Logger.debug("Nothing yet.");
+                                        Logger.info("Nothing yet.");
                                         webInterfaceComm.setSourceValue("emotion", "Neutral");
                                         arduinoComm.setSourceValue("a", "Forward");
                                         pathfindControl.goNext();
