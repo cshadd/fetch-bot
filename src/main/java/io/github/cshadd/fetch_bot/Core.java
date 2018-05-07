@@ -83,6 +83,7 @@ implements FetchBot {
                                 else {
                                     pathfindControl.unblockNext();
                                 }
+                                Logger.debug("PathfindController - Next blocked: " + pathfindControl.isNextBlocked() + ".");
                                 Logger.debug("PathfindController - " + pathfindControl + ".");
                                 
                                 if (pathfindControl.isNextTracked()) {
