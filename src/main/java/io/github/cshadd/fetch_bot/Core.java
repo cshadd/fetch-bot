@@ -116,7 +116,6 @@ implements FetchBot {
                                         pathfindControl.rotateLeft();
                                         if (!pathfindControl.isNextBlocked()) {
                                             Logger.debug("Turning left!");
-                                            pathfindControl.rotateLeft();
                                             arduinoComm.setSourceValue("a", "Left");
                                         }
                                         else {
@@ -124,7 +123,6 @@ implements FetchBot {
                                             pathfindControl.rotateRight();
                                             if (!pathfindControl.isNextBlocked()) {
                                                 Logger.debug("Turning right!");
-                                                pathfindControl.rotateRight();
                                                 arduinoComm.setSourceValue("a", "Right");
                                             }
                                         }
@@ -133,18 +131,16 @@ implements FetchBot {
                                         Logger.info("Wait I was just here.");
                                         webInterfaceComm.setSourceValue("emotion", "Sad");
 
-                                        pathfindControl.rotateRight();
+                                        pathfindControl.rotateLeft();
                                         if (!pathfindControl.isNextVisited()) {
-                                            Logger.debug("Turning right!");
-                                            pathfindControl.rotateRight();
-                                            arduinoComm.setSourceValue("a", "Right");
+                                            Logger.debug("Turning left!");
+                                            arduinoComm.setSourceValue("a", "Left");
                                         }
                                         else {
-                                            pathfindControl.rotateLeft();
-                                            pathfindControl.rotateLeft();
+                                            pathfindControl.rotateRight();
+                                            pathfindControl.rotateRight();
                                             if (!pathfindControl.isNextVisited()) {
-                                                Logger.debug("Turning left!");
-                                                pathfindControl.rotateRight();
+                                                Logger.debug("Turning right!");
                                                 arduinoComm.setSourceValue("a", "Right");
                                             }
                                             else {
