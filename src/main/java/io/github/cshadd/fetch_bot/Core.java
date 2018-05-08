@@ -60,10 +60,11 @@ implements FetchBot {
                 if (trackClass != null) {
                     if (trackClass != currentTrackClass) {
                         currentTrackClass = trackClass;
-                        tracked = false;
                         Logger.debug("WebInterface - [trackclass: " + currentTrackClass + "] received.");
                         openCVControl.assignTrackClass(currentTrackClass);
                         webInterfaceComm.setSourceValue("trackclass", "" + currentTrackClass);
+                        tracked = false;
+                        pathfindControl.reset();
                     }
                 }
 
@@ -74,6 +75,7 @@ implements FetchBot {
                         currentMode = mode;
                         Logger.debug("WebInterface - [mode: " + currentMode + "] command received.");
                         webInterfaceComm.setSourceValue("mode", currentMode);
+                        pathfindControl.reset();
                     }
                     
                     if (currentMode.equals("Auto")) {
@@ -94,8 +96,8 @@ implements FetchBot {
                                     webInterfaceComm.setSourceValue("emotion", "Happy");
                                     webInterfaceComm.setRobotValue("trackclass", "None");
                                     arduinoComm.setSourceValue("a", "Stop");
-                                    currentTrackClass = "None";
                                     tracked = true;
+                                    currentTrackClass = "None";
                                     pathfindControl.reset();
                                 }
                                 else {
@@ -174,15 +176,15 @@ implements FetchBot {
                     }
                     else if (currentMode.equals("Idle")) {
                         webInterfaceComm.setRobotValue("trackclass", "None");
+
                         webInterfaceComm.setSourceValue("emotion", "Idle");
-                        pathfindControl.reset();
                     }
                     else if (currentMode.equals("Off")) {
                         break;
                     }
                     else if (currentMode.equals("Manual")) {
                         webInterfaceComm.setRobotValue("trackclass", "None");
-                        pathfindControl.reset();
+                        
                         // Manual move
                         final String move = webInterfaceComm.getRobotValue("move");
                         if (move != null) {
