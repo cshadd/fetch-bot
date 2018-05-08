@@ -135,6 +135,7 @@ implements FetchBot {
                                                 arduinoComm.setSourceValue("a", "Right");
                                             }
                                             else {
+                                                pathfindControl.rotateLeft();
                                                 Logger.debug("Forward!");
                                                 pathfindControl.goNext();
                                                 arduinoComm.setSourceValue("a", "Forward");
