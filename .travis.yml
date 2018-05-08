@@ -39,7 +39,7 @@ script:
     - make
     - rm -f -r ./build-uno
     - cd ../../..
-    - mvn clean source:jar package 
+    - mvn clean package 
 before_cache:
 after_success:
 after_failure:
