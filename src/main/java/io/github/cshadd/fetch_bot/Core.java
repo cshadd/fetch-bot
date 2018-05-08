@@ -111,8 +111,8 @@ implements FetchBot {
                                         }
                                         else {
                                             pathfindControl.rotateRight();
-                                            pathfindControl.rotateRight();
                                             if (!pathfindControl.isNextBlocked()) {
+                                                pathfindControl.rotateRight();
                                                 Logger.debug("Turning right!");
                                                 arduinoComm.setSourceValue("a", "Right");
                                             }
@@ -129,8 +129,8 @@ implements FetchBot {
                                         }
                                         else {
                                             pathfindControl.rotateRight();
-                                            pathfindControl.rotateRight();
                                             if (!pathfindControl.isNextVisited()) {
+                                                pathfindControl.rotateRight();
                                                 Logger.debug("Turning right!");
                                                 arduinoComm.setSourceValue("a", "Right");
                                             }
@@ -156,6 +156,7 @@ implements FetchBot {
                                     webInterfaceComm.setSourceValue("emotion", "Neutral");
                                 }
                                 arduinoComm.setSourceValue("a", "Stop");
+                                pathfindControl.reset();
                             }
                         }
                         else {
