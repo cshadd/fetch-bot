@@ -75,6 +75,7 @@ Let's face it. In our day and age of the 21st century, we want lightweight mobil
         - Java SE Runtime Environment 8.0 or higher
         - OpenCV 3.4.1
         - PHP 7.0.27 or higher
+        - VNC Server
     - Packaged Software (apt-get):
         - arduino-core
         - arduino-mk
@@ -207,6 +208,8 @@ cd <CURRENT LOCATION OF PROGRAM>
 in a Bash terminal.
 
 To control and terminate the application, you must use the web interface. The address to the web interface depends on your Apache configuration. Normally it would just be http://localhost/FetchBot.
+
+The OpenCV Controller Terminal Window is located at the VNC server :1.
 
 ## Web Page
 https://cshadd.github.io/fetch-bot/
