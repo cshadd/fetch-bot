@@ -45,8 +45,10 @@ Great care is needed to assemble this robot. We specifically chose these parts f
 ```
 1. Assemble the chassis with the parts, we recommend using the parts listed and we 3d printed our design.
 Make sure the wheels are balanced.
-2. Connect the stepper motors and the ultrasonic sensor to the Arduino. The ports are listed in <PROJECT DIRECTORY>/arduino-slave-processor/FetchBot/FetchBot.ino.
-Adafruit has tutorials online for the stepper motor including the correct way to power it (the stepper motor will need a seperate source so we used the transformer to convert the 5V (2A port) battery to 12V for the motor).
+2. Connect the stepper motors and the ultrasonic sensor to the Arduino.
+The ports are listed in <PROJECT DIRECTORY>/arduino-slave-processor/FetchBot/FetchBot.ino.
+Adafruit has tutorials online for the stepper motor including the correct way to power it.
+The stepper motor will need a separate source so we used the transformer to convert the 5V (2A port) battery to 12V for the motor).
 3. Connect the Arduino directly to the Raspberry Pi.
 4. Connect the monitor to the Raspberry Pi.
 5. Connect the webcam to the Raspberry Pi.
