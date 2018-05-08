@@ -1,0 +1,49 @@
+jdk:
+    - oraclejdk8
+os:
+    - linux
+before_install:
+    - sudo apt-add-repository -y ppa:ondrej/php
+    - sudo apt-get update -y
+install:
+    - sudo apt-get install -y ant build-essential cmake pkg-config
+    - sudo apt-get install -y apache2 php7.0 libapache2-mod-php7.0
+    - sudo apt-get install -y arduino-core arduino-mk
+    - sudo apt-get install -y unclutter
+before_script:
+    - wget -q https://github.com/opencv/opencv/archive/3.4.1.zip
+    - unzip -qq 3.4.1.zip
+    - rm -f 3.4.1.zip
+    - wget -q https://github.com/opencv/opencv_contrib/archive/3.4.1.zip
+    - unzip -qq 3.4.1.zip
+    - rm -f 3.4.1.zip
+    - cd opencv-3.4.1
+    - mkdir -p build
+    - cd build
+    - cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-3.4.1/modules -D BUILD_NEW_PYTHON_SUPPORT=OFF -D WITH_OPENCL=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_SHARED_LIBS=OFF -D BUILD_EXAMPLES=OFF -D INSTALL_C_EXAMPLES=OFF -D INSTALL_PYTHON_EXAMPLES=OFF -DWITH_FFMPEG=OFF ..
+    - make
+    - sudo make install
+    - sudo cp /usr/local/share/OpenCV/java/libopencv_java341.so $JAVA_HOME/jre/lib/amd64/libopencv_java341.so
+    - mvn install:install-file -Dfile=/usr/local/share/OpenCV/java/opencv-341.jar -DgroupId=opencv -DartifactId=opencv -Dversion=3.4.1 -Dpackaging=jar
+    - cd ../..
+    - rm -f -r ./opencv-3.4.1
+    - rm -f -r ./opencv_contrib-3.4.1
+    - sudo mkdir -p /usr/share/arduino/libraries/
+    - wget -q https://github.com/bblanchon/ArduinoJson/releases/download/v5.13.1/ArduinoJson-v5.13.1.zip
+    - unzip -qq ArduinoJson-v5.13.1.zip
+    - rm -f ArduinoJson-v5.13.1.zip
+    - sudo cp -r ./ArduinoJson /usr/share/arduino/libraries/
+    - rm -f -r ./ArduinoJson
+    - cd ./src/arduino-slave-processor/FetchBot
+script:
+    - make
+    - rm -f -r ./build-uno
+    - cd ../../..
+    - mvn clean package
+before_cache:
+after_success:
+after_failure:
+before_deploy:
+deploy:
+after_deploy:
+after_script:
