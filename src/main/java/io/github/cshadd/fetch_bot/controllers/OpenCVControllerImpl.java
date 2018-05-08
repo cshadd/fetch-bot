@@ -17,6 +17,11 @@ extends AbstractOpenCVController {
         this.trackClass = trackClass;
     }
     @Override
+    public void close() {
+        terminalFrame.setEnabled(false);
+        terminalFrame.dispose();
+    }
+    @Override
     public boolean isTrackClassFound() {
         return trackClassFound;
     }

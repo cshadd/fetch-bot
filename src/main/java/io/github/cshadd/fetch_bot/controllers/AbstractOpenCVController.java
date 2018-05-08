@@ -46,14 +46,13 @@ implements OpenCVController {
     // Protected Final Instance/Property Fields
     protected final Thread cameraThread;
     protected final CameraThread cameraRunnable;    
-
+    
     // Private Instance/Property Fields
     private Mat cameraFrame;
     private BufferedImage buffer;
     private Mat det;
     private Net net;
     private JComponent terminalContent;
-    private JFrame terminalFrame;
     private JLabel terminalLabelCam;
     private JLabel terminalLabelCamFilter;
     private JLabel terminalLabelStatus;
@@ -61,6 +60,7 @@ implements OpenCVController {
     private JLayeredPane terminalLayerPane;
 
     // Protected Instance/Property Fields
+    protected JFrame terminalFrame;
     protected String trackClass;
     protected boolean trackClassFound;
     
@@ -124,7 +124,7 @@ implements OpenCVController {
                 
                 terminalFrame = new JFrame("Fetch Bot OpenCVController Terminal");
                 terminalFrame.setContentPane(terminalContent);
-                terminalFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                terminalFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 terminalFrame.setLocationByPlatform(true);
                 terminalFrame.setResizable(false);
 

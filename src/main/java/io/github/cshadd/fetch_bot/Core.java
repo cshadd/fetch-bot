@@ -295,6 +295,7 @@ implements FetchBot {
         Logger.info("Fetch Bot terminating! Log file: " + Logger.LOG_PATH);
         try {
             openCVControl.stopCamera();
+            openCVControl.close();
             arduinoComm.setSourceValue("a", "Stop");
             arduinoComm.pushSource();
             arduinoComm.clear();
