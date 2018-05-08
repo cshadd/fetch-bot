@@ -163,7 +163,6 @@ implements FetchBot {
                                     webInterfaceComm.setSourceValue("emotion", "Neutral");
                                 }
                                 arduinoComm.setSourceValue("a", "Stop");
-                                pathfindControl.reset();
                             }
                         }
                         else {
@@ -175,15 +174,15 @@ implements FetchBot {
                     }
                     else if (currentMode.equals("Idle")) {
                         webInterfaceComm.setRobotValue("trackclass", "None");
-
                         webInterfaceComm.setSourceValue("emotion", "Idle");
+                        pathfindControl.reset();
                     }
                     else if (currentMode.equals("Off")) {
                         break;
                     }
                     else if (currentMode.equals("Manual")) {
                         webInterfaceComm.setRobotValue("trackclass", "None");
-                        
+                        pathfindControl.reset();
                         // Manual move
                         final String move = webInterfaceComm.getRobotValue("move");
                         if (move != null) {
