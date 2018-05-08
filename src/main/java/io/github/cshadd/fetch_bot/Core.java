@@ -58,7 +58,7 @@ implements FetchBot {
                 // Tracking Class
                 final String trackClass = webInterfaceComm.getRobotValue("trackclass");
                 if (trackClass != null) {
-                    if (trackClass != currentTrackClass) {
+                    if (trackClass.equals(currentTrackClass)) {
                         currentTrackClass = trackClass;
                         Logger.debug("WebInterface - [trackclass: " + currentTrackClass + "] received.");
                         openCVControl.assignTrackClass(currentTrackClass);
