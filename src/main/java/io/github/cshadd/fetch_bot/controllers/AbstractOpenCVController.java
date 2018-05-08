@@ -30,8 +30,8 @@ implements OpenCVController {
     public static final String MOBILENETSSD_DEPLOY_CAFFEMODEL = "MobileNetSSD_deploy.caffemodel";
     public static final String MOBILENETSSD_DEPLOY_PROTOTXT_TXT = "MobileNetSSD_deploy.prototxt.txt";
     public static final double SCALE_FACTOR = 0.007843;
-    private static final int SCENE_W = 640;
-    private static final int SCENE_H = 480;
+    public static final int SCENE_W = 640;
+    public static final int SCENE_H = 480;
     public static final int SIZE = 300;
     
     // Protected Final Instance/Property Fields
@@ -91,8 +91,8 @@ implements OpenCVController {
         cameraFrame = new Mat();
         cameraRunnable = new CameraThread();
         cameraThread = new Thread(cameraRunnable);
+        det = null;
         net = Dnn.readNetFromCaffe(MOBILENETSSD_DEPLOY_PROTOTXT_TXT, MOBILENETSSD_DEPLOY_CAFFEMODEL);
-        
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 terminalLabelCam = new JLabel();
@@ -228,23 +228,24 @@ implements OpenCVController {
         for (int i = 0; i < det.reshape(1, 1).size().width; i += 7)
         {
             final int index = (int)det.reshape(1, 1).get(0, i + 1)[0];
-            final String currentTrackClass = trackClassArr[index].toString();
             final double con = det.reshape(1, 1).get(0, i + 2)[0];
             final int startX = (int)(det.reshape(1, 1).get(0, i + 3)[0]*SCENE_W);
             final int startY = (int)(det.reshape(1, 1).get(0, i + 4)[0]*SCENE_H);
             final int endX = (int)(det.reshape(1, 1).get(0, i + 5)[0]*SCENE_W);
             final int endY = (int)(det.reshape(1, 1).get(0, i + 6)[0]*SCENE_H);
+            
+            final String capturedTrackClass = trackClassArr[index].toString();
             final int fullCon = (int)(100*con);
             
-            if (fullCon >= CONFIDENCE_LIMIT && trackClass.equals(currentTrackClass)) {
+            if (fullCon >= CONFIDENCE_LIMIT && trackClass.equals(capturedTrackClass)) {
                 trackClassFound = true;
-                terminalLabelTrack.setText("<html><p style='color: white;'>" + currentTrackClass
+                terminalLabelTrack.setText("<html><p style='color: white;'>" + capturedTrackClass
                         + " [" + fullCon + "%]<br />"
                         + "TARGET</p></html>");
             }
             else {
                 trackClassFound = false;
-                terminalLabelTrack.setText("<html><p style='color: white;'>" + currentTrackClass
+                terminalLabelTrack.setText("<html><p style='color: white;'>" + capturedTrackClass
                         + " [" + fullCon + "%]</p></html>");
             }
             terminalLabelStatus.setText("<html><p style='color: white; font-size: 20px'>&#187; Status: Processing<br />"
