@@ -121,6 +121,8 @@ implements FetchBot {
                                                 arduinoComm.setSourceValue("a", "Right");
                                             }
                                             else {
+                                                Logger.info("I can't seem to find a way out.");
+                                                webInterfaceComm.setSourceValue("emotion", "Sad");
                                                 pathfindControl.rotateLeft();
                                                 arduinoComm.setSourceValue("a", "Stop");
                                             }
