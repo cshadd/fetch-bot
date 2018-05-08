@@ -144,21 +144,6 @@ implements PathfindController {
         }
         
         // Protected Methods
-        protected boolean checkForAllBlocked(int rot) {
-            final CartesianGraph.CartesianCoordinate forward = getNextCoordinateFromDirection(rot);
-            final CartesianGraph.CartesianCoordinate left = getNextCoordinateFromDirection(rot - ROT_ADD);
-            final CartesianGraph.CartesianCoordinate right = getNextCoordinateFromDirection(rot + ROT_ADD);
-            Logger.debug("PathfindController - Forward coord: " + forward + ".");
-            Logger.debug("PathfindController - Blocked: " + isCoordBlocked(forward) + ".");
-            Logger.debug("PathfindController - Visited: " + isCoordVisited(forward) + ".");
-            Logger.debug("PathfindController - Left coord:" + left + ".");
-            Logger.debug("PathfindController - Blocked: " + isCoordBlocked(left) + ".");
-            Logger.debug("PathfindController - Visited: " + isCoordVisited(left) + ".");
-            Logger.debug("PathfindController - Right coord:" + right + ".");
-            Logger.debug("PathfindController - Blocked: " + isCoordBlocked(right) + ".");
-            Logger.debug("PathfindController - Visited: " + isCoordVisited(right) + ".");
-            return (isCoordBlocked(forward) || isCoordBlocked(left) || isCoordBlocked(right));
-        }
         
         // Public Methods
         public void blockCoord(CartesianCoordinate coord) {

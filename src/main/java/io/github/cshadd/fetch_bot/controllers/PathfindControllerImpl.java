@@ -21,10 +21,6 @@ extends AbstractPathfindController {
         cartesianGraph.setCurrentCoord(getNext());
     }
     @Override
-    public boolean isAllBlocked() {
-        return cartesianGraph.checkForAllBlocked(currentRot);
-    }
-    @Override
     public boolean isNextBlocked() {
         return cartesianGraph.isCoordBlocked(getNext());
     }

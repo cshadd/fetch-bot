@@ -98,15 +98,6 @@ implements FetchBot {
                                     tracked = true;
                                     pathfindControl.reset();
                                 }
-                                else if (!pathfindControl.isAllBlocked()) {
-                                    Logger.info("I am stuck.");
-                                    webInterfaceComm.setSourceValue("emotion", "Sad");
-                                    webInterfaceComm.setRobotValue("trackclass", "None");
-                                    arduinoComm.setSourceValue("a", "Stop");
-                                    currentTrackClass = "None";
-                                    tracked = true;
-                                    pathfindControl.reset();
-                                }
                                 else {
                                     Logger.info("Hmm... curious.");
                                     if (pathfindControl.isNextBlocked()) {
