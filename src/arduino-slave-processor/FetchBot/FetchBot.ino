@@ -10,7 +10,7 @@
 #define MOTORR_AIN2_PIN 2 // Change if needed
 #define MOTORR_BIN1_PIN 4 // Change if needed
 #define MOTORR_BIN2_PIN 5 // Change if needed
-#define STEPPER_SPEED 30
+#define STEPPER_SPEED 10
 #define STEPPER_STEPS 200
 #define ULTRASONIC_SENSOR_ECHO_PIN 6 // Change if needed
 #define ULTRASONIC_SENSOR_TRIGGER_PIN 7 // Change if needed

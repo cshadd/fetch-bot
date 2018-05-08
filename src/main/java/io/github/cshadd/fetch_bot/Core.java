@@ -98,8 +98,8 @@ implements FetchBot {
                                     tracked = true;
                                     pathfindControl.reset();
                                 }
-                                else if (!pathfindControl.isAnyAvailable()) {
-                                    Logger.info("I am stuck!");
+                                else if (pathfindControl.isAllBlocked()) {
+                                    Logger.info("I am stuck.");
                                     webInterfaceComm.setSourceValue("emotion", "Sad");
                                     webInterfaceComm.setRobotValue("trackclass", "None");
                                     arduinoComm.setSourceValue("a", "Stop");
@@ -112,16 +112,47 @@ implements FetchBot {
                                     if (pathfindControl.isNextBlocked()) {
                                         Logger.info("Get out of my way!");
                                         webInterfaceComm.setSourceValue("emotion", "Angry");
-                                        Logger.debug("Turning left!");
+                                        
                                         pathfindControl.rotateLeft();
-                                        arduinoComm.setSourceValue("a", "Left");
+                                        if (!pathfindControl.isNextBlocked()) {
+                                            Logger.debug("Turning left!");
+                                            pathfindControl.rotateLeft();
+                                            arduinoComm.setSourceValue("a", "Left");
+                                        }
+                                        else {
+                                            pathfindControl.rotateRight();
+                                            pathfindControl.rotateRight();
+                                            if (!pathfindControl.isNextBlocked()) {
+                                                Logger.debug("Turning right!");
+                                                pathfindControl.rotateRight();
+                                                arduinoComm.setSourceValue("a", "Right");
+                                            }
+                                        }
                                     }
                                     else if (pathfindControl.isNextVisited()) {
                                         Logger.info("Wait I was just here.");
                                         webInterfaceComm.setSourceValue("emotion", "Sad");
-                                        Logger.debug("Turning right!");
+
                                         pathfindControl.rotateRight();
-                                        arduinoComm.setSourceValue("a", "Right");
+                                        if (!pathfindControl.isNextVisited()) {
+                                            Logger.debug("Turning right!");
+                                            pathfindControl.rotateRight();
+                                            arduinoComm.setSourceValue("a", "Right");
+                                        }
+                                        else {
+                                            pathfindControl.rotateLeft();
+                                            pathfindControl.rotateLeft();
+                                            if (!pathfindControl.isNextVisited()) {
+                                                Logger.debug("Turning left!");
+                                                pathfindControl.rotateRight();
+                                                arduinoComm.setSourceValue("a", "Right");
+                                            }
+                                            else {
+                                                Logger.debug("Forward!");
+                                                pathfindControl.goNext();
+                                                arduinoComm.setSourceValue("a", "Forward");
+                                            }
+                                        }
                                     }
                                     else {
                                         Logger.info("Nothing yet.");

@@ -144,23 +144,20 @@ implements PathfindController {
         }
         
         // Protected Methods
-        protected boolean checkForAvailable(int rot) {
+        protected boolean checkForAllBlocked(int rot) {
             final CartesianGraph.CartesianCoordinate forward = getNextCoordinateFromDirection(rot);
             final CartesianGraph.CartesianCoordinate left = getNextCoordinateFromDirection(rot - ROT_ADD);
             final CartesianGraph.CartesianCoordinate right = getNextCoordinateFromDirection(rot + ROT_ADD);
             Logger.debug("PathfindController - Forward coord: " + forward + ".");
-            Logger.debug("PathfindController - Avalible: " + isCoordAvailable(forward) + ".");
             Logger.debug("PathfindController - Blocked: " + isCoordBlocked(forward) + ".");
             Logger.debug("PathfindController - Visited: " + isCoordVisited(forward) + ".");
             Logger.debug("PathfindController - Left coord:" + left + ".");
-            Logger.debug("PathfindController - Avalible: " + isCoordAvailable(left) + ".");
             Logger.debug("PathfindController - Blocked: " + isCoordBlocked(left) + ".");
             Logger.debug("PathfindController - Visited: " + isCoordVisited(left) + ".");
             Logger.debug("PathfindController - Right coord:" + right + ".");
-            Logger.debug("PathfindController - Avalible: " + isCoordAvailable(right) + ".");
             Logger.debug("PathfindController - Blocked: " + isCoordBlocked(right) + ".");
             Logger.debug("PathfindController - Visited: " + isCoordVisited(right) + ".");
-            return (isCoordAvailable(forward) || isCoordAvailable(left) || isCoordAvailable(right));
+            return (isCoordBlocked(forward) || isCoordBlocked(left) || isCoordBlocked(right));
         }
         
         // Public Methods
@@ -169,11 +166,6 @@ implements PathfindController {
             if (!isCoordBlocked(coord)) {
                 blockedCoords.add(coord);
             }
-        }
-        public boolean isCoordAvailable(CartesianCoordinate coord) {
-            coord = fetchCoord(coord);
-            final boolean returnData = !(isCoordBlocked(coord) || isCoordVisited(coord));
-            return returnData;
         }
         public boolean isCoordBlocked(CartesianCoordinate coord) {
             coord = fetchCoord(coord);
