@@ -1,16 +1,17 @@
 package io.github.cshadd.fetch_bot.controllers;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.LayoutManager;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.OverlayLayout;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
@@ -24,11 +25,13 @@ public abstract class AbstractOpenCVController
 extends AbstractController
 implements OpenCVController {
     // Public Constant Instance/Property Fields
-    public static final int CAMERA_PORT = 1; // Change if needed
+    public static final int CAMERA_PORT = 0; // Change if needed
     public static final int CONFIDENCE_LIMIT = 90;
     public static final String MOBILENETSSD_DEPLOY_CAFFEMODEL = "MobileNetSSD_deploy.caffemodel";
     public static final String MOBILENETSSD_DEPLOY_PROTOTXT_TXT = "MobileNetSSD_deploy.prototxt.txt";
-    public static final double SCALE_FACTOR = 0.007;
+    public static final double SCALE_FACTOR = 0.007843;
+    private static final int SCENE_W = 640;
+    private static final int SCENE_H = 480;
     public static final int SIZE = 300;
     
     // Protected Final Instance/Property Fields
@@ -37,9 +40,6 @@ implements OpenCVController {
     
     // Private Final Instance/Property Fields
     private final VideoCapture camera;
-    private final JFrame terminalFrame;
-    private final LayoutManager terminalOverlayLayout;
-    private final JPanel terminalPanel;
     private final TrackClasses trackClassArr[];
 
     // Protected Instance/Property Fields
@@ -73,49 +73,80 @@ implements OpenCVController {
     }
     private Mat cameraFrame;
     private BufferedImage buffer;
-    private BufferedImage redBuffer;
     private Mat det;
     private Net net;
-    private JLabel terminalImageLabel;
-    private JLabel terminalStatusLabel;
+    private JComponent terminalContent;
+    private JFrame terminalFrame;
+    private JLabel terminalLabelCam;
+    private JLabel terminalLabelCamFilter;
+    private JLabel terminalLabelStatus;
+    private JLabel terminalLabelTrack;
+    private JLayeredPane terminalLayerPane;
     
     // Protected Constructors
     protected AbstractOpenCVController() {
         super();
         buffer = null;
-        redBuffer = null;
         camera = new VideoCapture(CAMERA_PORT);
         cameraFrame = new Mat();
         cameraRunnable = new CameraThread();
         cameraThread = new Thread(cameraRunnable);
         net = Dnn.readNetFromCaffe(MOBILENETSSD_DEPLOY_PROTOTXT_TXT, MOBILENETSSD_DEPLOY_CAFFEMODEL);
         
-        terminalFrame = new JFrame("Fetch Bot OpenCVController Terminal");
-        terminalFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        terminalFrame.setResizable(false);
-        terminalFrame.setLayout(new BorderLayout());
-        terminalFrame.setSize(SIZE, SIZE);
-        terminalFrame.setLocationByPlatform(true);
-        
-        terminalPanel = new JPanel();
-        terminalOverlayLayout = new OverlayLayout(terminalPanel);
-        terminalPanel.setLayout(terminalOverlayLayout);
-       
-        terminalStatusLabel = new JLabel(">Status: Unknown");
-        terminalStatusLabel.setForeground(Color.WHITE);
-        terminalStatusLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
-        terminalPanel.add(terminalStatusLabel);
-        
-        terminalImageLabel = new JLabel();        
-        terminalPanel.add(terminalImageLabel);
-        
-        terminalFrame.add(terminalPanel);
-        terminalFrame.setVisible(true);
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                terminalLabelCam = new JLabel();
+                terminalLabelCam.setVerticalAlignment(JLabel.TOP);
+                terminalLabelCam.setHorizontalAlignment(JLabel.LEFT);
+                terminalLabelCam.setOpaque(false);
+                terminalLabelCam.setBounds(0, 0, SCENE_W, SCENE_H);
+                
+                terminalLabelCamFilter = new JLabel();
+                terminalLabelCamFilter.setVerticalAlignment(JLabel.TOP);
+                terminalLabelCamFilter.setHorizontalAlignment(JLabel.LEFT);
+                terminalLabelCamFilter.setOpaque(true);
+                terminalLabelCamFilter.setBackground(new Color(255, 0, 0, 150));
+                terminalLabelCamFilter.setBounds(0, 0, SCENE_W, SCENE_H);
+                
+                terminalLabelStatus = new JLabel();
+                terminalLabelStatus.setVerticalAlignment(JLabel.BOTTOM);
+                terminalLabelStatus.setHorizontalAlignment(JLabel.LEFT);
+                terminalLabelStatus.setOpaque(false);
+                terminalLabelStatus.setBounds(0, 0, SCENE_W, SCENE_H);
+
+                terminalLabelTrack = new JLabel();
+                terminalLabelTrack.setVerticalAlignment(JLabel.TOP);
+                terminalLabelTrack.setHorizontalAlignment(JLabel.LEFT);
+                terminalLabelTrack.setOpaque(false);
+                terminalLabelTrack.setBorder(BorderFactory.createLineBorder(Color.white));
+                
+                terminalLayerPane = new JLayeredPane();
+                terminalLayerPane.setPreferredSize(new Dimension(SCENE_W, SCENE_H));
+                terminalLayerPane.add(terminalLabelStatus, 0);
+                terminalLayerPane.add(terminalLabelTrack, 1);
+                terminalLayerPane.add(terminalLabelCamFilter, 2);
+                terminalLayerPane.add(terminalLabelCam, 3);
+                
+                terminalContent = new JPanel();
+                terminalContent.setLayout(new BoxLayout(terminalContent, BoxLayout.PAGE_AXIS));
+                terminalContent.setOpaque(true);
+                terminalContent.add(terminalLayerPane);
+                
+                terminalFrame = new JFrame("Fetch Bot OpenCVController Terminal");
+                terminalFrame.setContentPane(terminalContent);
+                terminalFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                terminalFrame.setLocationByPlatform(true);
+                terminalFrame.setResizable(false);
+
+                terminalFrame.pack();
+                terminalFrame.setVisible(true);
+            }
+        });
         trackClassArr = TrackClasses.values();
         trackClass = "";
         trackClassFound = false;
     }
-    
+
     // Protected Final Nested Classes
     protected final class CameraThread
     implements Runnable {
@@ -130,7 +161,6 @@ implements OpenCVController {
         // Public Methods
         public void terminate() {
             buffer.flush();
-            redBuffer.flush();
             running = false;
         }
         
@@ -168,20 +198,6 @@ implements OpenCVController {
 
         return image;
     }
-    private static BufferedImage redFilter(BufferedImage img) {
-        for (int i = 0; i < img.getHeight(); i++) {
-            for (int i2 = 0; i2 < img.getWidth(); i2++) {
-                final Color c = new Color(img.getRGB(i2, i));
-                final int red = (int)(c.getRed() * 0.3);
-                final int green = (int)(c.getGreen() * 0.1);
-                final int blue = (int)(c.getBlue() * 0.1);
-                final Color newColor = new Color(red + green + blue, green, blue);
-                img.setRGB(i2, i, newColor.getRGB());
-            }
-        }
-        return img;
-    }
-
     
     // Public Static Methods
     static {
@@ -192,20 +208,18 @@ implements OpenCVController {
     private void detections(Mat mat)
     {
         buffer = matToBufferedImage(mat);
-        redBuffer = redFilter(matToBufferedImage(mat));
-
-        final ImageIcon img = new ImageIcon(redBuffer);
-        terminalImageLabel.setIcon(img);
+        final ImageIcon img = new ImageIcon(buffer);
+        terminalLabelCam.setIcon(img);
         /*
          * Converts the image matrix into a "blob," which is then fed into the Caffe neural network using net.setInput()
-         *         and detections are output as a matrix in net.forward().
+         * and detections are output as a matrix in net.forward().
          */
         final Mat blob = Dnn.blobFromImage(mat, SCALE_FACTOR, new Size(SIZE, SIZE), new Scalar(SIZE, SIZE), false, false);
         net.setInput(blob);
         det = net.forward();
         /* 
          * For each detection, there are 7 numbers the matrix det outputs. The first is always 0 for some unknown reason, the second is the object it
-         * detects (output as the index from the Classes enum (which is why you shouldn't change the order of the classes)), the third is the confidence
+         * detects (output as the index from the TrackClasses enum (which is why you shouldn't change the order of the classes)), the third is the confidence
          * the network has that the object is what they predicted it was, and the fourth to seventh numbers are the starting x position, starting y
          * position, ending x position, and ending y position of the object respectively. They are represented proportionally to the image, so you must
          * multiply them by the size of the image to get the actual location of the object with respects to the image. This for loop then draws a
@@ -216,14 +230,28 @@ implements OpenCVController {
             final int index = (int)det.reshape(1, 1).get(0, i + 1)[0];
             final String currentTrackClass = trackClassArr[index].toString();
             final double con = det.reshape(1, 1).get(0, i + 2)[0];
+            final int startX = (int)(det.reshape(1, 1).get(0, i + 3)[0]*SCENE_W);
+            final int startY = (int)(det.reshape(1, 1).get(0, i + 4)[0]*SCENE_H);
+            final int endX = (int)(det.reshape(1, 1).get(0, i + 5)[0]*SCENE_W);
+            final int endY = (int)(det.reshape(1, 1).get(0, i + 6)[0]*SCENE_H);
             final int fullCon = (int)(100*con);
-            terminalStatusLabel.setText(">Status: Track Class= ; Current=" + currentTrackClass + " [" + fullCon + "%]");
+            
             if (fullCon >= CONFIDENCE_LIMIT && trackClass.equals(currentTrackClass)) {
                 trackClassFound = true;
+                terminalLabelTrack.setText("<html><p style='color: white;'>" + currentTrackClass
+                        + " [" + fullCon + "%]<br />"
+                        + "TARGET</p></html>");
             }
             else {
                 trackClassFound = false;
+                terminalLabelTrack.setText("<html><p style='color: white;'>" + currentTrackClass
+                        + " [" + fullCon + "%]</p></html>");
             }
+            terminalLabelStatus.setText("<html><p style='color: white; font-size: 20px'>&#187; Status: Processing<br />"
+                    + "Target: " + trackClass + "<br />"
+                    + "Found Target: " + trackClassFound + "<br />"
+                    + "Raw: " + buffer.hashCode() + "</p></html>");
+            terminalLabelTrack.setBounds(startX, startY, endX - startX, endY - startY);
         }
     }
 }

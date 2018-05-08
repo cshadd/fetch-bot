@@ -190,6 +190,9 @@ in a Bash terminal.
 
 To control and terminate the application, you must use the web interface. The address to the web interface depends on your Apache configuration. Normally it would just be http://localhost/FetchBot.
 
+### Training
+TBA
+
 ## Web Page
 https://cshadd.github.io/fetch-bot/
 
