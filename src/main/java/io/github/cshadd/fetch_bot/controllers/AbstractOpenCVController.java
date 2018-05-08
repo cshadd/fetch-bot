@@ -33,19 +33,15 @@ implements OpenCVController {
     private static final int SCENE_W = 640;
     private static final int SCENE_H = 480;
     private static final int SIZE = 300;
+
+    // Private Final Instance/Property Fields
+    private final VideoCapture camera;
+    private final TrackClasses trackClassArr[];
     
     // Protected Final Instance/Property Fields
     protected final Thread cameraThread;
     protected final CameraThread cameraRunnable;    
-    
-    // Private Final Instance/Property Fields
-    private final VideoCapture camera;
-    private final TrackClasses trackClassArr[];
 
-    // Protected Instance/Property Fields
-    protected String trackClass;
-    protected boolean trackClassFound;
-    
     // Private Instance/Property Fields
     private enum TrackClasses
     {
@@ -82,6 +78,10 @@ implements OpenCVController {
     private JLabel terminalLabelStatus;
     private JLabel terminalLabelTrack;
     private JLayeredPane terminalLayerPane;
+
+    // Protected Instance/Property Fields
+    protected String trackClass;
+    protected boolean trackClassFound;
     
     // Protected Constructors
     protected AbstractOpenCVController() {

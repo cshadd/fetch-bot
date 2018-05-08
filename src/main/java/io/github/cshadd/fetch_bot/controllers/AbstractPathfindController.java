@@ -1,7 +1,6 @@
 package io.github.cshadd.fetch_bot.controllers;
 import io.github.cshadd.cshadd_java_data_structures.util.UndirectedGraph;
 import io.github.cshadd.fetch_bot.util.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 
