@@ -43,8 +43,17 @@ AI based robot with image processing.
 ### Hardware Assembly
 Great care is needed to assemble this robot. We specifically chose these parts for our robot but it is up to you to decide which ones you will use.
 ```
-1. Assemble the chassis with the...
+1. Assemble the chassis with the parts, we recommend using the parts listed and we 3d printed our design. Make sure the wheels are balanced.
+2. Connect the stepper motors and the ultrasonic sensor to the Arduino. The ports are listed in <PROJECT DIRECTORY>/arduino-slave-processor/FetchBot/FetchBot.ino. Adafruit has tutorials online for the stepper motor including the correct way to power it (the stepper motor will need a seperate source so we used the transformer to convert the 5V (2A port) battery to 12V for the motor)!
+3. Connect the Arduino directly to the Raspberry Pi.
+4. Connect the monitor to the Raspberry Pi.
+5. Connect the webcam to the Raspberry Pi.
+6. Connect the Raspberry Pi to the 5V (1A port) battery.
+7. Set up the router.
+8. Configure hardware.
 ```
+
+Full assembly is beyond the scope of this project.
 
 ### Why Raspberry Pi and Arduino Uno?
 Let's face it. In our day and age of the 21st century, we want lightweight mobile systems for robots. The Pi and Uno is perfect for it. We cannot stress enough about the power of the Pi and Uno. The features on the Pi contains preinstalled software such as ``git``.It is easy to setup and use as it is virtually a computer itself. We built this robot specifically on the Pi and Uno but made it as modular as possible to accommodate other systems. If you want to use a full tower as a robot brain, go ahead. But the Pi and Uno is much simpler. Proceeding forward, we will be specifically talking about the Pi and Uno unless otherwise. The system and Bash command lines will rely on the Pi.
