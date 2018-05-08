@@ -16,9 +16,10 @@ import io.github.cshadd.fetch_bot.util.VersionCheckException;
 @Component("Core")
 public class Core
 implements FetchBot {
-    // Public Constant Instance/Property Fields
-    public static final String VERSION = "v1.0.0-alpha";
-
+    // Private Constant Instance/Property Fields
+    private static final int SENSOR_LIMIT = 30;
+    private static final String VERSION = "v1.0.0-alpha";
+    
     // Private Static Instance/Property Fields
     private static ArduinoCommunication arduinoComm;
     private static OpenCVController openCVControl;
@@ -77,7 +78,7 @@ implements FetchBot {
                     if (currentMode.equals("Auto")) {
                         if (currentTrackClass != null) {
                             if (!currentTrackClass.equals("None")) {
-                                if (currentUltrasonicSensor <= 30) {
+                                if (currentUltrasonicSensor <= SENSOR_LIMIT) {
                                     Logger.warn("Arduino - Safety cut due to imminent collision.");
                                     pathfindControl.blockNext();
                                 }
@@ -160,8 +161,8 @@ implements FetchBot {
                                 currentMove = move;
                                 Logger.debug("WebInterface - [move: " + currentMove + "] command received.");
 
-                                if (currentUltrasonicSensor <= 30) {
-                                    if (currentUltrasonicSensor <= 15) {
+                                if (currentUltrasonicSensor <= SENSOR_LIMIT) {
+                                    if (currentUltrasonicSensor <= SENSOR_LIMIT/2) {
                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                     }
                                     else {

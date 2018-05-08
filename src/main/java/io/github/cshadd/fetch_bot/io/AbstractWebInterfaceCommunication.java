@@ -9,10 +9,12 @@ import org.json.JSONObject;
 public abstract class AbstractWebInterfaceCommunication
 extends AbstractCommunication
 implements WebInterfaceCommunication {
-    // Public Constant Instance/Property Fields
-    public static final String TO_WEB_COMM_PATH = "/var/www/html/FetchBot/comms/"; // Change if needed
-    public static final String TO_ROBOT_JSON_PATH = TO_WEB_COMM_PATH + "toRobot.json";
-    public static final String TO_WEB_INTERFACE_JSON_PATH = TO_WEB_COMM_PATH + "toInterface.json";
+    // Private Constant Instance/Property Fields
+    private static final String TO_WEB_COMM_PATH = "/var/www/html/FetchBot/comms/"; // Change if needed
+    
+    // Protected Constant Instance/Property Fields
+    protected static final String TO_ROBOT_JSON_PATH = TO_WEB_COMM_PATH + "toRobot.json";
+    protected static final String TO_WEB_INTERFACE_JSON_PATH = TO_WEB_COMM_PATH + "toInterface.json";
 
     // Protected Constructors
     protected AbstractWebInterfaceCommunication() {

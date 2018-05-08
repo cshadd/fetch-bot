@@ -21,7 +21,7 @@ implements FetchBot {
     
     // Public Constant Instance/Property Fields
     public static final String LOG_PATH = "FetchBot.log";
-    
+        
     // Private Instance/Property Fields
     private static final Console console;
     private static boolean debug;

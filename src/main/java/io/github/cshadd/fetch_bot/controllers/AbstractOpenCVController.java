@@ -24,15 +24,15 @@ import org.opencv.videoio.VideoCapture;
 public abstract class AbstractOpenCVController
 extends AbstractController
 implements OpenCVController {
-    // Public Constant Instance/Property Fields
-    public static final int CAMERA_PORT = 0; // Change if needed
-    public static final int CONFIDENCE_LIMIT = 90;
-    public static final String MOBILENETSSD_DEPLOY_CAFFEMODEL = "MobileNetSSD_deploy.caffemodel";
-    public static final String MOBILENETSSD_DEPLOY_PROTOTXT_TXT = "MobileNetSSD_deploy.prototxt.txt";
-    public static final double SCALE_FACTOR = 0.007843;
-    public static final int SCENE_W = 640;
-    public static final int SCENE_H = 480;
-    public static final int SIZE = 300;
+    // Private Constant Instance/Property Fields
+    private static final int CAMERA_PORT = 0; // Change if needed
+    private static final int CONFIDENCE_LIMIT = 90;
+    private static final String MOBILENETSSD_DEPLOY_CAFFEMODEL = "MobileNetSSD_deploy.caffemodel";
+    private static final String MOBILENETSSD_DEPLOY_PROTOTXT_TXT = "MobileNetSSD_deploy.prototxt.txt";
+    private static final double SCALE_FACTOR = 0.007843;
+    private static final int SCENE_W = 640;
+    private static final int SCENE_H = 480;
+    private static final int SIZE = 300;
     
     // Protected Final Instance/Property Fields
     protected final Thread cameraThread;

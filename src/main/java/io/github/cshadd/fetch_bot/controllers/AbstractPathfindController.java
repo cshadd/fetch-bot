@@ -9,10 +9,12 @@ import java.util.List;
 public abstract class AbstractPathfindController
 extends AbstractController
 implements PathfindController {
-    // protected Constant Instance/Property Fields
-    protected static final int COORD_MAX_RANGE = 5;
+    // Private Constant Instance/Property Fields
+    private static final int COORD_MAX_RANGE = 5;
+    private static final int ROT_MAX_RANGE = 360;
+
+    // Protected Constant Instance/Property Fields
     protected static final int ROT_ADD = 90;
-    protected static final int ROT_MAX_RANGE = 360;
     
     // Protected Final Instance/Property Fields
     protected final CartesianGraph cartesianGraph;
