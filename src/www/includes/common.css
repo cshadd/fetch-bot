@@ -1,0 +1,33 @@
+/* Global Elements */
+* { }
+
+body {
+    position: relative;
+}
+
+html { }
+
+/* Specific Elements */
+.connection-progress-bar {
+    width: 100%;
+}
+
+.fit {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.logo {
+    margin-left: 40%;
+    margin-right: 40%;
+    width: 20%;
+    height: 20%;
+}
+
+.move-button {
+    width: 100%;
+}
+
+.title {
+    text-align: center;
+}
