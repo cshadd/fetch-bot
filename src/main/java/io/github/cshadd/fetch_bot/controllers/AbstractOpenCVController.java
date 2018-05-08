@@ -41,7 +41,6 @@ implements OpenCVController {
 
     // Private Final Instance/Property Fields
     private final VideoCapture camera;
-    // private final TrackClasses trackClassArr[];
     private final List<String> trackClasses;
     
     // Protected Final Instance/Property Fields
@@ -49,30 +48,6 @@ implements OpenCVController {
     protected final CameraThread cameraRunnable;    
 
     // Private Instance/Property Fields
-    /*private enum TrackClasses
-    {
-        BACKGROUND,
-        AEROPLANE,
-        BICYCLE,
-        BIRD,
-        BOAT,
-        BOTTLE,
-        BUS,
-        CAR,
-        CAT,
-        CHAIR,
-        COW,
-        DININGTABLE,
-        DOG,
-        HORSE,
-        MOTORBIKE,
-        PERSON,
-        POTTEDPLANT,
-        SHEEP,
-        SOFA,
-        TRAIN,
-        TVMONITOR
-    }*/
     private Mat cameraFrame;
     private BufferedImage buffer;
     private Mat det;
@@ -157,7 +132,6 @@ implements OpenCVController {
                 terminalFrame.setVisible(true);
             }
         });
-        // trackClassArr = TrackClasses.values();
         trackClass = "";
         trackClassFound = false;
     }
