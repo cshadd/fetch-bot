@@ -8,10 +8,10 @@ extends Controller {
     public abstract void goNext();
     public abstract boolean isAnyAvailable();
     public abstract boolean isNextBlocked();
-    public abstract boolean isNextTracked();
     public abstract boolean isNextVisited();
     public abstract void reset();
     public abstract void rotateLeft();
     public abstract void rotateRight();
+    public abstract void unblockNext();
     public abstract void visit();
 }

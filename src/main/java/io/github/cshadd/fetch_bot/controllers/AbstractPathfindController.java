@@ -1,5 +1,6 @@
 package io.github.cshadd.fetch_bot.controllers;
 import io.github.cshadd.cshadd_java_data_structures.util.UndirectedGraph;
+import io.github.cshadd.fetch_bot.util.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,17 +111,17 @@ implements PathfindController {
 
         // Public Property Mutator Methods
         public void setCurrentCoord(CartesianCoordinate coord) {
-            coord = assignCoord(coord);
-            currentCoord = coord;
+            currentCoord = fetchCoord(coord);
         }
 
+        // Private Static Methods
         private static CartesianCoordinate directionCoordinate(int rot) {
             final double rad = Math.toRadians(rot);
             return new CartesianCoordinate((int)Math.sin(rad), (int)Math.cos(rad));
         }
         
         // Private Methods
-        private CartesianCoordinate assignCoord(CartesianCoordinate coord) {
+        private CartesianCoordinate fetchCoord(CartesianCoordinate coord) {
             for (int i = 0; i < adjacencyList.size(); i++) {
                 final Vertex vertex = adjacencyList.get(i);
                 if (vertex != null) {
@@ -136,8 +137,9 @@ implements PathfindController {
             return coord;
         }
         private CartesianCoordinate getNextCoordinateFromDirection(int rot) {
-            CartesianCoordinate otherCoord = CartesianGraph.directionCoordinate(rot);
-            return assignCoord(currentCoord.add(otherCoord.x, otherCoord.y));
+            final CartesianCoordinate otherCoord = CartesianGraph.directionCoordinate(rot);
+            final CartesianCoordinate coord = currentCoord.add(otherCoord.x, otherCoord.y);
+            return fetchCoord(coord);
         }
         
         // Protected Methods
@@ -145,26 +147,39 @@ implements PathfindController {
             final CartesianGraph.CartesianCoordinate forward = getNextCoordinateFromDirection(rot);
             final CartesianGraph.CartesianCoordinate left = getNextCoordinateFromDirection(rot - ROT_ADD);
             final CartesianGraph.CartesianCoordinate right = getNextCoordinateFromDirection(rot + ROT_ADD);
+            Logger.debug("PathfindController - Forward coord: " + forward + ".");
+            Logger.debug("PathfindController - Avalible: " + isCoordAvailable(forward) + ".");
+            Logger.debug("PathfindController - Blocked: " + isCoordBlocked(forward) + ".");
+            Logger.debug("PathfindController - Visited: " + isCoordVisited(forward) + ".");
+            Logger.debug("PathfindController - Left coord:" + left + ".");
+            Logger.debug("PathfindController - Avalible: " + isCoordAvailable(left) + ".");
+            Logger.debug("PathfindController - Blocked: " + isCoordBlocked(left) + ".");
+            Logger.debug("PathfindController - Visited: " + isCoordVisited(left) + ".");
+            Logger.debug("PathfindController - Right coord:" + right + ".");
+            Logger.debug("PathfindController - Avalible: " + isCoordAvailable(right) + ".");
+            Logger.debug("PathfindController - Blocked: " + isCoordBlocked(right) + ".");
+            Logger.debug("PathfindController - Visited: " + isCoordVisited(right) + ".");
             return (isCoordAvailable(forward) || isCoordAvailable(left) || isCoordAvailable(right));
         }
         
         // Public Methods
         public void blockCoord(CartesianCoordinate coord) {
-            coord = assignCoord(coord);
+            coord = fetchCoord(coord);
             if (!isCoordBlocked(coord)) {
                 blockedCoords.add(coord);
             }
         }
         public boolean isCoordAvailable(CartesianCoordinate coord) {
-            coord = assignCoord(coord);
-            return !(isCoordBlocked(coord) && isCoordVisited(coord));
+            coord = fetchCoord(coord);
+            final boolean returnData = !(isCoordBlocked(coord) || isCoordVisited(coord));
+            return returnData;
         }
         public boolean isCoordBlocked(CartesianCoordinate coord) {
-            coord = assignCoord(coord);
+            coord = fetchCoord(coord);
             return blockedCoords.contains(coord);
         }
         public boolean isCoordVisited(CartesianCoordinate coord) {
-            coord = assignCoord(coord);
+            coord = fetchCoord(coord);
             boolean returnData = false;
             final Vertex v = vertex(coord);
             if (v != null) {
@@ -177,19 +192,19 @@ implements PathfindController {
             blockedCoords.clear();
             for (int i = -maxRange; i <= maxRange; i++) {
                 for (int i2 = -maxRange; i2 <= maxRange; i2++) {
-                    final CartesianCoordinate coord = assignCoord(new CartesianCoordinate(i, i2));
-                    assignCoord(coord);
+                    final CartesianCoordinate coord = new CartesianCoordinate(i, i2);
+                    fetchCoord(coord);
                     if ((i + 1) <= maxRange) {
-                        addEdge(coord, assignCoord(coord.right()));
+                        addEdge(coord, fetchCoord(coord.right()));
                     }
                     if ((i - 1) >= -maxRange) {
-                        addEdge(coord, assignCoord(coord.left()));
+                        addEdge(coord, fetchCoord(coord.left()));
                     }
                     if ((i2 + 1) <= maxRange) {
-                        addEdge(coord, assignCoord(coord.up()));
+                        addEdge(coord, fetchCoord(coord.up()));
                     }
                     if ((i2 - 1) >= -maxRange) {
-                        addEdge(coord, assignCoord(coord.down()));
+                        addEdge(coord, fetchCoord(coord.down()));
                     }
                     if (i == 0 && i2 == 0) {
                         setRoot(vertex(coord));
@@ -199,20 +214,29 @@ implements PathfindController {
             currentCoord = getRoot().data();
             getRoot().visit();
         }
-        public void visitCoord() {
-            CartesianCoordinate coord = assignCoord(currentCoord);
+        public void unblockCoord(CartesianCoordinate coord) {
+            coord = fetchCoord(coord);
+            if (isCoordBlocked(coord)) {
+                blockedCoords.remove(coord);
+            }
+        }
+        public void unvisitCoord(CartesianCoordinate coord) {
+            coord = fetchCoord(coord);
+            if (isCoordVisited(coord)) {
+                final Vertex v = vertex(coord);
+                if (v != null) {
+                    v.unvisit();
+                }
+            }
+        }
+        public void visitCoord(CartesianCoordinate coord) {
+            coord = fetchCoord(coord);
             if (!isCoordVisited(coord)) {
                 final Vertex v = vertex(coord);
                 if (v != null) {
                     v.visit();
                 }
             }
-        }
-        
-        // Public Methods (Override)
-        @Override
-        public String toString() {
-            return "" + currentCoord;
         }
     }
     
@@ -234,11 +258,12 @@ implements PathfindController {
             rot = 0;
         }
         currentRot = rot;
+        Logger.debug("PathfindController - New rot: " + currentRot + ".");
     }
     
-    // Public Methods (Override)
+    // Public Methods (Overrided)
     @Override
     public String toString() {
-        return "" + cartesianGraph;
+        return "Current coord: " + cartesianGraph.getCurrentCoord() + "; Current rot: " + currentRot;
     }
 }

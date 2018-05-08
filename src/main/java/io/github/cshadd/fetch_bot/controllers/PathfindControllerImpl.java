@@ -17,6 +17,7 @@ extends AbstractPathfindController {
     }
     @Override
     public void goNext() {
+        visit();
         cartesianGraph.setCurrentCoord(getNext());
     }
     @Override
@@ -28,15 +29,12 @@ extends AbstractPathfindController {
         return cartesianGraph.isCoordBlocked(getNext());
     }
     @Override
-    public boolean isNextTracked() {
-        return false;
-    }
-    @Override
     public boolean isNextVisited() {
         return cartesianGraph.isCoordVisited(getNext());
     }
     @Override
     public void reset() {
+        currentRot = 0;
         cartesianGraph.reset();
     }
     @Override
@@ -48,7 +46,11 @@ extends AbstractPathfindController {
         rotateFix(ROT_ADD);
     }
     @Override
+    public void unblockNext() {
+        cartesianGraph.unblockCoord(getNext());
+    }
+    @Override
     public void visit() {
-        cartesianGraph.visitCoord();
+        cartesianGraph.visitCoord(cartesianGraph.getCurrentCoord());
     }
 }
