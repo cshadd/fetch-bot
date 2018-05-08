@@ -6,7 +6,8 @@ import io.github.cshadd.fetch_bot.Component;
 public class OpenCVControllerImpl
 extends AbstractOpenCVController {
     // Public Constructors
-    public OpenCVControllerImpl() {
+    public OpenCVControllerImpl()
+    throws OpenCVControllerException {
         super();
     }
 

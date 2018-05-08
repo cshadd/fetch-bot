@@ -1,4 +1,5 @@
 package io.github.cshadd.fetch_bot;
+import io.github.cshadd.fetch_bot.controllers.ControllerException;
 import io.github.cshadd.fetch_bot.controllers.OpenCVController;
 import io.github.cshadd.fetch_bot.controllers.OpenCVControllerImpl;
 import io.github.cshadd.fetch_bot.controllers.PathfindController;
@@ -237,10 +238,10 @@ implements FetchBot {
             arduinoComm.pushSource();
         }
         catch (CommunicationException e) {
-            Logger.error(e, "Communication encountered an error.");
+            Logger.error(e, "There was an issue with Communication!");
         }
         catch (Exception e) {
-            Logger.fatalError(e, "Communication encountered a fatal error.");
+            Logger.error(e, "There was an unknown issue!");
         }
         finally { }
 
@@ -259,7 +260,16 @@ implements FetchBot {
         finally { }
         
         // Initiate controllers
-        openCVControl = new OpenCVControllerImpl();
+        try {
+            openCVControl = new OpenCVControllerImpl();    
+        }
+        catch (ControllerException e) {
+            Logger.error(e, "There was an issue with Controller!");
+        }
+        catch (Exception e) {
+            Logger.error(e, "There was an unknown issue!");
+        }
+        finally { }
         pathfindControl = new PathfindControllerImpl();
         pathfindControl.reset();
         openCVControl.startCamera();

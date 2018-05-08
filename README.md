@@ -157,6 +157,11 @@ sudo chmod -R 776 <LOCATION OF APACHE HTTP SERVER FOLDER>/<DESIRED LOCATION OF W
 ```
 in a Bash terminal.
 
+### Training
+The project must be trained with a neural network. We use Caffe to train the project.
+The folder for the training data is ``<PROJECT DIRECTORY>/src/neural-network/``.
+Tutorials on training is beyond the scope of this project.
+
 ## Uninstalling The Project Software
 
 ### Easy Uninstall
@@ -190,9 +195,6 @@ in a Bash terminal.
 
 To control and terminate the application, you must use the web interface. The address to the web interface depends on your Apache configuration. Normally it would just be http://localhost/FetchBot.
 
-### Training
-TBA
-
 ## Web Page
 https://cshadd.github.io/fetch-bot/
 
@@ -224,6 +226,7 @@ See [here](/docs/software-requirements-specification/SoftwareRequirementsSpecifi
 * [Adafruit](https://www.adafruit.com/)
 * [Apache](https://www.apache.org/)
 * [Arduino](https://www.arduino.cc/)
+* [Caffe](http://caffe.berkeleyvision.org/)
 * [Eclipse](https://www.eclipse.org/)
 * [Ed's Blog](http://pblog.ebaker.me.uk/)
 * [JitPack](https://www.jitpack.io/)

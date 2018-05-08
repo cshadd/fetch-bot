@@ -5,7 +5,7 @@
     <version>v1.0.0-alpha</version>
     <name>Fetch Bot</name>
     <description>AI based robot with image processing.</description>
-    <url>https://www.github.com/cshadd/fetch-bot</url>
+    <url>https://cshadd.github.io/fetch-bot/</url>
     <inceptionYear>2018</inceptionYear>
     <packaging>jar</packaging>
 
@@ -13,7 +13,7 @@
     <licenses>
         <license>
             <name>MIT License</name>
-            <url>https://github.com/cshadd/fetch-bot/blob/master/LICENSE</url>
+            <url>https://raw.githubusercontent.com/cshadd/fetch-bot/master/LICENSE</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
@@ -114,6 +114,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- PLUGIN VERSIONS -->
+        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
         <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
@@ -211,7 +212,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        
+
         <!-- PROJECT BUILD PLUGINS -->
         <pluginManagement>
             <plugins>
@@ -220,6 +221,30 @@
 
         <!-- GLOBAL BUILD PLUGINS -->
         <plugins>
+            <!-- COPY RESOURCES -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/target/libs/fetch-bot</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/src/neural-network</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- JAVA COMPILER -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -270,7 +295,7 @@
                     </execution>
                 </executions>
             </plugin>
-                
+
             <!-- COPY DEPENDENCIES -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

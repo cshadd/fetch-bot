@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
+import java.io.File;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -12,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import org.apache.commons.io.FileUtils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
@@ -27,8 +30,10 @@ implements OpenCVController {
     // Private Constant Instance/Property Fields
     private static final int CAMERA_PORT = 0; // Change if needed
     private static final int CONFIDENCE_LIMIT = 90;
-    private static final String MOBILENETSSD_DEPLOY_CAFFEMODEL = "MobileNetSSD_deploy.caffemodel";
-    private static final String MOBILENETSSD_DEPLOY_PROTOTXT_TXT = "MobileNetSSD_deploy.prototxt.txt";
+    private static final String DEPLOY_PATH = "./libs/fetch-bot/";
+    private static final String DEPLOY_CAFFEMODEL = DEPLOY_PATH + "deploy.caffemodel";
+    private static final String DEPLOY_PROTOTXT_TXT = DEPLOY_PATH + "deploy.prototxt.txt";
+    private static final String DEPLOY_TRACK_CLASSES = DEPLOY_PATH + "deploy.track.classes";
     private static final double SCALE_FACTOR = 0.007843;
     private static final int SCENE_W = 640;
     private static final int SCENE_H = 480;
@@ -36,14 +41,15 @@ implements OpenCVController {
 
     // Private Final Instance/Property Fields
     private final VideoCapture camera;
-    private final TrackClasses trackClassArr[];
+    // private final TrackClasses trackClassArr[];
+    private final List<String> trackClasses;
     
     // Protected Final Instance/Property Fields
     protected final Thread cameraThread;
     protected final CameraThread cameraRunnable;    
 
     // Private Instance/Property Fields
-    private enum TrackClasses
+    /*private enum TrackClasses
     {
         BACKGROUND,
         AEROPLANE,
@@ -66,7 +72,7 @@ implements OpenCVController {
         SOFA,
         TRAIN,
         TVMONITOR
-    }
+    }*/
     private Mat cameraFrame;
     private BufferedImage buffer;
     private Mat det;
@@ -84,7 +90,8 @@ implements OpenCVController {
     protected boolean trackClassFound;
     
     // Protected Constructors
-    protected AbstractOpenCVController() {
+    protected AbstractOpenCVController()
+    throws OpenCVControllerException {
         super();
         buffer = null;
         camera = new VideoCapture(CAMERA_PORT);
@@ -92,7 +99,15 @@ implements OpenCVController {
         cameraRunnable = new CameraThread();
         cameraThread = new Thread(cameraRunnable);
         det = null;
-        net = Dnn.readNetFromCaffe(MOBILENETSSD_DEPLOY_PROTOTXT_TXT, MOBILENETSSD_DEPLOY_CAFFEMODEL);
+        try {
+            net = Dnn.readNetFromCaffe(DEPLOY_PROTOTXT_TXT, DEPLOY_CAFFEMODEL);
+            final File trackClassesInput = new File(DEPLOY_TRACK_CLASSES);
+            trackClasses = FileUtils.readLines(trackClassesInput, "UTF-8");
+        }
+        catch (Exception e) {
+            throw new OpenCVControllerException("There was an unknown issue!", e);
+        }
+
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 terminalLabelCam = new JLabel();
@@ -142,7 +157,7 @@ implements OpenCVController {
                 terminalFrame.setVisible(true);
             }
         });
-        trackClassArr = TrackClasses.values();
+        // trackClassArr = TrackClasses.values();
         trackClass = "";
         trackClassFound = false;
     }
@@ -233,9 +248,15 @@ implements OpenCVController {
             final int startY = (int)(det.reshape(1, 1).get(0, i + 4)[0]*SCENE_H);
             final int endX = (int)(det.reshape(1, 1).get(0, i + 5)[0]*SCENE_W);
             final int endY = (int)(det.reshape(1, 1).get(0, i + 6)[0]*SCENE_H);
-            
-            final String capturedTrackClass = trackClassArr[index].toString();
+            final String capturedTrackClass;
             final int fullCon = (int)(100*con);
+            
+            if (index > 0 && index < trackClasses.size()) {
+                capturedTrackClass = trackClasses.get(index);
+            }
+            else {
+                capturedTrackClass = "???"; 
+            }
             
             if (fullCon >= CONFIDENCE_LIMIT && trackClass.equals(capturedTrackClass)) {
                 trackClassFound = true;
