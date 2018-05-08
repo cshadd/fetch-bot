@@ -98,7 +98,7 @@ implements FetchBot {
                                     tracked = true;
                                     pathfindControl.reset();
                                 }
-                                else if (pathfindControl.isAllBlocked()) {
+                                else if (!pathfindControl.isAllBlocked()) {
                                     Logger.info("I am stuck.");
                                     webInterfaceComm.setSourceValue("emotion", "Sad");
                                     webInterfaceComm.setRobotValue("trackclass", "None");
