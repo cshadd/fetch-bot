@@ -28,10 +28,6 @@ extends AbstractPathfindController {
         return cartesianGraph.isCoordBlocked(getNext());
     }
     @Override
-    public boolean isNextTracked() {
-        return false;
-    }
-    @Override
     public boolean isNextVisited() {
         return cartesianGraph.isCoordVisited(getNext());
     }
