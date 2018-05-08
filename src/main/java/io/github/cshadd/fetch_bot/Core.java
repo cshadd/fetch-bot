@@ -60,6 +60,7 @@ implements FetchBot {
                         currentTrackClass = trackClass;
                         tracked = false;
                         Logger.debug("WebInterface - [trackclass: " + currentTrackClass + "] received.");
+                        openCVControl.assignTrackClass(currentTrackClass);
                         webInterfaceComm.setSourceValue("trackclass", "" + currentTrackClass);
                     }
                 }
@@ -86,8 +87,7 @@ implements FetchBot {
                                 Logger.debug("PathfindController - " + pathfindControl + ".");
                                 Logger.debug("PathfindController - Next blocked: " + pathfindControl.isNextBlocked() + ".");
 
-                                if (pathfindControl.isNextTracked()) {
-                                    // TODO: PUT HOW IT WILL BE FOUND!
+                                if (openCVControl.isTrackClassFound()) {
                                     Logger.info("Found you!");
                                     webInterfaceComm.setSourceValue("emotion", "Happy");
                                     webInterfaceComm.setRobotValue("trackclass", "None");

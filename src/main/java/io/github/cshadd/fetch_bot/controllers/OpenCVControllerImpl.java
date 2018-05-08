@@ -12,6 +12,14 @@ extends AbstractOpenCVController {
 
     // Public Methods (Overrided)
     @Override
+    public void assignTrackClass(String trackClass) {
+        this.trackClass = trackClass;
+    }
+    @Override
+    public boolean isTrackClassFound() {
+        return trackClassFound;
+    }
+    @Override
     public void startCamera() {
         cameraThread.start();
     }
