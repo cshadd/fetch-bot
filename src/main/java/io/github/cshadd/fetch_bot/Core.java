@@ -58,13 +58,13 @@ implements FetchBot {
                 // Tracking Class
                 final String trackClass = webInterfaceComm.getRobotValue("trackclass");
                 if (trackClass != null) {
-                    if (trackClass.equals(currentTrackClass)) {
+                    if (!trackClass.equals(currentTrackClass)) {
                         currentTrackClass = trackClass;
                         Logger.debug("WebInterface - [trackclass: " + currentTrackClass + "] received.");
                         openCVControl.assignTrackClass(currentTrackClass);
                         webInterfaceComm.setSourceValue("trackclass", "" + currentTrackClass);
-                        tracked = false;
                         pathfindControl.reset();
+                        tracked = false;
                     }
                 }
 
@@ -168,9 +168,7 @@ implements FetchBot {
                             }
                         }
                         else {
-                            if (!tracked) {
-                                webInterfaceComm.setSourceValue("emotion", "Neutral");
-                            }
+                            webInterfaceComm.setSourceValue("emotion", "Neutral");
                             arduinoComm.setSourceValue("a", "Stop");
                         }
                     }
