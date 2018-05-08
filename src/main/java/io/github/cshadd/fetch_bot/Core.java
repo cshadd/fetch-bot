@@ -19,7 +19,7 @@ public class Core
 implements FetchBot {
     // Private Constant Instance/Property Fields
     private static final int SENSOR_LIMIT = 30;
-    private static final String VERSION = "v1.0.0-alpha";
+    private static final String VERSION = "v1.0.0";
     
     // Private Static Instance/Property Fields
     private static ArduinoCommunication arduinoComm;
