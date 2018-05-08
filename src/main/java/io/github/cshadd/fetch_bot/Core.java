@@ -118,6 +118,10 @@ implements FetchBot {
                                                 Logger.debug("Turning right!");
                                                 arduinoComm.setSourceValue("a", "Right");
                                             }
+                                            else {
+                                                pathfindControl.rotateLeft();
+                                                arduinoComm.setSourceValue("a", "Stop");
+                                            }
                                         }
                                     }
                                     else if (pathfindControl.isNextVisited()) {
