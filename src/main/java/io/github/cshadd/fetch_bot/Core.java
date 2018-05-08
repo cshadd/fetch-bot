@@ -140,7 +140,9 @@ implements FetchBot {
                             }
                         }
                         else {
-                            webInterfaceComm.setSourceValue("emotion", "Neutral");
+                            if (!tracked) {
+                                webInterfaceComm.setSourceValue("emotion", "Neutral");
+                            }
                             arduinoComm.setSourceValue("a", "Stop");
                         }
                     }
