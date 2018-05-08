@@ -131,7 +131,7 @@ You will package the main Java code into a jar.
 
 Execute
 ```bash
-mvn package
+mvn source:jar package
 ```
 in a Bash terminal.
 

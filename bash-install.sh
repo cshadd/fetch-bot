@@ -6,7 +6,7 @@ make upload
 rm -f -r ./build-uno
 cd ../../..
 mkdir -p ~/bin
-mvn clean package
+mvn clean source:jar package
 cp -r ./target/libs ~/bin
 cp ./target/fetch-bot-v1.0.0-alpha.jar ~/bin/fetch-bot-v1.0.0-alpha.jar
 cp ./src/bash-start.sh ~/bin/StartFetchBot.sh
