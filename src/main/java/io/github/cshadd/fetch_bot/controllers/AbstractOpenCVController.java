@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -28,12 +29,12 @@ public abstract class AbstractOpenCVController
 extends AbstractController
 implements OpenCVController {
     // Private Constant Instance/Property Fields
-    private static final int CAMERA_PORT = 0; // Change if needed
     private static final int CONFIDENCE_LIMIT = 90;
+    private static final int DEFAULT_CAMERA_PORT = 0;
     private static final String DEPLOY_PATH = "./libs/fetch-bot/";
-    private static final String DEPLOY_CAFFEMODEL = DEPLOY_PATH + "deploy.caffemodel";
-    private static final String DEPLOY_PROTOTXT_TXT = DEPLOY_PATH + "deploy.prototxt.txt";
-    private static final String DEPLOY_TRACK_CLASSES = DEPLOY_PATH + "deploy.track.classes";
+    private static final String DEPLOY_CAFFEMODEL_FILE = DEPLOY_PATH + "deploy.caffemodel";
+    private static final String DEPLOY_PROTOTXT_TXT_FILE = DEPLOY_PATH + "deploy.prototxt.txt";
+    private static final String DEPLOY_TRACK_CLASSES_FILE = DEPLOY_PATH + "deploy.track.classes";
     private static final double SCALE_FACTOR = 0.007843;
     private static final int SCENE_W = 640;
     private static final int SCENE_H = 480;
@@ -44,8 +45,9 @@ implements OpenCVController {
     private final List<String> trackClasses;
     
     // Protected Final Instance/Property Fields
+    protected final int cameraPort;
     protected final Thread cameraThread;
-    protected final CameraThread cameraRunnable;    
+    protected final CameraThread cameraRunnable;
     
     // Private Instance/Property Fields
     private Mat cameraFrame;
@@ -67,20 +69,28 @@ implements OpenCVController {
     // Protected Constructors
     protected AbstractOpenCVController()
     throws OpenCVControllerException {
+        this(DEFAULT_CAMERA_PORT);
+    }
+    protected AbstractOpenCVController(int cameraPort)
+    throws OpenCVControllerException {
         super();
         buffer = null;
-        camera = new VideoCapture(CAMERA_PORT);
+        this.cameraPort = cameraPort;
+        camera = new VideoCapture(this.cameraPort);
         cameraFrame = new Mat();
         cameraRunnable = new CameraThread();
         cameraThread = new Thread(cameraRunnable);
         det = null;
         try {
-            net = Dnn.readNetFromCaffe(DEPLOY_PROTOTXT_TXT, DEPLOY_CAFFEMODEL);
-            final File trackClassesInput = new File(DEPLOY_TRACK_CLASSES);
+            net = Dnn.readNetFromCaffe(DEPLOY_PROTOTXT_TXT_FILE, DEPLOY_CAFFEMODEL_FILE);
+            final File trackClassesInput = new File(DEPLOY_TRACK_CLASSES_FILE);
             trackClasses = FileUtils.readLines(trackClassesInput, "UTF-8");
         }
+        catch (IOException e) {
+            throw new OpenCVControllerException("Could not read neural network files.", e);
+        }
         catch (Exception e) {
-            throw new OpenCVControllerException("There was an unknown issue!", e);
+            throw new OpenCVControllerException("Unknown issue.", e);
         }
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {

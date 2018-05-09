@@ -17,13 +17,13 @@ import org.apache.commons.io.FileUtils;
 public class Logger
 implements FetchBot {
     // Private Constant Instance/Property Fields
+    private static final Console CONSOLE = new Console();
     private static final String TAG = "[FETCH BOT]";
     
     // Public Constant Instance/Property Fields
-    public static final String LOG_PATH = "FetchBot.log";
+    public static final String LOG_FILE = "FetchBot.log";
         
-    // Private Instance/Property Fields
-    private static final Console console;
+    // Private Static Instance/Property Fields
     private static boolean debug;
     private static java.util.logging.Logger javaLogger;
     private static FileHandler javaLoggerHandler;
@@ -36,7 +36,7 @@ implements FetchBot {
     // Private Static Methods
     private static String read()
     throws IOException {
-        File input = new File(LOG_PATH);
+        File input = new File(LOG_FILE);
         String returnData = FileUtils.readFileToString(input, "UTF-8");
         return returnData;
     }
@@ -58,15 +58,17 @@ implements FetchBot {
                 webInterfaceComm.setSourceValue("verbose", read());
             }
         }
+        catch (IOException e) {
+            fatalError(e, "Could not read " + LOG_FILE + ".");
+        }
         catch (Exception e) {
-            fatalError(e, "There was an unknown issue!");
+            fatalError(e, "Unknown issue.");
         }
         finally { }
     }
 
     // Public Static Methods
     static {
-        console = new Console();
         javaLogger = java.util.logging.Logger.getLogger(java.util.logging.Logger.GLOBAL_LOGGER_NAME);
         javaLogger.setLevel(Level.ALL);
         javaLoggerHandlerFormatter = new SimpleFormatter();
@@ -77,23 +79,23 @@ implements FetchBot {
         }
     }
     public static void clear() {
-        console.title("--- Fetch Bot ---", "https://cshadd.github.io/fetch-bot/");
+        CONSOLE.title("--- Fetch Bot ---", "https://cshadd.github.io/fetch-bot/");
         File input = null;
         try {
-            input = new File(LOG_PATH);
+            input = new File(LOG_FILE);
             FileUtils.deleteQuietly(input);
-            javaLoggerHandler = new FileHandler(LOG_PATH);
+            javaLoggerHandler = new FileHandler(LOG_FILE);
             javaLoggerHandler.setFormatter(javaLoggerHandlerFormatter);
             javaLogger.addHandler(javaLoggerHandler);
         }
         catch (Exception e) {
-            fatalError(e, "There was an unknown issue!");
+            fatalError(e, "Unknown issue.");
         }
         finally { }
     }
     public static void close() {
         javaLogger.removeHandler(javaLoggerHandler);
-        console.promptForExit();
+        CONSOLE.promptForExit();
     }
     public static void debug(String msg) {
         debug(msg, true);
@@ -101,7 +103,7 @@ implements FetchBot {
     public static void debug(String msg, boolean append) {
         if (debug) {
             msg = TAG + " [DEBUG] " + msg;
-            console.println(msg);
+            CONSOLE.println(msg);
             writeInterface(Level.INFO, msg, append);
         }
     }
@@ -110,7 +112,7 @@ implements FetchBot {
     }
     public static void error(Throwable e, String msg, boolean append) {
         msg = TAG + " [ERROR (SAFELY CAUGHT)] " + msg;
-        console.println("\u001B[31m" + msg + "\nPlease report this issue to the developers!\u001B[0m");
+        CONSOLE.println("\u001B[31m" + msg + "\nPlease report this issue to the developers!\u001B[0m");
         writeInterface(Level.SEVERE, msg, append, e);
     }
     public static void fatalError(Throwable e, String msg) {
@@ -118,7 +120,7 @@ implements FetchBot {
     }
     public static void fatalError(Throwable e, String msg, boolean append) {
         msg = TAG + " [FATAL ERROR (SAFELY CAUGHT)] " + msg;
-        console.println("\u001B[31m" + msg + "\nPlease report this issue to the developers!\u001B[0m");
+        CONSOLE.println("\u001B[31m" + msg + "\nPlease report this issue to the developers!\u001B[0m");
         write(Level.SEVERE, msg, append, e);
     }
     public static void info(String msg) {
@@ -126,7 +128,7 @@ implements FetchBot {
     }
     public static void info(String msg, boolean append) {
         msg = TAG + " [INFO] " + msg;
-        console.println(msg);
+        CONSOLE.println(msg);
         writeInterface(Level.INFO, msg, append);
     }
     public static void setWebInterfaceCommunications(WebInterfaceCommunication comm) {
@@ -143,7 +145,7 @@ implements FetchBot {
     }
     public static void warn(Throwable e, String msg, boolean append) {
         msg = TAG + " [WARN] " + msg;
-        console.println("\u001B[33m" + msg + "\u001B[0m");
+        CONSOLE.println("\u001B[33m" + msg + "\u001B[0m");
         writeInterface(Level.WARNING, msg, append, e);
     }
 }

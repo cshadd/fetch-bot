@@ -276,8 +276,7 @@ implements FetchBot {
         finally { }
 
         // Startup logging
-        Logger.info("Fetch Bot " + VERSION + " started as profile " + profile + "!");
-        Logger.info("ArduinoCommunication - Opened serial on " + ArduinoCommunicationImpl.SERIAL_PORT + ".");        
+        Logger.info("Core - Fetch Bot " + VERSION + " started as profile " + profile + "!");
         try {
             webInterfaceComm.pushSource();
         }
@@ -318,11 +317,11 @@ implements FetchBot {
         finally { }
 
         if (!VERSION.equals(currentVersion)) {
-            Logger.warn("VersionCheck - [Version] mismatch (this: " + VERSION + "; current: " + currentVersion + "), this version might be outdated!");
+            Logger.warn("VersionCheck - Version mismatch (this: " + VERSION + "; current: " + currentVersion + "), this version might be outdated!");
         }
     }
     private static void terminate() {
-        Logger.info("Fetch Bot terminating! Log file: " + Logger.LOG_PATH);
+        Logger.info("Core - Fetch Bot terminating! Log file: " + Logger.LOG_FILE);
         try {
             openCVControl.stopCamera();
             openCVControl.close();

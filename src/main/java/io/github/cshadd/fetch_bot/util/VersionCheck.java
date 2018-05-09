@@ -14,7 +14,7 @@ import org.json.JSONObject;
 public class VersionCheck
 implements FetchBot {
     // Private Constant Instance/Property Fields
-    private static final int API_OBJECT = 0;
+    private static final int API_OBJECT_ID = 0;
     private static final String API_URL = "https://api.github.com/repos/cshadd/fetch-bot/releases";
     private static final String API_VERSION_TAG = "tag_name";
 
@@ -30,17 +30,17 @@ implements FetchBot {
         try {
             InputStream in = new URL(API_URL).openStream();
             api = new JSONArray(IOUtils.toString(in, "UTF-8"));
-            apiData = api.getJSONObject(API_OBJECT);
+            apiData = api.getJSONObject(API_OBJECT_ID);
             returnData = apiData.getString(API_VERSION_TAG);
         }
         catch (IOException e) {
-            throw new VersionCheckException("There was an issue with IO!", e);
+            throw new VersionCheckException("Could not read " + API_URL + ".", e);
         }
         catch (JSONException e) {
-            throw new VersionCheckException("There was an issue with JSON!", e);
+            throw new VersionCheckException("Could not parse JSON in " + API_URL +  ".", e);
         }
         catch (Exception e) {
-            throw new VersionCheckException("There was an unknown issue!", e);
+            throw new VersionCheckException("Unknown issue.", e);
         }
         finally { }
         return returnData;

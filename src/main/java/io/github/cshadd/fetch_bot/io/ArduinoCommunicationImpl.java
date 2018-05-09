@@ -10,6 +10,9 @@ extends AbstractArduinoCommunication {
     public ArduinoCommunicationImpl() {
         super();
     }
+    public ArduinoCommunicationImpl(String serialPort) {
+        super(serialPort);
+    }
 
     // Public Methods (Overrided)
     @Override
@@ -48,5 +51,9 @@ extends AbstractArduinoCommunication {
         setRobotValue("s", "-1");
 
         setSourceValue("a", "Stop");
+    }
+    @Override
+    public String toString() {
+        return serialPort;
     }
 }
