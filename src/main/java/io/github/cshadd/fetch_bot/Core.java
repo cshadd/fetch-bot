@@ -94,21 +94,21 @@ implements FetchBot {
                                     Logger.debug("PathfindController - " + pathfindControl + ".");
                                     
                                     if (openCVControl.isTrackClassFound()) {
-                                        Logger.info("Found you!");
+                                        Logger.info("OpenCVController - Target found!");
                                         webInterfaceComm.setSourceValue("emotion", "Happy");
                                         arduinoComm.setSourceValue("a", "Stop");
                                         tracked = true;
                                     }
                                     else {
-                                        Logger.info("Hmm... curious.");
-                                        final boolean backBlocked;
-                                        final boolean backVisited;
-                                        final boolean frontBlocked;
-                                        final boolean frontVisited;
-                                        final boolean leftBlocked;
-                                        final boolean leftVisited;
-                                        final boolean rightBlocked;
-                                        final boolean rightVisited;
+                                        Logger.info("OpenCVController - Target not found!");
+                                        boolean backBlocked = false;
+                                        boolean backVisited = false;
+                                        boolean frontBlocked = false;
+                                        boolean frontVisited = false;
+                                        boolean leftBlocked = false;
+                                        boolean leftVisited = false;
+                                        boolean rightBlocked = false;
+                                        boolean rightVisited = false;
                                         
                                         frontBlocked = pathfindControl.isNextBlocked();
                                         frontVisited = pathfindControl.isNextVisited();
@@ -136,21 +136,21 @@ implements FetchBot {
                                                     pathfindControl.rotateRight();
                                                     if (leftBlocked) { // B-B-B-B
                                                         pathfindControl.rotateRight();
-                                                        Logger.info("I can't seem to find a way out.");
+                                                        Logger.debug("PathfindController - I can't seem to find a way out.");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                                         arduinoComm.setSourceValue("a", "Stop");
                                                         tracked = true;
                                                     }
                                                     else if (leftVisited) { // B-B-B-V
-                                                        Logger.info("Get out of my way!");
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Left!");
+                                                        Logger.debug("PathfindController - Get out of my way!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Left!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                                         arduinoComm.setSourceValue("a", "Left");
                                                     }
                                                     else { // B-B-B-O
-                                                        Logger.info("Get out of my way!");
-                                                        Logger.debug("Left!");
+                                                        Logger.debug("PathfindController - Get out of my way!");
+                                                        Logger.debug("PathfindController - Left!");
                                                         webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
                                                         arduinoComm.setSourceValue("a", "Left");
                                                     }
@@ -159,29 +159,29 @@ implements FetchBot {
                                                     pathfindControl.rotateRight();
                                                     if (leftBlocked) { // B-B-V-B
                                                         pathfindControl.rotateLeft();
-                                                        Logger.info("Get out of my way!");
-                                                        Logger.debug("Back!");
+                                                        Logger.debug("PathfindController - Get out of my way!");
+                                                        Logger.debug("PathfindController - Back!");
                                                         webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
                                                         arduinoComm.setSourceValue("a", "DRight");
                                                     }
                                                     else if (leftVisited) { // B-B-V-V
                                                         pathfindControl.rotateLeft();
-                                                        Logger.info("Get out of my way!");
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Back!");
+                                                        Logger.debug("PathfindController - Get out of my way!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Back!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");                                                        
                                                         arduinoComm.setSourceValue("a", "DLeft");
                                                     }
                                                     else { // B-B-V-O
-                                                        Logger.info("Get out of my way!");
-                                                        Logger.debug("Left!");
+                                                        Logger.debug("PathfindController - Get out of my way!");
+                                                        Logger.debug("PathfindController - Left!");
                                                         webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
                                                         arduinoComm.setSourceValue("a", "Left");
                                                     }
                                                 }
                                                 else { // B-B-O
-                                                    Logger.info("Get out of my way!");
-                                                    Logger.debug("Back!");
+                                                    Logger.debug("PathfindController - Get out of my way!");
+                                                    Logger.debug("PathfindController - Back!");
                                                     webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
                                                     arduinoComm.setSourceValue("a", "DLeft");
                                                 }
@@ -193,24 +193,24 @@ implements FetchBot {
                                                     if (leftBlocked) { // B-V-B-B
                                                         pathfindControl.rotateLeft();
                                                         pathfindControl.rotateLeft();
-                                                        Logger.info("Get out of my way!");
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Right!");
+                                                        Logger.debug("PathfindController - Get out of my way!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Right!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");                                                        
                                                         arduinoComm.setSourceValue("a", "Right");
                                                     }
                                                     else if (leftVisited) { // B-V-B-V
                                                         pathfindControl.rotateLeft();
                                                         pathfindControl.rotateLeft();
-                                                        Logger.info("Get out of my way!");
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Right!");
+                                                        Logger.debug("PathfindController - Get out of my way!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Right!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                                         arduinoComm.setSourceValue("a", "Right");
                                                     }
                                                     else { // B-V-B-O
-                                                        Logger.info("Get out of my way!");
-                                                        Logger.debug("Left!");
+                                                        Logger.debug("PathfindController - Get out of my way!");
+                                                        Logger.debug("PathfindController - Left!");
                                                         webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
                                                         arduinoComm.setSourceValue("a", "Left");
                                                     }
@@ -219,38 +219,38 @@ implements FetchBot {
                                                     pathfindControl.rotateRight();
                                                     if (leftBlocked) { // B-V-V-B
                                                         pathfindControl.rotateLeft();
-                                                        Logger.info("Get out of my way!");
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Back!");
+                                                        Logger.debug("PathfindController - Get out of my way!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Back!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");                                                        
                                                         arduinoComm.setSourceValue("a", "DRight");
                                                     }
                                                     else if (leftVisited) { // B-V-V-V
                                                         pathfindControl.rotateLeft();
                                                         pathfindControl.rotateLeft();
-                                                        Logger.info("Get out of my way!");
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Right!");
+                                                        Logger.debug("PathfindController - Get out of my way!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Right!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                                         arduinoComm.setSourceValue("a", "Right");    
                                                     }
                                                     else { // B-V-V-O
-                                                        Logger.info("Get out of my way!");
-                                                        Logger.debug("Left!");
+                                                        Logger.debug("PathfindController - Get out of my way!");
+                                                        Logger.debug("PathfindController - Left!");
                                                         webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
                                                         arduinoComm.setSourceValue("a", "Left");                                                        
                                                     }
                                                 }
                                                 else { // B-V-O
-                                                    Logger.info("Get out of my way!");
-                                                    Logger.debug("Back!");
+                                                    Logger.debug("PathfindController - Get out of my way!");
+                                                    Logger.debug("PathfindController - Back!");
                                                     webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
                                                     arduinoComm.setSourceValue("a", "DLeft");
                                                 }
                                             }
                                             else { // B-O
-                                                Logger.info("Get out of my way!");
-                                                Logger.debug("Right!");
+                                                Logger.debug("PathfindController - Get out of my way!");
+                                                Logger.debug("PathfindController - Right!");
                                                 webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
                                                 arduinoComm.setSourceValue("a", "Right");
                                             }
@@ -263,23 +263,23 @@ implements FetchBot {
                                                     pathfindControl.rotateRight();
                                                     if (leftBlocked) { // V-B-B-B
                                                         pathfindControl.rotateRight();
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Forward!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Forward!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                                         pathfindControl.goNext();
                                                         arduinoComm.setSourceValue("a", "Forward");
                                                     }
                                                     else if (leftVisited) { // V-B-B-V
                                                         pathfindControl.rotateRight();
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Forward!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Forward!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                                         pathfindControl.goNext();
                                                         arduinoComm.setSourceValue("a", "Forward");
                                                     }
                                                     else { // V-B-B-O
                                                         Logger.info("Nothing yet.");
-                                                        Logger.debug("Left!");
+                                                        Logger.debug("PathfindController - Left!");
                                                         webInterfaceComm.setSourceValue("emotion", "Neutral");
                                                         arduinoComm.setSourceValue("a", "Left");
                                                     }
@@ -288,30 +288,30 @@ implements FetchBot {
                                                     pathfindControl.rotateRight();
                                                     if (leftBlocked) { // V-B-V-B
                                                         pathfindControl.rotateRight();
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Forward!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Forward!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                                         pathfindControl.goNext();
                                                         arduinoComm.setSourceValue("a", "Forward");
                                                     }
                                                     else if (leftVisited) { // V-B-V-V
                                                         pathfindControl.rotateRight();
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Forward!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Forward!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                                         pathfindControl.goNext();
                                                         arduinoComm.setSourceValue("a", "Forward");
                                                     }
                                                     else { // V-B-V-O
                                                         Logger.info("Nothing yet.");
-                                                        Logger.debug("Left!");
+                                                        Logger.debug("PathfindController - Left!");
                                                         webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
                                                         arduinoComm.setSourceValue("a", "Left");
                                                     }
                                                 }
                                                 else { // V-B-O
                                                     Logger.info("Nothing yet.");
-                                                    Logger.debug("Back!");
+                                                    Logger.debug("PathfindController - Back!");
                                                     webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
                                                     arduinoComm.setSourceValue("a", "DLeft");
                                                 }
@@ -322,23 +322,23 @@ implements FetchBot {
                                                     pathfindControl.rotateRight();
                                                     if (leftBlocked) { // V-V-B-B
                                                         pathfindControl.rotateRight();
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Forward!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Forward!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                                         pathfindControl.goNext();
                                                         arduinoComm.setSourceValue("a", "Forward");
                                                     }
                                                     else if (leftVisited) { // V-V-B-V
                                                         pathfindControl.rotateRight();
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Forward!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Forward!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                                         pathfindControl.goNext();
                                                         arduinoComm.setSourceValue("a", "Forward");
                                                     }
                                                     else { // V-V-B-O
                                                         Logger.info("Nothing yet.");
-                                                        Logger.debug("Left!");
+                                                        Logger.debug("PathfindController - Left!");
                                                         webInterfaceComm.setSourceValue("emotion", "Neutral");
                                                         arduinoComm.setSourceValue("a", "Left");
                                                     }
@@ -347,44 +347,44 @@ implements FetchBot {
                                                     pathfindControl.rotateRight();
                                                     if (leftBlocked) { // V-V-V-B
                                                         pathfindControl.rotateRight();
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Forward!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Forward!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                                         pathfindControl.goNext();
                                                         arduinoComm.setSourceValue("a", "Forward");
                                                     }
                                                     else if (leftVisited) { // V-V-V-V
                                                         pathfindControl.rotateRight();
-                                                        Logger.info("Wait I visited that area before.");
-                                                        Logger.debug("Forward!");
+                                                        Logger.debug("PathfindController - Wait I visited that area before.");
+                                                        Logger.debug("PathfindController - Forward!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                                         pathfindControl.goNext();
                                                         arduinoComm.setSourceValue("a", "Forward");  
                                                     }
                                                     else { // V-V-V-O
                                                         Logger.info("Nothing yet.");
-                                                        Logger.debug("Left!");
+                                                        Logger.debug("PathfindController - Left!");
                                                         webInterfaceComm.setSourceValue("emotion", "Neutral");
                                                         arduinoComm.setSourceValue("a", "Left");
                                                     }
                                                 }
                                                 else { // V-V-O
                                                     Logger.info("Nothing yet.");
-                                                    Logger.debug("Back!");
+                                                    Logger.debug("PathfindController - Back!");
                                                     webInterfaceComm.setSourceValue("emotion", "Neutral");                                                        
                                                     arduinoComm.setSourceValue("a", "DLeft");
                                                 }
                                             }
                                             else { // V-O
                                                 Logger.info("Nothing yet.");
-                                                Logger.debug("Right!");
+                                                Logger.debug("PathfindController - Right!");
                                                 webInterfaceComm.setSourceValue("emotion", "Neutral");                                                        
                                                 arduinoComm.setSourceValue("a", "Right");
                                             } 
                                         }
                                         else { // O
                                             Logger.info("Nothing yet.");
-                                            Logger.debug("Forward!");
+                                            Logger.debug("PathfindController - Forward!");
                                             webInterfaceComm.setSourceValue("emotion", "Neutral");
                                             pathfindControl.goNext();
                                             arduinoComm.setSourceValue("a", "Forward");
@@ -537,9 +537,7 @@ implements FetchBot {
             Logger.error(e, "There was an unknown issue!");
         }
         finally { }
-        Logger.info("Core - Please wait.");
         pathfindControl = new PathfindControllerImpl();
-        pathfindControl.reset();
         openCVControl.startCamera();
         
         // Version check
@@ -558,7 +556,6 @@ implements FetchBot {
         if (!VERSION.equals(currentVersion)) {
             Logger.warn("VersionCheck - Version mismatch [this: " + VERSION + "; current: " + currentVersion + "], this version might be outdated!");
         }
-        Logger.info("Core - Ready.");
     }
     private static void terminate() {
         Logger.info("Core - Fetch Bot terminating! Log file: " + Logger.LOG_FILE);

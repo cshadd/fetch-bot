@@ -249,7 +249,6 @@ implements OpenCVController {
                         + "TARGET</p></html>");
             }
             else {
-                trackClassFound = false;
                 terminalLabelTrack.setText("<html><p style='color: white;'>" + capturedTrackClass
                         + " [" + fullCon + "%]</p></html>");
             }

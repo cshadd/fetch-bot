@@ -9,7 +9,7 @@ public abstract class AbstractPathfindController
 extends AbstractController
 implements PathfindController {
     // Private Constant Instance/Property Fields
-    private static final int COORD_MAX_RANGE = 10;
+    private static final int COORD_MAX_RANGE = 6;
     private static final int ROT_MAX_RANGE = 360;
 
     // Protected Constant Instance/Property Fields
@@ -222,6 +222,7 @@ implements PathfindController {
     protected CartesianGraph.CartesianCoordinate getNext() {
         CartesianGraph.CartesianCoordinate coord = cartesianGraph.getNextCoordinateFromDirection(currentRot);
         if (coord.x < -COORD_MAX_RANGE || coord.x > COORD_MAX_RANGE || coord.y < -COORD_MAX_RANGE || coord.y > COORD_MAX_RANGE) {
+            Logger.debug("PathfindController - Out of bounds, resetting.");
             cartesianGraph.reset();
             coord = cartesianGraph.currentCoord;
         }
