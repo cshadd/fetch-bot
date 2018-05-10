@@ -10,6 +10,10 @@ extends AbstractOpenCVController {
     throws OpenCVControllerException {
         super();
     }
+    public OpenCVControllerImpl(int cameraPort)
+    throws OpenCVControllerException {
+        super(cameraPort);
+    }
 
     // Public Methods (Overrided)
     @Override
