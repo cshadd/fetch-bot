@@ -81,6 +81,7 @@ implements ArduinoCommunication {
             if (!serial.isOpen()) {
                 serial.open(serialConfig);
                 serialListener = new SerialDataEventListener() {
+                    // Public Methods (Overrided)
                     @Override
                     public void dataReceived(SerialDataEvent event) {
                         try {
