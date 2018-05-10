@@ -24,8 +24,6 @@ import org.opencv.dnn.Dnn;
 import org.opencv.dnn.Net;
 import org.opencv.videoio.VideoCapture;
 
-import io.github.cshadd.fetch_bot.util.Logger;
-
 // Main
 public abstract class AbstractOpenCVController
 extends AbstractController
