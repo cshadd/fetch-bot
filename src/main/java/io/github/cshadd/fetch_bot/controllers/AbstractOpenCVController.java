@@ -1,4 +1,5 @@
 package io.github.cshadd.fetch_bot.controllers;
+import static io.github.cshadd.fetch_bot.Core.delayThread;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
@@ -159,8 +160,10 @@ implements OpenCVController {
 
                 terminalFrame.pack();
                 terminalFrame.setVisible(true);
+                terminalFrame.setEnabled(true);
                 
                 while (terminalFrame.isEnabled()) {
+                    delayThread(500);
                     if (bufferImg != null) {
                         terminalLabelCam.setIcon(bufferImg);
                         
@@ -172,6 +175,8 @@ implements OpenCVController {
                         }
                         else {
                             trackClassFound = false;
+                            terminalLabelTrack.setText("<html><p style='color: white;'>" + capturedTrackClass
+                                    + " [" + fullCon + "%]</p></html>");
                         }
                         terminalLabelStatus.setText("<html><p style='color: white; font-size: 20px'>&#187; Status: Processing<br />"
                                 + "Target: " + trackClass + "<br />"
