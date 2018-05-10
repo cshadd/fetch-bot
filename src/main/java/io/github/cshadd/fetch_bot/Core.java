@@ -406,15 +406,14 @@ implements FetchBot {
                     }
                     else if (currentMode.equals("Idle")) {
                         webInterfaceComm.setRobotValue("trackclass", "None");
-
                         webInterfaceComm.setSourceValue("emotion", "Idle");
+                        arduinoComm.setSourceValue("a", "Stop");
                     }
                     else if (currentMode.equals("Off")) {
                         break;
                     }
                     else if (currentMode.equals("Manual")) {
                         webInterfaceComm.setRobotValue("trackclass", "None");
-                        
                         webInterfaceComm.setSourceValue("emotion", "Neutral");
                         
                         // Manual move
