@@ -75,6 +75,7 @@ implements FetchBot {
                         currentMode = mode;
                         Logger.debug("WebInterface - [mode: " + currentMode + "] command received.");
                         webInterfaceComm.setSourceValue("mode", currentMode);
+                        arduinoComm.setSourceValue("a", "Stop");
                     }
                     
                     if (currentMode.equals("Auto")) {
@@ -406,7 +407,6 @@ implements FetchBot {
                     }
                     else if (currentMode.equals("Idle")) {
                         webInterfaceComm.setRobotValue("trackclass", "None");
-                        webInterfaceComm.setSourceValue("emotion", "Idle");
                         arduinoComm.setSourceValue("a", "Stop");
                     }
                     else if (currentMode.equals("Off")) {
