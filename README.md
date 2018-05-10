@@ -91,7 +91,7 @@ Let's face it. In our day and age of the 21st century, we want lightweight mobil
 You may use any IDE of your choice to edit project files. We have included files for importing the project into Eclipse Oxygen or higher and Visual Studio 2017 or higher. These would be ``.project`` and ``fetch-bot.sln`` respectively.
 
 ## Installing The Project Software
-Before installing this project, you must make sure that you have installed all the dependencies necessary and have assembled the hardware correctly.
+Before installing this project, you must make sure that you have installed all the dependencies necessary and have assembled the hardware correctly. This will overwrite any code on the Arduino.
 
 ### Easy Install
 Execute
@@ -177,6 +177,7 @@ The folder for the training data is ``<PROJECT DIRECTORY>/src/neural-network/``.
 Tutorials on training is beyond the scope of this project.
 
 ## Uninstalling The Project Software
+This will help you to uninstall the project. This will not uninstall any of the code on the Arduino so you will have to do that part manually yourself.
 
 ### Easy Uninstall
 Only do this if you did the Easy Install!
