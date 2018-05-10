@@ -245,7 +245,7 @@ implements FetchBot {
                                                     arduinoComm.setSourceValue("a", "DLeft");
                                                 }
                                             }
-                                            else { // B-0
+                                            else { // B-O
                                                 pathfindControl.rotateRight();
                                                 Logger.info("Get out of my way!");
                                                 Logger.debug("Right!");
@@ -373,7 +373,7 @@ implements FetchBot {
                                                     arduinoComm.setSourceValue("a", "DLeft");
                                                 }
                                             }
-                                            else { // V-0
+                                            else { // V-O
                                                 pathfindControl.rotateRight();
                                                 Logger.info("Nothing yet.");
                                                 Logger.debug("Right!");
@@ -381,7 +381,7 @@ implements FetchBot {
                                                 arduinoComm.setSourceValue("a", "Right");
                                             } 
                                         }
-                                        else {
+                                        else { // O
                                             Logger.info("Nothing yet.");
                                             Logger.debug("Forward!");
                                             webInterfaceComm.setSourceValue("emotion", "Neutral");
