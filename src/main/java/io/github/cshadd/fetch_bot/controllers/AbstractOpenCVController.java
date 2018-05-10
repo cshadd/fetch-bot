@@ -142,7 +142,7 @@ implements OpenCVController {
                 terminalFrame.setVisible(true);
             }
         });
-        trackClass = "";
+        trackClass = "None";
         trackClassFound = false;
     }
 
