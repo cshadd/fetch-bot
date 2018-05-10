@@ -53,7 +53,15 @@ void loop() {
     communicationJsonReturn["a"] = communication;
 
     // Movement
-    if (communication.equals("Forward")) {
+    if (communication.equals("DRight")) {
+        moveStepperMotors(-1, -1);
+        moveStepperMotors(-1, -1);
+    }
+    else if (communication.equals("DLeft")) {
+        moveStepperMotors(1, 1);
+        moveStepperMotors(1, 1);
+    }
+    else if (communication.equals("Forward")) {
         moveStepperMotors(-1, 1);
     }
     else if (communication.equals("Right")) {

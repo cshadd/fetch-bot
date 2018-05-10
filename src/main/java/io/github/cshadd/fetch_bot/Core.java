@@ -75,103 +75,334 @@ implements FetchBot {
                         currentMode = mode;
                         Logger.debug("WebInterface - [mode: " + currentMode + "] command received.");
                         webInterfaceComm.setSourceValue("mode", currentMode);
-                        pathfindControl.reset();
                     }
                     
                     if (currentMode.equals("Auto")) {
                         if (currentTrackClass != null) {
                             if (!currentTrackClass.equals("None")) {
-                                if (currentUltrasonicSensor <= SENSOR_LIMIT) {
-                                    Logger.warn("Arduino - Safety cut due to imminent collision.");
-                                    pathfindControl.blockNext();
-                                }
-                                else {
-                                    pathfindControl.unblockNext();
-                                }
-                                Logger.debug("PathfindController - " + pathfindControl + ".");
-
-                                
-                                if (openCVControl.isTrackClassFound()) {
-                                    Logger.info("Found you!");
-                                    webInterfaceComm.setSourceValue("emotion", "Happy");
-                                    webInterfaceComm.setRobotValue("trackclass", "None");
-                                    arduinoComm.setSourceValue("a", "Stop");
-                                    tracked = true;
-                                    currentTrackClass = "None";
-                                    pathfindControl.reset();
-                                }
-                                else {
-                                    Logger.info("Hmm... curious.");
-                                    if (pathfindControl.isNextBlocked()) {
-                                        Logger.info("Get out of my way!");
-                                        webInterfaceComm.setSourceValue("emotion", "Angry");
-                                        
-                                        pathfindControl.rotateLeft();
-                                        Logger.debug("PathfindController - " + pathfindControl + ".");
-                                        if (!pathfindControl.isNextBlocked()) {
-                                            Logger.debug("Turning left!");
-                                            arduinoComm.setSourceValue("a", "Left");
-                                        }
-                                        else {
-                                            pathfindControl.rotateRight();
-                                            pathfindControl.rotateRight();
-                                            Logger.debug("PathfindController - " + pathfindControl + ".");
-                                            if (!pathfindControl.isNextBlocked()) {
-                                                Logger.debug("Turning right!");
-                                                arduinoComm.setSourceValue("a", "Right");
-                                            }
-                                            else {
-                                                Logger.info("I can't seem to find a way out.");
-                                                webInterfaceComm.setSourceValue("emotion", "Sad");
-                                                pathfindControl.rotateLeft();
-                                                arduinoComm.setSourceValue("a", "Stop");
-                                            }
-                                        }
-                                    }
-                                    else if (pathfindControl.isNextVisited()) {
-                                        Logger.info("Wait I was just here.");
-                                        webInterfaceComm.setSourceValue("emotion", "Sad");
-
-                                        pathfindControl.rotateLeft();
-                                        if (!pathfindControl.isNextVisited()) {
-                                            Logger.debug("Turning left!");
-                                            arduinoComm.setSourceValue("a", "Left");
-                                        }
-                                        else {
-                                            pathfindControl.rotateRight();
-                                            pathfindControl.rotateRight();
-                                            Logger.debug("PathfindController - " + pathfindControl + ".");
-                                            if (!pathfindControl.isNextVisited()) {
-                                                Logger.debug("Turning right!");
-                                                arduinoComm.setSourceValue("a", "Right");
-                                            }
-                                            else {
-                                                pathfindControl.rotateLeft();
-                                                Logger.debug("Forward!");
-                                                pathfindControl.goNext();
-                                                arduinoComm.setSourceValue("a", "Forward");
-                                            }
-                                        }
+                                if (!tracked) {
+                                    if (currentUltrasonicSensor <= SENSOR_LIMIT) {
+                                        Logger.warn("Arduino - Safety cut due to imminent collision.");
+                                        pathfindControl.blockNext();
                                     }
                                     else {
-                                        Logger.info("Nothing yet.");
-                                        webInterfaceComm.setSourceValue("emotion", "Neutral");
-                                        Logger.debug("Forward!");
-                                        pathfindControl.goNext();
-                                        arduinoComm.setSourceValue("a", "Forward");
+                                        pathfindControl.unblockNext();
                                     }
+                                    Logger.debug("PathfindController - " + pathfindControl + ".");
+                                    
+                                    if (openCVControl.isTrackClassFound()) {
+                                        Logger.info("Found you!");
+                                        webInterfaceComm.setSourceValue("emotion", "Happy");
+                                        arduinoComm.setSourceValue("a", "Stop");
+                                        tracked = true;
+                                    }
+                                    else {
+                                        Logger.info("Hmm... curious.");
+                                        final boolean backBlocked;
+                                        final boolean backVisited;
+                                        final boolean frontBlocked;
+                                        final boolean frontVisited;
+                                        final boolean leftBlocked;
+                                        final boolean leftVisited;
+                                        final boolean rightBlocked;
+                                        final boolean rightVisited;
+                                        
+                                        frontBlocked = pathfindControl.isNextBlocked();
+                                        frontVisited = pathfindControl.isNextVisited();
+                                        pathfindControl.rotateRight();
+                                        rightBlocked = pathfindControl.isNextBlocked();
+                                        rightVisited = pathfindControl.isNextVisited();
+                                        pathfindControl.rotateRight();
+                                        backBlocked = pathfindControl.isNextBlocked();
+                                        backVisited = pathfindControl.isNextVisited();
+                                        pathfindControl.rotateRight();
+                                        leftBlocked = pathfindControl.isNextBlocked();
+                                        leftVisited = pathfindControl.isNextVisited();
+                                        pathfindControl.rotateRight();
+                                        
+                                        Logger.debug("PathfindController - [Back Blocked: " + backBlocked + "; Back Visited: " + backVisited  + "].");
+                                        Logger.debug("PathfindController - [Front Blocked: " + frontBlocked + "; Front Visited: " + frontVisited  + "].");
+                                        Logger.debug("PathfindController - [Left Blocked: " + leftBlocked + "; Left Visited: " + leftVisited  + "].");
+                                        Logger.debug("PathfindController - [Right Blocked: " + rightBlocked + "; Right Visited: " + rightVisited  + "].");
+ 
+                                        if (frontBlocked) { // B
+                                            pathfindControl.rotateRight();
+                                            if (rightBlocked) { // B-B
+                                                pathfindControl.rotateRight();
+                                                if (backBlocked) { // B-B-B
+                                                    pathfindControl.rotateRight();
+                                                    if (leftBlocked) { // B-B-B-B
+                                                        pathfindControl.rotateRight();
+                                                        Logger.info("I can't seem to find a way out.");
+                                                        Logger.debug("Stopping!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");
+                                                        arduinoComm.setSourceValue("a", "Stop");
+                                                        tracked = true;
+                                                    }
+                                                    else if (leftVisited) { // B-B-B-V
+                                                        Logger.info("Get out of my way!");
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Left!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");
+                                                        arduinoComm.setSourceValue("a", "Left");
+                                                    }
+                                                    else { // B-B-B-O
+                                                        Logger.info("Get out of my way!");
+                                                        Logger.debug("Left!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
+                                                        arduinoComm.setSourceValue("a", "Left");
+                                                    }
+                                                }
+                                                else if (backVisited) { // B-B-V
+                                                    pathfindControl.rotateRight();
+                                                    if (leftBlocked) { // B-B-V-B
+                                                        pathfindControl.rotateLeft();
+                                                        Logger.info("Get out of my way!");
+                                                        Logger.debug("Back!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
+                                                        arduinoComm.setSourceValue("a", "DRight");
+                                                    }
+                                                    else if (leftVisited) { // B-B-V-V
+                                                        pathfindControl.rotateLeft();
+                                                        Logger.info("Get out of my way!");
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Back!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");                                                        
+                                                        arduinoComm.setSourceValue("a", "DLeft");
+                                                    }
+                                                    else { // B-B-V-O
+                                                        Logger.info("Get out of my way!");
+                                                        Logger.debug("Left!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
+                                                        arduinoComm.setSourceValue("a", "Left");
+                                                    }
+                                                }
+                                                else { // B-B-O
+                                                    Logger.info("Get out of my way!");
+                                                    Logger.debug("Back!");
+                                                    webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
+                                                    arduinoComm.setSourceValue("a", "DLeft");
+                                                }
+                                            }
+                                            else if (rightVisited) { // B-V
+                                                pathfindControl.rotateRight();
+                                                if (backBlocked) { // B-V-B
+                                                    pathfindControl.rotateRight();
+                                                    if (leftBlocked) { // B-V-B-B
+                                                        pathfindControl.rotateLeft();
+                                                        pathfindControl.rotateLeft();
+                                                        Logger.info("Get out of my way!");
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Right!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");                                                        
+                                                        arduinoComm.setSourceValue("a", "Right");
+                                                    }
+                                                    else if (leftVisited) { // B-V-B-V
+                                                        pathfindControl.rotateLeft();
+                                                        pathfindControl.rotateLeft();
+                                                        Logger.info("Get out of my way!");
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Right!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");
+                                                        arduinoComm.setSourceValue("a", "Right");
+                                                    }
+                                                    else { // B-V-B-O
+                                                        Logger.info("Get out of my way!");
+                                                        Logger.debug("Left!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
+                                                        arduinoComm.setSourceValue("a", "Left");
+                                                    }
+                                                }
+                                                else if (backVisited) { // B-V-V
+                                                    pathfindControl.rotateRight();
+                                                    if (leftBlocked) { // B-V-V-B
+                                                        pathfindControl.rotateLeft();
+                                                        Logger.info("Get out of my way!");
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Back!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");                                                        
+                                                        arduinoComm.setSourceValue("a", "DRight");
+                                                    }
+                                                    else if (leftVisited) { // B-V-V-V
+                                                        pathfindControl.rotateLeft();
+                                                        pathfindControl.rotateLeft();
+                                                        Logger.info("Get out of my way!");
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Right!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");
+                                                        arduinoComm.setSourceValue("a", "Right");    
+                                                    }
+                                                    else { // B-V-V-O
+                                                        Logger.info("Get out of my way!");
+                                                        Logger.debug("Left!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
+                                                        arduinoComm.setSourceValue("a", "Left");                                                        
+                                                    }
+                                                }
+                                                else { // B-V-O
+                                                    Logger.info("Get out of my way!");
+                                                    Logger.debug("Back!");
+                                                    webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
+                                                    arduinoComm.setSourceValue("a", "DLeft");
+                                                }
+                                            }
+                                            else { // B-0
+                                                pathfindControl.rotateRight();
+                                                Logger.info("Get out of my way!");
+                                                Logger.debug("Right!");
+                                                webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
+                                                arduinoComm.setSourceValue("a", "Right");
+                                            }
+                                        }
+                                        else if (frontVisited) { // V
+                                            pathfindControl.rotateRight();
+                                            if (rightBlocked) { // V-B
+                                                pathfindControl.rotateRight();
+                                                if (backBlocked) { // V-B-B
+                                                    pathfindControl.rotateRight();
+                                                    if (leftBlocked) { // V-B-B-B
+                                                        pathfindControl.rotateRight();
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Forward!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");
+                                                        pathfindControl.goNext();
+                                                        arduinoComm.setSourceValue("a", "Forward");
+                                                    }
+                                                    else if (leftVisited) { // V-B-B-V
+                                                        pathfindControl.rotateRight();
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Forward!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");
+                                                        pathfindControl.goNext();
+                                                        arduinoComm.setSourceValue("a", "Forward");
+                                                    }
+                                                    else { // V-B-B-O
+                                                        Logger.info("Nothing yet.");
+                                                        Logger.debug("Left!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Neutral");
+                                                        arduinoComm.setSourceValue("a", "Left");
+                                                    }
+                                                }
+                                                else if (backVisited) { // V-B-V
+                                                    pathfindControl.rotateRight();
+                                                    if (leftBlocked) { // V-B-V-B
+                                                        pathfindControl.rotateRight();
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Forward!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");
+                                                        pathfindControl.goNext();
+                                                        arduinoComm.setSourceValue("a", "Forward");
+                                                    }
+                                                    else if (leftVisited) { // V-B-V-V
+                                                        pathfindControl.rotateRight();
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Forward!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");
+                                                        pathfindControl.goNext();
+                                                        arduinoComm.setSourceValue("a", "Forward");
+                                                    }
+                                                    else { // V-B-V-O
+                                                        Logger.info("Nothing yet.");
+                                                        Logger.debug("Left!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
+                                                        arduinoComm.setSourceValue("a", "Left");
+                                                    }
+                                                }
+                                                else { // V-B-O
+                                                    Logger.info("Nothing yet.");
+                                                    Logger.debug("Back!");
+                                                    webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
+                                                    arduinoComm.setSourceValue("a", "DLeft");
+                                                }
+                                            }
+                                            else if (rightVisited) { // V-V
+                                                pathfindControl.rotateRight();
+                                                if (backBlocked) { // V-V-B
+                                                    pathfindControl.rotateRight();
+                                                    if (leftBlocked) { // V-V-B-B
+                                                        pathfindControl.rotateRight();
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Forward!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");
+                                                        pathfindControl.goNext();
+                                                        arduinoComm.setSourceValue("a", "Forward");
+                                                    }
+                                                    else if (leftVisited) { // V-V-B-V
+                                                        pathfindControl.rotateRight();
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Forward!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");
+                                                        pathfindControl.goNext();
+                                                        arduinoComm.setSourceValue("a", "Forward");
+                                                    }
+                                                    else { // V-V-B-O
+                                                        Logger.info("Nothing yet.");
+                                                        Logger.debug("Left!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Neutral");
+                                                        arduinoComm.setSourceValue("a", "Left");
+                                                    }
+                                                }
+                                                else if (backVisited) { // V-V-V
+                                                    pathfindControl.rotateRight();
+                                                    if (leftBlocked) { // V-V-V-B
+                                                        pathfindControl.rotateRight();
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Forward!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");
+                                                        pathfindControl.goNext();
+                                                        arduinoComm.setSourceValue("a", "Forward");
+                                                    }
+                                                    else if (leftVisited) { // V-V-V-V
+                                                        pathfindControl.rotateRight();
+                                                        Logger.info("Wait I visited that area before.");
+                                                        Logger.debug("Forward!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Sad");
+                                                        pathfindControl.goNext();
+                                                        arduinoComm.setSourceValue("a", "Forward");  
+                                                    }
+                                                    else { // V-V-V-O
+                                                        Logger.info("Nothing yet.");
+                                                        Logger.debug("Left!");
+                                                        webInterfaceComm.setSourceValue("emotion", "Neutral");
+                                                        arduinoComm.setSourceValue("a", "Left");
+                                                    }
+                                                }
+                                                else { // V-V-O
+                                                    Logger.info("Nothing yet.");
+                                                    Logger.debug("Back!");
+                                                    webInterfaceComm.setSourceValue("emotion", "Neutral");                                                        
+                                                    arduinoComm.setSourceValue("a", "DLeft");
+                                                }
+                                            }
+                                            else { // V-0
+                                                pathfindControl.rotateRight();
+                                                Logger.info("Nothing yet.");
+                                                Logger.debug("Right!");
+                                                webInterfaceComm.setSourceValue("emotion", "Neutral");                                                        
+                                                arduinoComm.setSourceValue("a", "Right");
+                                            } 
+                                        }
+                                        else {
+                                            Logger.info("Nothing yet.");
+                                            Logger.debug("Forward!");
+                                            webInterfaceComm.setSourceValue("emotion", "Neutral");
+                                            pathfindControl.goNext();
+                                            arduinoComm.setSourceValue("a", "Forward");
+                                        }
+                                    }
+                                }
+                                else {
+                                    arduinoComm.setSourceValue("a", "Stop");
                                 }
                             }
                             else {
-                                if (!tracked) {
-                                    webInterfaceComm.setSourceValue("emotion", "Neutral");
-                                }
+                                webInterfaceComm.setSourceValue("emotion", "Neutral");
                                 arduinoComm.setSourceValue("a", "Stop");
                             }
                         }
                         else {
-                            webInterfaceComm.setSourceValue("emotion", "Neutral");
-                            arduinoComm.setSourceValue("a", "Stop");
+                            Logger.warn("WebInterface - [trackclass: " + currentTrackClass + "] is invalid, setting to [trackclass: None].");
+                            webInterfaceComm.setRobotValue("trackclass", "None");
                         }
                     }
                     else if (currentMode.equals("Idle")) {
@@ -184,6 +415,8 @@ implements FetchBot {
                     }
                     else if (currentMode.equals("Manual")) {
                         webInterfaceComm.setRobotValue("trackclass", "None");
+                        
+                        webInterfaceComm.setSourceValue("emotion", "Neutral");
                         
                         // Manual move
                         final String move = webInterfaceComm.getRobotValue("move");
@@ -217,11 +450,19 @@ implements FetchBot {
                                 }
                             }
                         }
+                        else {
+                            Logger.warn("WebInterface - [move: " + currentMove + "] is invalid, setting to [move: Stop].");
+                            webInterfaceComm.setRobotValue("move", "Stop");
+                        }
                     }
                     else {
                         Logger.warn("WebInterface - [mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
                         webInterfaceComm.setRobotValue("mode", "Idle");
                     }
+                }
+                else {
+                    Logger.warn("WebInterface - [mode: " + currentMode + "] is invalid, setting to [mode: Idle].");
+                    webInterfaceComm.setRobotValue("mode", "Idle");
                 }
                 webInterfaceComm.pushSource();
                 webInterfaceComm.pushRobot();
@@ -317,7 +558,7 @@ implements FetchBot {
         finally { }
 
         if (!VERSION.equals(currentVersion)) {
-            Logger.warn("VersionCheck - Version mismatch (this: " + VERSION + "; current: " + currentVersion + "), this version might be outdated!");
+            Logger.warn("VersionCheck - Version mismatch [this: " + VERSION + "; current: " + currentVersion + "], this version might be outdated!");
         }
     }
     private static void terminate() {
