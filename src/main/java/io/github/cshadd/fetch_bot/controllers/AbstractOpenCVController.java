@@ -221,11 +221,6 @@ implements OpenCVController {
     {
         buffer = matToBufferedImage(mat);
         final ImageIcon img = new ImageIcon(buffer);
-        terminalLabelCam.setIcon(img);
-        terminalLabelStatus.setText("<html><p style='color: white; font-size: 20px'>&#187; Status: Processing<br />"
-                + "Target: " + trackClass + "<br />"
-                + "Found Target: " + trackClassFound + "<br />"
-                + "Raw: " + buffer.hashCode() + "</p></html>");
         /*
          * Converts the image matrix into a "blob," which is then fed into the Caffe neural network using net.setInput()
          * and detections are output as a matrix in net.forward().
@@ -260,24 +255,23 @@ implements OpenCVController {
                 capturedTrackClass = "???"; 
             }
             
-            if (fullCon >= CONFIDENCE_LIMIT) {
-                if (capturedTrackClass.equals(trackClass)) {
-                    trackClassFound = true;
-                    capturedLabel = "<html><p style='color: white;'>" + capturedTrackClass
-                            + " [" + fullCon + "%]<br />"
-                            + "TARGET</p></html>";
-                }
-                else {
-                    trackClassFound = false;
-                    capturedLabel = "<html><p style='color: white;'>" + capturedTrackClass
-                            + " [" + fullCon + "%]</p></html>";
-                }
+            if (fullCon >= CONFIDENCE_LIMIT && capturedTrackClass.equals(trackClass)) {
+                trackClassFound = true;
+                capturedLabel = "<html><p style='color: white;'>" + capturedTrackClass
+                        + " [" + fullCon + "%]<br />"
+                        + "TARGET</p></html>";
             }
             else {
                 trackClassFound = false;
-                capturedLabel = "";
+                capturedLabel = "<html><p style='color: white;'>" + capturedTrackClass
+                        + " [" + fullCon + "%]</p></html>";
             }
         }
+        terminalLabelCam.setIcon(img);
+        terminalLabelStatus.setText("<html><p style='color: white; font-size: 20px'>&#187; Status: Processing<br />"
+                + "Target: " + trackClass + "<br />"
+                + "Found Target: " + trackClassFound + "<br />"
+                + "Raw I/O Buffer: " + buffer.hashCode() + "</p></html>");
         terminalLabelTrack.setBounds(startX, startY, endX - startX, endY - startY);
         terminalLabelTrack.setText(capturedLabel);
     }
