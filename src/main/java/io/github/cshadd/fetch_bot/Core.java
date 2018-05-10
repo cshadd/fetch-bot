@@ -63,7 +63,9 @@ implements FetchBot {
                         Logger.debug("WebInterface - [trackclass: " + currentTrackClass + "] received.");
                         openCVControl.assignTrackClass(currentTrackClass);
                         webInterfaceComm.setSourceValue("trackclass", "" + currentTrackClass);
+                        Logger.info("Core - Please wait.");
                         pathfindControl.reset();
+                        Logger.info("Core - Ready.");
                         tracked = false;
                     }
                 }
@@ -247,7 +249,6 @@ implements FetchBot {
                                                 }
                                             }
                                             else { // B-O
-                                                pathfindControl.rotateRight();
                                                 Logger.info("Get out of my way!");
                                                 Logger.debug("Right!");
                                                 webInterfaceComm.setSourceValue("emotion", "Angry");                                                        
@@ -375,7 +376,6 @@ implements FetchBot {
                                                 }
                                             }
                                             else { // V-O
-                                                pathfindControl.rotateRight();
                                                 Logger.info("Nothing yet.");
                                                 Logger.debug("Right!");
                                                 webInterfaceComm.setSourceValue("emotion", "Neutral");                                                        
@@ -407,7 +407,6 @@ implements FetchBot {
                     }
                     else if (currentMode.equals("Idle")) {
                         webInterfaceComm.setRobotValue("trackclass", "None");
-                        arduinoComm.setSourceValue("a", "Stop");
                     }
                     else if (currentMode.equals("Off")) {
                         break;
@@ -538,6 +537,7 @@ implements FetchBot {
             Logger.error(e, "There was an unknown issue!");
         }
         finally { }
+        Logger.info("Core - Please wait.");
         pathfindControl = new PathfindControllerImpl();
         pathfindControl.reset();
         openCVControl.startCamera();
@@ -558,6 +558,7 @@ implements FetchBot {
         if (!VERSION.equals(currentVersion)) {
             Logger.warn("VersionCheck - Version mismatch [this: " + VERSION + "; current: " + currentVersion + "], this version might be outdated!");
         }
+        Logger.info("Core - Ready.");
     }
     private static void terminate() {
         Logger.info("Core - Fetch Bot terminating! Log file: " + Logger.LOG_FILE);
