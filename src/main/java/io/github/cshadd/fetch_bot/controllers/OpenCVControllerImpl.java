@@ -27,12 +27,7 @@ extends AbstractOpenCVController {
     }
     @Override
     public boolean isTrackClassFound() {
-        boolean returnData = false;
-        if (trackClassFound) {
-            returnData = true;
-            trackClassFound = false;
-        }
-        return returnData;
+        return trackClassFound;
     }
     @Override
     public void startCamera() {
