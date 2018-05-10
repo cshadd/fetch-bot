@@ -228,14 +228,13 @@ implements PathfindController {
         return coord;
     }
     protected void rotateFix(int rot) {
-        rot = currentRot + rot;
-        if (rot == -ROT_ADD) {
-            rot = ROT_MAX_RANGE - ROT_ADD;
+        currentRot = currentRot + rot;
+        if (currentRot <= -ROT_ADD) {
+            currentRot = ROT_MAX_RANGE - ROT_ADD;
         }
-        else if (currentRot == ROT_MAX_RANGE) {
-            rot = 0;
+        else if (currentRot >= ROT_MAX_RANGE) {
+            currentRot = 0;
         }
-        currentRot = rot;
         Logger.debug("PathfindController - New rot: " + currentRot + ".");
     }
     
