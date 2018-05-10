@@ -134,7 +134,6 @@ implements FetchBot {
                                                     if (leftBlocked) { // B-B-B-B
                                                         pathfindControl.rotateRight();
                                                         Logger.info("I can't seem to find a way out.");
-                                                        Logger.debug("Stopping!");
                                                         webInterfaceComm.setSourceValue("emotion", "Sad");
                                                         arduinoComm.setSourceValue("a", "Stop");
                                                         tracked = true;
