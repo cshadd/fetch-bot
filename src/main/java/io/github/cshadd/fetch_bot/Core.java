@@ -75,7 +75,7 @@ implements FetchBot {
                 if (mode != null) {
                     if (!mode.equals(currentMode)) {
                         currentMode = mode;
-                        Logger.debug("WebInterface - [mode: " + currentMode + "] command received.");
+                        Logger.debug("WebInterface - [mode: " + currentMode + "] received.");
                         webInterfaceComm.setSourceValue("mode", currentMode);
                         arduinoComm.setSourceValue("a", "Stop");
                     }
@@ -91,7 +91,7 @@ implements FetchBot {
                                     else {
                                         pathfindControl.unblockNext();
                                     }
-                                    Logger.debug("PathfindController - " + pathfindControl + ".");
+                                    Logger.debug("PathfindController - [" + pathfindControl + "].");
                                     
                                     if (openCVControl.isTrackClassFound()) {
                                         Logger.info("OpenCVController - Target found!");
@@ -420,7 +420,7 @@ implements FetchBot {
                         if (move != null) {
                             if (!move.equals(currentMove)) {
                                 currentMove = move;
-                                Logger.debug("WebInterface - [move: " + currentMove + "] command received.");
+                                Logger.debug("WebInterface - [move: " + currentMove + "] received.");
 
                                 if (currentUltrasonicSensor <= SENSOR_LIMIT) {
                                     if (currentUltrasonicSensor <= SENSOR_LIMIT/2) {
