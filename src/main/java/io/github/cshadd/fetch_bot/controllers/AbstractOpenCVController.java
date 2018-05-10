@@ -180,7 +180,6 @@ implements OpenCVController {
                         terminalLabelTrack.setBounds(startX, startY, endX - startX, endY - startY);
                     }
                 }
-
             }
         });
     }
