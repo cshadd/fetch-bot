@@ -2,6 +2,7 @@
 
 [![Release](https://img.shields.io/github/release/cshadd/fetch-bot/all.svg)](https://github.com/cshadd/fetch-bot/releases)
 [![License](https://img.shields.io/github/license/cshadd/fetch-bot.svg)](LICENSE)
+[![Zenhub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://www.zenhub.com/)
 [![Travis CI Build Status](https://www.travis-ci.org/cshadd/fetch-bot.svg)](https://www.travis-ci.org/cshadd/fetch-bot)
 
 # Fetch Bot
