@@ -31,6 +31,10 @@ package io.github.cshadd.fetch_bot;
  * Interface to define the project.
  * 
  * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
  * @version 1.0.0
  * @since 1.0.0
  */

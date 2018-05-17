@@ -673,6 +673,9 @@ public class Core implements FetchBot {
      *
      * @param args
      *            the arguments
+     * @throws UnsatisfiedLinkError
+     *             if a native library failed to load or if the system
+     *             architecture is not valid for Fetch Bot.
      */
     private static void setup(String[] args) {
         String profile = "Normal";
@@ -801,6 +804,9 @@ public class Core implements FetchBot {
      *
      * @param args
      *            the arguments
+     * @throws UnsatisfiedLinkError
+     *             if a native library failed to load or if the system
+     *             architecture is not valid for Fetch Bot.
      */
     public static void main(String[] args) {
         // Setup
