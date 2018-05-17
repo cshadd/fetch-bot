@@ -100,7 +100,7 @@ implements OpenCVController {
         catch (Exception e) {
             throw new OpenCVControllerException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
         trackClass = "None";
         trackClassFound = false;
         startX = 0;

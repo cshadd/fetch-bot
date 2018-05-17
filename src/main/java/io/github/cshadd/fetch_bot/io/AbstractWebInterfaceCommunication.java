@@ -47,7 +47,7 @@ implements WebInterfaceCommunication {
         catch (Exception e) {
             throw new WebInterfaceCommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
         return returnData;
     }
     protected void write(JSONObject json, String filePath)
@@ -65,6 +65,6 @@ implements WebInterfaceCommunication {
         catch (Exception e) {
             throw new WebInterfaceCommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
     }
 }

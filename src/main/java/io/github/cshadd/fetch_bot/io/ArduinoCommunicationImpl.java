@@ -39,8 +39,8 @@ extends AbstractArduinoCommunication {
                     serialLock.wait();
                 }
             }
-            catch (Exception e) { } // Suppressed
-            finally { }
+            catch (Exception e) { /* */ } // Suppressed
+            finally { /* */ }
         }
     }
     @Override

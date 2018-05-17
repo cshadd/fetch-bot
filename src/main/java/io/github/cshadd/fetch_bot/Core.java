@@ -481,8 +481,8 @@ implements FetchBot {
         String profile = "Normal";
         if (args.length > 0) {
             profile = args[0];
-            if (profile.equals("Normal")) { }
-            else if (profile.equals("Debug")) { }
+            if (profile.equals("Normal")) { /* */ }
+            else if (profile.equals("Debug")) { /* */ }
             else {
                 profile = "Normal";
             }
@@ -511,7 +511,7 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }
+        finally { /* */ }
 
         // Startup logging
         Logger.info("Core - Fetch Bot " + VERSION + " started as profile " + profile + "!");
@@ -524,7 +524,7 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }
+        finally { /* */ }
         
         // Initiate controllers
         try {
@@ -536,7 +536,7 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }
+        finally { /* */ }
         pathfindControl = new PathfindControllerImpl();
         openCVControl.startCamera();
         
@@ -551,7 +551,7 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }
+        finally { /* */ }
 
         if (!VERSION.equals(currentVersion)) {
             Logger.warn("VersionCheck - Version mismatch [this: " + VERSION + "; current: " + currentVersion + "], this version might be outdated!");
@@ -591,7 +591,7 @@ implements FetchBot {
         catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         }
-        finally { }
+        finally { /* */ }
     }
 
     // Public Static Methods

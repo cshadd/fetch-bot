@@ -42,7 +42,7 @@ implements FetchBot {
         catch (Exception e) {
             throw new VersionCheckException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
         return returnData;
     }
 }

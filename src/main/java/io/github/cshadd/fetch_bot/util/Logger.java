@@ -64,7 +64,7 @@ implements FetchBot {
         catch (Exception e) {
             fatalError(e, "Unknown issue.");
         }
-        finally { }
+        finally { /* */ }
     }
 
     // Public Static Methods
@@ -91,7 +91,7 @@ implements FetchBot {
         catch (Exception e) {
             fatalError(e, "Unknown issue.");
         }
-        finally { }
+        finally { /* */ }
     }
     public static void close() {
         javaLogger.removeHandler(javaLoggerHandler);

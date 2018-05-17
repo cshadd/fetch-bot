@@ -73,7 +73,7 @@ implements ArduinoCommunication {
         catch (Exception e) {
             throw new ArduinoCommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
     }
     protected void open()
     throws CommunicationException {
@@ -91,8 +91,8 @@ implements ArduinoCommunication {
                                 serialLock.notifyAll();
                             }
                         }
-                        catch (Exception e) { } // Suppressed
-                        finally { }
+                        catch (Exception e) { /* */ } // Suppressed
+                        finally { /* */ }
                     }
                 };
                 serial.addListener(serialListener);
@@ -104,7 +104,7 @@ implements ArduinoCommunication {
         catch (Exception e) {
             throw new ArduinoCommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
     }
     protected JSONObject read()
     throws CommunicationException {
@@ -121,7 +121,7 @@ implements ArduinoCommunication {
         catch (Exception e) {
             throw new ArduinoCommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
         return returnData;
     }
     protected void write()
@@ -141,7 +141,7 @@ implements ArduinoCommunication {
         catch (Exception e) {
             throw new ArduinoCommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
     }
     
     // Public Methods (Overrided)
@@ -158,7 +158,7 @@ implements ArduinoCommunication {
         catch (Exception e) {
             throw new ArduinoCommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
         return returnData;
     }
 }

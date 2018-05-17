@@ -29,7 +29,7 @@ implements Communication {
         catch (Exception e) {
             throw new CommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
         return returnData;
     }
     @Override
@@ -45,7 +45,7 @@ implements Communication {
         catch (Exception e) {
             throw new CommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
         return returnData;
     }
     @Override
@@ -80,7 +80,7 @@ implements Communication {
         catch (Exception e) {
             throw new CommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
     }
     @Override
     public void setSourceValue(String key, String value)
@@ -94,6 +94,6 @@ implements Communication {
         catch (Exception e) {
             throw new CommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
     }
 }
