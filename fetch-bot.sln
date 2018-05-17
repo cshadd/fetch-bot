@@ -104,8 +104,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eclipse_Config", "Eclipse_C
 	ProjectSection(SolutionItems) = preProject
 		.classpath = .classpath
 		.project = .project
+		.settings\net.sf.jautodoc.prefs = .settings\net.sf.jautodoc.prefs
 		.settings\org.eclipse.core.resources.prefs = .settings\org.eclipse.core.resources.prefs
 		.settings\org.eclipse.jdt.core.prefs = .settings\org.eclipse.jdt.core.prefs
+		.settings\org.eclipse.jdt.ui.prefs = .settings\org.eclipse.jdt.ui.prefs
+		.settings\org.eclipse.ltk.core.refactoring.prefs = .settings\org.eclipse.ltk.core.refactoring.prefs
 		.settings\org.eclipse.m2e.core.prefs = .settings\org.eclipse.m2e.core.prefs
 	EndProjectSection
 EndProject
