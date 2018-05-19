@@ -10,6 +10,9 @@ extends AbstractWebInterfaceCommunication {
     public WebInterfaceCommunicationImpl() {
         super();
     }
+    public WebInterfaceCommunicationImpl(String commPath) {
+        super(commPath);
+    }
 
     // Public Methods (Overrided)
     @Override
@@ -21,22 +24,22 @@ extends AbstractWebInterfaceCommunication {
     @Override
     public void pullRobot()
     throws CommunicationException {
-        toRobotData = read(TO_ROBOT_JSON_PATH);
+        toRobotData = read(TOROBOT_JSON_FILE);
     }
     @Override
     public void pullSource()
     throws CommunicationException {
-        toSourceData = read(TO_WEB_INTERFACE_JSON_PATH);
+        toSourceData = read(TOWEBINTERFACE_JSON_FILE);
     }
     @Override
     public void pushRobot()
     throws CommunicationException {
-        write(toRobotData, TO_ROBOT_JSON_PATH);
+        write(toRobotData, TOROBOT_JSON_FILE);
     }
     @Override
     public void pushSource()
     throws CommunicationException {
-        write(toSourceData, TO_WEB_INTERFACE_JSON_PATH);
+        write(toSourceData, TOWEBINTERFACE_JSON_FILE);
     }
     @Override
     public void reset()

@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -28,12 +29,12 @@ public abstract class AbstractOpenCVController
 extends AbstractController
 implements OpenCVController {
     // Private Constant Instance/Property Fields
-    private static final int CAMERA_PORT = 0; // Change if needed
     private static final int CONFIDENCE_LIMIT = 90;
+    private static final int DEFAULT_CAMERA_PORT = 0;
     private static final String DEPLOY_PATH = "./libs/fetch-bot/";
-    private static final String DEPLOY_CAFFEMODEL = DEPLOY_PATH + "deploy.caffemodel";
-    private static final String DEPLOY_PROTOTXT_TXT = DEPLOY_PATH + "deploy.prototxt.txt";
-    private static final String DEPLOY_TRACK_CLASSES = DEPLOY_PATH + "deploy.track.classes";
+    private static final String DEPLOY_CAFFEMODEL_FILE = DEPLOY_PATH + "deploy.caffemodel";
+    private static final String DEPLOY_PROTOTXT_TXT_FILE = DEPLOY_PATH + "deploy.prototxt.txt";
+    private static final String DEPLOY_TRACK_CLASSES_FILE = DEPLOY_PATH + "deploy.track.classes";
     private static final double SCALE_FACTOR = 0.007843;
     private static final int SCENE_W = 640;
     private static final int SCENE_H = 480;
@@ -44,16 +45,21 @@ implements OpenCVController {
     private final List<String> trackClasses;
     
     // Protected Final Instance/Property Fields
+    protected final int cameraPort;
     protected final Thread cameraThread;
-    protected final CameraThread cameraRunnable;    
-
+    protected final CameraThread cameraRunnable;
+    
     // Private Instance/Property Fields
-    private Mat cameraFrame;
     private BufferedImage buffer;
+    private Mat cameraFrame;
+    private String capturedLabel;
     private Mat det;
+    private int endX;
+    private int endY;
     private Net net;
+    private int startX;
+    private int startY;
     private JComponent terminalContent;
-    private JFrame terminalFrame;
     private JLabel terminalLabelCam;
     private JLabel terminalLabelCamFilter;
     private JLabel terminalLabelStatus;
@@ -61,29 +67,48 @@ implements OpenCVController {
     private JLayeredPane terminalLayerPane;
 
     // Protected Instance/Property Fields
+    protected JFrame terminalFrame;
     protected String trackClass;
     protected boolean trackClassFound;
     
     // Protected Constructors
     protected AbstractOpenCVController()
     throws OpenCVControllerException {
+        this(DEFAULT_CAMERA_PORT);
+    }
+    protected AbstractOpenCVController(int cameraPort)
+    throws OpenCVControllerException {
         super();
         buffer = null;
-        camera = new VideoCapture(CAMERA_PORT);
+        this.cameraPort = cameraPort;
+        camera = new VideoCapture(this.cameraPort);
         cameraFrame = new Mat();
         cameraRunnable = new CameraThread();
         cameraThread = new Thread(cameraRunnable);
+        capturedLabel = "";
         det = null;
+        endX = 0;
+        endY = 0;
         try {
-            net = Dnn.readNetFromCaffe(DEPLOY_PROTOTXT_TXT, DEPLOY_CAFFEMODEL);
-            final File trackClassesInput = new File(DEPLOY_TRACK_CLASSES);
+            net = Dnn.readNetFromCaffe(DEPLOY_PROTOTXT_TXT_FILE, DEPLOY_CAFFEMODEL_FILE);
+            final File trackClassesInput = new File(DEPLOY_TRACK_CLASSES_FILE);
             trackClasses = FileUtils.readLines(trackClassesInput, "UTF-8");
         }
-        catch (Exception e) {
-            throw new OpenCVControllerException("There was an unknown issue!", e);
+        catch (IOException e) {
+            throw new OpenCVControllerException("Could not read neural network files.", e);
         }
+        catch (Exception e) {
+            throw new OpenCVControllerException("Unknown issue.", e);
+        }
+        finally { /* */ }
+        trackClass = "None";
+        trackClassFound = false;
+        startX = 0;
+        startY = 0;
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            // Public Methods (Overrided)
+            @Override
             public void run() {
                 terminalLabelCam = new JLabel();
                 terminalLabelCam.setVerticalAlignment(JLabel.TOP);
@@ -124,7 +149,7 @@ implements OpenCVController {
                 
                 terminalFrame = new JFrame("Fetch Bot OpenCVController Terminal");
                 terminalFrame.setContentPane(terminalContent);
-                terminalFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                terminalFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 terminalFrame.setLocationByPlatform(true);
                 terminalFrame.setResizable(false);
 
@@ -132,8 +157,6 @@ implements OpenCVController {
                 terminalFrame.setVisible(true);
             }
         });
-        trackClass = "";
-        trackClassFound = false;
     }
 
     // Protected Final Nested Classes
@@ -198,7 +221,6 @@ implements OpenCVController {
     {
         buffer = matToBufferedImage(mat);
         final ImageIcon img = new ImageIcon(buffer);
-        terminalLabelCam.setIcon(img);
         /*
          * Converts the image matrix into a "blob," which is then fed into the Caffe neural network using net.setInput()
          * and detections are output as a matrix in net.forward().
@@ -218,12 +240,13 @@ implements OpenCVController {
         {
             final int index = (int)det.reshape(1, 1).get(0, i + 1)[0];
             final double con = det.reshape(1, 1).get(0, i + 2)[0];
-            final int startX = (int)(det.reshape(1, 1).get(0, i + 3)[0]*SCENE_W);
-            final int startY = (int)(det.reshape(1, 1).get(0, i + 4)[0]*SCENE_H);
-            final int endX = (int)(det.reshape(1, 1).get(0, i + 5)[0]*SCENE_W);
-            final int endY = (int)(det.reshape(1, 1).get(0, i + 6)[0]*SCENE_H);
             final String capturedTrackClass;
             final int fullCon = (int)(100*con);
+            
+            startX = (int)(det.reshape(1, 1).get(0, i + 3)[0]*SCENE_W);
+            startY = (int)(det.reshape(1, 1).get(0, i + 4)[0]*SCENE_H);
+            endX = (int)(det.reshape(1, 1).get(0, i + 5)[0]*SCENE_W);
+            endY = (int)(det.reshape(1, 1).get(0, i + 6)[0]*SCENE_H);
             
             if (index > 0 && index < trackClasses.size()) {
                 capturedTrackClass = trackClasses.get(index);
@@ -232,22 +255,24 @@ implements OpenCVController {
                 capturedTrackClass = "???"; 
             }
             
-            if (fullCon >= CONFIDENCE_LIMIT && trackClass.equals(capturedTrackClass)) {
+            if (fullCon >= CONFIDENCE_LIMIT && capturedTrackClass.equals(trackClass)) {
                 trackClassFound = true;
-                terminalLabelTrack.setText("<html><p style='color: white;'>" + capturedTrackClass
+                capturedLabel = "<html><p style='color: white;'>" + capturedTrackClass
                         + " [" + fullCon + "%]<br />"
-                        + "TARGET</p></html>");
+                        + "TARGET</p></html>";
             }
             else {
                 trackClassFound = false;
-                terminalLabelTrack.setText("<html><p style='color: white;'>" + capturedTrackClass
-                        + " [" + fullCon + "%]</p></html>");
+                capturedLabel = "<html><p style='color: white;'>" + capturedTrackClass
+                        + " [" + fullCon + "%]</p></html>";
             }
-            terminalLabelStatus.setText("<html><p style='color: white; font-size: 20px'>&#187; Status: Processing<br />"
-                    + "Target: " + trackClass + "<br />"
-                    + "Found Target: " + trackClassFound + "<br />"
-                    + "Raw: " + buffer.hashCode() + "</p></html>");
-            terminalLabelTrack.setBounds(startX, startY, endX - startX, endY - startY);
         }
+        terminalLabelCam.setIcon(img);
+        terminalLabelStatus.setText("<html><p style='color: white; font-size: 20px'>&#187; Status: Processing<br />"
+                + "Target: " + trackClass + "<br />"
+                + "Found Target: " + trackClassFound + "<br />"
+                + "Raw I/O Buffer: " + buffer.hashCode() + "</p></html>");
+        terminalLabelTrack.setBounds(startX, startY, endX - startX, endY - startY);
+        terminalLabelTrack.setText(capturedLabel);
     }
 }

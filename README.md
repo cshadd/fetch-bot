@@ -2,6 +2,7 @@
 
 [![Release](https://img.shields.io/github/release/cshadd/fetch-bot/all.svg)](https://github.com/cshadd/fetch-bot/releases)
 [![License](https://img.shields.io/github/license/cshadd/fetch-bot.svg)](LICENSE)
+[![Zenhub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://www.zenhub.com/)
 [![Travis CI Build Status](https://www.travis-ci.org/cshadd/fetch-bot.svg)](https://www.travis-ci.org/cshadd/fetch-bot)
 
 # Fetch Bot
@@ -75,6 +76,7 @@ Let's face it. In our day and age of the 21st century, we want lightweight mobil
         - Java SE Runtime Environment 8.0 or higher
         - OpenCV 3.4.1
         - PHP 7.0.27 or higher
+        - VNC Server
     - Packaged Software (apt-get):
         - arduino-core
         - arduino-mk
@@ -90,7 +92,7 @@ Let's face it. In our day and age of the 21st century, we want lightweight mobil
 You may use any IDE of your choice to edit project files. We have included files for importing the project into Eclipse Oxygen or higher and Visual Studio 2017 or higher. These would be ``.project`` and ``fetch-bot.sln`` respectively.
 
 ## Installing The Project Software
-Before installing this project, you must make sure that you have installed all the dependencies necessary and have assembled the hardware correctly.
+Before installing this project, you must make sure that you have installed all the dependencies necessary and have assembled the hardware correctly. This will overwrite any code on the Arduino.
 
 ### Easy Install
 Execute
@@ -176,6 +178,7 @@ The folder for the training data is ``<PROJECT DIRECTORY>/src/neural-network/``.
 Tutorials on training is beyond the scope of this project.
 
 ## Uninstalling The Project Software
+This will help you to uninstall the project. This will not uninstall any of the code on the Arduino so you will have to do that part manually yourself.
 
 ### Easy Uninstall
 Only do this if you did the Easy Install!
@@ -208,6 +211,8 @@ in a Bash terminal.
 
 To control and terminate the application, you must use the web interface. The address to the web interface depends on your Apache configuration. Normally it would just be http://localhost/FetchBot.
 
+The OpenCV Controller Terminal Window is located at the VNC server :1.
+
 ## Web Page
 https://cshadd.github.io/fetch-bot/
 
@@ -231,6 +236,9 @@ See [here](LICENSE).
 
 ## Development Standards
 See [here](/docs/development-standards/DevelopmentStandards.pdf).
+
+## Product Report
+See [here](/docs/product-report/ProductReport.pdf).
 
 ## Software Requirements Specification
 See [here](/docs/software-requirements-specification/SoftwareRequirementsSpecification.pdf).

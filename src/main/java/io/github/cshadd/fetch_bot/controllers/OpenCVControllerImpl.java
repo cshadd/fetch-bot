@@ -10,11 +10,20 @@ extends AbstractOpenCVController {
     throws OpenCVControllerException {
         super();
     }
+    public OpenCVControllerImpl(int cameraPort)
+    throws OpenCVControllerException {
+        super(cameraPort);
+    }
 
     // Public Methods (Overrided)
     @Override
     public void assignTrackClass(String trackClass) {
         this.trackClass = trackClass;
+    }
+    @Override
+    public void close() {
+        terminalFrame.setEnabled(false);
+        terminalFrame.dispose();
     }
     @Override
     public boolean isTrackClassFound() {

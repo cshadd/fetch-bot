@@ -104,8 +104,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eclipse_Config", "Eclipse_C
 	ProjectSection(SolutionItems) = preProject
 		.classpath = .classpath
 		.project = .project
+		.settings\net.sf.jautodoc.prefs = .settings\net.sf.jautodoc.prefs
 		.settings\org.eclipse.core.resources.prefs = .settings\org.eclipse.core.resources.prefs
 		.settings\org.eclipse.jdt.core.prefs = .settings\org.eclipse.jdt.core.prefs
+		.settings\org.eclipse.jdt.ui.prefs = .settings\org.eclipse.jdt.ui.prefs
+		.settings\org.eclipse.ltk.core.refactoring.prefs = .settings\org.eclipse.ltk.core.refactoring.prefs
 		.settings\org.eclipse.m2e.core.prefs = .settings\org.eclipse.m2e.core.prefs
 	EndProjectSection
 EndProject
@@ -142,6 +145,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5B2EF48B-6
 		src\test\java\AppTest.java = src\test\java\AppTest.java
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "product-report", "product-report", "{2111C6F6-3805-4939-AA67-DB7629AC10B4}"
+	ProjectSection(SolutionItems) = preProject
+		docs\product-report\ProductReport.docx = docs\product-report\ProductReport.docx
+		docs\product-report\ProductReport.pdf = docs\product-report\ProductReport.pdf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,6 +174,7 @@ Global
 		{508DA01D-22B2-4199-9A37-99C514811E94} = {60C4203F-A524-49E6-A778-D332C9E7C5A2}
 		{169B5BE4-6DAD-411F-9145-ECE3C95B2B7C} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
 		{5B2EF48B-66D9-4553-89E9-1FB07605549C} = {678A9F65-DA68-4368-AE51-59B334A2E5EF}
+		{2111C6F6-3805-4939-AA67-DB7629AC10B4} = {3CE22A40-18BF-4C2A-A19F-3B9CF5E08A03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8F99668-DE84-4451-95F0-312B7F0E1A3C}

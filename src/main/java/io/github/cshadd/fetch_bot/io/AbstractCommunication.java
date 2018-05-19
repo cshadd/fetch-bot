@@ -24,12 +24,12 @@ implements Communication {
             returnData = toRobotData.getString(key);
         }
         catch (JSONException e) {
-            throw new CommunicationException("There was an issue with JSON!", e);
+            throw new CommunicationException("Bad JSON value " + key + ".", e);
         }
         catch (Exception e) {
-            throw new CommunicationException("There was an unknown issue!", e);
+            throw new CommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
         return returnData;
     }
     @Override
@@ -40,12 +40,12 @@ implements Communication {
             returnData = toSourceData.getString(key);
         }
         catch (JSONException e) {
-            throw new CommunicationException("There was an issue with JSON!", e);
+            throw new CommunicationException("Bad JSON value " + key + ".", e);
         }
         catch (Exception e) {
-            throw new CommunicationException("There was an unknown issue!", e);
+            throw new CommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
         return returnData;
     }
     @Override
@@ -75,15 +75,12 @@ implements Communication {
             toRobotData.put(key, value);
         }
         catch (JSONException e) {
-            throw new CommunicationException("There was an issue with JSON!", e);
-        }
-        catch (NumberFormatException e) {
-            throw new CommunicationException("There was an issue with Number Format!", e);
+            throw new CommunicationException("Bad JSON key-value " + key + ", " + value + ".", e);
         }
         catch (Exception e) {
-            throw new CommunicationException("There was an unknown issue!", e);
+            throw new CommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
     }
     @Override
     public void setSourceValue(String key, String value)
@@ -92,11 +89,11 @@ implements Communication {
             toSourceData.put(key, value);
         }
         catch (JSONException e) {
-            throw new CommunicationException("There was an issue with JSON!", e);
+            throw new CommunicationException("Bad JSON key-value " + key + ", " + value + ".", e);
         }
         catch (Exception e) {
-            throw new CommunicationException("There was an unknown issue!", e);
+            throw new CommunicationException("Unknown issue.", e);
         }
-        finally { }
+        finally { /* */ }
     }
 }
