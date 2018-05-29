@@ -220,7 +220,7 @@ The OpenCV Controller Terminal Window is located at the VNC server :1.
 ### Manual Usage
 To run, execute
 ```bash
-cd <CURRENT LOCATION OF PROGRAM>
+cd ~/bin
 vncserver :1
 export DISPLAY=:0
 xset -display :0 s off
