@@ -63,7 +63,7 @@ public class Core implements FetchBot {
     /**
      * The Constant VERSION.
      */
-    private static final String VERSION = "v1.0.0";
+    private static final String VERSION = "v1.1.0";
     
     // Private Static Instance/Property Fields
     
