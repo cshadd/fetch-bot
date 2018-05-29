@@ -51,13 +51,13 @@ public class VersionCheckException extends FetchBotException {
     // Public Constructors
     
     /**
-     * Instantiates a new version check exception.
+     * Instantiates a new Version Check Exception.
      */
     public VersionCheckException() {
     }
     
     /**
-     * Instantiates a new version check exception.
+     * Instantiates a new Version Check Exception with message.
      *
      * @param message
      *            the message
@@ -67,7 +67,7 @@ public class VersionCheckException extends FetchBotException {
     }
     
     /**
-     * Instantiates a new version check exception.
+     * Instantiates a new Version Check Exception with message and cause.
      *
      * @param message
      *            the message
@@ -79,7 +79,7 @@ public class VersionCheckException extends FetchBotException {
     }
     
     /**
-     * Instantiates a new version check exception.
+     * Instantiates a new Version Check Exception with cause.
      *
      * @param cause
      *            the cause
