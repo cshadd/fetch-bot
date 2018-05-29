@@ -53,8 +53,6 @@ implements OpenCVController {
     protected final CameraThread cameraRunnable;
     
     // Private Instance/Property Fields
-    protected BufferedImage buffer;
-    protected Mat cameraFrame;
     private String capturedLabel;
     private Mat det;
     private int endX;
@@ -64,6 +62,8 @@ implements OpenCVController {
     private int startY;
 
     // Protected Instance/Property Fields
+    protected BufferedImage buffer;
+    protected Mat cameraFrame;
     protected JComponent terminalContent;
     protected JFrame terminalFrame;
     protected JLabel terminalLabelCam;
