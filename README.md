@@ -194,7 +194,7 @@ in a Bash terminal.
 Execute
 ```bash
 sudo pkill java
-sudo rm -f -r <LOCATION OF APACHE HTTP SERVER FOLDER>/<DESIRED LOCATION OF WEB INTERFACE>
+sudo rm -f -r <LOCATION OF APACHE HTTP SERVER FOLDER>/<CURRENT LOCATION OF WEB INTERFACE>
 find <CURRENT LOCATION OF PROGRAM> -name 'fetch-bot*.jar' -exec rm -f {} \;
 rm -f -r <CURRENT LOCATION OF PROGRAM>/libs/fetch-bot
 rm -f <CURRENT LOCATION OF PROGRAM>/StartFetchBot.sh
@@ -232,7 +232,7 @@ export DISPLAY=:1
 java -jar fetch-bot-vx.x.x.jar &
 export DISPLAY=:0
 unclutter -display :0 &
-/usr/bin/chromium-browser --incognito --start-maximized --kiosk http://localhost/<DESIRED LOCATION OF WEB INTERFACE>/face.html
+/usr/bin/chromium-browser --incognito --start-maximized --kiosk http://localhost/<CURRENT LOCATION OF WEB INTERFACE>/face.html
 ```
 using a Bash file in a Bash terminal.
 
