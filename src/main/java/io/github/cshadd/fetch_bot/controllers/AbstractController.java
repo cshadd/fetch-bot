@@ -28,14 +28,18 @@ package io.github.cshadd.fetch_bot.controllers;
 // Main
 
 /**
- * The Class AbstractController.
+ * The Class AbstractController. Defines what a Controller is. A Controller is
+ * basically a manager that directs data between entities in Fetch Bot.
+ * 
+ * @author Christian Shadd
+ * @since 1.0.0
  */
-public abstract class AbstractController
-implements Controller {
+public abstract class AbstractController implements Controller {
     // Protected Constructors
-
+    
     /**
      * Instantiates a new Abstract Controller.
      */
-    protected AbstractController() { }
+    protected AbstractController() {
+    }
 }
