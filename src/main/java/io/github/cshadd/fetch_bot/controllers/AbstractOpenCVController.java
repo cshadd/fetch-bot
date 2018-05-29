@@ -253,7 +253,7 @@ public abstract class AbstractOpenCVController extends AbstractController
     // Protected Constructors
     
     /**
-     * Instantiates a new Abstract Open CV Controller.
+     * Instantiates a new Abstract OpenCV Controller.
      *
      * @throws OpenCVControllerException
      *             if OpenCV could not load
@@ -263,7 +263,7 @@ public abstract class AbstractOpenCVController extends AbstractController
     }
     
     /**
-     * Instantiates a new Abstract Open CV Controller with a camera port.
+     * Instantiates a new Abstract OpenCV Controller with a camera port.
      *
      * @param newCameraPort
      *            the new camera port

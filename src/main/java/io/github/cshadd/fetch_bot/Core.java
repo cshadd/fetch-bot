@@ -73,7 +73,7 @@ public class Core implements FetchBot {
     private static ArduinoCommunication arduinoComm;
     
     /**
-     * The Open CV Controller.
+     * The OpenCV Controller.
      */
     private static OpenCVController openCVControl;
     
