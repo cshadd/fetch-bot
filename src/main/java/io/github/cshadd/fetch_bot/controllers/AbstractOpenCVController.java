@@ -454,6 +454,14 @@ public abstract class AbstractOpenCVController extends AbstractController
     
     // Private Static Methods
     
+    static {
+        /*
+         * We use this to load the OpenCV library from the system. This requires
+         * the jar file with the Java bindings.
+         */
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+    }
+    
     /**
      * Mat to buffered image.
      *
@@ -477,15 +485,6 @@ public abstract class AbstractOpenCVController extends AbstractController
         mat.get(0, 0, data);
         
         return image;
-    }
-    
-    // Public Static Methods
-    static {
-        /*
-         * We use this to load the OpenCV library from the system. This requires
-         * the jar file with the Java bindings.
-         */
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
     
     // Protected Methods
