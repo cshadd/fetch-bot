@@ -371,7 +371,7 @@ public abstract class AbstractOpenCVController extends AbstractController
     
     /**
      * The Class TerminalSetupThread. A Runnable that controls the setup for the
-     * OpenCV Terminal.
+     * terminal.
      * 
      * @author Christian Shadd
      * @author Maria Verna Aquino
@@ -393,7 +393,7 @@ public abstract class AbstractOpenCVController extends AbstractController
         // Public Methods (Overrided)
         
         /**
-         * Runs the OpenCV Terminal.
+         * Runs the terminal setup.
          * 
          * @see java.lang.Runnable#run()
          */
@@ -557,7 +557,7 @@ public abstract class AbstractOpenCVController extends AbstractController
      * </tr>
      * </table>
      * <br />
-     * 4. Draw terminals in the OpenCV Terminal for each detection.
+     * 4. Draw terminals in the terminal for each detection.
      *
      *
      * @param mat
