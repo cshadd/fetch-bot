@@ -151,6 +151,11 @@ public abstract class AbstractOpenCVController extends AbstractController
      */
     protected final CameraThread cameraRunnable;
     
+    /**
+     * The terminal setup runnable thread.
+     */
+    protected final TerminalSetupThread terminalSetupRunnable;
+    
     // Private Instance/Property Fields
     
     /**
@@ -290,102 +295,13 @@ public abstract class AbstractOpenCVController extends AbstractController
             throw new OpenCVControllerException("Unknown issue.", e);
         } finally {
             /* */ }
+        this.terminalSetupRunnable = new TerminalSetupThread();
         this.trackClass = "None";
         this.trackClassFound = false;
         this.startX = 0;
         this.startY = 0;
         
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            // Public Methods (Overrided)
-            
-            /**
-             * Runs the OpenCV Terminal.
-             * 
-             * @see java.lang.Runnable#run()
-             */
-            @Override
-            public void run() {
-                AbstractOpenCVController.this.terminalLabelCam = new JLabel();
-                AbstractOpenCVController.this.terminalLabelCam
-                                .setVerticalAlignment(SwingConstants.TOP);
-                AbstractOpenCVController.this.terminalLabelCam
-                                .setHorizontalAlignment(SwingConstants.LEFT);
-                AbstractOpenCVController.this.terminalLabelCam.setOpaque(false);
-                AbstractOpenCVController.this.terminalLabelCam.setBounds(0, 0,
-                                SCENE_W, SCENE_H);
-                
-                AbstractOpenCVController.this.terminalLabelCamFilter = new JLabel();
-                AbstractOpenCVController.this.terminalLabelCamFilter
-                                .setVerticalAlignment(SwingConstants.TOP);
-                AbstractOpenCVController.this.terminalLabelCamFilter
-                                .setHorizontalAlignment(SwingConstants.LEFT);
-                AbstractOpenCVController.this.terminalLabelCamFilter.setOpaque(
-                                true);
-                AbstractOpenCVController.this.terminalLabelCamFilter
-                                .setBackground(new Color(255, 0, 0, 150));
-                AbstractOpenCVController.this.terminalLabelCamFilter.setBounds(
-                                0, 0, SCENE_W, SCENE_H);
-                
-                AbstractOpenCVController.this.terminalLabelStatus = new JLabel();
-                AbstractOpenCVController.this.terminalLabelStatus
-                                .setVerticalAlignment(SwingConstants.BOTTOM);
-                AbstractOpenCVController.this.terminalLabelStatus
-                                .setHorizontalAlignment(SwingConstants.LEFT);
-                AbstractOpenCVController.this.terminalLabelStatus.setOpaque(
-                                false);
-                AbstractOpenCVController.this.terminalLabelStatus.setBounds(0,
-                                0, SCENE_W, SCENE_H);
-                
-                AbstractOpenCVController.this.terminalLabelTrack = new JLabel();
-                AbstractOpenCVController.this.terminalLabelTrack
-                                .setVerticalAlignment(SwingConstants.TOP);
-                AbstractOpenCVController.this.terminalLabelTrack
-                                .setHorizontalAlignment(SwingConstants.LEFT);
-                AbstractOpenCVController.this.terminalLabelTrack.setOpaque(
-                                false);
-                AbstractOpenCVController.this.terminalLabelTrack.setBorder(
-                                BorderFactory.createLineBorder(Color.white));
-                
-                AbstractOpenCVController.this.terminalLayerPane = new JLayeredPane();
-                AbstractOpenCVController.this.terminalLayerPane
-                                .setPreferredSize(new Dimension(SCENE_W,
-                                                SCENE_H));
-                AbstractOpenCVController.this.terminalLayerPane.add(
-                                AbstractOpenCVController.this.terminalLabelStatus,
-                                0);
-                AbstractOpenCVController.this.terminalLayerPane.add(
-                                AbstractOpenCVController.this.terminalLabelTrack,
-                                1);
-                AbstractOpenCVController.this.terminalLayerPane.add(
-                                AbstractOpenCVController.this.terminalLabelCamFilter,
-                                2);
-                AbstractOpenCVController.this.terminalLayerPane.add(
-                                AbstractOpenCVController.this.terminalLabelCam,
-                                3);
-                
-                AbstractOpenCVController.this.terminalContent = new JPanel();
-                AbstractOpenCVController.this.terminalContent.setLayout(
-                                new BoxLayout(AbstractOpenCVController.this.terminalContent,
-                                                BoxLayout.PAGE_AXIS));
-                AbstractOpenCVController.this.terminalContent.setOpaque(true);
-                AbstractOpenCVController.this.terminalContent.add(
-                                AbstractOpenCVController.this.terminalLayerPane);
-                
-                AbstractOpenCVController.this.terminalFrame = new JFrame(
-                                "Fetch Bot OpenCVController Terminal");
-                AbstractOpenCVController.this.terminalFrame.setContentPane(
-                                AbstractOpenCVController.this.terminalContent);
-                AbstractOpenCVController.this.terminalFrame
-                                .setDefaultCloseOperation(
-                                                WindowConstants.DISPOSE_ON_CLOSE);
-                AbstractOpenCVController.this.terminalFrame
-                                .setLocationByPlatform(true);
-                AbstractOpenCVController.this.terminalFrame.setResizable(false);
-                
-                AbstractOpenCVController.this.terminalFrame.pack();
-                AbstractOpenCVController.this.terminalFrame.setVisible(true);
-            }
-        });
+        javax.swing.SwingUtilities.invokeLater(this.terminalSetupRunnable);
     }
     
     // Protected Final Nested Classes
@@ -414,6 +330,7 @@ public abstract class AbstractOpenCVController extends AbstractController
          * Instantiates a new Camera Thread.
          */
         public CameraThread() {
+            super();
             this.running = false;
         }
         
@@ -449,6 +366,114 @@ public abstract class AbstractOpenCVController extends AbstractController
                     AbstractOpenCVController.this.camera.release();
                 }
             }
+        }
+    }
+    
+    /**
+     * The Class TerminalSetupThread. A Runnable that controls the setup for the
+     * OpenCV Terminal.
+     * 
+     * @author Christian Shadd
+     * @author Maria Verna Aquino
+     * @author Thanh Vu
+     * @author Joseph Damian
+     * @author Giovanni Orozco
+     * @since 1.0.0
+     */
+    protected final class TerminalSetupThread implements Runnable {
+        // Public Constructors
+        
+        /**
+         * Instantiates a new Terminal Setup Thread.
+         */
+        public TerminalSetupThread() {
+            super();
+        }
+        
+        // Public Methods (Overrided)
+        
+        /**
+         * Runs the OpenCV Terminal.
+         * 
+         * @see java.lang.Runnable#run()
+         */
+        @Override
+        public void run() {
+            AbstractOpenCVController.this.terminalLabelCam = new JLabel();
+            AbstractOpenCVController.this.terminalLabelCam.setVerticalAlignment(
+                            SwingConstants.TOP);
+            AbstractOpenCVController.this.terminalLabelCam
+                            .setHorizontalAlignment(SwingConstants.LEFT);
+            AbstractOpenCVController.this.terminalLabelCam.setOpaque(false);
+            AbstractOpenCVController.this.terminalLabelCam.setBounds(0, 0,
+                            SCENE_W, SCENE_H);
+            
+            AbstractOpenCVController.this.terminalLabelCamFilter = new JLabel();
+            AbstractOpenCVController.this.terminalLabelCamFilter
+                            .setVerticalAlignment(SwingConstants.TOP);
+            AbstractOpenCVController.this.terminalLabelCamFilter
+                            .setHorizontalAlignment(SwingConstants.LEFT);
+            AbstractOpenCVController.this.terminalLabelCamFilter.setOpaque(
+                            true);
+            AbstractOpenCVController.this.terminalLabelCamFilter.setBackground(
+                            new Color(255, 0, 0, 150));
+            AbstractOpenCVController.this.terminalLabelCamFilter.setBounds(0, 0,
+                            SCENE_W, SCENE_H);
+            
+            AbstractOpenCVController.this.terminalLabelStatus = new JLabel();
+            AbstractOpenCVController.this.terminalLabelStatus
+                            .setVerticalAlignment(SwingConstants.BOTTOM);
+            AbstractOpenCVController.this.terminalLabelStatus
+                            .setHorizontalAlignment(SwingConstants.LEFT);
+            AbstractOpenCVController.this.terminalLabelStatus.setOpaque(false);
+            AbstractOpenCVController.this.terminalLabelStatus.setBounds(0, 0,
+                            SCENE_W, SCENE_H);
+            
+            AbstractOpenCVController.this.terminalLabelTrack = new JLabel();
+            AbstractOpenCVController.this.terminalLabelTrack
+                            .setVerticalAlignment(SwingConstants.TOP);
+            AbstractOpenCVController.this.terminalLabelTrack
+                            .setHorizontalAlignment(SwingConstants.LEFT);
+            AbstractOpenCVController.this.terminalLabelTrack.setOpaque(false);
+            AbstractOpenCVController.this.terminalLabelTrack.setBorder(
+                            BorderFactory.createLineBorder(Color.white));
+            
+            AbstractOpenCVController.this.terminalLayerPane = new JLayeredPane();
+            AbstractOpenCVController.this.terminalLayerPane.setPreferredSize(
+                            new Dimension(SCENE_W, SCENE_H));
+            AbstractOpenCVController.this.terminalLayerPane.add(
+                            AbstractOpenCVController.this.terminalLabelStatus,
+                            0);
+            AbstractOpenCVController.this.terminalLayerPane.add(
+                            AbstractOpenCVController.this.terminalLabelTrack,
+                            1);
+            AbstractOpenCVController.this.terminalLayerPane.add(
+                            AbstractOpenCVController.this.terminalLabelCamFilter,
+                            2);
+            AbstractOpenCVController.this.terminalLayerPane.add(
+                            AbstractOpenCVController.this.terminalLabelCam, 3);
+            
+            AbstractOpenCVController.this.terminalContent = new JPanel();
+            AbstractOpenCVController.this.terminalContent.setLayout(
+                            new BoxLayout(AbstractOpenCVController.this.terminalContent,
+                                            BoxLayout.PAGE_AXIS));
+            AbstractOpenCVController.this.terminalContent.setOpaque(true);
+            AbstractOpenCVController.this.terminalContent.add(
+                            AbstractOpenCVController.this.terminalLayerPane);
+            
+            AbstractOpenCVController.this.terminalFrame = new JFrame(
+                            "Fetch Bot OpenCVController Terminal");
+            AbstractOpenCVController.this.terminalFrame.setContentPane(
+                            AbstractOpenCVController.this.terminalContent);
+            AbstractOpenCVController.this.terminalFrame
+                            .setDefaultCloseOperation(
+                                            WindowConstants.DISPOSE_ON_CLOSE);
+            AbstractOpenCVController.this.terminalFrame.setLocationByPlatform(
+                            true);
+            AbstractOpenCVController.this.terminalFrame.setResizable(false);
+            
+            AbstractOpenCVController.this.terminalFrame.pack();
+            AbstractOpenCVController.this.terminalFrame.setVisible(true);
         }
     }
     
