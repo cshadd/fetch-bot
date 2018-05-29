@@ -32,6 +32,10 @@ package io.github.cshadd.fetch_bot.controllers;
  * basically a manager that directs data between entities in Fetch Bot.
  * 
  * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
  * @since 1.0.0
  */
 public abstract class AbstractController implements Controller {
