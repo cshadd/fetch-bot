@@ -494,78 +494,45 @@ public abstract class AbstractOpenCVController extends AbstractController
      * Processes the detections from the matrix from the mat. The mat is loaded
      * from the buffer of frames from the camera thread.
      * 
-     * The process follows:
-     * 1. Convert the image matrix into a "blob".
-     * 2. Feed "blob" into Caffe neural network.
-     * 3. Detections are outputted as matrix.
-     * <p>
-     * <table>
+     * The process follows:<br />
+     * 1. Convert the image matrix into a "blob".<br />
+     * 2. Feed "blob" into Caffe neural network.<br />
+     * 3. Detections are outputted as matrix.<br />
+     * <table border="1">
      * <tr>
-     * <th>
-     * Index
-     * </th>
-     * <th>
-     * Value
-     * </th>
+     * <th>Index</th>
+     * <th>Value</th>
      * </tr>
      * <tr>
-     * <td>
-     * 0
-     * </td>
-     * <td>
-     * Always 0 (?)
-     * </td>
+     * <td>0</td>
+     * <td>Always 0 (?)</td>
      * </tr>
      * <tr>
-     * <td>
-     * 1
-     * </td>
-     * <td>
-     * Detected object
-     * </td>
+     * <td>1</td>
+     * <td>Detected object</td>
      * </tr>
      * <tr>
-     * <td>
-     * 2
-     * </td>
-     * <td>
-     * Confidence level of detection
-     * </td>
+     * <td>2</td>
+     * <td>Confidence level of detection</td>
      * </tr>
      * <tr>
-     * <td>
-     * 3
-     * </td>
-     * <td>
-     * Starting X coordinate of detection
-     * </td>
+     * <td>3</td>
+     * <td>Starting X coordinate of detection</td>
      * </tr>
      * <tr>
-     * <td>
-     * 4
-     * </td>
-     * <td>
-     * Starting Y coordinate of detection
-     * </td>
+     * <td>4</td>
+     * <td>Starting Y coordinate of detection</td>
      * </tr>
      * <tr>
-     * <td>
-     * 5
-     * </td>
-     * <td>
-     * Ending X coordinate of detection
-     * </td>
+     * <td>5</td>
+     * <td>Ending X coordinate of detection</td>
      * </tr>
      * <tr>
-     * <td>
-     * 6
-     * </td>
-     * <td>
-     * Ending Y coordinate of detection
-     * </td>
+     * <td>6</td>
+     * <td>Ending Y coordinate of detection</td>
      * </tr>
      * </table>
-     * </p>
+     * <br />
      * 4. Draw terminals in the OpenCV Terminal for each detection.
      *
      *
