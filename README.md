@@ -47,7 +47,7 @@ Great care is needed to assemble this robot. We specifically chose these parts f
 1. Assemble the chassis with the parts, we recommend using the parts listed and we 3d printed our design.
 Make sure the wheels are balanced.
 2. Connect the stepper motors and the ultrasonic sensor to the Arduino.
-The ports are listed in <PROJECT DIRECTORY>/arduino-slave-processor/FetchBot/FetchBot.ino.
+The ports are listed in ``<PROJECT DIRECTORY>/arduino-slave-processor/FetchBot/FetchBot.ino``.
 Adafruit has tutorials online for the stepper motor including the correct way to power it.
 The stepper motor will need a separate source so we used the transformer to convert the 5V (2A port) battery to 12V for the motor).
 3. Connect the Arduino directly to the Raspberry Pi.
@@ -158,7 +158,7 @@ cd <PROJECT DIRECTORY>
 cp -r ./target/libs <DESIRED LOCATION OF PROGRAM>
 cp ./target/fetch-bot-vx.x.x.jar <DESIRED LOCATION OF PROGRAM>/fetch-bot-vx.x.x.jar
 cp ./src/bash-start.sh <DESIRED LOCATION OF PROGRAM>/StartFetchBot.sh
-sudo cp -R ./src/www <LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot
+sudo cp -R ./src/www <LOCATION OF APACHE HTTP SERVER FOLDER>/<DESIRED LOCATION OF WEB INTERFACE>
 ```
 in a Bash terminal.
 
@@ -202,6 +202,11 @@ rm -f <CURRENT LOCATION OF PROGRAM>/StartFetchBot.sh
 in a Bash terminal.
 
 ## Usage
+Depending on how you installed it will determine its usage.
+
+### Easy Usage
+Only do this if you did the Easy Install!
+
 To run, execute
 ```bash
 cd <CURRENT LOCATION OF PROGRAM>
@@ -209,9 +214,29 @@ cd <CURRENT LOCATION OF PROGRAM>
 ```
 in a Bash terminal.
 
-To control and terminate the application, you must use the web interface. The address to the web interface depends on your Apache configuration. Normally it would just be http://localhost/FetchBot.
-
+To control and terminate the application, you must use the web interface. It should be http://localhost/FetchBot.
 The OpenCV Controller Terminal Window is located at the VNC server :1.
+
+### Manual Usage
+To run, execute
+```bash
+cd <CURRENT LOCATION OF PROGRAM>
+vncserver :1
+export DISPLAY=:0
+xset -display :0 s off
+xset -display :0 -dpms
+xset -display :0 s noblank
+sudo pkill java
+sudo pkill unclutter
+export DISPLAY=:1
+java -jar fetch-bot-vx.x.x.jar &
+export DISPLAY=:0
+unclutter -display :0 &
+/usr/bin/chromium-browser --incognito --start-maximized --kiosk http://localhost/<DESIRED LOCATION OF WEB INTERFACE>/face.html
+```
+using a Bash file in a Bash terminal.
+
+To control and terminate the application, you must use the web interface. The OpenCV Controller Terminal Window is located at the VNC server :1.
 
 ## Web Page
 https://cshadd.github.io/fetch-bot/
