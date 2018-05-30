@@ -1,52 +1,129 @@
+/*
+ * MIT License
+ * 
+ * Copyright (c) 2018 Christian Shadd
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+ * https://cshadd.github.io/fetch-bot/
+ */
 package io.github.cshadd.fetch_bot.controllers;
+
 import io.github.cshadd.fetch_bot.Component;
 
 // Main
+
+/**
+ * The Class PathfindControllerImpl. An Pathfind Controller with basic
+ * implementation.
+ * 
+ * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
+ * @since 1.0.0
+ */
 @Component("AI")
-public class PathfindControllerImpl
-extends AbstractPathfindController {    
+public class PathfindControllerImpl extends AbstractPathfindController {
     // Public Constructors
+    
+    /**
+     * Instantiates a new Pathfind Controller Impl.
+     */
     public PathfindControllerImpl() {
         super();
     }
-
+    
     // Public Methods (Overrided)
+    
+    /**
+     * @see io.github.cshadd.fetch_bot.controllers.PathfindController#blockNext()
+     */
     @Override
     public void blockNext() {
-        cartesianGraph.blockCoord(getNext());
+        this.cartesianGraph.blockCoord(getNext());
     }
+    
+    /**
+     * @see io.github.cshadd.fetch_bot.controllers.PathfindController#goNext()
+     */
     @Override
     public void goNext() {
         visit();
-        cartesianGraph.setCurrentCoord(getNext());
+        this.cartesianGraph.setCurrentCoord(getNext());
     }
+    
+    /**
+     * @see io.github.cshadd.fetch_bot.controllers.PathfindController#isNextBlocked()
+     */
     @Override
     public boolean isNextBlocked() {
-        return cartesianGraph.isCoordBlocked(getNext());
+        return this.cartesianGraph.isCoordBlocked(getNext());
     }
+    
+    /**
+     * @see io.github.cshadd.fetch_bot.controllers.PathfindController#isNextVisited()
+     */
     @Override
     public boolean isNextVisited() {
-        return cartesianGraph.isCoordVisited(getNext());
+        return this.cartesianGraph.isCoordVisited(getNext());
     }
+    
+    /**
+     * @see io.github.cshadd.fetch_bot.controllers.PathfindController#reset()
+     */
     @Override
     public void reset() {
-        currentRot = 0;
-        cartesianGraph.reset();
+        this.currentRot = 0;
+        this.cartesianGraph.reset();
     }
+    
+    /**
+     * @see io.github.cshadd.fetch_bot.controllers.PathfindController#rotateLeft()
+     */
     @Override
     public void rotateLeft() {
         rotateFix(-ROT_ADD);
     }
+    
+    /**
+     * @see io.github.cshadd.fetch_bot.controllers.PathfindController#rotateRight()
+     */
     @Override
     public void rotateRight() {
         rotateFix(ROT_ADD);
     }
+    
+    /**
+     * @see io.github.cshadd.fetch_bot.controllers.PathfindController#unblockNext()
+     */
     @Override
     public void unblockNext() {
-        cartesianGraph.unblockCoord(getNext());
+        this.cartesianGraph.unblockCoord(getNext());
     }
+    
+    /**
+     * @see io.github.cshadd.fetch_bot.controllers.PathfindController#visit()
+     */
     @Override
     public void visit() {
-        cartesianGraph.visitCoord(cartesianGraph.getCurrentCoord());
+        this.cartesianGraph.visitCoord(this.cartesianGraph.getCurrentCoord());
     }
 }
