@@ -1,18 +1,141 @@
+/*
+ * MIT License
+ * 
+ * Copyright (c) 2018 Christian Shadd
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+ * https://cshadd.github.io/fetch-bot/
+ */
 package io.github.cshadd.fetch_bot.io;
+
 import io.github.cshadd.fetch_bot.FetchBot;
 
+/**
+ * The Interface Communication. Defines what an Communication does.
+ * 
+ * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
+ * @since 1.0.0
+ */
 // Main
-public abstract interface Communication
-extends FetchBot {
+public abstract interface Communication extends FetchBot {
+    
+    /**
+     * Clear.
+     *
+     * @throws CommunicationException
+     *             if the clear request failed
+     */
     // Public Abstract Methods
     public abstract void clear() throws CommunicationException;
-    public abstract String getRobotValue(String key) throws CommunicationException;
-    public abstract String getSourceValue(String key) throws CommunicationException;
+    
+    /**
+     * Gets the robot value.
+     *
+     * @param key
+     *            the key
+     * @return the robot value
+     * @throws CommunicationException
+     *             if the value could not be read
+     */
+    public abstract String getRobotValue(String key)
+                    throws CommunicationException;
+    
+    /**
+     * Gets the source value.
+     *
+     * @param key
+     *            the key
+     * @return the source value
+     * @throws CommunicationException
+     *             if the value could not be read
+     */
+    public abstract String getSourceValue(String key)
+                    throws CommunicationException;
+    
+    /**
+     * Pull robot.
+     *
+     * @throws CommunicationException
+     *             if the pull request failed
+     */
     public abstract void pullRobot() throws CommunicationException;
+    
+    /**
+     * Pull source.
+     *
+     * @throws CommunicationException
+     *             if the pull request failed
+     */
     public abstract void pullSource() throws CommunicationException;
+    
+    /**
+     * Push robot.
+     *
+     * @throws CommunicationException
+     *             if the push request failed
+     */
     public abstract void pushRobot() throws CommunicationException;
+    
+    /**
+     * Push source.
+     *
+     * @throws CommunicationException
+     *             if the push request failed
+     */
     public abstract void pushSource() throws CommunicationException;
+    
+    /**
+     * Reset.
+     *
+     * @throws CommunicationException
+     *             if the reset request failed
+     */
     public abstract void reset() throws CommunicationException;
-    public abstract void setRobotValue(String key, String value) throws CommunicationException;
-    public abstract void setSourceValue(String key, String value) throws CommunicationException;
+    
+    /**
+     * Sets the robot value.
+     *
+     * @param key
+     *            the key
+     * @param value
+     *            the value
+     * @throws CommunicationException
+     *             if the value could not be set
+     */
+    public abstract void setRobotValue(String key, String value)
+                    throws CommunicationException;
+    
+    /**
+     * Sets the source value.
+     *
+     * @param key
+     *            the key
+     * @param value
+     *            the value
+     * @throws CommunicationException
+     *             if the value could not be set
+     */
+    public abstract void setSourceValue(String key, String value)
+                    throws CommunicationException;
 }
