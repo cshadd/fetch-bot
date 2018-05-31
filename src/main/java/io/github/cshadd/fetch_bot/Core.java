@@ -255,14 +255,14 @@ public class Core implements FetchBot {
                                         final boolean states[] = pathfindControl
                                                         .calculate();
                                         
-                                        boolean backBlocked = states[0];
-                                        boolean backVisited = states[1];
-                                        boolean frontBlocked = states[2];
-                                        boolean frontVisited = states[3];
-                                        boolean leftBlocked = states[4];
-                                        boolean leftVisited = states[5];
-                                        boolean rightBlocked = states[6];
-                                        boolean rightVisited = states[7];
+                                        final boolean backBlocked = states[0];
+                                        final boolean backVisited = states[1];
+                                        final boolean frontBlocked = states[2];
+                                        final boolean frontVisited = states[3];
+                                        final boolean leftBlocked = states[4];
+                                        final boolean leftVisited = states[5];
+                                        final boolean rightBlocked = states[6];
+                                        final boolean rightVisited = states[7];
                                         
                                         Logger.debug("PathfindController - [\n\n"
                                                         + pathfindControl
