@@ -209,18 +209,22 @@ Only do this if you did the Easy Install!
 
 To run, execute
 ```bash
-cd <CURRENT LOCATION OF PROGRAM>
-./StartFetchBot.sh
+cd ~/bin
+./StartFetchBot.sh [optional command line]
 ```
 in a Bash terminal.
 
-To control and terminate the application, you must use the web interface. It should be http://localhost/FetchBot.
-The OpenCV Controller Terminal Window is located at the VNC server :1.
+To control and terminate the application, you must use the web interface. It should be http://localhost/FetchBot. The OpenCV Controller Terminal Window is located at the VNC server :1. You can also use other command lines. If you wish to view the different command lines available, execute
+```bash
+cd ~/bin
+java -jar fetch-bot-vx.x.x.jar HELP
+```
+in a Bash terminal.
 
 ### Manual Usage
 To run, execute
 ```bash
-cd ~/bin
+cd <CURRENT LOCATION OF PROGRAM>
 vncserver :1
 export DISPLAY=:0
 xset -display :0 s off
@@ -229,14 +233,19 @@ xset -display :0 s noblank
 sudo pkill java
 sudo pkill unclutter
 export DISPLAY=:1
-java -jar fetch-bot-vx.x.x.jar &
+java -jar fetch-bot-vx.x.x.jar [optional command line] &
 export DISPLAY=:0
 unclutter -display :0 &
 /usr/bin/chromium-browser --incognito --start-maximized --kiosk http://localhost/<CURRENT LOCATION OF WEB INTERFACE>/face.html
 ```
 using a Bash file in a Bash terminal.
 
-To control and terminate the application, you must use the web interface. The OpenCV Controller Terminal Window is located at the VNC server :1.
+To control and terminate the application, you must use the web interface. The OpenCV Controller Terminal Window is located at the VNC server :1. You can also use other command lines. If you wish to view the different command lines available, execute
+```bash
+cd ~/bin
+java -jar fetch-bot-vx.x.x.jar HELP
+```
+in a Bash terminal.
 
 ## Web Page
 https://cshadd.github.io/fetch-bot/

@@ -95,6 +95,81 @@ public class Core implements FetchBot {
     public Core() {
     }
     
+    // Private Nested Classes
+    
+    /**
+     * The Enum CommandLine. Provides the command line flags.
+     * 
+     * @author Christian Shadd
+     * @author Maria Verna Aquino
+     * @author Thanh Vu
+     * @author Joseph Damian
+     * @author Giovanni Orozco
+     * @since 1.1.0
+     */
+    private enum CommandLine implements FetchBot {
+        // Public Constant Instance/Property Fields
+        
+        /**
+         * The normal flag.
+         */
+        NORMAL("Normal execution mode."),
+        /**
+         * The debug flag.
+         */
+        DEBUG("Debugging mode."),
+        /**
+         * The help flag.
+         */
+        H("View help."),
+        /**
+         * The help flag.
+         */
+        HELP(CommandLine.H.getDescription());
+        
+        /**
+         * The Constant DEFAULT_FLAG.
+         */
+        public static final CommandLine DEFAULT_FLAG = NORMAL;
+        
+        // Private Instance/Property Fields
+        
+        /**
+         * The description.
+         */
+        private final String description;
+        
+        // Private Constructors
+        
+        /**
+         * Instantiates a new Command Line.
+         */
+        private CommandLine() {
+            this(null);
+        }
+        
+        /**
+         * Instantiates a new Command Line.
+         *
+         * @param newDescription
+         *            the new description
+         */
+        private CommandLine(String newDescription) {
+            this.description = newDescription;
+        }
+        
+        // Public Methods
+        
+        /**
+         * Gets the description.
+         *
+         * @return the description
+         */
+        public String getDescription() {
+            return this.description;
+        }
+    }
+    
     // Private Static Methods
     
     /**
@@ -678,14 +753,32 @@ public class Core implements FetchBot {
      *             architecture is not valid for Fetch Bot.
      */
     private static void setup(String[] args) {
-        String profile = "Normal";
+        CommandLine cL = CommandLine.DEFAULT_FLAG;
+        
         if (args.length > 0) {
-            profile = args[0];
-            if (profile.equals("Normal")) {
-                /* */ } else if (profile.equals("Debug")) {
-                /* */ } else {
-                profile = "Normal";
+            try {
+                cL = CommandLine.valueOf(args[0]);
+            } catch (IllegalArgumentException e) {
+                Logger.fatalError(e, "Bad command line, try using HElP.");
+                terminatePremature();
+            } catch (Exception e) {
+                Logger.fatalError(e, "There was an unknown issue!");
+                terminatePremature();
+            } finally {
+                /* */ }
+        }
+        
+        final String profile = cL.toString();
+        
+        if (profile.equals("H") || profile.equals("HELP")) {
+            String help = "Fetch Bot\nUsage: java -jar fetch-bot-" + VERSION
+                            + ".jar [commands]\n where commands include:\n";
+            for (CommandLine command : CommandLine.values()) {
+                help += "\t" + command + "\t\t" + command.getDescription()
+                                + "\n";
             }
+            Logger.info(help);
+            terminatePremature();
         }
         
         // Initiate communications
@@ -693,7 +786,7 @@ public class Core implements FetchBot {
         webInterfaceComm = new WebInterfaceCommunicationImpl();
         Logger.setWebInterfaceCommunications(webInterfaceComm);
         Logger.clear();
-        if (profile.equals("Debug")) {
+        if (profile.equals("DEBUG")) {
             Logger.setToDebugMode();
         }
         
@@ -754,11 +847,11 @@ public class Core implements FetchBot {
     }
     
     /**
-     * Terminates the application resources.
+     * Terminates the application.
      */
     private static void terminate() {
         Logger.info("Core - Fetch Bot terminating! Log file: "
-                        + Logger.LOG_FILE);
+                        + Logger.LOG_FILE + ".");
         try {
             openCVControl.stopCamera();
             openCVControl.close();
@@ -773,8 +866,18 @@ public class Core implements FetchBot {
         } catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         } finally {
-            Logger.close();
+            Logger.closePrompt();
         }
+    }
+    
+    /**
+     * Terminates the application prematurely.
+     */
+    private static void terminatePremature() {
+        Logger.info("Core - Fetch Bot terminating prematurely! Log file: "
+                        + Logger.LOG_FILE + ".");
+        Logger.close();
+        System.exit(1);
     }
     
     // Public Static Final Methods
@@ -809,9 +912,18 @@ public class Core implements FetchBot {
      *             architecture is not valid for Fetch Bot.
      */
     public static void main(String[] args) {
-        // Setup
-        setup(args);
-        
+        try {
+            // Setup
+            setup(args);
+        } catch (UnsatisfiedLinkError e) {
+            Logger.fatalError(e, "Native library failed to load!");
+            terminatePremature();
+        } catch (Exception e) {
+            Logger.error(e, "There was an unknown issue!");
+            terminatePremature();
+        } finally {
+            /* */ }
+            
         // Run
         run();
         

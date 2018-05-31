@@ -215,8 +215,16 @@ public class Logger implements FetchBot {
      */
     public static void close() {
         javaLogger.removeHandler(javaLoggerHandler);
+    }
+
+    /**
+     * Closes the logger with a prompt.
+     */
+    public static void closePrompt() {
+        close();
         CONSOLE.promptForExit();
     }
+    
     
     /**
      * Log a debug message.
