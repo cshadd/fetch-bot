@@ -32,6 +32,10 @@ import org.junit.Test;
  * The Class AppTest. This is for testing.
  * 
  * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
  * @since 1.0.0
  */
 public class AppTest {

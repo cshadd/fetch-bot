@@ -63,7 +63,7 @@ public class Core implements FetchBot {
     /**
      * The Constant VERSION.
      */
-    private static final String VERSION = "v1.0.0";
+    private static final String VERSION = "v1.1.0";
     
     // Private Static Instance/Property Fields
     
@@ -73,7 +73,7 @@ public class Core implements FetchBot {
     private static ArduinoCommunication arduinoComm;
     
     /**
-     * The Open CV Controller.
+     * The OpenCV Controller.
      */
     private static OpenCVController openCVControl;
     
@@ -93,6 +93,81 @@ public class Core implements FetchBot {
      * Instantiates a new Core.
      */
     public Core() {
+    }
+    
+    // Private Nested Classes
+    
+    /**
+     * The Enum CommandLineArgument. Provides the command line argument flags.
+     * 
+     * @author Christian Shadd
+     * @author Maria Verna Aquino
+     * @author Thanh Vu
+     * @author Joseph Damian
+     * @author Giovanni Orozco
+     * @since 2.0.0-alpha
+     */
+    private enum CommandLineArgument implements FetchBot {
+        // Public Constant Instance/Property Fields
+        
+        /**
+         * The normal flag.
+         */
+        NORMAL("Normal execution mode."),
+        /**
+         * The debug flag.
+         */
+        DEBUG("Debugging mode."),
+        /**
+         * The help flag.
+         */
+        HELP("View help."),
+        /**
+         * The version flag.
+         */
+        V("View version.");
+        
+        /**
+         * The Constant DEFAULT_FLAG.
+         */
+        public static final CommandLineArgument DEFAULT_FLAG = NORMAL;
+        
+        // Private Instance/Property Fields
+        
+        /**
+         * The description.
+         */
+        private final String description;
+        
+        // Private Constructors
+        
+        /**
+         * Instantiates a new Command Line Argument.
+         */
+        private CommandLineArgument() {
+            this(null);
+        }
+        
+        /**
+         * Instantiates a new Command Line Argument with description.
+         *
+         * @param newDescription
+         *            the new description
+         */
+        private CommandLineArgument(String newDescription) {
+            this.description = newDescription;
+        }
+        
+        // Public Methods
+        
+        /**
+         * Gets the description.
+         *
+         * @return the description
+         */
+        public String getDescription() {
+            return this.description;
+        }
     }
     
     // Private Static Methods
@@ -177,35 +252,22 @@ public class Core implements FetchBot {
                                         tracked = true;
                                     } else {
                                         Logger.info("OpenCVController - Target not found!");
-                                        boolean backBlocked = false;
-                                        boolean backVisited = false;
-                                        boolean frontBlocked = false;
-                                        boolean frontVisited = false;
-                                        boolean leftBlocked = false;
-                                        boolean leftVisited = false;
-                                        boolean rightBlocked = false;
-                                        boolean rightVisited = false;
+                                        final boolean states[] = pathfindControl
+                                                        .calculate();
                                         
-                                        frontBlocked = pathfindControl
-                                                        .isNextBlocked();
-                                        frontVisited = pathfindControl
-                                                        .isNextVisited();
-                                        pathfindControl.rotateRight();
-                                        rightBlocked = pathfindControl
-                                                        .isNextBlocked();
-                                        rightVisited = pathfindControl
-                                                        .isNextVisited();
-                                        pathfindControl.rotateRight();
-                                        backBlocked = pathfindControl
-                                                        .isNextBlocked();
-                                        backVisited = pathfindControl
-                                                        .isNextVisited();
-                                        pathfindControl.rotateRight();
-                                        leftBlocked = pathfindControl
-                                                        .isNextBlocked();
-                                        leftVisited = pathfindControl
-                                                        .isNextVisited();
-                                        pathfindControl.rotateRight();
+                                        boolean backBlocked = states[0];
+                                        boolean backVisited = states[1];
+                                        boolean frontBlocked = states[2];
+                                        boolean frontVisited = states[3];
+                                        boolean leftBlocked = states[4];
+                                        boolean leftVisited = states[5];
+                                        boolean rightBlocked = states[6];
+                                        boolean rightVisited = states[7];
+                                        
+                                        Logger.debug("PathfindController - [\n\n"
+                                                        + pathfindControl
+                                                                        .rawGraphToString()
+                                                        + "\n\n].");
                                         
                                         Logger.debug("PathfindController - [Back Blocked: "
                                                         + backBlocked
@@ -678,24 +740,44 @@ public class Core implements FetchBot {
      *             architecture is not valid for Fetch Bot.
      */
     private static void setup(String[] args) {
-        String profile = "Normal";
+        CommandLineArgument cLArg = CommandLineArgument.DEFAULT_FLAG;
+        
         if (args.length > 0) {
-            profile = args[0];
-            if (profile.equals("Normal")) {
-                /* */ } else if (profile.equals("Debug")) {
-                /* */ } else {
-                profile = "Normal";
+            try {
+                cLArg = CommandLineArgument.valueOf(args[0]);
+            } catch (IllegalArgumentException e) {
+                throw e;
+            } catch (Exception e) {
+                throw e;
+            } finally {
+                /* */ }
+        }
+        
+        if (cLArg == CommandLineArgument.DEBUG) {
+            Logger.setToDebugMode();
+        } else if (cLArg == CommandLineArgument.HELP) {
+            String help = "\n\nFetch Bot " + VERSION + "\n" + Logger.WEBSITE
+                            + "\nUsage: java -jar fetch-bot-" + VERSION
+                            + ".jar [commands]\n where commands include:\n";
+            for (CommandLineArgument arg : CommandLineArgument.values()) {
+                help += "\t" + arg + "\t\t" + arg.getDescription() + "\n";
             }
+            Logger.assign();
+            Logger.info(help + "\n\n");
+            Logger.close();
+            System.exit(0);
+        } else if (cLArg == CommandLineArgument.V) {
+            Logger.assign();
+            Logger.info("\n\n" + VERSION + "\n\n");
+            Logger.close();
+            System.exit(0);
         }
         
         // Initiate communications
         arduinoComm = new ArduinoCommunicationImpl();
         webInterfaceComm = new WebInterfaceCommunicationImpl();
-        Logger.setWebInterfaceCommunications(webInterfaceComm);
         Logger.clear();
-        if (profile.equals("Debug")) {
-            Logger.setToDebugMode();
-        }
+        Logger.setWebInterfaceCommunications(webInterfaceComm);
         
         // Reset communications
         try {
@@ -713,11 +795,28 @@ public class Core implements FetchBot {
             
         // Startup logging
         Logger.info("Core - Fetch Bot " + VERSION + " started as profile "
-                        + profile + "!");
+                        + cLArg.toString() + "!");
         try {
             webInterfaceComm.pushSource();
         } catch (CommunicationException e) {
             Logger.error(e, "There was an issue with Communication!");
+        } catch (Exception e) {
+            Logger.error(e, "There was an unknown issue!");
+        } finally {
+            /* */ }
+            
+        // Version check
+        boolean versionOk = false;
+        try {
+            versionOk = VersionCheck.verify(VERSION);
+            if (!versionOk) {
+                Logger.warn("VersionCheck - Version mismatch [this: " + VERSION
+                                + "; current: " + VersionCheck
+                                                .getCurrentVersion()
+                                + "], this version might be outdated!");
+            }
+        } catch (VersionCheckException e) {
+            Logger.warn(e, "There was an issue with VersionCheck!");
         } catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         } finally {
@@ -734,31 +833,14 @@ public class Core implements FetchBot {
             /* */ }
         pathfindControl = new PathfindControllerImpl();
         openCVControl.startCamera();
-        
-        // Version check
-        boolean versionOk = false;
-        try {
-            versionOk = VersionCheck.verify(VERSION);
-            if (!versionOk) {
-                Logger.warn("VersionCheck - Version mismatch [this: " + VERSION
-                                + "; current: " + VersionCheck
-                                                .getCurrentVersion()
-                                + "], this version might be outdated!");
-            }
-        } catch (VersionCheckException e) {
-            Logger.error(e, "There was an issue with VersionCheck!");
-        } catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
-        } finally {
-            /* */ }
     }
     
     /**
-     * Terminates the application resources.
+     * Terminates the application.
      */
     private static void terminate() {
-        Logger.info("Core - Fetch Bot terminating! Log file: "
-                        + Logger.LOG_FILE);
+        Logger.info("Core - Fetch Bot terminating! Log file: " + Logger.LOG_FILE
+                        + ".");
         try {
             openCVControl.stopCamera();
             openCVControl.close();
@@ -773,8 +855,9 @@ public class Core implements FetchBot {
         } catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         } finally {
-            Logger.close();
+            Logger.closePrompt();
         }
+        System.exit(0);
     }
     
     // Public Static Final Methods
@@ -809,9 +892,33 @@ public class Core implements FetchBot {
      *             architecture is not valid for Fetch Bot.
      */
     public static void main(String[] args) {
-        // Setup
-        setup(args);
-        
+        try {
+            // Setup
+            setup(args);
+        } catch (IllegalArgumentException e) {
+            Logger.assign();
+            Logger.fatalError(e, "Bad command line, try using HElP.");
+            Logger.info("Core - Fetch Bot terminating prematurely! Log file: "
+                            + Logger.LOG_FILE + ".");
+            Logger.close();
+            System.exit(1);
+        } catch (UnsatisfiedLinkError e) {
+            Logger.assign();
+            Logger.fatalError(e, "Native library failed to load!");
+            Logger.info("Core - Fetch Bot terminating prematurely! Log file: "
+                            + Logger.LOG_FILE + ".");
+            Logger.close();
+            System.exit(1);
+        } catch (Exception e) {
+            Logger.assign();
+            Logger.fatalError(e, "There was an unknown issue!");
+            Logger.info("Core - Fetch Bot terminating prematurely! Log file: "
+                            + Logger.LOG_FILE + ".");
+            Logger.close();
+            System.exit(1);
+        } finally {
+            /* */ }
+            
         // Run
         run();
         
