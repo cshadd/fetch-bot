@@ -72,6 +72,11 @@ public class Logger implements FetchBot {
      */
     public static final String LOG_FILE = "FetchBot.log";
     
+    /**
+     * The Constant WEBSITE.
+     */
+    public static final String WEBSITE = "https://cshadd.github.io/fetch-bot/";
+    
     // Private Static Instance/Property Fields
     
     /**
@@ -114,7 +119,7 @@ public class Logger implements FetchBot {
      *
      * @return the logs
      * @throws IOException
-     *             Signals that an I/O exception has occurred.
+     *             If the log file could not be read
      */
     private static String read() throws IOException {
         File input = new File(LOG_FILE);
@@ -170,7 +175,7 @@ public class Logger implements FetchBot {
                 webInterfaceComm.setSourceValue("verbose", read());
             }
         } catch (IOException e) {
-            fatalError(e, "Could not read " + LOG_FILE + ".");
+            fatalError(e, "Could not use " + LOG_FILE + ".");
         } catch (Exception e) {
             fatalError(e, "Unknown issue.");
         } finally {
@@ -192,18 +197,21 @@ public class Logger implements FetchBot {
     }
     
     /**
-     * Clears the logger.
+     * Assign the logger.
      */
-    public static void clear() {
-        CONSOLE.title("--- Fetch Bot ---",
-                        "https://cshadd.github.io/fetch-bot/");
-        File input = null;
+    public static void assign() {
+        webInterfaceComm = null;
         try {
-            input = new File(LOG_FILE);
+            close();
+            File input = new File(LOG_FILE);
             FileUtils.deleteQuietly(input);
             javaLoggerHandler = new FileHandler(LOG_FILE);
             javaLoggerHandler.setFormatter(javaLoggerHandlerFormatter);
             javaLogger.addHandler(javaLoggerHandler);
+        } catch (IOException e) {
+            fatalError(e, "Could not use " + LOG_FILE + ".");
+        } catch (SecurityException e) {
+            fatalError(e, "Could not use " + LOG_FILE + ".");
         } catch (Exception e) {
             fatalError(e, "Unknown issue.");
         } finally {
@@ -211,12 +219,25 @@ public class Logger implements FetchBot {
     }
     
     /**
+     * Clears the logger.
+     */
+    public static void clear() {
+        CONSOLE.clearScreen();
+        CONSOLE.title("--- Fetch Bot ---", WEBSITE);
+        assign();
+    }
+    
+    /**
      * Closes the logger.
      */
     public static void close() {
+        if (javaLoggerHandler != null) {
+            javaLoggerHandler.flush();
+            javaLoggerHandler.close();
+        }
         javaLogger.removeHandler(javaLoggerHandler);
     }
-
+    
     /**
      * Closes the logger with a prompt.
      */
@@ -224,7 +245,6 @@ public class Logger implements FetchBot {
         close();
         CONSOLE.promptForExit();
     }
-    
     
     /**
      * Log a debug message.

@@ -98,7 +98,7 @@ public class Core implements FetchBot {
     // Private Nested Classes
     
     /**
-     * The Enum CommandLine. Provides the command line flags.
+     * The Enum CommandLineArgument. Provides the command line argument flags.
      * 
      * @author Christian Shadd
      * @author Maria Verna Aquino
@@ -107,7 +107,7 @@ public class Core implements FetchBot {
      * @author Giovanni Orozco
      * @since 1.1.0
      */
-    private enum CommandLine implements FetchBot {
+    private enum CommandLineArgument implements FetchBot {
         // Public Constant Instance/Property Fields
         
         /**
@@ -121,16 +121,16 @@ public class Core implements FetchBot {
         /**
          * The help flag.
          */
-        H("View help."),
+        HELP("View help."),
         /**
-         * The help flag.
+         * The version flag.
          */
-        HELP(CommandLine.H.getDescription());
+        V("View version.");
         
         /**
          * The Constant DEFAULT_FLAG.
          */
-        public static final CommandLine DEFAULT_FLAG = NORMAL;
+        public static final CommandLineArgument DEFAULT_FLAG = NORMAL;
         
         // Private Instance/Property Fields
         
@@ -142,19 +142,19 @@ public class Core implements FetchBot {
         // Private Constructors
         
         /**
-         * Instantiates a new Command Line.
+         * Instantiates a new Command Line Argument.
          */
-        private CommandLine() {
+        private CommandLineArgument() {
             this(null);
         }
         
         /**
-         * Instantiates a new Command Line.
+         * Instantiates a new Command Line Argument with description.
          *
          * @param newDescription
          *            the new description
          */
-        private CommandLine(String newDescription) {
+        private CommandLineArgument(String newDescription) {
             this.description = newDescription;
         }
         
@@ -753,42 +753,44 @@ public class Core implements FetchBot {
      *             architecture is not valid for Fetch Bot.
      */
     private static void setup(String[] args) {
-        CommandLine cL = CommandLine.DEFAULT_FLAG;
+        CommandLineArgument cLArg = CommandLineArgument.DEFAULT_FLAG;
         
         if (args.length > 0) {
             try {
-                cL = CommandLine.valueOf(args[0]);
+                cLArg = CommandLineArgument.valueOf(args[0]);
             } catch (IllegalArgumentException e) {
-                Logger.fatalError(e, "Bad command line, try using HElP.");
-                terminatePremature();
+                throw e;
             } catch (Exception e) {
-                Logger.fatalError(e, "There was an unknown issue!");
-                terminatePremature();
+                throw e;
             } finally {
                 /* */ }
         }
         
-        final String profile = cL.toString();
-        
-        if (profile.equals("H") || profile.equals("HELP")) {
-            String help = "Fetch Bot\nUsage: java -jar fetch-bot-" + VERSION
+        if (cLArg == CommandLineArgument.DEBUG) {
+            Logger.setToDebugMode();
+        } else if (cLArg == CommandLineArgument.HELP) {
+            String help = "\n\nFetch Bot " + VERSION + "\n" + Logger.WEBSITE
+                            + "\nUsage: java -jar fetch-bot-" + VERSION
                             + ".jar [commands]\n where commands include:\n";
-            for (CommandLine command : CommandLine.values()) {
-                help += "\t" + command + "\t\t" + command.getDescription()
-                                + "\n";
+            for (CommandLineArgument arg : CommandLineArgument.values()) {
+                help += "\t" + arg + "\t\t" + arg.getDescription() + "\n";
             }
-            Logger.info(help);
-            terminatePremature();
+            Logger.assign();
+            Logger.info(help + "\n\n");
+            Logger.close();
+            System.exit(0);
+        } else if (cLArg == CommandLineArgument.V) {
+            Logger.assign();
+            Logger.info("\n\n" + VERSION + "\n\n");
+            Logger.close();
+            System.exit(0);
         }
         
         // Initiate communications
         arduinoComm = new ArduinoCommunicationImpl();
         webInterfaceComm = new WebInterfaceCommunicationImpl();
-        Logger.setWebInterfaceCommunications(webInterfaceComm);
         Logger.clear();
-        if (profile.equals("DEBUG")) {
-            Logger.setToDebugMode();
-        }
+        Logger.setWebInterfaceCommunications(webInterfaceComm);
         
         // Reset communications
         try {
@@ -806,11 +808,28 @@ public class Core implements FetchBot {
             
         // Startup logging
         Logger.info("Core - Fetch Bot " + VERSION + " started as profile "
-                        + profile + "!");
+                        + cLArg.toString() + "!");
         try {
             webInterfaceComm.pushSource();
         } catch (CommunicationException e) {
             Logger.error(e, "There was an issue with Communication!");
+        } catch (Exception e) {
+            Logger.error(e, "There was an unknown issue!");
+        } finally {
+            /* */ }
+        
+        // Version check
+        boolean versionOk = false;
+        try {
+            versionOk = VersionCheck.verify(VERSION);
+            if (!versionOk) {
+                Logger.warn("VersionCheck - Version mismatch [this: " + VERSION
+                                + "; current: " + VersionCheck
+                                                .getCurrentVersion()
+                                + "], this version might be outdated!");
+            }
+        } catch (VersionCheckException e) {
+            Logger.warn(e, "There was an issue with VersionCheck!");
         } catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         } finally {
@@ -827,31 +846,14 @@ public class Core implements FetchBot {
             /* */ }
         pathfindControl = new PathfindControllerImpl();
         openCVControl.startCamera();
-        
-        // Version check
-        boolean versionOk = false;
-        try {
-            versionOk = VersionCheck.verify(VERSION);
-            if (!versionOk) {
-                Logger.warn("VersionCheck - Version mismatch [this: " + VERSION
-                                + "; current: " + VersionCheck
-                                                .getCurrentVersion()
-                                + "], this version might be outdated!");
-            }
-        } catch (VersionCheckException e) {
-            Logger.error(e, "There was an issue with VersionCheck!");
-        } catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
-        } finally {
-            /* */ }
     }
     
     /**
      * Terminates the application.
      */
     private static void terminate() {
-        Logger.info("Core - Fetch Bot terminating! Log file: "
-                        + Logger.LOG_FILE + ".");
+        Logger.info("Core - Fetch Bot terminating! Log file: " + Logger.LOG_FILE
+                        + ".");
         try {
             openCVControl.stopCamera();
             openCVControl.close();
@@ -868,16 +870,7 @@ public class Core implements FetchBot {
         } finally {
             Logger.closePrompt();
         }
-    }
-    
-    /**
-     * Terminates the application prematurely.
-     */
-    private static void terminatePremature() {
-        Logger.info("Core - Fetch Bot terminating prematurely! Log file: "
-                        + Logger.LOG_FILE + ".");
-        Logger.close();
-        System.exit(1);
+        System.exit(0);
     }
     
     // Public Static Final Methods
@@ -915,12 +908,27 @@ public class Core implements FetchBot {
         try {
             // Setup
             setup(args);
+        } catch (IllegalArgumentException e) {
+            Logger.assign();
+            Logger.fatalError(e, "Bad command line, try using HElP.");
+            Logger.info("Core - Fetch Bot terminating prematurely! Log file: "
+                            + Logger.LOG_FILE + ".");
+            Logger.close();
+            System.exit(1);
         } catch (UnsatisfiedLinkError e) {
+            Logger.assign();
             Logger.fatalError(e, "Native library failed to load!");
-            terminatePremature();
+            Logger.info("Core - Fetch Bot terminating prematurely! Log file: "
+                            + Logger.LOG_FILE + ".");
+            Logger.close();
+            System.exit(1);
         } catch (Exception e) {
-            Logger.error(e, "There was an unknown issue!");
-            terminatePremature();
+            Logger.assign();
+            Logger.fatalError(e, "There was an unknown issue!");
+            Logger.info("Core - Fetch Bot terminating prematurely! Log file: "
+                            + Logger.LOG_FILE + ".");
+            Logger.close();
+            System.exit(1);
         } finally {
             /* */ }
             
