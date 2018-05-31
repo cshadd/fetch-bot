@@ -105,6 +105,38 @@ public abstract class AbstractPathfindController extends AbstractController
      */
     public static class CartesianGraph extends
                     UndirectedGraph<CartesianGraph.CartesianCoordinate> {
+        // Public Constant Instance/Property Fields
+        
+        /**
+         * The Constant RAW_GRAPH_AVALIBLE_SYMBOL.
+         */
+        public static final char RAW_GRAPH_AVALIBLE_SYMBOL = '.';
+        
+        /**
+         * The Constant RAW_GRAPH_UNKNOWN_SYMBOL.
+         */
+        public static final char RAW_GRAPH_UNKNOWN_SYMBOL = '?';
+        
+        /**
+         * The Constant RAW_GRAPH_BLOCKED_AND_VISITED_SYMBOL.
+         */
+        public static final char RAW_GRAPH_BLOCKED_AND_VISITED_SYMBOL = '#';
+        
+        /**
+         * The Constant RAW_GRAPH_BLOCKED_SYMBOL.
+         */
+        public static final char RAW_GRAPH_BLOCKED_SYMBOL = 'X';
+        
+        /**
+         * The Constant RAW_GRAPH_LOCATION_SYMBOL.
+         */
+        public static final char RAW_GRAPH_LOCATION_SYMBOL = '@';
+        
+        /**
+         * The Constant RAW_GRAPH_VISITED_SYMBOL.
+         */
+        public static final char RAW_GRAPH_VISITED_SYMBOL = '/';
+        
         // Private Instance/Property Fields
         
         /**
@@ -116,6 +148,11 @@ public abstract class AbstractPathfindController extends AbstractController
          * The max range.
          */
         private int maxRange;
+        
+        /**
+         * The raw graph.
+         */
+        private char rawGraph[][];
         
         /**
          * The current coordinate.
@@ -142,6 +179,8 @@ public abstract class AbstractPathfindController extends AbstractController
             super();
             this.blockedCoords = new ArrayList<>();
             this.maxRange = newMaxRange;
+            this.rawGraph = new char[newMaxRange * 2][newMaxRange * 2];
+            this.reset();
         }
         
         // Protected Static Nested Classes
@@ -262,6 +301,15 @@ public abstract class AbstractPathfindController extends AbstractController
                 return this.y;
             }
             
+            /**
+             * To array.
+             *
+             * @return the int[]
+             */
+            protected int[] toArray() {
+                return new int[] { this.x, this.y };
+            }
+            
             // Public Methods (Overrided)
             
             /**
@@ -376,6 +424,49 @@ public abstract class AbstractPathfindController extends AbstractController
             return fetchCoord(coord);
         }
         
+        /**
+         * Gets the raw graph value.
+         *
+         * @param x
+         *            the x
+         * @param y
+         *            the y
+         * @return the raw graph value
+         */
+        protected char getRawGraphValue(int x, int y) {
+            return this.rawGraph[x + this.maxRange][y + this.maxRange];
+        }
+        
+        /**
+         * String representation of the raw graph.
+         *
+         * @return the string
+         */
+        protected String rawGraphToString() {
+            String returnData = "";
+            for (int i = this.maxRange; i >= -this.maxRange; i--) {
+                for (int i2 = -this.maxRange; i2 <= this.maxRange; i2++) {
+                    returnData += this.getRawGraphValue(i2, i) + " ";
+                }
+                returnData += "\n";
+            }
+            return returnData;
+        }
+        
+        /**
+         * Sets the raw graph value.
+         *
+         * @param x
+         *            the x
+         * @param y
+         *            the y
+         * @param value
+         *            the value
+         */
+        protected void setRawGraphValue(int x, int y, char value) {
+            this.rawGraph[x + this.maxRange][y + this.maxRange] = value;
+        }
+        
         // Public Methods
         
         /**
@@ -424,6 +515,11 @@ public abstract class AbstractPathfindController extends AbstractController
          * Resets the graph.
          */
         public void reset() {
+            for (int i = 0; i <= this.maxRange * 2; i++) {
+                for (int i2 = 0; i2 <= this.maxRange * 2; i2++) {
+                    this.rawGraph[i][i2] = CartesianGraph.RAW_GRAPH_UNKNOWN_SYMBOL;
+                }
+            }
             unvisitAll();
             this.blockedCoords.clear();
             for (int i = -this.maxRange; i <= this.maxRange; i++) {

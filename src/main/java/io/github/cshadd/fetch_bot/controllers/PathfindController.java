@@ -46,6 +46,14 @@ public abstract interface PathfindController extends Controller {
     public abstract void blockNext();
     
     /**
+     * Calculate pathfinding and the states for visited and blocked of the
+     * back, front, left, right respectively.
+     *
+     * @return the array of states
+     */
+    public abstract boolean[] calculate();
+    
+    /**
      * Go to next coordinate in path.
      */
     public abstract void goNext();
@@ -63,6 +71,13 @@ public abstract interface PathfindController extends Controller {
      * @return true, if next coordinate in path is visited
      */
     public abstract boolean isNextVisited();
+    
+    /**
+     * String representation of the raw graph.
+     *
+     * @return the string
+     */
+    public abstract String rawGraphToString();
     
     /**
      * Reset pathfinding.

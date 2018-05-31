@@ -252,35 +252,22 @@ public class Core implements FetchBot {
                                         tracked = true;
                                     } else {
                                         Logger.info("OpenCVController - Target not found!");
-                                        boolean backBlocked = false;
-                                        boolean backVisited = false;
-                                        boolean frontBlocked = false;
-                                        boolean frontVisited = false;
-                                        boolean leftBlocked = false;
-                                        boolean leftVisited = false;
-                                        boolean rightBlocked = false;
-                                        boolean rightVisited = false;
+                                        final boolean states[] = pathfindControl
+                                                        .calculate();
                                         
-                                        frontBlocked = pathfindControl
-                                                        .isNextBlocked();
-                                        frontVisited = pathfindControl
-                                                        .isNextVisited();
-                                        pathfindControl.rotateRight();
-                                        rightBlocked = pathfindControl
-                                                        .isNextBlocked();
-                                        rightVisited = pathfindControl
-                                                        .isNextVisited();
-                                        pathfindControl.rotateRight();
-                                        backBlocked = pathfindControl
-                                                        .isNextBlocked();
-                                        backVisited = pathfindControl
-                                                        .isNextVisited();
-                                        pathfindControl.rotateRight();
-                                        leftBlocked = pathfindControl
-                                                        .isNextBlocked();
-                                        leftVisited = pathfindControl
-                                                        .isNextVisited();
-                                        pathfindControl.rotateRight();
+                                        boolean backBlocked = states[0];
+                                        boolean backVisited = states[1];
+                                        boolean frontBlocked = states[2];
+                                        boolean frontVisited = states[3];
+                                        boolean leftBlocked = states[4];
+                                        boolean leftVisited = states[5];
+                                        boolean rightBlocked = states[6];
+                                        boolean rightVisited = states[7];
+                                        
+                                        Logger.debug("PathfindController - [\n\n"
+                                                        + pathfindControl
+                                                                        .rawGraphToString()
+                                                        + "\n\n].");
                                         
                                         Logger.debug("PathfindController - [Back Blocked: "
                                                         + backBlocked
@@ -817,7 +804,7 @@ public class Core implements FetchBot {
             Logger.error(e, "There was an unknown issue!");
         } finally {
             /* */ }
-        
+            
         // Version check
         boolean versionOk = false;
         try {

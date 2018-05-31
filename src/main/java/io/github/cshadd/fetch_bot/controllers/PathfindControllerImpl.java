@@ -61,13 +61,91 @@ public class PathfindControllerImpl extends AbstractPathfindController {
         this.cartesianGraph.blockCoord(getNext());
     }
     
+    // Public Methods
+    
+    /**
+     * @see io.github.cshadd.fetch_bot.controllers.PathfindController#calculate()
+     */
+    @Override
+    public boolean[] calculate() {
+        boolean backBlocked = false;
+        boolean backVisited = false;
+        boolean frontBlocked = false;
+        boolean frontVisited = false;
+        boolean leftBlocked = false;
+        boolean leftVisited = false;
+        boolean rightBlocked = false;
+        boolean rightVisited = false;
+        int[] c = this.cartesianGraph.currentCoord.toArray();
+        System.out.println();
+        System.out.println();
+        System.out.println(c[0] + ", " + c[1]);
+        System.out.println();
+        this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_LOCATION_SYMBOL);
+        frontBlocked = this.isNextBlocked();
+        frontVisited = this.isNextVisited();
+        c = this.getNext().toArray();
+        if (frontBlocked && frontVisited) {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_BLOCKED_AND_VISITED_SYMBOL);
+        } else if (frontBlocked) {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_BLOCKED_SYMBOL);
+        } else if (frontVisited) {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_VISITED_SYMBOL);
+        } else {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_AVALIBLE_SYMBOL);
+        }
+        this.rotateRight();
+        rightBlocked = this.isNextBlocked();
+        rightVisited = this.isNextVisited();
+        c = this.getNext().toArray();
+        if (rightBlocked && rightVisited) {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_BLOCKED_AND_VISITED_SYMBOL);
+        } else if (rightBlocked) {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_BLOCKED_SYMBOL);
+        } else if (rightVisited) {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_VISITED_SYMBOL);
+        } else {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_AVALIBLE_SYMBOL);
+        }
+        this.rotateRight();
+        backBlocked = this.isNextBlocked();
+        backVisited = this.isNextVisited();
+        c = this.getNext().toArray();
+        if (backBlocked && backVisited) {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_BLOCKED_AND_VISITED_SYMBOL);
+        } else if (backBlocked) {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_BLOCKED_SYMBOL);
+        } else if (backVisited) {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_VISITED_SYMBOL);
+        } else {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_AVALIBLE_SYMBOL);
+        }
+        this.rotateRight();
+        leftBlocked = this.isNextBlocked();
+        leftVisited = this.isNextVisited();
+        c = this.getNext().toArray();
+        if (leftBlocked && leftVisited) {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_BLOCKED_AND_VISITED_SYMBOL);
+        } else if (leftBlocked) {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_BLOCKED_SYMBOL);
+        } else if (leftVisited) {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_VISITED_SYMBOL);
+        } else {
+            this.cartesianGraph.setRawGraphValue(c[0], c[1], CartesianGraph.RAW_GRAPH_AVALIBLE_SYMBOL);
+        }
+        this.rotateRight();
+        return new boolean[] { backBlocked, backVisited, frontBlocked,
+                        frontVisited, leftBlocked, leftVisited, rightBlocked,
+                        rightVisited };
+    }
+    
     /**
      * @see io.github.cshadd.fetch_bot.controllers.PathfindController#goNext()
      */
     @Override
     public void goNext() {
         visit();
-        this.cartesianGraph.setCurrentCoord(getNext());
+        this.cartesianGraph.currentCoord = getNext();
     }
     
     /**
@@ -84,6 +162,14 @@ public class PathfindControllerImpl extends AbstractPathfindController {
     @Override
     public boolean isNextVisited() {
         return this.cartesianGraph.isCoordVisited(getNext());
+    }
+    
+    /**
+     * @see io.github.cshadd.fetch_bot.controllers.PathfindController#rawGraphToString()
+     */
+    @Override
+    public String rawGraphToString() {
+        return this.cartesianGraph.rawGraphToString();
     }
     
     /**
