@@ -144,7 +144,7 @@ public abstract class AbstractPathfindController extends AbstractController
             this.maxRange = newMaxRange;
         }
         
-        // Private Static Nested Classes
+        // Protected Static Nested Classes
         
         /**
          * The Class CartesianCoordinate. A Comparable that is used with a
@@ -157,7 +157,7 @@ public abstract class AbstractPathfindController extends AbstractController
          * @author Giovanni Orozco
          * @since 1.0.0
          */
-        private static class CartesianCoordinate implements
+        protected static class CartesianCoordinate implements
                         Comparable<CartesianCoordinate> {
             // Protected Instance/Property Fields
             
@@ -171,15 +171,13 @@ public abstract class AbstractPathfindController extends AbstractController
              */
             protected int y;
             
-            // Private Constructors
-            
+            // Public Constructors
             /**
              * Instantiates a new Cartesian Coordinate.
              */
-            private CartesianCoordinate() {
+            public CartesianCoordinate() {
+                this(0, 0);
             }
-            
-            // Public Constructors
             
             /**
              * Instantiates a new Cartesian Coordinate with a X coordinate and Y
@@ -191,7 +189,6 @@ public abstract class AbstractPathfindController extends AbstractController
              *            the new Y
              */
             public CartesianCoordinate(int newX, int newY) {
-                this();
                 this.x = newX;
                 this.y = newY;
             }
@@ -245,6 +242,24 @@ public abstract class AbstractPathfindController extends AbstractController
              */
             protected CartesianCoordinate up() {
                 return new CartesianCoordinate(this.x, this.y + 1);
+            }
+            
+            /**
+             * Get X coordinate.
+             *
+             * @return the int
+             */
+            protected int x() {
+                return this.x;
+            }
+            
+            /**
+             * Get Y coordinate.
+             *
+             * @return the int
+             */
+            protected int y() {
+                return this.y;
             }
             
             // Public Methods (Overrided)
