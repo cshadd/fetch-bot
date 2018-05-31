@@ -35,7 +35,7 @@ package io.github.cshadd.fetch_bot;
  * @author Thanh Vu
  * @author Joseph Damian
  * @author Giovanni Orozco
- * @version 1.1.0
+ * @version 2.0.0-alpha
  * @since 1.0.0
  */
 public abstract interface FetchBot {
