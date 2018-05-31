@@ -11,8 +11,8 @@ implements Communication {
 
     // Protected Constructors
     protected AbstractCommunication() {
-        toRobotData = new JSONObject();
-        toSourceData = new JSONObject();
+        this.toRobotData = new JSONObject();
+        this.toSourceData = new JSONObject();
     }
     
     // Public Methods (Overrided)
@@ -21,7 +21,7 @@ implements Communication {
     throws CommunicationException {
         String returnData = null;
         try {
-            returnData = toRobotData.getString(key);
+            returnData = this.toRobotData.getString(key);
         }
         catch (JSONException e) {
             throw new CommunicationException("Bad JSON value " + key + ".", e);
@@ -37,7 +37,7 @@ implements Communication {
     throws CommunicationException {
         String returnData = null;
         try {
-            returnData = toSourceData.getString(key);
+            returnData = this.toSourceData.getString(key);
         }
         catch (JSONException e) {
             throw new CommunicationException("Bad JSON value " + key + ".", e);
@@ -72,7 +72,7 @@ implements Communication {
     public void setRobotValue(String key, String value)
     throws CommunicationException {
         try {
-            toRobotData.put(key, value);
+            this.toRobotData.put(key, value);
         }
         catch (JSONException e) {
             throw new CommunicationException("Bad JSON key-value " + key + ", " + value + ".", e);
@@ -86,7 +86,7 @@ implements Communication {
     public void setSourceValue(String key, String value)
     throws CommunicationException {
         try {
-            toSourceData.put(key, value);
+            this.toSourceData.put(key, value);
         }
         catch (JSONException e) {
             throw new CommunicationException("Bad JSON key-value " + key + ", " + value + ".", e);

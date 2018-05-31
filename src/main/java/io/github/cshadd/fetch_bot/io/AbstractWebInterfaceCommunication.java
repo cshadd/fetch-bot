@@ -35,7 +35,7 @@ implements WebInterfaceCommunication {
     throws CommunicationException {
         JSONObject returnData = null;
         try {
-            final File input = new File(commPath + filePath);
+            final File input = new File(this.commPath + filePath);
             returnData = new JSONObject(FileUtils.readFileToString(input, "UTF-8"));
         }
         catch (IOException e) {
@@ -53,7 +53,7 @@ implements WebInterfaceCommunication {
     protected void write(JSONObject json, String filePath)
     throws CommunicationException {
         try {
-            final File input = new File(commPath + filePath);
+            final File input = new File(this.commPath + filePath);
             FileUtils.writeStringToFile(input, "" + json, "UTF-8");
         }
         catch (IOException e) {
