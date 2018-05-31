@@ -27,6 +27,8 @@ package io.github.cshadd.fetch_bot.io;
 
 import io.github.cshadd.fetch_bot.FetchBot;
 
+//Main
+
 /**
  * The Interface Communication. Defines what an Communication does.
  * 
@@ -37,8 +39,8 @@ import io.github.cshadd.fetch_bot.FetchBot;
  * @author Giovanni Orozco
  * @since 1.0.0
  */
-// Main
 public abstract interface Communication extends FetchBot {
+    // Public Abstract Methods
     
     /**
      * Clear.
@@ -46,7 +48,6 @@ public abstract interface Communication extends FetchBot {
      * @throws CommunicationException
      *             if the clear request failed
      */
-    // Public Abstract Methods
     public abstract void clear() throws CommunicationException;
     
     /**

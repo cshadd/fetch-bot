@@ -25,6 +25,8 @@
  */
 package io.github.cshadd.fetch_bot.io;
 
+//Main
+
 /**
  * The Interface ArduinoCommunication. Defines what an Arduino Communication does.
  * 
@@ -35,8 +37,8 @@ package io.github.cshadd.fetch_bot.io;
  * @author Giovanni Orozco
  * @since 1.0.0
  */
-// Main
 public abstract interface ArduinoCommunication extends Communication {
+    // Public Abstract Methods
     
     /**
      * Gets the robot float value.
@@ -47,7 +49,6 @@ public abstract interface ArduinoCommunication extends Communication {
      * @throws CommunicationException
      *             if the value could not be read
      */
-    // Public Abstract Methods
     public abstract float getRobotFloatValue(String key)
                     throws CommunicationException;
 }

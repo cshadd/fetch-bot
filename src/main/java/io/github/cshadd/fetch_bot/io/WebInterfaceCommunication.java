@@ -25,6 +25,8 @@
  */
 package io.github.cshadd.fetch_bot.io;
 
+//Main
+
 /**
  * The Interface WebInterfaceCommunication. Defines what an Web Interface
  * Communication does.
@@ -36,6 +38,5 @@ package io.github.cshadd.fetch_bot.io;
  * @author Giovanni Orozco
  * @since 1.0.0
  */
-// Main
 public abstract interface WebInterfaceCommunication extends Communication {
     /* */ }
