@@ -58,12 +58,10 @@ public abstract class AbstractPathfindController extends AbstractController
      */
     private static final int ROT_MAX_RANGE = 360;
     
-    // Protected Constant Instance/Property Fields
-    
     /**
      * The Constant ROT_ADD.
      */
-    protected static final int ROT_ADD = 90;
+    private static final int ROT_ADD = 90;
     
     // Protected Final Instance/Property Fields
     
@@ -105,37 +103,37 @@ public abstract class AbstractPathfindController extends AbstractController
      */
     public static class CartesianGraph extends
                     UndirectedGraph<CartesianGraph.CartesianCoordinate> {
-        // Public Constant Instance/Property Fields
+        // Protected Constant Instance/Property Fields
         
         /**
          * The Constant RAW_GRAPH_AVALIBLE_SYMBOL.
          */
-        public static final char RAW_GRAPH_AVALIBLE_SYMBOL = '.';
+        protected static final char RAW_GRAPH_AVALIBLE_SYMBOL = '.';
         
         /**
          * The Constant RAW_GRAPH_UNKNOWN_SYMBOL.
          */
-        public static final char RAW_GRAPH_UNKNOWN_SYMBOL = '?';
+        protected static final char RAW_GRAPH_UNKNOWN_SYMBOL = '?';
         
         /**
          * The Constant RAW_GRAPH_BLOCKED_AND_VISITED_SYMBOL.
          */
-        public static final char RAW_GRAPH_BLOCKED_AND_VISITED_SYMBOL = '#';
+        protected static final char RAW_GRAPH_BLOCKED_AND_VISITED_SYMBOL = '#';
         
         /**
          * The Constant RAW_GRAPH_BLOCKED_SYMBOL.
          */
-        public static final char RAW_GRAPH_BLOCKED_SYMBOL = 'X';
+        protected static final char RAW_GRAPH_BLOCKED_SYMBOL = 'X';
         
         /**
          * The Constant RAW_GRAPH_LOCATION_SYMBOL.
          */
-        public static final char RAW_GRAPH_LOCATION_SYMBOL = '@';
+        protected static final char RAW_GRAPH_LOCATION_SYMBOL = '@';
         
         /**
          * The Constant RAW_GRAPH_VISITED_SYMBOL.
          */
-        public static final char RAW_GRAPH_VISITED_SYMBOL = '/';
+        protected static final char RAW_GRAPH_VISITED_SYMBOL = '/';
         
         // Private Instance/Property Fields
         
@@ -143,6 +141,11 @@ public abstract class AbstractPathfindController extends AbstractController
          * The blocked coordinates.
          */
         private List<CartesianCoordinate> blockedCoords;
+        
+        /**
+         * The current coordinate.
+         */
+        private CartesianCoordinate currentCoord;
         
         /**
          * The max range.
@@ -153,12 +156,6 @@ public abstract class AbstractPathfindController extends AbstractController
          * The raw graph.
          */
         private char rawGraph[][];
-        
-        /**
-         * The current coordinate.
-         */
-        // Protected Instance/Property Fields
-        protected CartesianCoordinate currentCoord;
         
         // Protected Constructors
         
@@ -198,23 +195,23 @@ public abstract class AbstractPathfindController extends AbstractController
          */
         protected static class CartesianCoordinate implements
                         Comparable<CartesianCoordinate> {
-            // Protected Instance/Property Fields
+            // Private Instance/Property Fields
             
             /**
              * The X coordinate.
              */
-            protected int x;
+            private int x;
             
             /**
              * The Y coordinate.
              */
-            protected int y;
+            private int y;
             
-            // Public Constructors
+            // Protected Constructors
             /**
              * Instantiates a new Cartesian Coordinate.
              */
-            public CartesianCoordinate() {
+            protected CartesianCoordinate() {
                 this(0, 0);
             }
             
@@ -227,7 +224,7 @@ public abstract class AbstractPathfindController extends AbstractController
              * @param newY
              *            the new Y
              */
-            public CartesianCoordinate(int newX, int newY) {
+            protected CartesianCoordinate(int newX, int newY) {
                 this.x = newX;
                 this.y = newY;
             }
@@ -398,8 +395,8 @@ public abstract class AbstractPathfindController extends AbstractController
                 if (vertex != null) {
                     final CartesianCoordinate vertexData = vertex.data();
                     if (vertexData != null) {
-                        if (vertexData.x == c.x
-                                        && vertexData.y == c.y) { return vertexData; }
+                        if (vertexData.x() == c.x() && vertexData.x() == c
+                                        .y()) { return vertexData; }
                     }
                 }
             }
@@ -419,8 +416,8 @@ public abstract class AbstractPathfindController extends AbstractController
         protected CartesianCoordinate getNextCoordinateFromDirection(int rot) {
             final CartesianCoordinate otherCoord = CartesianGraph
                             .directionCoordinate(rot);
-            final CartesianCoordinate coord = this.currentCoord.add(
-                            otherCoord.x, otherCoord.y);
+            final CartesianCoordinate coord = this.currentCoord.add(otherCoord
+                            .x(), otherCoord.y());
             return fetchCoord(coord);
         }
         
@@ -594,6 +591,24 @@ public abstract class AbstractPathfindController extends AbstractController
         }
     }
     
+    // Private Methods
+    
+    /**
+     * Rotation fix to keep it between the ranges.
+     *
+     * @param rot
+     *            the rotation
+     */
+    private void rotateFix(int rot) {
+        this.currentRot = this.currentRot + rot;
+        if (this.currentRot <= -ROT_ADD) {
+            this.currentRot = ROT_MAX_RANGE - ROT_ADD;
+        } else if (this.currentRot >= ROT_MAX_RANGE) {
+            this.currentRot = 0;
+        }
+        Logger.debug("PathfindController - New rot: " + this.currentRot + ".");
+    }
+    
     // Protected Methods
     
     /**
@@ -605,33 +620,33 @@ public abstract class AbstractPathfindController extends AbstractController
     protected CartesianGraph.CartesianCoordinate getNext() {
         CartesianGraph.CartesianCoordinate coord = this.cartesianGraph
                         .getNextCoordinateFromDirection(this.currentRot);
-        if (coord.x < -COORD_MAX_RANGE || coord.x > COORD_MAX_RANGE
-                        || coord.y < -COORD_MAX_RANGE
-                        || coord.y > COORD_MAX_RANGE) {
+        if (coord.x() < -COORD_MAX_RANGE || coord.x() > COORD_MAX_RANGE || coord
+                        .y() < -COORD_MAX_RANGE || coord
+                                        .y() > COORD_MAX_RANGE) {
             Logger.debug("PathfindController - Out of bounds, resetting.");
             this.cartesianGraph.reset();
-            coord = this.cartesianGraph.currentCoord;
+            coord = this.cartesianGraph.getCurrentCoord();
         }
         return coord;
     }
     
+    // Public Methods (Overrided)
+    
     /**
-     * Rotation fix to keep it between the ranges.
-     *
-     * @param rot
-     *            the rotation
+     * @see io.github.cshadd.fetch_bot.controllers.PathfindController#rotateLeft()
      */
-    protected void rotateFix(int rot) {
-        this.currentRot = this.currentRot + rot;
-        if (this.currentRot <= -ROT_ADD) {
-            this.currentRot = ROT_MAX_RANGE - ROT_ADD;
-        } else if (this.currentRot >= ROT_MAX_RANGE) {
-            this.currentRot = 0;
-        }
-        Logger.debug("PathfindController - New rot: " + this.currentRot + ".");
+    @Override
+    public void rotateLeft() {
+        rotateFix(-ROT_ADD);
     }
     
-    // Public Methods (Overrided)
+    /**
+     * @see io.github.cshadd.fetch_bot.controllers.PathfindController#rotateRight()
+     */
+    @Override
+    public void rotateRight() {
+        rotateFix(ROT_ADD);
+    }
     
     /**
      * @see java.lang.Object#toString()
