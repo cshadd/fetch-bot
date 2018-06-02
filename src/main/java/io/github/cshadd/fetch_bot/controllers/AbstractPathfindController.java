@@ -332,6 +332,17 @@ public abstract class AbstractPathfindController extends AbstractController
                 return returnData;
             }
             
+            /**
+             * @see java.lang.Object#hashCode()
+             */
+            @Override
+            public int hashCode() {
+                return super.hashCode();
+            }
+            
+            /**
+             * @see java.lang.Object#equals(java.lang.Object)
+             */
             @Override
             public boolean equals(Object o) {
                 return (this.x == ((CartesianCoordinate) o).x
@@ -344,14 +355,6 @@ public abstract class AbstractPathfindController extends AbstractController
             @Override
             public String toString() {
                 return "(" + this.x + "," + this.y + ")";
-            }
-
-            /**
-             * @see java.lang.Object#hashCode()
-             */
-            @Override
-            public int hashCode() {
-                return super.hashCode();
             }
         }
         
@@ -405,20 +408,6 @@ public abstract class AbstractPathfindController extends AbstractController
          * @return the Cartesian Coordinate
          */
         private CartesianCoordinate fetchCoord(CartesianCoordinate c) {
-            /*
-             * for (int i = 0; i < this.adjacencyList.size(); i++) {
-             * final Vertex vertex = this.adjacencyList.get(i);
-             * if (vertex != null) {
-             * final CartesianCoordinate vertexData = vertex.data();
-             * if (vertexData != null) {
-             * if (vertexData.x() == c.x() && vertexData.x() == c
-             * .y()) { return vertexData; }
-             * }
-             * }
-             * }
-             * addVertex(c);
-             * return c;
-             */
             final Vertex vertex = vertex(c);
             if (vertex != null) { return vertex.data(); }
             addVertex(c);
