@@ -88,7 +88,7 @@ public abstract class AbstractPathfindController extends AbstractController
         this.currentRot = 0;
     }
     
-    // Public Static Nested Classes
+    // Protected Static Nested Classes
     
     /**
      * The Class CartesianGraph. An Undirected Graph that has a basic X and Y
@@ -101,7 +101,7 @@ public abstract class AbstractPathfindController extends AbstractController
      * @author Giovanni Orozco
      * @since 1.0.0
      */
-    public static class CartesianGraph extends
+    protected static class CartesianGraph extends
                     UndirectedGraph<CartesianGraph.CartesianCoordinate> {
         // Protected Constant Instance/Property Fields
         
@@ -176,7 +176,8 @@ public abstract class AbstractPathfindController extends AbstractController
             super();
             this.blockedCoords = new ArrayList<>();
             this.maxRange = newMaxRange;
-            this.rawGraph = new char[newMaxRange * 2][newMaxRange * 2];
+            this.rawGraph = new char[(newMaxRange * 2) + 1][(newMaxRange * 2)
+                            + 1];
             this.reset();
         }
         
@@ -331,12 +332,26 @@ public abstract class AbstractPathfindController extends AbstractController
                 return returnData;
             }
             
+            @Override
+            public boolean equals(Object o) {
+                return (this.x == ((CartesianCoordinate) o).x
+                                && this.y == ((CartesianCoordinate) o).y);
+            }
+            
             /**
              * @see java.lang.Object#toString()
              */
             @Override
             public String toString() {
                 return "(" + this.x + "," + this.y + ")";
+            }
+
+            /**
+             * @see java.lang.Object#hashCode()
+             */
+            @Override
+            public int hashCode() {
+                return super.hashCode();
             }
         }
         
@@ -390,16 +405,22 @@ public abstract class AbstractPathfindController extends AbstractController
          * @return the Cartesian Coordinate
          */
         private CartesianCoordinate fetchCoord(CartesianCoordinate c) {
-            for (int i = 0; i < this.adjacencyList.size(); i++) {
-                final Vertex vertex = this.adjacencyList.get(i);
-                if (vertex != null) {
-                    final CartesianCoordinate vertexData = vertex.data();
-                    if (vertexData != null) {
-                        if (vertexData.x() == c.x() && vertexData.x() == c
-                                        .y()) { return vertexData; }
-                    }
-                }
-            }
+            /*
+             * for (int i = 0; i < this.adjacencyList.size(); i++) {
+             * final Vertex vertex = this.adjacencyList.get(i);
+             * if (vertex != null) {
+             * final CartesianCoordinate vertexData = vertex.data();
+             * if (vertexData != null) {
+             * if (vertexData.x() == c.x() && vertexData.x() == c
+             * .y()) { return vertexData; }
+             * }
+             * }
+             * }
+             * addVertex(c);
+             * return c;
+             */
+            final Vertex vertex = vertex(c);
+            if (vertex != null) { return vertex.data(); }
             addVertex(c);
             return c;
         }
@@ -606,7 +627,6 @@ public abstract class AbstractPathfindController extends AbstractController
         } else if (this.currentRot >= ROT_MAX_RANGE) {
             this.currentRot = 0;
         }
-        Logger.debug("PathfindController - New rot: " + this.currentRot + ".");
     }
     
     // Protected Methods
@@ -623,7 +643,6 @@ public abstract class AbstractPathfindController extends AbstractController
         if (coord.x() < -COORD_MAX_RANGE || coord.x() > COORD_MAX_RANGE || coord
                         .y() < -COORD_MAX_RANGE || coord
                                         .y() > COORD_MAX_RANGE) {
-            Logger.debug("PathfindController - Out of bounds, resetting.");
             this.cartesianGraph.reset();
             coord = this.cartesianGraph.getCurrentCoord();
         }

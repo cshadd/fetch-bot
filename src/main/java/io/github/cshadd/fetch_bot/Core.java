@@ -250,7 +250,7 @@ public class Core implements FetchBot {
                                                         "emotion", "Happy");
                                         arduinoComm.setSourceValue("a", "Stop");
                                         tracked = true;
-                                    } else {
+                                    } else { // Pathfinding
                                         Logger.info("OpenCVController - Target not found!");
                                         final boolean states[] = pathfindControl
                                                         .calculate();
@@ -656,6 +656,7 @@ public class Core implements FetchBot {
                         }
                     } else if (currentMode.equals("Idle")) {
                         webInterfaceComm.setRobotValue("trackclass", "None");
+                        webInterfaceComm.setSourceValue("emotion", "Idle");
                     } else if (currentMode.equals("Off")) {
                         break;
                     } else if (currentMode.equals("Manual")) {

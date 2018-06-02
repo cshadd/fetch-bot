@@ -68,24 +68,17 @@ public class PathfindControllerImpl extends AbstractPathfindController {
      */
     @Override
     public boolean[] calculate() {
-        boolean backBlocked = false;
-        boolean backVisited = false;
-        boolean frontBlocked = false;
-        boolean frontVisited = false;
-        boolean leftBlocked = false;
-        boolean leftVisited = false;
-        boolean rightBlocked = false;
-        boolean rightVisited = false;
-        int[] c = this.cartesianGraph.getCurrentCoord().toArray();
-        System.out.println();
-        System.out.println();
-        System.out.println(c[0] + ", " + c[1]);
-        System.out.println();
-        this.cartesianGraph.setRawGraphValue(c[0], c[1],
-                        CartesianGraph.RAW_GRAPH_LOCATION_SYMBOL);
+        final boolean backBlocked;
+        final boolean backVisited;
+        final boolean frontBlocked;
+        final boolean frontVisited;
+        final boolean leftBlocked;
+        final boolean leftVisited;
+        final boolean rightBlocked;
+        final boolean rightVisited;
         frontBlocked = this.isNextBlocked();
         frontVisited = this.isNextVisited();
-        c = this.getNext().toArray();
+        int[] c = this.getNext().toArray();
         if (frontBlocked && frontVisited) {
             this.cartesianGraph.setRawGraphValue(c[0], c[1],
                             CartesianGraph.RAW_GRAPH_BLOCKED_AND_VISITED_SYMBOL);
@@ -151,6 +144,9 @@ public class PathfindControllerImpl extends AbstractPathfindController {
                             CartesianGraph.RAW_GRAPH_AVALIBLE_SYMBOL);
         }
         this.rotateRight();
+        c = this.cartesianGraph.getCurrentCoord().toArray();
+        this.cartesianGraph.setRawGraphValue(c[0], c[1],
+                        CartesianGraph.RAW_GRAPH_LOCATION_SYMBOL);
         return new boolean[] { backBlocked, backVisited, frontBlocked,
                         frontVisited, leftBlocked, leftVisited, rightBlocked,
                         rightVisited };
