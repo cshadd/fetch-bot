@@ -26,7 +26,6 @@
 package io.github.cshadd.fetch_bot.controllers;
 
 import io.github.cshadd.cshadd_java_data_structures.util.UndirectedGraph;
-import io.github.cshadd.fetch_bot.util.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,14 +147,16 @@ public abstract class AbstractPathfindController extends AbstractController
         private CartesianCoordinate currentCoord;
         
         /**
-         * The max range.
-         */
-        private int maxRange;
-        
-        /**
          * The raw graph.
          */
         private char rawGraph[][];
+        
+        // Protected Instance/property Fields
+        
+        /**
+         * The max range.
+         */
+        protected int maxRange;
         
         // Protected Constructors
         
@@ -175,9 +176,13 @@ public abstract class AbstractPathfindController extends AbstractController
         protected CartesianGraph(int newMaxRange) {
             super();
             this.blockedCoords = new ArrayList<>();
-            this.maxRange = newMaxRange;
-            this.rawGraph = new char[(newMaxRange * 2) + 1][(newMaxRange * 2)
-                            + 1];
+            if (newMaxRange < 0) {
+                this.maxRange = 0;
+            } else {
+                this.maxRange = newMaxRange;
+            }
+            this.rawGraph = new char[(this.maxRange * 2) + 1][(this.maxRange
+                            * 2) + 1];
             this.reset();
         }
         
@@ -333,20 +338,20 @@ public abstract class AbstractPathfindController extends AbstractController
             }
             
             /**
-             * @see java.lang.Object#hashCode()
-             */
-            @Override
-            public int hashCode() {
-                return super.hashCode();
-            }
-            
-            /**
              * @see java.lang.Object#equals(java.lang.Object)
              */
             @Override
             public boolean equals(Object o) {
                 return (this.x == ((CartesianCoordinate) o).x
                                 && this.y == ((CartesianCoordinate) o).y);
+            }
+            
+            /**
+             * @see java.lang.Object#hashCode()
+             */
+            @Override
+            public int hashCode() {
+                return super.hashCode();
             }
             
             /**
@@ -522,15 +527,12 @@ public abstract class AbstractPathfindController extends AbstractController
          * Resets the graph.
          */
         public void reset() {
-            for (int i = 0; i <= this.maxRange * 2; i++) {
-                for (int i2 = 0; i2 <= this.maxRange * 2; i2++) {
-                    this.rawGraph[i][i2] = CartesianGraph.RAW_GRAPH_UNKNOWN_SYMBOL;
-                }
-            }
             unvisitAll();
             this.blockedCoords.clear();
             for (int i = -this.maxRange; i <= this.maxRange; i++) {
                 for (int i2 = -this.maxRange; i2 <= this.maxRange; i2++) {
+                    this.rawGraph[i + this.maxRange][i2
+                                    + this.maxRange] = CartesianGraph.RAW_GRAPH_UNKNOWN_SYMBOL;
                     final CartesianCoordinate coord = new CartesianCoordinate(i,
                                     i2);
                     fetchCoord(coord);
@@ -629,9 +631,10 @@ public abstract class AbstractPathfindController extends AbstractController
     protected CartesianGraph.CartesianCoordinate getNext() {
         CartesianGraph.CartesianCoordinate coord = this.cartesianGraph
                         .getNextCoordinateFromDirection(this.currentRot);
-        if (coord.x() < -COORD_MAX_RANGE || coord.x() > COORD_MAX_RANGE || coord
-                        .y() < -COORD_MAX_RANGE || coord
-                                        .y() > COORD_MAX_RANGE) {
+        if (coord.x() < -this.cartesianGraph.maxRange || coord
+                        .x() > this.cartesianGraph.maxRange || coord
+                                        .y() < -this.cartesianGraph.maxRange
+                        || coord.y() > this.cartesianGraph.maxRange) {
             this.cartesianGraph.reset();
             coord = this.cartesianGraph.getCurrentCoord();
         }
