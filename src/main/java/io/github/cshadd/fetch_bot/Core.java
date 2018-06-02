@@ -263,11 +263,12 @@ public class Core implements FetchBot {
                                         final boolean leftVisited = states[5];
                                         final boolean rightBlocked = states[6];
                                         final boolean rightVisited = states[7];
-                                        
+                                        final String rawGraph = pathfindControl
+                                                        .rawGraphToString();
                                         Logger.debug("PathfindController - [\n\n"
-                                                        + pathfindControl
-                                                                        .rawGraphToString()
-                                                        + "\n\n].");
+                                                        + rawGraph + "\n\n].");
+                                        webInterfaceComm.setSourceValue(
+                                                        "rawgraph", rawGraph);
                                         
                                         Logger.debug("PathfindController - [Back Blocked: "
                                                         + backBlocked

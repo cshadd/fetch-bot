@@ -110,9 +110,9 @@ public abstract class AbstractPathfindController extends AbstractController
         protected static final char RAW_GRAPH_AVALIBLE_SYMBOL = '.';
         
         /**
-         * The Constant RAW_GRAPH_UNKNOWN_SYMBOL.
+         * The Constant RAW_GRAPH_BLOCKED_SYMBOL.
          */
-        protected static final char RAW_GRAPH_UNKNOWN_SYMBOL = '?';
+        protected static final char RAW_GRAPH_BLOCKED_SYMBOL = 'X';
         
         /**
          * The Constant RAW_GRAPH_BLOCKED_AND_VISITED_SYMBOL.
@@ -120,14 +120,14 @@ public abstract class AbstractPathfindController extends AbstractController
         protected static final char RAW_GRAPH_BLOCKED_AND_VISITED_SYMBOL = '#';
         
         /**
-         * The Constant RAW_GRAPH_BLOCKED_SYMBOL.
-         */
-        protected static final char RAW_GRAPH_BLOCKED_SYMBOL = 'X';
-        
-        /**
          * The Constant RAW_GRAPH_LOCATION_SYMBOL.
          */
         protected static final char RAW_GRAPH_LOCATION_SYMBOL = '@';
+        
+        /**
+         * The Constant RAW_GRAPH_UNKNOWN_SYMBOL.
+         */
+        protected static final char RAW_GRAPH_UNKNOWN_SYMBOL = '?';
         
         /**
          * The Constant RAW_GRAPH_VISITED_SYMBOL.
@@ -455,7 +455,14 @@ public abstract class AbstractPathfindController extends AbstractController
          * @return the string
          */
         protected String rawGraphToString() {
-            String returnData = "";
+            String returnData = "\nKey:\nAvalible - "
+                            + RAW_GRAPH_AVALIBLE_SYMBOL + "\nBlocked - "
+                            + RAW_GRAPH_BLOCKED_SYMBOL
+                            + "\nBlocked and Visited - "
+                            + RAW_GRAPH_BLOCKED_AND_VISITED_SYMBOL
+                            + "\nLocation - " + RAW_GRAPH_LOCATION_SYMBOL
+                            + "\nUnknown - " + RAW_GRAPH_UNKNOWN_SYMBOL
+                            + "\nVisited - " + RAW_GRAPH_VISITED_SYMBOL + "\n";
             for (int i = this.maxRange; i >= -this.maxRange; i--) {
                 for (int i2 = -this.maxRange; i2 <= this.maxRange; i2++) {
                     returnData += this.getRawGraphValue(i2, i) + " ";

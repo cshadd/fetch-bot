@@ -51,9 +51,10 @@ extends AbstractWebInterfaceCommunication {
         
         setSourceValue("emotion", "Idle");
         setSourceValue("mode", "Idle");
+        setSourceValue("rawgraph", "");
         setSourceValue("rot", "0");
         setSourceValue("trackclass", "None");
         setSourceValue("ultrasonic", "0");
-        setSourceValue("verbose", "...");
+        setSourceValue("verbose", "");
     }
 }
