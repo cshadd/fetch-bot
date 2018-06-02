@@ -63,7 +63,7 @@ public class Core implements FetchBot {
     /**
      * The Constant VERSION.
      */
-    private static final String VERSION = "v1.1.0";
+    private static final String VERSION = "v2.0.0-alpha";
     
     // Private Static Instance/Property Fields
     
@@ -844,7 +844,7 @@ public class Core implements FetchBot {
                         + ".");
         try {
             openCVControl.stopCamera();
-            openCVControl.close();
+            openCVControl.closeTerminal();
             arduinoComm.setSourceValue("a", "Stop");
             arduinoComm.pushSource();
             arduinoComm.clear();

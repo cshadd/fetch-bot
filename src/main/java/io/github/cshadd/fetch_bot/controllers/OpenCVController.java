@@ -49,9 +49,9 @@ public abstract interface OpenCVController extends Controller {
     public abstract void assignTrackClass(String newTrackClass);
     
     /**
-     * Close.
+     * Close terminal.
      */
-    public abstract void close();
+    public abstract void closeTerminal();
     
     /**
      * Checks if track class is found.

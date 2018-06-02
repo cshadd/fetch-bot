@@ -45,6 +45,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import org.apache.commons.io.FileUtils;
 import org.opencv.core.Core;
+import org.opencv.core.CvException;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -288,11 +289,14 @@ public abstract class AbstractOpenCVController extends AbstractController
                             DEPLOY_CAFFEMODEL_FILE);
             final File trackClassesInput = new File(DEPLOY_TRACK_CLASSES_FILE);
             this.trackClasses = FileUtils.readLines(trackClassesInput, "UTF-8");
+        } catch (CvException e) {
+            throw new OpenCVControllerException(
+                            "Could not load neural network.", e);
         } catch (IOException e) {
             throw new OpenCVControllerException(
-                            "Could not read neural network files.", e);
+                            "Could not load neural network.", e);
         } catch (Exception e) {
-            throw new OpenCVControllerException("Unknown issue.", e);
+            throw new OpenCVControllerException("There was an unknown issue!", e);
         } finally {
             /* */ }
         this.terminalSetupRunnable = new TerminalSetupThread();

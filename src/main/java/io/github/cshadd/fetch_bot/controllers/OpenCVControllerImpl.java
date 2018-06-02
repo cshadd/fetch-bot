@@ -78,10 +78,10 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
     }
     
     /**
-     * @see io.github.cshadd.fetch_bot.controllers.OpenCVController#close()
+     * @see io.github.cshadd.fetch_bot.controllers.OpenCVController#closeTerminal()
      */
     @Override
-    public void close() {
+    public void closeTerminal() {
         this.terminalFrame.setEnabled(false);
         this.terminalFrame.dispose();
     }
