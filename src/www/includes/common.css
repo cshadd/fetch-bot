@@ -33,6 +33,10 @@ html { }
     width: 640px;    
 }
 
+.rawgraph {
+    font-family: monospace;
+}
+
 .title {
     text-align: center;
 }
