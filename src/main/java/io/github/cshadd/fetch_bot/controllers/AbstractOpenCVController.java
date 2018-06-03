@@ -27,12 +27,17 @@ package io.github.cshadd.fetch_bot.controllers;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -44,6 +49,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.opencv.core.Core;
 import org.opencv.core.CvException;
 import org.opencv.core.Mat;
@@ -119,9 +125,21 @@ public abstract class AbstractOpenCVController extends AbstractController
     private static final int SCENE_H = 480;
     
     /**
+     * The Constant SERVER_TERMINAL_OUTPUT_SOCKET_PORT.
+     */
+    private static final int SERVER_TERMINAL_OUTPUT_SOCKET_PORT = 9090;
+    
+    /**
      * The Constant SIZE.
      */
     private static final int SIZE = 300;
+    
+    // Protected Constant Instance/Property Fields
+    
+    /**
+     * The Constant STREAM_BOUNDARY.
+     */
+    protected static final String STREAM_BOUNDARY = "stream";
     
     // Private Final Instance/Property Fields
     
@@ -156,6 +174,16 @@ public abstract class AbstractOpenCVController extends AbstractController
      * The terminal setup runnable thread.
      */
     protected final TerminalSetupThread terminalSetupRunnable;
+    
+    /**
+     * The terminal output socket thread.
+     */
+    protected final Thread terminalOutputSocketThread;
+    
+    /**
+     * The terminal output socket runnable.
+     */
+    protected final TerminalOutputSocketThread terminalOutputSocketRunnable;
     
     // Private Instance/Property Fields
     
@@ -207,6 +235,16 @@ public abstract class AbstractOpenCVController extends AbstractController
     protected Mat cameraFrame;
     
     /**
+     * The server terminal output socket.
+     */
+    protected ServerSocket serverTerminalOutputSocket;
+    
+    /**
+     * The terminal output stream.
+     */
+    protected OutputStream terminalOutputStream;
+    
+    /**
      * The terminal content.
      */
     protected JComponent terminalContent;
@@ -240,6 +278,11 @@ public abstract class AbstractOpenCVController extends AbstractController
      * The terminal layer pane.
      */
     protected JLayeredPane terminalLayerPane;
+    
+    /**
+     * The terminal output socket.
+     */
+    protected Socket terminalOutputSocket;
     
     /**
      * The track class.
@@ -296,12 +339,19 @@ public abstract class AbstractOpenCVController extends AbstractController
             throw new OpenCVControllerException(
                             "Could not load neural network.", e);
         } catch (Exception e) {
-            throw new OpenCVControllerException("There was an unknown issue!", e);
+            throw new OpenCVControllerException("There was an unknown issue!",
+                            e);
         } finally {
             /* */ }
+        this.terminalOutputStream = null;
         this.terminalSetupRunnable = new TerminalSetupThread();
+        this.terminalOutputSocketRunnable = new TerminalOutputSocketThread();
+        this.terminalOutputSocketThread = new Thread(
+                        this.terminalOutputSocketRunnable);
         this.trackClass = "None";
         this.trackClassFound = false;
+        this.serverTerminalOutputSocket = null;
+        this.terminalOutputSocket = null;
         this.startX = 0;
         this.startY = 0;
         
@@ -311,7 +361,7 @@ public abstract class AbstractOpenCVController extends AbstractController
     // Protected Final Nested Classes
     
     /**
-     * The Class CameraThread. A Runnable that controls the Camera.
+     * The Class CameraThread. A Runnable that controls the camera.
      * 
      * @author Christian Shadd
      * @author Maria Verna Aquino
@@ -481,11 +531,115 @@ public abstract class AbstractOpenCVController extends AbstractController
         }
     }
     
+    /**
+     * The Class TerminalOutputSocketThread. A Runnable that controls the
+     * terminal output sockets.
+     * 
+     * @author Christian Shadd
+     * @author Maria Verna Aquino
+     * @author Thanh Vu
+     * @author Joseph Damian
+     * @author Giovanni Orozco
+     * @since 1.0.0
+     */
+    protected final class TerminalOutputSocketThread implements Runnable {
+        // Private Instance/Property Fields
+        
+        /**
+         * The running state.
+         */
+        private volatile boolean running;
+        
+        // Public Constructors
+        
+        /**
+         * Instantiates a new Camera Thread.
+         */
+        public TerminalOutputSocketThread() {
+            super();
+            this.running = false;
+        }
+        
+        // Public Methods
+        
+        /**
+         * Terminate.
+         *
+         * @throws IOException
+         *             if the terminal socket could not close
+         */
+        public void terminate() throws IOException {
+            AbstractOpenCVController.this.terminalOutputSocket.close();
+            AbstractOpenCVController.this.serverTerminalOutputSocket.close();
+            this.running = false;
+        }
+        
+        // Public Methods (Overrided)
+        
+        /**
+         * Runs the camera with each frame being processed.
+         * 
+         * @see java.lang.Runnable#run()
+         */
+        @Override
+        public void run() {
+            try {
+                AbstractOpenCVController.this.serverTerminalOutputSocket = new ServerSocket(
+                                SERVER_TERMINAL_OUTPUT_SOCKET_PORT);
+                AbstractOpenCVController.this.terminalOutputSocket = AbstractOpenCVController.this.serverTerminalOutputSocket
+                                .accept();
+                writeHeader(AbstractOpenCVController.this.terminalOutputSocket
+                                .getOutputStream(), STREAM_BOUNDARY);
+                this.running = true;
+                while (this.running) {
+                    try (final ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+                        AbstractOpenCVController.this.terminalOutputStream = AbstractOpenCVController.this.terminalOutputSocket
+                                        .getOutputStream();
+                        final BufferedImage image = new BufferedImage(
+                                        AbstractOpenCVController.this.terminalFrame
+                                                        .getWidth(),
+                                        AbstractOpenCVController.this.terminalFrame
+                                                        .getHeight(),
+                                        BufferedImage.TYPE_INT_RGB);
+                        final Graphics2D g2 = image.createGraphics();
+                        AbstractOpenCVController.this.terminalFrame.paint(g2);
+                        ImageIO.write(image, "jpg", os);
+                        final byte[] terminalImageBytes = os.toByteArray();
+                        AbstractOpenCVController.this.terminalOutputStream
+                                        .write(("Content-type: image/jpeg\r\n"
+                                                        + "Content-Length: "
+                                                        + terminalImageBytes.length
+                                                        + "\r\n" + "\r\n")
+                                                                        .getBytes());
+                        AbstractOpenCVController.this.terminalOutputStream
+                                        .write(terminalImageBytes);
+                        AbstractOpenCVController.this.terminalOutputStream
+                                        .write(("\r\n--" + STREAM_BOUNDARY
+                                                        + "\r\n").getBytes());
+                        os.flush();
+                        os.close();
+                        image.flush();
+                    } catch (@SuppressWarnings("unused") Exception e) { // Suppressed
+                        AbstractOpenCVController.this.terminalOutputSocket = AbstractOpenCVController.this.serverTerminalOutputSocket
+                                        .accept();
+                        writeHeader(AbstractOpenCVController.this.terminalOutputSocket
+                                        .getOutputStream(), STREAM_BOUNDARY);
+                    } finally {
+                        /* */ }
+                }
+            } catch (@SuppressWarnings("unused") Exception e) { // Suppressed
+            } finally {
+                /* */ }
+        }
+        
+    }
+    
     // Private Static Methods
     
     static {
         /*
-         * We use this to load the OpenCV library from the system. This requires
+         * We use this to load the OpenCV library from the system. This
+         * requires
          * the jar file with the Java bindings.
          */
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -516,10 +670,32 @@ public abstract class AbstractOpenCVController extends AbstractController
         return image;
     }
     
-    // Protected Methods
+    // Protected Static Methods
     
     /**
-     * Processes the detections from the matrix from the mat. The mat is loaded
+     * Write header.
+     *
+     * @param stream
+     *            the stream
+     * @param boundary
+     *            the boundary
+     * @throws IOException
+     *             if the stream could not be written to
+     */
+    protected static void writeHeader(OutputStream stream, String boundary)
+                    throws IOException {
+        stream.write(("HTTP/1.0 200 OK\r\n" + "Connection: close\r\n"
+                        + "Max-Age: 0\r\n" + "Expires: 0\r\n"
+                        + "Cache-Control: no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0\r\n"
+                        + "Pragma: no-cache\r\n"
+                        + "Content-Type: multipart/x-mixed-replace; "
+                        + "boundary=" + boundary + "\r\n" + "\r\n" + "--"
+                        + boundary + "\r\n").getBytes());
+    }
+    
+    /**
+     * Processes the detections from the matrix from the mat. The mat is
+     * loaded
      * from the buffer of frames from the camera thread.
      * 
      * The process follows:<br />
@@ -571,8 +747,10 @@ public abstract class AbstractOpenCVController extends AbstractController
         this.buffer = matToBufferedImage(mat);
         final ImageIcon img = new ImageIcon(this.buffer);
         /*
-         * Converts the image matrix into a "blob," which is then fed into the
-         * Caffe neural network using net.setInput() and detections are output
+         * Converts the image matrix into a "blob," which is then fed into
+         * the
+         * Caffe neural network using net.setInput() and detections are
+         * output
          * as a matrix in net.forward().
          */
         final Mat blob = Dnn.blobFromImage(mat, SCALE_FACTOR, new Size(SIZE,
@@ -580,16 +758,25 @@ public abstract class AbstractOpenCVController extends AbstractController
         this.net.setInput(blob);
         this.det = this.net.forward();
         /*
-         * For each detection, there are 7 numbers the matrix det outputs. The
-         * first is always 0 for some unknown reason, the second is the object
-         * it detects (output as the index from the TrackClasses enum (which is
-         * why you shouldn't change the order of the classes)), the third is the
-         * confidence the network has that the object is what they predicted it
-         * was, and the fourth to seventh numbers are the starting x position,
-         * starting y position, ending x position, and ending y position of the
+         * For each detection, there are 7 numbers the matrix det outputs.
+         * The
+         * first is always 0 for some unknown reason, the second is the
+         * object
+         * it detects (output as the index from the TrackClasses enum (which
+         * is
+         * why you shouldn't change the order of the classes)), the third is
+         * the
+         * confidence the network has that the object is what they predicted
+         * it
+         * was, and the fourth to seventh numbers are the starting x
+         * position,
+         * starting y position, ending x position, and ending y position of
+         * the
          * object respectively. They are represented proportionally to the
-         * image, so you must multiply them by the size of the image to get the
-         * actual location of the object with respects to the image. This for
+         * image, so you must multiply them by the size of the image to get
+         * the
+         * actual location of the object with respects to the image. This
+         * for
          * loop then draws a rectangle around each detection and text
          * identifying each image.
          */

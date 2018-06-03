@@ -48,7 +48,7 @@ extends AbstractWebInterfaceCommunication {
         setRobotValue("mode", "Idle");
         setRobotValue("move", "Stop");
         setRobotValue("trackclass", "None");
-        
+
         setSourceValue("emotion", "Idle");
         setSourceValue("mode", "Idle");
         setSourceValue("rawgraph", "");

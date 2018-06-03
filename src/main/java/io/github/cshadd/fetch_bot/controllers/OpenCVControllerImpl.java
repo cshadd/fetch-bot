@@ -25,6 +25,7 @@
  */
 package io.github.cshadd.fetch_bot.controllers;
 
+import java.io.IOException;
 import io.github.cshadd.fetch_bot.Component;
 
 // Main
@@ -100,16 +101,28 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
     @Override
     public void startCamera() {
         this.cameraThread.start();
+        this.terminalOutputSocketThread.start();
     }
     
     /**
      * @see io.github.cshadd.fetch_bot.controllers.OpenCVController#stopCamera()
      */
     @Override
-    public void stopCamera() throws InterruptedException {
-        if (this.cameraThread != null) {
+    public void stopCamera() throws OpenCVControllerException {
+        try {
             this.cameraRunnable.terminate();
             this.cameraThread.join();
-        }
+            this.terminalOutputSocketRunnable.terminate();
+            this.terminalOutputSocketThread.join();
+        } catch (IOException e) {
+            throw new OpenCVControllerException("Thread could not finish I/O.",
+                            e);
+        } catch (InterruptedException e) {
+            throw new OpenCVControllerException("Thread was interrupted.", e);
+        } catch (Exception e) {
+            throw new OpenCVControllerException("There was an unknown issue!",
+                            e);
+        } finally {
+            /* */ }
     }
 }

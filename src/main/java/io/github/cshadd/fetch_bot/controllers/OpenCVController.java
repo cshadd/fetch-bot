@@ -68,8 +68,8 @@ public abstract interface OpenCVController extends Controller {
     /**
      * Stop camera.
      *
-     * @throws InterruptedException
+     * @throws OpenCVControllerException
      *             if the thread was interrupted during termination
      */
-    public abstract void stopCamera() throws InterruptedException;
+    public abstract void stopCamera() throws OpenCVControllerException;
 }
