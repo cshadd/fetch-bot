@@ -67,15 +67,15 @@ Let's face it. In our day and age of the 21st century, we want lightweight mobil
 * Recommended (Raspberry Pi):
     - OS: Raspbian Stretch or higher
     - Software:
-        - Apache HTTP Server 2.4.25 or higher
+        - Apache HTTP Server 2.4 or higher
         - Apache Maven 3.5.3 or higher
         - ArduinoJson 5.13.1 or higher
         - Basic Linux Software (``apt-get``, ``bash``, ``git``, ``wget``, etc.)
         - Chromium Browser
         - Java SE Development Kit 8.0 or higher
         - Java SE Runtime Environment 8.0 or higher
-        - OpenCV 3.4.1
-        - PHP 7.0.27 or higher
+        - OpenCV 3.4.1 or higher
+        - PHP 7.0 or higher
     - Packaged Software (apt-get):
         - arduino-core
         - arduino-mk
@@ -83,7 +83,7 @@ Let's face it. In our day and age of the 21st century, we want lightweight mobil
 * Optional (Computer):
     - OS: Any
     - Software:
-        - Arduino IDE 1.8.5 or higher
+        - Arduino IDE 1.8 or higher
         - Eclipse Oxygen or higher
         - Visual Studio 2017 or higher
 
