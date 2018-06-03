@@ -535,7 +535,7 @@ public abstract class AbstractOpenCVController extends AbstractController
             AbstractOpenCVController.this.terminalFrame.setResizable(false);
             
             AbstractOpenCVController.this.terminalFrame.pack();
-            AbstractOpenCVController.this.terminalFrame.setVisible(true);
+            AbstractOpenCVController.this.terminalFrame.setVisible(false);
         }
     }
     
