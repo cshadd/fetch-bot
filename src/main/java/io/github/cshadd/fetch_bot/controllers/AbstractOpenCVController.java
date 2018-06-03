@@ -535,7 +535,7 @@ public abstract class AbstractOpenCVController extends AbstractController
             AbstractOpenCVController.this.terminalFrame.setResizable(false);
             
             AbstractOpenCVController.this.terminalFrame.pack();
-            AbstractOpenCVController.this.terminalFrame.setVisible(false);
+            AbstractOpenCVController.this.terminalFrame.setVisible(true);
         }
     }
     
@@ -629,6 +629,7 @@ public abstract class AbstractOpenCVController extends AbstractController
                         os.flush();
                         os.close();
                         image.flush();
+                        io.github.cshadd.fetch_bot.Core.delayThread(1000);
                     } catch (@SuppressWarnings("unused") Exception e) { // Suppressed
                         AbstractOpenCVController.this.terminalOutputSocket = AbstractOpenCVController.this.serverTerminalOutputSocket
                                         .accept();

@@ -26,13 +26,6 @@
  */
 import org.junit.Test;
 
-import io.github.cshadd.fetch_bot.controllers.OpenCVController;
-import io.github.cshadd.fetch_bot.controllers.OpenCVControllerException;
-import io.github.cshadd.fetch_bot.controllers.OpenCVControllerImpl;
-import io.github.cshadd.fetch_bot.io.CommunicationException;
-import io.github.cshadd.fetch_bot.io.WebInterfaceCommunication;
-import io.github.cshadd.fetch_bot.io.WebInterfaceCommunicationImpl;
-
 // Main
 
 /**
@@ -54,5 +47,6 @@ public class AppTest {
     @Test
     @SuppressWarnings("static-method")
     public void test() {
+        System.out.println("Tested.");
     }
 }
