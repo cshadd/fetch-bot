@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./bash-uninstall.sh
+source bash-uninstall.sh
 cd ./src/arduino-slave-processor/FetchBot
 make upload
 rm -f -r ./build-uno
