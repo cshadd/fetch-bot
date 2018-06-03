@@ -97,7 +97,7 @@ Before installing this project, you must make sure that you have installed all t
 Execute
 ```bash
 cd <PROJECT DIRECTORY>
-./bash-install.sh
+source bash-install.sh
 ```
 in a Bash terminal.
 
@@ -185,7 +185,7 @@ Only do this if you did the Easy Install!
 Execute
 ```bash
 cd <PROJECT DIRECTORY>
-./bash-uninstall.sh
+source bash-uninstall.sh
 ```
 in a Bash terminal.
 
@@ -240,7 +240,7 @@ using a Bash file in a Bash terminal.
 
 To control and terminate the application, you must use the web interface. You can also use other command line arguments. If you wish to view the different command line arguments available, execute
 ```bash
-cd ~/bin
+cd <CURRENT LOCATION OF PROGRAM>
 java -jar fetch-bot-vx.x.x.jar HELP
 ```
 in a Bash terminal.
