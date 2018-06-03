@@ -1,6 +1,5 @@
 #!/bin/bash
 
-vncserver :1
 export DISPLAY=:0
 xset -display :0 s off
 xset -display :0 -dpms

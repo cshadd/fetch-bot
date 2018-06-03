@@ -47,28 +47,12 @@ import io.github.cshadd.fetch_bot.io.WebInterfaceCommunicationImpl;
  */
 public class AppTest {
     // Public Static Methods
-
+    
     /**
      * Test.
-     * @throws OpenCVControllerException
-     * @throws CommunicationException
-     * @throws InterruptedException
      */
     @Test
     @SuppressWarnings("static-method")
-    public void test() throws OpenCVControllerException, CommunicationException, InterruptedException {
-        /*WebInterfaceCommunication a = new WebInterfaceCommunicationImpl();
-        OpenCVController b = new OpenCVControllerImpl();
-        b.startCamera();
-        io.github.cshadd.fetch_bot.Core.delayThread(2000);
-        a.reset();
-        System.out.println("Tested.");
-        while (true) {
-            a.setSourceValue("mode", "Idle");
-            a.pushRobot();
-            a.pushSource();
-            io.github.cshadd.fetch_bot.Core.delayThread(1000);
-            a.pullRobot();
-        }*/
+    public void test() {
     }
 }

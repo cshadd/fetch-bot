@@ -20,12 +20,17 @@ html { }
 .logo {
     margin-left: 40%;
     margin-right: 40%;
-    width: 20%;
     height: 20%;
+    width: 20%;
 }
 
 .move-button {
     width: 100%;
+}
+
+.open-cv-terminal {
+    height: 480px;
+    width: 640px;    
 }
 
 .title {

@@ -319,7 +319,15 @@ public abstract class AbstractOpenCVController extends AbstractController
         super();
         this.buffer = null;
         this.cameraPort = newCameraPort;
-        this.camera = new VideoCapture(this.cameraPort);
+        try {
+            this.camera = new VideoCapture(this.cameraPort);
+        } catch (CvException e) {
+            throw new OpenCVControllerException("Could not open camera.", e);
+        } catch (Exception e) {
+            throw new OpenCVControllerException("There was an unknown issue!",
+                            e);
+        } finally {
+            /* */ }
         this.cameraFrame = new Mat();
         this.cameraRunnable = new CameraThread();
         this.cameraThread = new Thread(this.cameraRunnable);
@@ -527,7 +535,7 @@ public abstract class AbstractOpenCVController extends AbstractController
             AbstractOpenCVController.this.terminalFrame.setResizable(false);
             
             AbstractOpenCVController.this.terminalFrame.pack();
-            AbstractOpenCVController.this.terminalFrame.setVisible(true);
+            AbstractOpenCVController.this.terminalFrame.setVisible(false);
         }
     }
     
@@ -540,7 +548,7 @@ public abstract class AbstractOpenCVController extends AbstractController
      * @author Thanh Vu
      * @author Joseph Damian
      * @author Giovanni Orozco
-     * @since 1.0.0
+     * @since 2.0.0-alpha
      */
     protected final class TerminalOutputSocketThread implements Runnable {
         // Private Instance/Property Fields
@@ -592,6 +600,8 @@ public abstract class AbstractOpenCVController extends AbstractController
                                 .getOutputStream(), STREAM_BOUNDARY);
                 this.running = true;
                 while (this.running) {
+                    AbstractOpenCVController.this.terminalOutputSocket = AbstractOpenCVController.this.serverTerminalOutputSocket
+                                    .accept();
                     try (final ByteArrayOutputStream os = new ByteArrayOutputStream()) {
                         AbstractOpenCVController.this.terminalOutputStream = AbstractOpenCVController.this.terminalOutputSocket
                                         .getOutputStream();
