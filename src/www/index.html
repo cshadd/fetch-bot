@@ -18,6 +18,7 @@
         setInterval(function () {
             if (data != null && data2 != null) {
                 $("#connection-offline").hide();
+                $("#hud").attr("src", data.hud);
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
                 $("#status-curr-mode").text("Current Mode: " + data.mode);
                 $("#status-curr-rawgraph").text("Current Raw Graph:\n\n" + data.rawgraph);
@@ -58,6 +59,7 @@
                     $("#connection-offline").show();
                     $("#controls-auto").hide();
                     $("#controls-manual").hide();
+                    $("#hud").attr("src", "");
                     $("#status-curr-emotion").text("Current Emotion:");
                     $("#status-curr-mode").text("Current Mode:");
                     $("#status-curr-rot").text("Current Rotation:");
@@ -74,6 +76,7 @@
                 $("#connection-offline").show();
                 $("#controls-auto").hide();
                 $("#controls-manual").hide();
+                $("#hud").attr("src", "");
                 $("#status-curr-emotion").text("Current Emotion:");
                 $("#status-curr-mode").text("Current Mode:");
                 $("#status-curr-rot").text("Current Rotation:");
@@ -196,9 +199,9 @@
         </div>
         <div class="row">
             <div class="panel panel-primary">
-                <div class="panel-heading">OpenCV Terminal</div>
+                <div class="panel-heading">HUD</div>
                 <div class="panel-body">
-                    <iframe id="open-cv-terminal" class="open-cv-terminal" src=""></iframe>
+                    <img id="hud" src="" alt="Hud" />
                 </div>
             </div>
         </div>
@@ -211,8 +214,5 @@
             <a href="https://cshadd.github.io/fetch-bot" target="_blank">https://cshadd.github.io/fetch-bot</a>
         </div>
     </main>
-    <script>
-        $("#open-cv-terminal").attr("src", window.location.protocol + "//" + window.location.hostname + ":9090/");
-    </script>
 </body>
 </html>
