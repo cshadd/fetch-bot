@@ -26,6 +26,8 @@
 package io.github.cshadd.fetch_bot;
 
 import io.github.cshadd.fetch_bot.controllers.ControllerException;
+import io.github.cshadd.fetch_bot.controllers.HudController;
+import io.github.cshadd.fetch_bot.controllers.HudControllerImpl;
 import io.github.cshadd.fetch_bot.controllers.OpenCVController;
 import io.github.cshadd.fetch_bot.controllers.OpenCVControllerImpl;
 import io.github.cshadd.fetch_bot.controllers.PathfindController;
@@ -71,6 +73,11 @@ public class Core implements FetchBot {
      * The Arduino Communications.
      */
     private static ArduinoCommunication arduinoComm;
+    
+    /**
+     * The Hud Controller.
+     */
+    private static HudController hudControl;
     
     /**
      * The OpenCV Controller.
@@ -179,6 +186,7 @@ public class Core implements FetchBot {
         String currentMode = "Idle";
         String currentMove = "Stop";
         String currentTrackClass = "None";
+        String currentTrackStatus = "";
         boolean tracked = false;
         int currentUltrasonicSensor = -1;
         while (true) {
@@ -219,7 +227,7 @@ public class Core implements FetchBot {
                         tracked = false;
                     }
                 }
-                
+
                 // Mode
                 final String mode = webInterfaceComm.getRobotValue("mode");
                 if (mode != null) {
@@ -718,6 +726,12 @@ public class Core implements FetchBot {
                                     + "] is invalid, setting to [mode: Idle].");
                     webInterfaceComm.setRobotValue("mode", "Idle");
                 }
+                
+                currentTrackStatus = openCVControl.status();
+                if (currentUltrasonicSensor <= SENSOR_LIMIT) {
+                    currentTrackStatus += "Imminent Collision!";
+                }
+                hudControl.updateStatus(currentTrackStatus);
                 webInterfaceComm.pushSource();
                 webInterfaceComm.pushRobot();
                 arduinoComm.pushSource();
@@ -825,16 +839,18 @@ public class Core implements FetchBot {
             /* */ }
             
         // Initiate controllers
+        hudControl = new HudControllerImpl();
+        hudControl.openHud();
         try {
-            openCVControl = new OpenCVControllerImpl();
+            openCVControl = new OpenCVControllerImpl(hudControl);
         } catch (ControllerException e) {
             Logger.error(e, "There was an issue with Controller!");
         } catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         } finally {
             /* */ }
-        pathfindControl = new PathfindControllerImpl();
         openCVControl.startCamera();
+        pathfindControl = new PathfindControllerImpl();
     }
     
     /**
@@ -844,8 +860,8 @@ public class Core implements FetchBot {
         Logger.info("Core - Fetch Bot terminating! Log file: " + Logger.LOG_FILE
                         + ".");
         try {
+            hudControl.closeHud();
             openCVControl.stopCamera();
-            openCVControl.closeTerminal();
             arduinoComm.setSourceValue("a", "Stop");
             arduinoComm.pushSource();
             arduinoComm.clear();

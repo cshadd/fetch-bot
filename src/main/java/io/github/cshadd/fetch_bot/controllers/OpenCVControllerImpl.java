@@ -25,7 +25,6 @@
  */
 package io.github.cshadd.fetch_bot.controllers;
 
-import java.io.IOException;
 import io.github.cshadd.fetch_bot.Component;
 
 // Main
@@ -55,17 +54,14 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
         super();
     }
     
-    /**
-     * Instantiates a new Open CV Controller Impl with camera port.
-     *
-     * @param newCameraPort
-     *            the new camera port
-     * @throws OpenCVControllerException
-     *             if OpenCV could not load
-     */
-    public OpenCVControllerImpl(int newCameraPort)
+    public OpenCVControllerImpl(HudController newHud)
                     throws OpenCVControllerException {
-        super(newCameraPort);
+        super(newHud);
+    }
+    
+    public OpenCVControllerImpl(HudController newHud, int newCameraPort)
+                    throws OpenCVControllerException {
+        super(newHud, newCameraPort);
     }
     
     // Public Methods (Overrided)
@@ -76,15 +72,6 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
     @Override
     public void assignTrackClass(String newTrackClass) {
         this.trackClass = newTrackClass;
-    }
-    
-    /**
-     * @see io.github.cshadd.fetch_bot.controllers.OpenCVController#closeTerminal()
-     */
-    @Override
-    public void closeTerminal() {
-        this.terminalFrame.setEnabled(false);
-        this.terminalFrame.dispose();
     }
     
     /**
@@ -101,7 +88,11 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
     @Override
     public void startCamera() {
         this.cameraThread.start();
-        this.terminalOutputSocketThread.start();
+    }
+    
+    @Override
+    public String status() {
+        return this.status;
     }
     
     /**
@@ -112,11 +103,6 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
         try {
             this.cameraRunnable.terminate();
             this.cameraThread.join();
-            this.terminalOutputSocketRunnable.terminate();
-            this.terminalOutputSocketThread.join();
-        } catch (IOException e) {
-            throw new OpenCVControllerException("Thread could not finish I/O.",
-                            e);
         } catch (InterruptedException e) {
             throw new OpenCVControllerException("Thread was interrupted.", e);
         } catch (Exception e) {

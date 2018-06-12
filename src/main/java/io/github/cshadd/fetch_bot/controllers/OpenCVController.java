@@ -38,6 +38,8 @@ package io.github.cshadd.fetch_bot.controllers;
  * @since 1.0.0
  */
 public abstract interface OpenCVController extends Controller {
+    // Public Abstract Property Accessor Methods
+    
     // Public Abstract Methods
     
     /**
@@ -47,11 +49,6 @@ public abstract interface OpenCVController extends Controller {
      *            the new track class
      */
     public abstract void assignTrackClass(String newTrackClass);
-    
-    /**
-     * Close terminal.
-     */
-    public abstract void closeTerminal();
     
     /**
      * Checks if track class is found.
@@ -64,6 +61,8 @@ public abstract interface OpenCVController extends Controller {
      * Start camera.
      */
     public abstract void startCamera();
+    
+    public abstract String status();
     
     /**
      * Stop camera.

@@ -26,6 +26,13 @@
  */
 import org.junit.Test;
 
+import io.github.cshadd.fetch_bot.controllers.HudController;
+import io.github.cshadd.fetch_bot.controllers.HudControllerException;
+import io.github.cshadd.fetch_bot.controllers.HudControllerImpl;
+import io.github.cshadd.fetch_bot.controllers.OpenCVController;
+import io.github.cshadd.fetch_bot.controllers.OpenCVControllerException;
+import io.github.cshadd.fetch_bot.controllers.OpenCVControllerImpl;
+
 // Main
 
 /**
@@ -46,7 +53,19 @@ public class AppTest {
      */
     @Test
     @SuppressWarnings("static-method")
-    public void test() {
-        System.out.println("Tested.");
+    public void test() throws OpenCVControllerException, HudControllerException {
+        /*HudController b = new HudControllerImpl();
+        OpenCVController a = new OpenCVControllerImpl(b);
+        
+        b.openHud();
+        a.startCamera();
+        
+        b.updateStatus(a.status());
+        
+        io.github.cshadd.fetch_bot.Core.delayThread(15000);
+        b.closeHud();
+        a.stopCamera();
+        
+        System.out.println("Tested.");*/
     }
 }

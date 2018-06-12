@@ -25,31 +25,16 @@
  */
 package io.github.cshadd.fetch_bot.controllers;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.List;
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
+
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
+
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.opencv.core.Core;
 import org.opencv.core.CvException;
 import org.opencv.core.Mat;
@@ -115,33 +100,13 @@ public abstract class AbstractOpenCVController extends AbstractController
     private static final double SCALE_FACTOR = 0.007843;
     
     /**
-     * The Constant SCENE_W.
-     */
-    private static final int SCENE_W = 640;
-    
-    /**
-     * The Constant SCENE_H.
-     */
-    private static final int SCENE_H = 480;
-    
-    /**
-     * The Constant SERVER_TERMINAL_OUTPUT_SOCKET_PORT.
-     */
-    private static final int SERVER_TERMINAL_OUTPUT_SOCKET_PORT = 9090;
-    
-    /**
      * The Constant SIZE.
      */
     private static final int SIZE = 300;
     
-    // Protected Constant Instance/Property Fields
-    
-    /**
-     * The Constant STREAM_BOUNDARY.
-     */
-    protected static final String STREAM_BOUNDARY = "stream";
-    
     // Private Final Instance/Property Fields
+    
+    private final HudController hud;
     
     /**
      * The track classes.
@@ -170,26 +135,8 @@ public abstract class AbstractOpenCVController extends AbstractController
      */
     protected final CameraThread cameraRunnable;
     
-    /**
-     * The terminal setup runnable thread.
-     */
-    protected final TerminalSetupThread terminalSetupRunnable;
-    
-    /**
-     * The terminal output socket thread.
-     */
-    protected final Thread terminalOutputSocketThread;
-    
-    /**
-     * The terminal output socket runnable.
-     */
-    protected final TerminalOutputSocketThread terminalOutputSocketRunnable;
-    
     // Private Instance/Property Fields
     
-    /**
-     * The captured label.
-     */
     private String capturedLabel;
     
     /**
@@ -197,14 +144,7 @@ public abstract class AbstractOpenCVController extends AbstractController
      */
     private Mat det;
     
-    /**
-     * The end X coordinate for detections.
-     */
     private int endX;
-    
-    /**
-     * The end Y coordinate for detections.
-     */
     private int endY;
     
     /**
@@ -212,14 +152,7 @@ public abstract class AbstractOpenCVController extends AbstractController
      */
     private Net net;
     
-    /**
-     * The start X coordinate for detections.
-     */
     private int startX;
-    
-    /**
-     * The start Y coordinate for detections.
-     */
     private int startY;
     
     // Protected Instance/Property Fields
@@ -234,55 +167,7 @@ public abstract class AbstractOpenCVController extends AbstractController
      */
     protected Mat cameraFrame;
     
-    /**
-     * The server terminal output socket.
-     */
-    protected ServerSocket serverTerminalOutputSocket;
-    
-    /**
-     * The terminal output stream.
-     */
-    protected OutputStream terminalOutputStream;
-    
-    /**
-     * The terminal content.
-     */
-    protected JComponent terminalContent;
-    
-    /**
-     * The terminal frame.
-     */
-    protected JFrame terminalFrame;
-    
-    /**
-     * The terminal camera label.
-     */
-    protected JLabel terminalLabelCam;
-    
-    /**
-     * The terminal camera filter.
-     */
-    protected JLabel terminalLabelCamFilter;
-    
-    /**
-     * The terminal status label.
-     */
-    protected JLabel terminalLabelStatus;
-    
-    /**
-     * The terminal track label.
-     */
-    protected JLabel terminalLabelTrack;
-    
-    /**
-     * The terminal layer pane.
-     */
-    protected JLayeredPane terminalLayerPane;
-    
-    /**
-     * The terminal output socket.
-     */
-    protected Socket terminalOutputSocket;
+    protected String status;
     
     /**
      * The track class.
@@ -303,18 +188,15 @@ public abstract class AbstractOpenCVController extends AbstractController
      *             if OpenCV could not load
      */
     protected AbstractOpenCVController() throws OpenCVControllerException {
-        this(DEFAULT_CAMERA_PORT);
+        this(null);
     }
     
-    /**
-     * Instantiates a new Abstract OpenCV Controller with a camera port.
-     *
-     * @param newCameraPort
-     *            the new camera port
-     * @throws OpenCVControllerException
-     *             if OpenCV could not load
-     */
-    protected AbstractOpenCVController(int newCameraPort)
+    protected AbstractOpenCVController(HudController newHud)
+                    throws OpenCVControllerException {
+        this(newHud, DEFAULT_CAMERA_PORT);
+    }
+    
+    protected AbstractOpenCVController(HudController newHud, int newCameraPort)
                     throws OpenCVControllerException {
         super();
         this.buffer = null;
@@ -333,8 +215,6 @@ public abstract class AbstractOpenCVController extends AbstractController
         this.cameraThread = new Thread(this.cameraRunnable);
         this.capturedLabel = "";
         this.det = null;
-        this.endX = 0;
-        this.endY = 0;
         try {
             this.net = Dnn.readNetFromCaffe(DEPLOY_PROTOTXT_TXT_FILE,
                             DEPLOY_CAFFEMODEL_FILE);
@@ -351,19 +231,14 @@ public abstract class AbstractOpenCVController extends AbstractController
                             e);
         } finally {
             /* */ }
-        this.terminalOutputStream = null;
-        this.terminalSetupRunnable = new TerminalSetupThread();
-        this.terminalOutputSocketRunnable = new TerminalOutputSocketThread();
-        this.terminalOutputSocketThread = new Thread(
-                        this.terminalOutputSocketRunnable);
-        this.trackClass = "None";
-        this.trackClassFound = false;
-        this.serverTerminalOutputSocket = null;
-        this.terminalOutputSocket = null;
+        this.endX = 0;
+        this.endY = 0;
+        this.hud = newHud;
+        this.status = "";
         this.startX = 0;
         this.startY = 0;
-        
-        javax.swing.SwingUtilities.invokeLater(this.terminalSetupRunnable);
+        this.trackClass = "None";
+        this.trackClassFound = false;
     }
     
     // Protected Final Nested Classes
@@ -431,220 +306,6 @@ public abstract class AbstractOpenCVController extends AbstractController
         }
     }
     
-    /**
-     * The Class TerminalSetupThread. A Runnable that controls the setup for the
-     * terminal.
-     * 
-     * @author Christian Shadd
-     * @author Maria Verna Aquino
-     * @author Thanh Vu
-     * @author Joseph Damian
-     * @author Giovanni Orozco
-     * @since 1.0.0
-     */
-    protected final class TerminalSetupThread implements Runnable {
-        // Public Constructors
-        
-        /**
-         * Instantiates a new Terminal Setup Thread.
-         */
-        public TerminalSetupThread() {
-            super();
-        }
-        
-        // Public Methods (Overrided)
-        
-        /**
-         * Runs the terminal setup.
-         * 
-         * @see java.lang.Runnable#run()
-         */
-        @Override
-        public void run() {
-            AbstractOpenCVController.this.terminalLabelCam = new JLabel();
-            AbstractOpenCVController.this.terminalLabelCam.setVerticalAlignment(
-                            SwingConstants.TOP);
-            AbstractOpenCVController.this.terminalLabelCam
-                            .setHorizontalAlignment(SwingConstants.LEFT);
-            AbstractOpenCVController.this.terminalLabelCam.setOpaque(false);
-            AbstractOpenCVController.this.terminalLabelCam.setBounds(0, 0,
-                            SCENE_W, SCENE_H);
-            
-            AbstractOpenCVController.this.terminalLabelCamFilter = new JLabel();
-            AbstractOpenCVController.this.terminalLabelCamFilter
-                            .setVerticalAlignment(SwingConstants.TOP);
-            AbstractOpenCVController.this.terminalLabelCamFilter
-                            .setHorizontalAlignment(SwingConstants.LEFT);
-            AbstractOpenCVController.this.terminalLabelCamFilter.setOpaque(
-                            true);
-            AbstractOpenCVController.this.terminalLabelCamFilter.setBackground(
-                            new Color(255, 0, 0, 150));
-            AbstractOpenCVController.this.terminalLabelCamFilter.setBounds(0, 0,
-                            SCENE_W, SCENE_H);
-            
-            AbstractOpenCVController.this.terminalLabelStatus = new JLabel();
-            AbstractOpenCVController.this.terminalLabelStatus
-                            .setVerticalAlignment(SwingConstants.BOTTOM);
-            AbstractOpenCVController.this.terminalLabelStatus
-                            .setHorizontalAlignment(SwingConstants.LEFT);
-            AbstractOpenCVController.this.terminalLabelStatus.setOpaque(false);
-            AbstractOpenCVController.this.terminalLabelStatus.setBounds(0, 0,
-                            SCENE_W, SCENE_H);
-            
-            AbstractOpenCVController.this.terminalLabelTrack = new JLabel();
-            AbstractOpenCVController.this.terminalLabelTrack
-                            .setVerticalAlignment(SwingConstants.TOP);
-            AbstractOpenCVController.this.terminalLabelTrack
-                            .setHorizontalAlignment(SwingConstants.LEFT);
-            AbstractOpenCVController.this.terminalLabelTrack.setOpaque(false);
-            AbstractOpenCVController.this.terminalLabelTrack.setBorder(
-                            BorderFactory.createLineBorder(Color.white));
-            
-            AbstractOpenCVController.this.terminalLayerPane = new JLayeredPane();
-            AbstractOpenCVController.this.terminalLayerPane.setPreferredSize(
-                            new Dimension(SCENE_W, SCENE_H));
-            AbstractOpenCVController.this.terminalLayerPane.add(
-                            AbstractOpenCVController.this.terminalLabelStatus,
-                            0);
-            AbstractOpenCVController.this.terminalLayerPane.add(
-                            AbstractOpenCVController.this.terminalLabelTrack,
-                            1);
-            AbstractOpenCVController.this.terminalLayerPane.add(
-                            AbstractOpenCVController.this.terminalLabelCamFilter,
-                            2);
-            AbstractOpenCVController.this.terminalLayerPane.add(
-                            AbstractOpenCVController.this.terminalLabelCam, 3);
-            
-            AbstractOpenCVController.this.terminalContent = new JPanel();
-            AbstractOpenCVController.this.terminalContent.setLayout(
-                            new BoxLayout(AbstractOpenCVController.this.terminalContent,
-                                            BoxLayout.PAGE_AXIS));
-            AbstractOpenCVController.this.terminalContent.setOpaque(true);
-            AbstractOpenCVController.this.terminalContent.add(
-                            AbstractOpenCVController.this.terminalLayerPane);
-            
-            AbstractOpenCVController.this.terminalFrame = new JFrame(
-                            "Fetch Bot OpenCVController Terminal");
-            AbstractOpenCVController.this.terminalFrame.setContentPane(
-                            AbstractOpenCVController.this.terminalContent);
-            AbstractOpenCVController.this.terminalFrame
-                            .setDefaultCloseOperation(
-                                            WindowConstants.DISPOSE_ON_CLOSE);
-            AbstractOpenCVController.this.terminalFrame.setLocationByPlatform(
-                            true);
-            AbstractOpenCVController.this.terminalFrame.setResizable(false);
-            
-            AbstractOpenCVController.this.terminalFrame.pack();
-            AbstractOpenCVController.this.terminalFrame.setVisible(false);
-        }
-    }
-    
-    /**
-     * The Class TerminalOutputSocketThread. A Runnable that controls the
-     * terminal output sockets.
-     * 
-     * @author Christian Shadd
-     * @author Maria Verna Aquino
-     * @author Thanh Vu
-     * @author Joseph Damian
-     * @author Giovanni Orozco
-     * @since 2.0.0-alpha
-     */
-    protected final class TerminalOutputSocketThread implements Runnable {
-        // Private Instance/Property Fields
-        
-        /**
-         * The running state.
-         */
-        private volatile boolean running;
-        
-        // Public Constructors
-        
-        /**
-         * Instantiates a new Camera Thread.
-         */
-        public TerminalOutputSocketThread() {
-            super();
-            this.running = false;
-        }
-        
-        // Public Methods
-        
-        /**
-         * Terminate.
-         *
-         * @throws IOException
-         *             if the terminal socket could not close
-         */
-        public void terminate() throws IOException {
-            AbstractOpenCVController.this.terminalOutputSocket.close();
-            AbstractOpenCVController.this.serverTerminalOutputSocket.close();
-            this.running = false;
-        }
-        
-        // Public Methods (Overrided)
-        
-        /**
-         * Runs the camera with each frame being processed.
-         * 
-         * @see java.lang.Runnable#run()
-         */
-        @Override
-        public void run() {
-            try {
-                AbstractOpenCVController.this.serverTerminalOutputSocket = new ServerSocket(
-                                SERVER_TERMINAL_OUTPUT_SOCKET_PORT);
-                AbstractOpenCVController.this.terminalOutputSocket = AbstractOpenCVController.this.serverTerminalOutputSocket
-                                .accept();
-                writeHeader(AbstractOpenCVController.this.terminalOutputSocket
-                                .getOutputStream(), STREAM_BOUNDARY);
-                this.running = true;
-                while (this.running) {
-                    AbstractOpenCVController.this.terminalOutputSocket = AbstractOpenCVController.this.serverTerminalOutputSocket
-                                    .accept();
-                    try (final ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-                        AbstractOpenCVController.this.terminalOutputStream = AbstractOpenCVController.this.terminalOutputSocket
-                                        .getOutputStream();
-                        final BufferedImage image = new BufferedImage(
-                                        AbstractOpenCVController.this.terminalFrame
-                                                        .getWidth(),
-                                        AbstractOpenCVController.this.terminalFrame
-                                                        .getHeight(),
-                                        BufferedImage.TYPE_INT_RGB);
-                        final Graphics2D g2 = image.createGraphics();
-                        AbstractOpenCVController.this.terminalFrame.paint(g2);
-                        ImageIO.write(image, "jpg", os);
-                        final byte[] terminalImageBytes = os.toByteArray();
-                        AbstractOpenCVController.this.terminalOutputStream
-                                        .write(("Content-type: image/jpeg\r\n"
-                                                        + "Content-Length: "
-                                                        + terminalImageBytes.length
-                                                        + "\r\n" + "\r\n")
-                                                                        .getBytes());
-                        AbstractOpenCVController.this.terminalOutputStream
-                                        .write(terminalImageBytes);
-                        AbstractOpenCVController.this.terminalOutputStream
-                                        .write(("\r\n--" + STREAM_BOUNDARY
-                                                        + "\r\n").getBytes());
-                        os.flush();
-                        os.close();
-                        image.flush();
-                        io.github.cshadd.fetch_bot.Core.delayThread(1000);
-                    } catch (@SuppressWarnings("unused") Exception e) { // Suppressed
-                        AbstractOpenCVController.this.terminalOutputSocket = AbstractOpenCVController.this.serverTerminalOutputSocket
-                                        .accept();
-                        writeHeader(AbstractOpenCVController.this.terminalOutputSocket
-                                        .getOutputStream(), STREAM_BOUNDARY);
-                    } finally {
-                        /* */ }
-                }
-            } catch (@SuppressWarnings("unused") Exception e) { // Suppressed
-            } finally {
-                /* */ }
-        }
-        
-    }
-    
     // Private Static Methods
     
     static {
@@ -681,28 +342,7 @@ public abstract class AbstractOpenCVController extends AbstractController
         return image;
     }
     
-    // Protected Static Methods
-    
-    /**
-     * Write header.
-     *
-     * @param stream
-     *            the stream
-     * @param boundary
-     *            the boundary
-     * @throws IOException
-     *             if the stream could not be written to
-     */
-    protected static void writeHeader(OutputStream stream, String boundary)
-                    throws IOException {
-        stream.write(("HTTP/1.0 200 OK\r\n" + "Connection: close\r\n"
-                        + "Max-Age: 0\r\n" + "Expires: 0\r\n"
-                        + "Cache-Control: no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0\r\n"
-                        + "Pragma: no-cache\r\n"
-                        + "Content-Type: multipart/x-mixed-replace; "
-                        + "boundary=" + boundary + "\r\n" + "\r\n" + "--"
-                        + boundary + "\r\n").getBytes());
-    }
+    // Protected Methods
     
     /**
      * Processes the detections from the matrix from the mat. The mat is
@@ -756,7 +396,7 @@ public abstract class AbstractOpenCVController extends AbstractController
      */
     protected void detections(Mat mat) {
         this.buffer = matToBufferedImage(mat);
-        final ImageIcon img = new ImageIcon(this.buffer);
+        final ImageIcon cameraIcon = new ImageIcon(this.buffer);
         /*
          * Converts the image matrix into a "blob," which is then fed into
          * the
@@ -768,6 +408,7 @@ public abstract class AbstractOpenCVController extends AbstractController
                         SIZE), new Scalar(SIZE, SIZE), false, false);
         this.net.setInput(blob);
         this.det = this.net.forward();
+        
         /*
          * For each detection, there are 7 numbers the matrix det outputs.
          * The
@@ -798,13 +439,13 @@ public abstract class AbstractOpenCVController extends AbstractController
             final int fullCon = (int) (100 * con);
             
             this.startX = (int) (this.det.reshape(1, 1).get(0, i + 3)[0]
-                            * SCENE_W);
+                            * AbstractHudController.SCENE_W);
             this.startY = (int) (this.det.reshape(1, 1).get(0, i + 4)[0]
-                            * SCENE_H);
+                            * AbstractHudController.SCENE_H);
             this.endX = (int) (this.det.reshape(1, 1).get(0, i + 5)[0]
-                            * SCENE_W);
+                            * AbstractHudController.SCENE_W);
             this.endY = (int) (this.det.reshape(1, 1).get(0, i + 6)[0]
-                            * SCENE_H);
+                            * AbstractHudController.SCENE_H);
             
             if (index > 0 && index < this.trackClasses.size()) {
                 capturedTrackClass = this.trackClasses.get(index);
@@ -815,27 +456,21 @@ public abstract class AbstractOpenCVController extends AbstractController
             if (fullCon >= CONFIDENCE_LIMIT && capturedTrackClass.equals(
                             this.trackClass)) {
                 this.trackClassFound = true;
-                this.capturedLabel = "<html><p style='color: white;'>"
-                                + capturedTrackClass + " [" + fullCon
-                                + "%]<br />" + "TARGET</p></html>";
+                this.capturedLabel = capturedTrackClass + " [" + fullCon
+                                + "%]<br />" + "TARGET";
             } else {
                 this.trackClassFound = false;
-                this.capturedLabel = "<html><p style='color: white;'>"
-                                + capturedTrackClass + " [" + fullCon
-                                + "%]</p></html>";
+                this.capturedLabel = capturedTrackClass + " [" + fullCon + "%]";
             }
+            
         }
-        this.terminalLabelCam.setIcon(img);
-        this.terminalLabelStatus.setText(
-                        "<html><p style='color: white; font-size: 20px'>&#187; Status: Processing<br />"
-                                        + "Target: " + this.trackClass
-                                        + "<br />" + "Found Target: "
-                                        + this.trackClassFound + "<br />"
-                                        + "Raw I/O Buffer: " + this.buffer
-                                                        .hashCode()
-                                        + "</p></html>");
-        this.terminalLabelTrack.setBounds(this.startX, this.startY, this.endX
+        this.hud.updateBack(cameraIcon);
+        this.status = "&#187; Status: Processing<br />" + "Target: "
+                        + this.trackClass + "<br />" + "Found Target: "
+                        + this.trackClassFound + "<br />" + "Raw I/O Buffer: "
+                        + this.buffer.hashCode() + "<br />";
+        this.hud.updateTrackBounds(this.startX, this.startY, this.endX
                         - this.startX, this.endY - this.startY);
-        this.terminalLabelTrack.setText(this.capturedLabel);
+        this.hud.updateTrack(this.capturedLabel);
     }
 }
