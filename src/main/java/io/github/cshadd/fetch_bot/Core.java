@@ -227,7 +227,7 @@ public class Core implements FetchBot {
                         tracked = false;
                     }
                 }
-
+                
                 // Mode
                 final String mode = webInterfaceComm.getRobotValue("mode");
                 if (mode != null) {
@@ -732,6 +732,7 @@ public class Core implements FetchBot {
                     currentTrackStatus += "Imminent Collision!";
                 }
                 hudControl.updateStatus(currentTrackStatus);
+                webInterfaceComm.setSourceValue("hud", hudControl.bufferData());
                 webInterfaceComm.pushSource();
                 webInterfaceComm.pushRobot();
                 arduinoComm.pushSource();

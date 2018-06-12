@@ -2,7 +2,14 @@ package io.github.cshadd.fetch_bot.controllers;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Base64;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -12,14 +19,15 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import org.opencv.core.Mat;
-
-import io.github.cshadd.fetch_bot.controllers.AbstractOpenCVController.CameraThread;
 
 // Main
 
 public abstract class AbstractHudController extends AbstractController
                 implements HudController {
+    // Private Constant Instance/Property Fields
+    
+    private static final int BUFFER_CAPACITY = 3;
+    
     // Public Constant Instance/Property Fields
     
     public static final int SCENE_H = 480;
@@ -33,8 +41,7 @@ public abstract class AbstractHudController extends AbstractController
     
     // Protected Instance/Property Fields
     
-    protected BufferedImage buffer;
-    protected Mat           cameraFrame;
+    protected Queue<String> buffer;
     protected JComponent    hudContent;
     protected JFrame        hudFrame;
     protected JLabel        hudLabelBack;
@@ -47,6 +54,7 @@ public abstract class AbstractHudController extends AbstractController
     
     protected AbstractHudController() {
         super();
+        this.buffer = new LinkedBlockingQueue<>(BUFFER_CAPACITY);
         this.hudSetupRunnable = new HudSetupThread();
         javax.swing.SwingUtilities.invokeLater(this.hudSetupRunnable);
         
@@ -93,9 +101,15 @@ public abstract class AbstractHudController extends AbstractController
         @Override
         public void run() {
             this.running = true;
-            // while (this.running) {
-                
-            // }
+            while (this.running) {
+                try {
+                    AbstractHudController.this.buffer.add(
+                                    toBase64WebImageString());
+                } catch (Exception e) {
+                    /* */ } // Suppressed
+                finally {
+                    /* */ }
+            }
         }
     }
     
@@ -185,8 +199,30 @@ public abstract class AbstractHudController extends AbstractController
             AbstractHudController.this.hudFrame.setResizable(false);
             
             AbstractHudController.this.hudFrame.pack();
-            // AbstractHudController.this.hudFrame.setVisible(false);
-            AbstractHudController.this.hudFrame.setVisible(true);
+            AbstractHudController.this.hudFrame.setVisible(false);
+        }
+    }
+    
+    // Protected Methods
+    
+    protected String toBase64WebImageString() throws IOException {
+        final BufferedImage img = new BufferedImage(SCENE_W, SCENE_H,
+                        BufferedImage.TYPE_INT_RGB);
+        final Graphics2D g2d = img.createGraphics();
+        this.hudContent.printAll(g2d);
+        g2d.dispose();
+        try (final ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+            ImageIO.write(img, "png", os);
+            final byte[] imgBytes = os.toByteArray();
+            os.flush();
+            os.close();
+            return "data:image/png;base64," + Base64.getEncoder()
+                            .encodeToString(imgBytes);
+        } catch (IOException e) {
+            throw e;
+        } catch (Exception e) {
+            throw e;
+        } finally { /* */
         }
     }
 }

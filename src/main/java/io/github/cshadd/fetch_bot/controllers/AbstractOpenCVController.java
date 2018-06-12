@@ -31,9 +31,7 @@ import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
 import javax.swing.ImageIcon;
-
 import org.apache.commons.io.FileUtils;
 import org.opencv.core.Core;
 import org.opencv.core.CvException;

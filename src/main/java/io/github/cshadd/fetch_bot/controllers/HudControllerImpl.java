@@ -1,7 +1,6 @@
 package io.github.cshadd.fetch_bot.controllers;
 
 import javax.swing.ImageIcon;
-
 import io.github.cshadd.fetch_bot.Component;
 
 // Main
@@ -15,6 +14,11 @@ public class HudControllerImpl extends AbstractHudController {
     }
     
     // Public Methods (Overrided)
+    
+    @Override
+    public String bufferData() {
+        return "" + this.buffer.poll();
+    }
     
     @Override
     public void closeHud() throws HudControllerException {
@@ -43,8 +47,8 @@ public class HudControllerImpl extends AbstractHudController {
     
     @Override
     public void updateTrack(String label) {
-        this.hudLabelTrack.setText("<html><p style='color: white;'>"
-                        + label + "</p></html>");
+        this.hudLabelTrack.setText("<html><p style='color: white;'>" + label
+                        + "</p></html>");
     }
     
     @Override

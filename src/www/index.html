@@ -86,15 +86,6 @@
             }
         }, 1000);
 
-        setInterval(function () {
-            if (data != null && data2 != null) {
-                
-            }
-            else {
-                
-            }
-        }, 3000);
-
         function sendToRobot() {
             $.ajax({
                 type: "POST",
@@ -141,6 +132,7 @@
         <div class="fit row">
             <img class="logo" src="https://cshadd.github.io/fetch-bot/Logo.png" alt="Fetch Bot" />
             <h1 class="title">Fetch Bot Web Interface</h1>
+            <h2 class="title"><a href="https://cshadd.github.io/fetch-bot" target="_blank">https://cshadd.github.io/fetch-bot</a></h2>
             <hr />
         </div>
         <div class="fit row">
@@ -210,7 +202,8 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">HUD</div>
                 <div class="panel-body">
-                    <img id="hud" src="" alt="Hud" />
+                    <img id="hud" src="" alt="<Stream>" /><br />
+                    <iframe src="face.html"></iframe>
                 </div>
             </div>
         </div>
@@ -219,8 +212,6 @@
             <a href="https://www.raspberrypi.org/" target="_blank">
                 <img src="https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png" alt="<3 Raspberry Pi" />
             </a>
-            <hr />
-            <a href="https://cshadd.github.io/fetch-bot" target="_blank">https://cshadd.github.io/fetch-bot</a>
         </div>
     </main>
 </body>
