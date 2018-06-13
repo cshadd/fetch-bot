@@ -466,7 +466,7 @@ public abstract class AbstractOpenCVController extends AbstractController
         this.status = "&#187; Status: Processing<br />" + "Target: "
                         + this.trackClass + "<br />" + "Found Target: "
                         + this.trackClassFound + "<br />" + "Raw I/O Buffer: "
-                        + this.buffer.hashCode() + "<br />";
+                        + this.buffer.hashCode();
         this.hud.updateTrackBounds(this.startX, this.startY, this.endX
                         - this.startX, this.endY - this.startY);
         this.hud.updateTrack(this.capturedLabel);

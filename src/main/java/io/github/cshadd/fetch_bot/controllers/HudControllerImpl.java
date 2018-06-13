@@ -59,7 +59,7 @@ public class HudControllerImpl extends AbstractHudController {
     @Override
     public void updateStatus(String status) {
         this.hudLabelStatus.setText(
-                        "<html><p style='color: white; font-size: 20px'>"
+                        "<html><p style='color: white; font-size: 10px'>"
                                         + status + "</p></html>");
     }
 }
