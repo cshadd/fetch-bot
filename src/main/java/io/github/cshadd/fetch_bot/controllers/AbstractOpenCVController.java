@@ -104,7 +104,7 @@ public abstract class AbstractOpenCVController extends AbstractController
     
     // Private Final Instance/Property Fields
     
-    private final HudController hud;
+    private final HUDController hud;
     
     /**
      * The track classes.
@@ -189,12 +189,12 @@ public abstract class AbstractOpenCVController extends AbstractController
         this(null);
     }
     
-    protected AbstractOpenCVController(HudController newHud)
+    protected AbstractOpenCVController(HUDController newHud)
                     throws OpenCVControllerException {
         this(newHud, DEFAULT_CAMERA_PORT);
     }
     
-    protected AbstractOpenCVController(HudController newHud, int newCameraPort)
+    protected AbstractOpenCVController(HUDController newHud, int newCameraPort)
                     throws OpenCVControllerException {
         super();
         this.buffer = null;
@@ -437,13 +437,13 @@ public abstract class AbstractOpenCVController extends AbstractController
             final int fullCon = (int) (100 * con);
             
             this.startX = (int) (this.det.reshape(1, 1).get(0, i + 3)[0]
-                            * AbstractHudController.SCENE_W);
+                            * AbstractHUDController.SCENE_W);
             this.startY = (int) (this.det.reshape(1, 1).get(0, i + 4)[0]
-                            * AbstractHudController.SCENE_H);
+                            * AbstractHUDController.SCENE_H);
             this.endX = (int) (this.det.reshape(1, 1).get(0, i + 5)[0]
-                            * AbstractHudController.SCENE_W);
+                            * AbstractHUDController.SCENE_W);
             this.endY = (int) (this.det.reshape(1, 1).get(0, i + 6)[0]
-                            * AbstractHudController.SCENE_H);
+                            * AbstractHUDController.SCENE_H);
             
             if (index > 0 && index < this.trackClasses.size()) {
                 capturedTrackClass = this.trackClasses.get(index);

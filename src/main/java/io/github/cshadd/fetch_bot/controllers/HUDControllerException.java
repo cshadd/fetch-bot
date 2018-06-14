@@ -2,22 +2,22 @@ package io.github.cshadd.fetch_bot.controllers;
 
 // Main
 
-public class HudControllerException extends ControllerException {
+public class HUDControllerException extends ControllerException {
     // Private Constant Instance/Property Fields
 
     private static final long serialVersionUID = 1L;
     
     // Public Constructors
 
-    public HudControllerException() {
+    public HUDControllerException() {
     }
-    public HudControllerException(String message) {
+    public HUDControllerException(String message) {
         super(message);
     }
-    public HudControllerException(String message, Throwable cause) {
+    public HUDControllerException(String message, Throwable cause) {
         super(message, cause);
     }
-    public HudControllerException(Throwable cause) {
+    public HUDControllerException(Throwable cause) {
         super(cause);
     }
 }

@@ -22,8 +22,8 @@ import javax.swing.WindowConstants;
 
 // Main
 
-public abstract class AbstractHudController extends AbstractController
-                implements HudController {
+public abstract class AbstractHUDController extends AbstractController
+                implements HUDController {
     // Private Constant Instance/Property Fields
     
     private static final int BUFFER_CAPACITY = 3;
@@ -52,7 +52,7 @@ public abstract class AbstractHudController extends AbstractController
     
     // Protected Constructors
     
-    protected AbstractHudController() {
+    protected AbstractHUDController() {
         super();
         this.buffer = new LinkedBlockingQueue<>(BUFFER_CAPACITY);
         this.hudSetupRunnable = new HudSetupThread();
@@ -103,7 +103,7 @@ public abstract class AbstractHudController extends AbstractController
             this.running = true;
             while (this.running) {
                 try {
-                    AbstractHudController.this.buffer.add(
+                    AbstractHUDController.this.buffer.add(
                                     toBase64WebImageString());
                 } catch (Exception e) {
                     /* */ } // Suppressed
@@ -132,74 +132,74 @@ public abstract class AbstractHudController extends AbstractController
          */
         @Override
         public void run() {
-            AbstractHudController.this.hudLabelBack = new JLabel();
-            AbstractHudController.this.hudLabelBack.setVerticalAlignment(
+            AbstractHUDController.this.hudLabelBack = new JLabel();
+            AbstractHUDController.this.hudLabelBack.setVerticalAlignment(
                             SwingConstants.TOP);
-            AbstractHudController.this.hudLabelBack.setHorizontalAlignment(
+            AbstractHUDController.this.hudLabelBack.setHorizontalAlignment(
                             SwingConstants.LEFT);
-            AbstractHudController.this.hudLabelBack.setOpaque(false);
-            AbstractHudController.this.hudLabelBack.setBounds(0, 0, SCENE_W,
+            AbstractHUDController.this.hudLabelBack.setOpaque(false);
+            AbstractHUDController.this.hudLabelBack.setBounds(0, 0, SCENE_W,
                             SCENE_H);
             
-            AbstractHudController.this.hudLabelBackFilter = new JLabel();
-            AbstractHudController.this.hudLabelBackFilter.setVerticalAlignment(
+            AbstractHUDController.this.hudLabelBackFilter = new JLabel();
+            AbstractHUDController.this.hudLabelBackFilter.setVerticalAlignment(
                             SwingConstants.TOP);
-            AbstractHudController.this.hudLabelBackFilter
+            AbstractHUDController.this.hudLabelBackFilter
                             .setHorizontalAlignment(SwingConstants.LEFT);
-            AbstractHudController.this.hudLabelBackFilter.setOpaque(true);
-            AbstractHudController.this.hudLabelBackFilter.setBackground(
+            AbstractHUDController.this.hudLabelBackFilter.setOpaque(true);
+            AbstractHUDController.this.hudLabelBackFilter.setBackground(
                             new Color(255, 0, 0, 150));
-            AbstractHudController.this.hudLabelBackFilter.setBounds(0, 0,
+            AbstractHUDController.this.hudLabelBackFilter.setBounds(0, 0,
                             SCENE_W, SCENE_H);
             
-            AbstractHudController.this.hudLabelStatus = new JLabel();
-            AbstractHudController.this.hudLabelStatus.setVerticalAlignment(
+            AbstractHUDController.this.hudLabelStatus = new JLabel();
+            AbstractHUDController.this.hudLabelStatus.setVerticalAlignment(
                             SwingConstants.BOTTOM);
-            AbstractHudController.this.hudLabelStatus.setHorizontalAlignment(
+            AbstractHUDController.this.hudLabelStatus.setHorizontalAlignment(
                             SwingConstants.LEFT);
-            AbstractHudController.this.hudLabelStatus.setOpaque(false);
-            AbstractHudController.this.hudLabelStatus.setBounds(0, 0, SCENE_W,
+            AbstractHUDController.this.hudLabelStatus.setOpaque(false);
+            AbstractHUDController.this.hudLabelStatus.setBounds(0, 0, SCENE_W,
                             SCENE_H);
             
-            AbstractHudController.this.hudLabelTrack = new JLabel();
-            AbstractHudController.this.hudLabelTrack.setVerticalAlignment(
+            AbstractHUDController.this.hudLabelTrack = new JLabel();
+            AbstractHUDController.this.hudLabelTrack.setVerticalAlignment(
                             SwingConstants.TOP);
-            AbstractHudController.this.hudLabelTrack.setHorizontalAlignment(
+            AbstractHUDController.this.hudLabelTrack.setHorizontalAlignment(
                             SwingConstants.LEFT);
-            AbstractHudController.this.hudLabelTrack.setOpaque(false);
-            AbstractHudController.this.hudLabelTrack.setBorder(BorderFactory
+            AbstractHUDController.this.hudLabelTrack.setOpaque(false);
+            AbstractHUDController.this.hudLabelTrack.setBorder(BorderFactory
                             .createLineBorder(Color.white));
             
-            AbstractHudController.this.hudLayerPane = new JLayeredPane();
-            AbstractHudController.this.hudLayerPane.setPreferredSize(
+            AbstractHUDController.this.hudLayerPane = new JLayeredPane();
+            AbstractHUDController.this.hudLayerPane.setPreferredSize(
                             new Dimension(SCENE_W, SCENE_H));
-            AbstractHudController.this.hudLayerPane.add(
-                            AbstractHudController.this.hudLabelStatus, 0);
-            AbstractHudController.this.hudLayerPane.add(
-                            AbstractHudController.this.hudLabelTrack, 1);
-            AbstractHudController.this.hudLayerPane.add(
-                            AbstractHudController.this.hudLabelBackFilter, 2);
-            AbstractHudController.this.hudLayerPane.add(
-                            AbstractHudController.this.hudLabelBack, 3);
+            AbstractHUDController.this.hudLayerPane.add(
+                            AbstractHUDController.this.hudLabelStatus, 0);
+            AbstractHUDController.this.hudLayerPane.add(
+                            AbstractHUDController.this.hudLabelTrack, 1);
+            AbstractHUDController.this.hudLayerPane.add(
+                            AbstractHUDController.this.hudLabelBackFilter, 2);
+            AbstractHUDController.this.hudLayerPane.add(
+                            AbstractHUDController.this.hudLabelBack, 3);
             
-            AbstractHudController.this.hudContent = new JPanel();
-            AbstractHudController.this.hudContent.setLayout(new BoxLayout(
-                            AbstractHudController.this.hudContent,
+            AbstractHUDController.this.hudContent = new JPanel();
+            AbstractHUDController.this.hudContent.setLayout(new BoxLayout(
+                            AbstractHUDController.this.hudContent,
                             BoxLayout.PAGE_AXIS));
-            AbstractHudController.this.hudContent.setOpaque(true);
-            AbstractHudController.this.hudContent.add(
-                            AbstractHudController.this.hudLayerPane);
+            AbstractHUDController.this.hudContent.setOpaque(true);
+            AbstractHUDController.this.hudContent.add(
+                            AbstractHUDController.this.hudLayerPane);
             
-            AbstractHudController.this.hudFrame = new JFrame("Fetch Bot Hud");
-            AbstractHudController.this.hudFrame.setContentPane(
-                            AbstractHudController.this.hudContent);
-            AbstractHudController.this.hudFrame.setDefaultCloseOperation(
+            AbstractHUDController.this.hudFrame = new JFrame("Fetch Bot Hud");
+            AbstractHUDController.this.hudFrame.setContentPane(
+                            AbstractHUDController.this.hudContent);
+            AbstractHUDController.this.hudFrame.setDefaultCloseOperation(
                             WindowConstants.DISPOSE_ON_CLOSE);
-            AbstractHudController.this.hudFrame.setLocationByPlatform(true);
-            AbstractHudController.this.hudFrame.setResizable(false);
+            AbstractHUDController.this.hudFrame.setLocationByPlatform(true);
+            AbstractHUDController.this.hudFrame.setResizable(false);
             
-            AbstractHudController.this.hudFrame.pack();
-            AbstractHudController.this.hudFrame.setVisible(false);
+            AbstractHUDController.this.hudFrame.pack();
+            AbstractHUDController.this.hudFrame.setVisible(false);
         }
     }
     

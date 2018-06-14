@@ -54,12 +54,12 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
         super();
     }
     
-    public OpenCVControllerImpl(HudController newHud)
+    public OpenCVControllerImpl(HUDController newHud)
                     throws OpenCVControllerException {
         super(newHud);
     }
     
-    public OpenCVControllerImpl(HudController newHud, int newCameraPort)
+    public OpenCVControllerImpl(HUDController newHud, int newCameraPort)
                     throws OpenCVControllerException {
         super(newHud, newCameraPort);
     }

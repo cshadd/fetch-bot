@@ -4,11 +4,11 @@ import javax.swing.ImageIcon;
 
 // Main
 
-public abstract interface HudController extends Controller {
+public abstract interface HUDController extends Controller {
     // Public Abstract Methods
     
     public abstract String bufferData();
-    public abstract void closeHud() throws HudControllerException;
+    public abstract void closeHud() throws HUDControllerException;
     public abstract void openHud();
     public abstract void updateBack(ImageIcon img);
     public abstract void updateTrack(String label);

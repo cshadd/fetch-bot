@@ -26,8 +26,8 @@
 package io.github.cshadd.fetch_bot;
 
 import io.github.cshadd.fetch_bot.controllers.ControllerException;
-import io.github.cshadd.fetch_bot.controllers.HudController;
-import io.github.cshadd.fetch_bot.controllers.HudControllerImpl;
+import io.github.cshadd.fetch_bot.controllers.HUDController;
+import io.github.cshadd.fetch_bot.controllers.HUDControllerImpl;
 import io.github.cshadd.fetch_bot.controllers.OpenCVController;
 import io.github.cshadd.fetch_bot.controllers.OpenCVControllerImpl;
 import io.github.cshadd.fetch_bot.controllers.PathfindController;
@@ -77,7 +77,7 @@ public class Core implements FetchBot {
     /**
      * The Hud Controller.
      */
-    private static HudController hudControl;
+    private static HUDController hudControl;
     
     /**
      * The OpenCV Controller.
@@ -842,7 +842,7 @@ public class Core implements FetchBot {
             /* */ }
             
         // Initiate controllers
-        hudControl = new HudControllerImpl();
+        hudControl = new HUDControllerImpl();
         hudControl.openHud();
         try {
             openCVControl = new OpenCVControllerImpl(hudControl);

@@ -6,10 +6,10 @@ import io.github.cshadd.fetch_bot.Component;
 // Main
 
 @Component("Hud")
-public class HudControllerImpl extends AbstractHudController {
+public class HUDControllerImpl extends AbstractHUDController {
     // Public Constructors
     
-    public HudControllerImpl() {
+    public HUDControllerImpl() {
         super();
     }
     
@@ -21,16 +21,16 @@ public class HudControllerImpl extends AbstractHudController {
     }
     
     @Override
-    public void closeHud() throws HudControllerException {
+    public void closeHud() throws HUDControllerException {
         this.hudFrame.setEnabled(false);
         this.hudFrame.dispose();
         try {
             this.hudRunnable.terminate();
             this.hudThread.join();
         } catch (InterruptedException e) {
-            throw new HudControllerException("Thread was interrupted.", e);
+            throw new HUDControllerException("Thread was interrupted.", e);
         } catch (Exception e) {
-            throw new HudControllerException("There was an unknown issue!", e);
+            throw new HUDControllerException("There was an unknown issue!", e);
         } finally {
             /* */ }
     }
