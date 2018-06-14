@@ -7,9 +7,9 @@ import javax.swing.ImageIcon;
 public abstract interface HUDController extends Controller {
     // Public Abstract Methods
     
-    public abstract String bufferData();
     public abstract void closeHud() throws HUDControllerException;
     public abstract void openHud();
+    public abstract String pollBufferData();
     public abstract void updateBack(ImageIcon img);
     public abstract void updateTrack(String label);
     public abstract void updateTrackBounds(int startX, int startY, int endX, int endY);

@@ -728,13 +728,12 @@ public class Core implements FetchBot {
                 }
                 
                 currentTrackStatus = "Fetch Bot " + VERSION + "<br />"
-                                + openCVControl.status() + "<br />"
-                                + pathfindControl + "<br />";
+                                + openCVControl.status() + "<br />";
                 if (currentUltrasonicSensor <= SENSOR_LIMIT) {
                     currentTrackStatus += "Imminent Collision!";
                 }
                 hudControl.updateStatus(currentTrackStatus);
-                webInterfaceComm.setSourceValue("hud", hudControl.bufferData());
+                webInterfaceComm.setSourceValue("hud", hudControl.pollBufferData());
                 webInterfaceComm.pushSource();
                 webInterfaceComm.pushRobot();
                 arduinoComm.pushSource();

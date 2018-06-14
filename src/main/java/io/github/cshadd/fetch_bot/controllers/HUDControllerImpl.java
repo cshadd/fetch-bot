@@ -5,7 +5,7 @@ import io.github.cshadd.fetch_bot.Component;
 
 // Main
 
-@Component("Hud")
+@Component("HUD")
 public class HUDControllerImpl extends AbstractHUDController {
     // Public Constructors
     
@@ -14,11 +14,6 @@ public class HUDControllerImpl extends AbstractHUDController {
     }
     
     // Public Methods (Overrided)
-    
-    @Override
-    public String bufferData() {
-        return "" + this.buffer.poll();
-    }
     
     @Override
     public void closeHud() throws HUDControllerException {
@@ -38,6 +33,11 @@ public class HUDControllerImpl extends AbstractHUDController {
     @Override
     public void openHud() {
         this.hudThread.start();
+    }
+    
+    @Override
+    public String pollBufferData() {
+        return "" + this.buffer.poll();
     }
     
     @Override

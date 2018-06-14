@@ -35,13 +35,13 @@ public abstract class AbstractHUDController extends AbstractController
     
     // Protected Final Instance/Property Fields
     
+    protected final Queue<String> buffer;
     protected final HudThread      hudRunnable;
     protected final HudSetupThread hudSetupRunnable;
     protected final Thread         hudThread;
     
     // Protected Instance/Property Fields
     
-    protected Queue<String> buffer;
     protected JComponent    hudContent;
     protected JFrame        hudFrame;
     protected JLabel        hudLabelBack;
@@ -190,7 +190,7 @@ public abstract class AbstractHUDController extends AbstractController
             AbstractHUDController.this.hudContent.add(
                             AbstractHUDController.this.hudLayerPane);
             
-            AbstractHUDController.this.hudFrame = new JFrame("Fetch Bot Hud");
+            AbstractHUDController.this.hudFrame = new JFrame("Fetch Bot HUD");
             AbstractHUDController.this.hudFrame.setContentPane(
                             AbstractHUDController.this.hudContent);
             AbstractHUDController.this.hudFrame.setDefaultCloseOperation(
