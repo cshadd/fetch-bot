@@ -7,8 +7,10 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
+// import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+// import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.SynchronousQueue;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -26,7 +28,7 @@ public abstract class AbstractHUDController extends AbstractController
                 implements HUDController {
     // Private Constant Instance/Property Fields
     
-    private static final int BUFFER_CAPACITY = 3;
+    // private static final int BUFFER_CAPACITY = 3;
     
     // Public Constant Instance/Property Fields
     
@@ -35,26 +37,28 @@ public abstract class AbstractHUDController extends AbstractController
     
     // Protected Final Instance/Property Fields
     
-    protected final Queue<String> buffer;
-    protected final HudThread      hudRunnable;
-    protected final HudSetupThread hudSetupRunnable;
-    protected final Thread         hudThread;
+    // protected final Queue<String> buffer;
+    protected final BlockingQueue<String> hudBase64BufferSyncQueue;
+    protected final HudThread             hudRunnable;
+    protected final HudSetupThread        hudSetupRunnable;
+    protected final Thread                hudThread;
     
     // Protected Instance/Property Fields
     
-    protected JComponent    hudContent;
-    protected JFrame        hudFrame;
-    protected JLabel        hudLabelBack;
-    protected JLabel        hudLabelBackFilter;
-    protected JLabel        hudLabelStatus;
-    protected JLabel        hudLabelTrack;
-    protected JLayeredPane  hudLayerPane;
+    protected JComponent   hudContent;
+    protected JFrame       hudFrame;
+    protected JLabel       hudLabelBack;
+    protected JLabel       hudLabelBackFilter;
+    protected JLabel       hudLabelStatus;
+    protected JLabel       hudLabelTrack;
+    protected JLayeredPane hudLayerPane;
     
     // Protected Constructors
     
     protected AbstractHUDController() {
         super();
-        this.buffer = new LinkedBlockingQueue<>(BUFFER_CAPACITY);
+        // this.buffer = new LinkedBlockingQueue<>(BUFFER_CAPACITY);
+        this.hudBase64BufferSyncQueue = new SynchronousQueue<>();
         this.hudSetupRunnable = new HudSetupThread();
         javax.swing.SwingUtilities.invokeLater(this.hudSetupRunnable);
         
@@ -103,8 +107,10 @@ public abstract class AbstractHUDController extends AbstractController
             this.running = true;
             while (this.running) {
                 try {
-                    AbstractHUDController.this.buffer.add(
+                    AbstractHUDController.this.hudBase64BufferSyncQueue.offer(
                                     toBase64WebImageString());
+                    // AbstractHUDController.this.buffer.add(
+                    // toBase64WebImageString());
                 } catch (Exception e) {
                     /* */ } // Suppressed
                 finally {

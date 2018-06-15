@@ -36,8 +36,13 @@ public class HUDControllerImpl extends AbstractHUDController {
     }
     
     @Override
-    public String pollBufferData() {
-        return "" + this.buffer.poll();
+    public String pullBufferData() {
+        String returnData = "";
+        // return "" + this.buffer.poll();
+        try {
+            returnData += this.hudBase64BufferSyncQueue.take();
+        } catch (Exception e) { /* */ } // Suppressed
+        return returnData;
     }
     
     @Override

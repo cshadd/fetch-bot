@@ -158,7 +158,7 @@ public abstract class AbstractOpenCVController extends AbstractController
     /**
      * The buffer of the camera.
      */
-    protected BufferedImage buffer;
+    protected BufferedImage cameraBuffer;
     
     /**
      * The camera frame.
@@ -197,7 +197,7 @@ public abstract class AbstractOpenCVController extends AbstractController
     protected AbstractOpenCVController(HUDController newHud, int newCameraPort)
                     throws OpenCVControllerException {
         super();
-        this.buffer = null;
+        this.cameraBuffer = null;
         this.cameraPort = newCameraPort;
         try {
             this.camera = new VideoCapture(this.cameraPort);
@@ -275,7 +275,7 @@ public abstract class AbstractOpenCVController extends AbstractController
          * Terminate the thread.
          */
         public void terminate() {
-            AbstractOpenCVController.this.buffer.flush();
+            AbstractOpenCVController.this.cameraBuffer.flush();
             this.running = false;
         }
         
@@ -393,8 +393,8 @@ public abstract class AbstractOpenCVController extends AbstractController
      *            the mat
      */
     protected void detections(Mat mat) {
-        this.buffer = matToBufferedImage(mat);
-        final ImageIcon cameraIcon = new ImageIcon(this.buffer);
+        this.cameraBuffer = matToBufferedImage(mat);
+        final ImageIcon cameraIcon = new ImageIcon(this.cameraBuffer);
         /*
          * Converts the image matrix into a "blob," which is then fed into
          * the
@@ -466,7 +466,7 @@ public abstract class AbstractOpenCVController extends AbstractController
         this.status = "&#187; Status: Processing<br />" + "Target: "
                         + this.trackClass + "<br />" + "Found Target: "
                         + this.trackClassFound + "<br />" + "Raw I/O Buffer: "
-                        + this.buffer.hashCode();
+                        + this.cameraBuffer.hashCode();
         this.hud.updateTrackBounds(this.startX, this.startY, this.endX
                         - this.startX, this.endY - this.startY);
         this.hud.updateTrack(this.capturedLabel);
