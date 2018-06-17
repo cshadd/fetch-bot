@@ -19,29 +19,29 @@ extends AbstractArduinoCommunication {
     public void clear()
     throws CommunicationException {
         close();
-        buffer = "{ }";
-        toSourceData = new JSONObject();
-        toRobotData = new JSONObject();
+        // this.buffer = "{ }";
+        this.toSourceData = new JSONObject();
+        this.toRobotData = new JSONObject();
     }
     @Override
     public void pullRobot()
     throws CommunicationException {
-        toRobotData = read();
+        this.toRobotData = read();
     }
     @Override
     public void pushSource()
     throws CommunicationException {
         write();
-        isSerialLocked = true;
-        synchronized (serialLock) {
-            try {
-            	while (isSerialLocked) {
-                    serialLock.wait();
-                }
-            }
-            catch (Exception e) { /* */ } // Suppressed
-            finally { /* */ }
-        }
+        // this.isSerialLocked = true;
+        // synchronized (this.serialLock) {
+            // try {
+            	// while (this.isSerialLocked) {
+                    // this.serialLock.wait();
+                // }
+            // }
+            // catch (Exception e) { /* */ } // Suppressed
+            // finally { /* */ }
+        // }
     }
     @Override
     public void reset()
@@ -54,6 +54,6 @@ extends AbstractArduinoCommunication {
     }
     @Override
     public String toString() {
-        return serialPort;
+        return this.serialPort;
     }
 }

@@ -18,12 +18,14 @@
         setInterval(function () {
             if (data != null && data2 != null) {
                 $("#connection-offline").hide();
+                $("#hud").attr("src", data.hud);
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
                 $("#status-curr-mode").text("Current Mode: " + data.mode);
+                $("#status-curr-rawgraph").text("Current Raw Graph:\n\n" + data.rawgraph);
                 $("#status-curr-rot").text("Current Rotation: " + data.rot + " Degrees");
                 $("#status-curr-trackclass").text("Current Track Class: " + data.trackclass);
-                $("#status-ultrasonic").text("Ultrasonic Sensor: ~" + data.ultrasonic + "cm");
-                $("#status-verbose").text(data.verbose);
+                $("#status-curr-ultrasonic").text("Current Ultrasonic Sensor: ~" + data.ultrasonic + "cm");
+                $("#status-curr-verbose").text("Current Verbose:\n\n" + data.verbose);
 
                 if (data.mode == "Auto") {
                     $("#btn-auto").hide();
@@ -57,12 +59,13 @@
                     $("#connection-offline").show();
                     $("#controls-auto").hide();
                     $("#controls-manual").hide();
+                    $("#hud").attr("src", "");
                     $("#status-curr-emotion").text("Current Emotion:");
                     $("#status-curr-mode").text("Current Mode:");
                     $("#status-curr-rot").text("Current Rotation:");
                     $("#status-curr-trackclass").text("Current Track Class:");
-                    $("#status-ultrasonic").text("Ultrasonic Sensor:");
-                    $("#status-verbose").text("...");
+                    $("#status-curr-ultrasonic").text("Current Ultrasonic Sensor:");
+                    $("#status-curr-verbose").text("Current Verbose:");
                 }
             }
             else {
@@ -73,12 +76,13 @@
                 $("#connection-offline").show();
                 $("#controls-auto").hide();
                 $("#controls-manual").hide();
+                $("#hud").attr("src", "");
                 $("#status-curr-emotion").text("Current Emotion:");
                 $("#status-curr-mode").text("Current Mode:");
                 $("#status-curr-rot").text("Current Rotation:");
                 $("#status-curr-trackclass").text("Current Track Class:");
-                $("#status-ultrasonic").text("Ultrasonic Sensor:");
-                $("#status-verbose").text("...");
+                $("#status-curr-ultrasonic").text("Current Ultrasonic Sensor:");
+                $("#status-curr-verbose").text("Current Verbose:");
             }
         }, 1000);
 
@@ -115,8 +119,8 @@
     <title>Fetch Bot Web Interface</title>
 </head>
 <body>
-    <main>
-        <div class="fit row">
+    <main class="container-fluid">
+        <div class="row">
             <div id="connection-offline" class="alert alert-danger">
                 <div class="progress">
                     <div class="connection-progress-bar progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
@@ -125,12 +129,13 @@
                 </div>
             </div>
         </div>
-        <div class="fit row">
+        <div class="row">
             <img class="logo" src="https://cshadd.github.io/fetch-bot/Logo.png" alt="Fetch Bot" />
             <h1 class="title">Fetch Bot Web Interface</h1>
+            <h2 class="title"><a href="https://cshadd.github.io/fetch-bot" target="_blank">https://cshadd.github.io/fetch-bot</a></h2>
             <hr />
         </div>
-        <div class="fit row">
+        <div class="row">
             <div class="col-sm-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Status</div>
@@ -139,7 +144,7 @@
                         <p id="status-curr-trackclass"></p>
                         <p id="status-curr-emotion"></p>
                         <p id="status-curr-rot"></p>
-                        <p id="status-ultrasonic"></p>
+                        <p id="status-curr-ultrasonic"></p>
                     </div>
                 </div>
             </div>
@@ -155,6 +160,9 @@
                         </div>
                         <br />
                         <div id="controls-auto">
+                            <div class="form-group">
+                                <textarea id="status-curr-rawgraph" class="form-control rawgraph" rows="10" readonly="readonly"></textarea>
+                            </div>
                             <p>You can only use the trained classes that you compiled.</p>
                             <div class="form-group">
                                 <input id="txt-trackclass" class="form-control" type="text" />
@@ -182,21 +190,38 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Verbose</div>
                     <div class="panel-body">
-                        <input data-toggle="collapse" data-target="#status-verbose" class="btn btn-primary" type="button" value="Show/Hide" />
+                        <input data-toggle="collapse" data-target="#status-curr-verbose" class="btn btn-primary" type="button" value="Show/Hide" />
                         <div class="form-group">
-                            <textarea id="status-verbose" class="collapse form-control" rows="10" readonly="readonly">...</textarea>
+                            <textarea id="status-curr-verbose" class="collapse form-control" rows="10" readonly="readonly"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="fit row">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">HUD</div>
+                    <div class="panel-body">
+                        <img id="hud" src="" alt="<Stream>" /><br />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Face</div>
+                    <div class="panel-body">
+                    <iframe src="face.html"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <hr />
             <a href="https://www.raspberrypi.org/" target="_blank">
                 <img src="https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png" alt="<3 Raspberry Pi" />
             </a>
-            <hr />
-            <a href="https://cshadd.github.io/fetch-bot" target="_blank">https://cshadd.github.io/fetch-bot</a>
         </div>
     </main>
 </body>

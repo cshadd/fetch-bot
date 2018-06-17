@@ -18,28 +18,28 @@ extends AbstractWebInterfaceCommunication {
     @Override
     public void clear()
     throws CommunicationException {
-        toSourceData = new JSONObject();
-        toRobotData = new JSONObject();
+        this.toSourceData = new JSONObject();
+        this.toRobotData = new JSONObject();
     }
     @Override
     public void pullRobot()
     throws CommunicationException {
-        toRobotData = read(TOROBOT_JSON_FILE);
+        this.toRobotData = read(TOROBOT_JSON_FILE);
     }
     @Override
     public void pullSource()
     throws CommunicationException {
-        toSourceData = read(TOWEBINTERFACE_JSON_FILE);
+        this.toSourceData = read(TOWEBINTERFACE_JSON_FILE);
     }
     @Override
     public void pushRobot()
     throws CommunicationException {
-        write(toRobotData, TOROBOT_JSON_FILE);
+        write(this.toRobotData, TOROBOT_JSON_FILE);
     }
     @Override
     public void pushSource()
     throws CommunicationException {
-        write(toSourceData, TOWEBINTERFACE_JSON_FILE);
+        write(this.toSourceData, TOWEBINTERFACE_JSON_FILE);
     }
     @Override
     public void reset()
@@ -48,12 +48,14 @@ extends AbstractWebInterfaceCommunication {
         setRobotValue("mode", "Idle");
         setRobotValue("move", "Stop");
         setRobotValue("trackclass", "None");
-        
+
         setSourceValue("emotion", "Idle");
+        setSourceValue("hud", "");
         setSourceValue("mode", "Idle");
+        setSourceValue("rawgraph", "");
         setSourceValue("rot", "0");
         setSourceValue("trackclass", "None");
         setSourceValue("ultrasonic", "0");
-        setSourceValue("verbose", "...");
+        setSourceValue("verbose", "");
     }
 }

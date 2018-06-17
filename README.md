@@ -47,7 +47,7 @@ Great care is needed to assemble this robot. We specifically chose these parts f
 1. Assemble the chassis with the parts, we recommend using the parts listed and we 3d printed our design.
 Make sure the wheels are balanced.
 2. Connect the stepper motors and the ultrasonic sensor to the Arduino.
-The ports are listed in <PROJECT DIRECTORY>/arduino-slave-processor/FetchBot/FetchBot.ino.
+The ports are listed in ``<PROJECT DIRECTORY>/arduino-slave-processor/FetchBot/FetchBot.ino``.
 Adafruit has tutorials online for the stepper motor including the correct way to power it.
 The stepper motor will need a separate source so we used the transformer to convert the 5V (2A port) battery to 12V for the motor).
 3. Connect the Arduino directly to the Raspberry Pi.
@@ -67,16 +67,15 @@ Let's face it. In our day and age of the 21st century, we want lightweight mobil
 * Recommended (Raspberry Pi):
     - OS: Raspbian Stretch or higher
     - Software:
-        - Apache HTTP Server 2.4.25 or higher
+        - Apache HTTP Server 2.4 or higher
         - Apache Maven 3.5.3 or higher
         - ArduinoJson 5.13.1 or higher
         - Basic Linux Software (``apt-get``, ``bash``, ``git``, ``wget``, etc.)
         - Chromium Browser
         - Java SE Development Kit 8.0 or higher
         - Java SE Runtime Environment 8.0 or higher
-        - OpenCV 3.4.1
-        - PHP 7.0.27 or higher
-        - VNC Server
+        - OpenCV 3.4.1 or higher
+        - PHP 7.0 or higher
     - Packaged Software (apt-get):
         - arduino-core
         - arduino-mk
@@ -84,7 +83,7 @@ Let's face it. In our day and age of the 21st century, we want lightweight mobil
 * Optional (Computer):
     - OS: Any
     - Software:
-        - Arduino IDE 1.8.5 or higher
+        - Arduino IDE 1.8 or higher
         - Eclipse Oxygen or higher
         - Visual Studio 2017 or higher
 
@@ -98,7 +97,7 @@ Before installing this project, you must make sure that you have installed all t
 Execute
 ```bash
 cd <PROJECT DIRECTORY>
-./bash-install.sh
+source bash-install.sh
 ```
 in a Bash terminal.
 
@@ -158,7 +157,7 @@ cd <PROJECT DIRECTORY>
 cp -r ./target/libs <DESIRED LOCATION OF PROGRAM>
 cp ./target/fetch-bot-vx.x.x.jar <DESIRED LOCATION OF PROGRAM>/fetch-bot-vx.x.x.jar
 cp ./src/bash-start.sh <DESIRED LOCATION OF PROGRAM>/StartFetchBot.sh
-sudo cp -R ./src/www <LOCATION OF APACHE HTTP SERVER FOLDER>/FetchBot
+sudo cp -R ./src/www <LOCATION OF APACHE HTTP SERVER FOLDER>/<DESIRED LOCATION OF WEB INTERFACE>
 ```
 in a Bash terminal.
 
@@ -186,7 +185,7 @@ Only do this if you did the Easy Install!
 Execute
 ```bash
 cd <PROJECT DIRECTORY>
-./bash-uninstall.sh
+source bash-uninstall.sh
 ```
 in a Bash terminal.
 
@@ -194,7 +193,7 @@ in a Bash terminal.
 Execute
 ```bash
 sudo pkill java
-sudo rm -f -r <LOCATION OF APACHE HTTP SERVER FOLDER>/<DESIRED LOCATION OF WEB INTERFACE>
+sudo rm -f -r <LOCATION OF APACHE HTTP SERVER FOLDER>/<CURRENT LOCATION OF WEB INTERFACE>
 find <CURRENT LOCATION OF PROGRAM> -name 'fetch-bot*.jar' -exec rm -f {} \;
 rm -f -r <CURRENT LOCATION OF PROGRAM>/libs/fetch-bot
 rm -f <CURRENT LOCATION OF PROGRAM>/StartFetchBot.sh
@@ -202,16 +201,49 @@ rm -f <CURRENT LOCATION OF PROGRAM>/StartFetchBot.sh
 in a Bash terminal.
 
 ## Usage
+Depending on how you installed it will determine its usage.
+
+### Easy Usage
+Only do this if you did the Easy Install!
+
 To run, execute
 ```bash
-cd <CURRENT LOCATION OF PROGRAM>
-./StartFetchBot.sh
+cd ~/bin
+./StartFetchBot.sh [optional command line argument]
 ```
 in a Bash terminal.
 
-To control and terminate the application, you must use the web interface. The address to the web interface depends on your Apache configuration. Normally it would just be http://localhost/FetchBot.
+To control and terminate the application, you must use the web interface. It should be http://localhost/FetchBot. You can also use other command line arguments. If you wish to view the different command line arguments available, execute
+```bash
+cd ~/bin
+java -jar fetch-bot-vx.x.x.jar HELP
+```
+in a Bash terminal.
 
-The OpenCV Controller Terminal Window is located at the VNC server :1.
+### Manual Usage
+To run, execute
+```bash
+cd <CURRENT LOCATION OF PROGRAM>
+export DISPLAY=:0
+xset -display :0 s off
+xset -display :0 -dpms
+xset -display :0 s noblank
+sudo pkill java
+sudo pkill unclutter
+export DISPLAY=:1
+java -jar fetch-bot-vx.x.x.jar [optional command line argument] &
+export DISPLAY=:0
+unclutter -display :0 &
+/usr/bin/chromium-browser --incognito --start-maximized --kiosk http://localhost/<CURRENT LOCATION OF WEB INTERFACE>/face.html
+```
+using a Bash file in a Bash terminal.
+
+To control and terminate the application, you must use the web interface. You can also use other command line arguments. If you wish to view the different command line arguments available, execute
+```bash
+cd <CURRENT LOCATION OF PROGRAM>
+java -jar fetch-bot-vx.x.x.jar HELP
+```
+in a Bash terminal.
 
 ## Web Page
 https://cshadd.github.io/fetch-bot/
