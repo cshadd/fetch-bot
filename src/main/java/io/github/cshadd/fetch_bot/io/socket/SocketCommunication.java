@@ -29,9 +29,9 @@ import io.github.cshadd.fetch_bot.io.Communication;
 
 //Main
 // Since 2.0.0-alpha.1
-public abstract interface SocketCommunication extends Communication { /* */
+public abstract interface SocketCommunication extends Communication {
     // Public Abstract Methods
     
-    public abstract void close() throws SocketCommunicationException();
-    public abstract void open() throws SocketCommunicationException();
+    public abstract void close() throws SocketCommunicationException;
+    public abstract void open() throws SocketCommunicationException;
 }
