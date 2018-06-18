@@ -733,8 +733,10 @@ public class Core implements FetchBot {
                     currentTrackStatus += "Imminent Collision!";
                 }
                 hudControl.updateStatus(currentTrackStatus);
-                // webInterfaceComm.setSourceValue("hud", hudControl.pollBufferData());
-                webInterfaceComm.setSourceValue("hud", hudControl.pullBufferData());
+                // webInterfaceComm.setSourceValue("hud",
+                // hudControl.pollBufferData());
+                webInterfaceComm.setSourceValue("hud", hudControl
+                                .pullBufferData());
                 webInterfaceComm.pushSource();
                 webInterfaceComm.pushRobot();
                 arduinoComm.pushSource();

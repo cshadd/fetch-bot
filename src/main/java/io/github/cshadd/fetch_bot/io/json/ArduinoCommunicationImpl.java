@@ -19,7 +19,6 @@ extends AbstractArduinoCommunication {
     public void clear()
     throws JSONCommunicationException {
         close();
-        // this.buffer = "{ }";
         this.toSourceData = new JSONObject();
         this.toRobotData = new JSONObject();
     }
@@ -32,16 +31,6 @@ extends AbstractArduinoCommunication {
     public void pushSource()
     throws JSONCommunicationException {
         write();
-        // this.isSerialLocked = true;
-        // synchronized (this.serialLock) {
-            // try {
-            	// while (this.isSerialLocked) {
-                    // this.serialLock.wait();
-                // }
-            // }
-            // catch (Exception e) { /* */ } // Suppressed
-            // finally { /* */ }
-        // }
     }
     @Override
     public void reset()

@@ -32,7 +32,7 @@ implements WebInterfaceCommunication {
     
     // Protected Methods
     protected JSONObject read(String filePath)
-    throws JSONCommunicationException {
+    throws WebInterfaceCommunicationException {
         JSONObject returnData = null;
         try {
             final File input = new File(this.commPath + filePath);
@@ -51,7 +51,7 @@ implements WebInterfaceCommunication {
         return returnData;
     }
     protected void write(JSONObject json, String filePath)
-    throws JSONCommunicationException {
+    throws WebInterfaceCommunicationException {
         try {
             final File input = new File(this.commPath + filePath);
             FileUtils.writeStringToFile(input, "" + json, "UTF-8");

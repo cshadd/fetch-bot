@@ -25,8 +25,6 @@
  */
 package io.github.cshadd.fetch_bot.io.json;
 
-import io.github.cshadd.fetch_bot.io.Communication;
-
 //Main
 
 /**
@@ -48,7 +46,7 @@ public abstract interface ArduinoCommunication extends JSONCommunication {
      * @param key
      *            the key
      * @return the robot float value
-     * @throws CommunicationException
+     * @throws JSONCommunicationException
      *             if the value could not be read
      */
     public abstract float getRobotFloatValue(String key)

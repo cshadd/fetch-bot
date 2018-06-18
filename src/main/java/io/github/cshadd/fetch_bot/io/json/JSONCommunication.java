@@ -36,7 +36,7 @@ public abstract interface JSONCommunication extends Communication {
     /**
      * Clear.
      *
-     * @throws CommunicationException
+     * @throws JSONCommunicationException
      *             if the clear request failed
      */
     public abstract void clear() throws JSONCommunicationException;
@@ -47,7 +47,7 @@ public abstract interface JSONCommunication extends Communication {
      * @param key
      *            the key
      * @return the robot value
-     * @throws CommunicationException
+     * @throws JSONCommunicationException
      *             if the value could not be read
      */
     public abstract String getRobotValue(String key)
@@ -59,7 +59,7 @@ public abstract interface JSONCommunication extends Communication {
      * @param key
      *            the key
      * @return the source value
-     * @throws CommunicationException
+     * @throws JSONCommunicationException
      *             if the value could not be read
      */
     public abstract String getSourceValue(String key)
@@ -68,7 +68,7 @@ public abstract interface JSONCommunication extends Communication {
     /**
      * Pull robot.
      *
-     * @throws CommunicationException
+     * @throws JSONCommunicationException
      *             if the pull request failed
      */
     public abstract void pullRobot() throws JSONCommunicationException;
@@ -76,7 +76,7 @@ public abstract interface JSONCommunication extends Communication {
     /**
      * Pull source.
      *
-     * @throws CommunicationException
+     * @throws JSONCommunicationException
      *             if the pull request failed
      */
     public abstract void pullSource() throws JSONCommunicationException;
@@ -84,7 +84,7 @@ public abstract interface JSONCommunication extends Communication {
     /**
      * Push robot.
      *
-     * @throws CommunicationException
+     * @throws JSONCommunicationException
      *             if the push request failed
      */
     public abstract void pushRobot() throws JSONCommunicationException;
@@ -92,7 +92,7 @@ public abstract interface JSONCommunication extends Communication {
     /**
      * Push source.
      *
-     * @throws CommunicationException
+     * @throws JSONCommunicationException
      *             if the push request failed
      */
     public abstract void pushSource() throws JSONCommunicationException;
@@ -100,7 +100,7 @@ public abstract interface JSONCommunication extends Communication {
     /**
      * Reset.
      *
-     * @throws CommunicationException
+     * @throws JSONCommunicationException
      *             if the reset request failed
      */
     public abstract void reset() throws JSONCommunicationException;
@@ -112,7 +112,7 @@ public abstract interface JSONCommunication extends Communication {
      *            the key
      * @param value
      *            the value
-     * @throws CommunicationException
+     * @throws JSONCommunicationException
      *             if the value could not be set
      */
     public abstract void setRobotValue(String key, String value)
@@ -125,7 +125,7 @@ public abstract interface JSONCommunication extends Communication {
      *            the key
      * @param value
      *            the value
-     * @throws CommunicationException
+     * @throws JSONCommunicationException
      *             if the value could not be set
      */
     public abstract void setSourceValue(String key, String value)

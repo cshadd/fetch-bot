@@ -27,13 +27,10 @@ implements ArduinoCommunication {
     private final SerialConfig serialConfig;
     
     // Protected Final Instance/Property Fields
-    // protected final Object serialLock;
     protected final BlockingQueue<String> serialBufferSyncQueue;
     protected final String serialPort;
     
     // Protected Instance/Property Fields
-    // protected String buffer;
-    // protected boolean isSerialLocked;
     
     // Private Instance/Property Fields
     private SerialDataEventListener serialListener;
@@ -45,8 +42,6 @@ implements ArduinoCommunication {
     protected AbstractArduinoCommunication(String serialPort) {
         super();
         this.serialPort = serialPort;
-        // this.buffer = "{ }";
-        // this.isSerialLocked = false;
         this.serial = SerialFactory.createInstance();
         this.serialConfig = new SerialConfig();
         this.serialConfig.device(this.serialPort);
@@ -55,13 +50,12 @@ implements ArduinoCommunication {
         this.serialConfig.parity(Parity.NONE);
         this.serialConfig.stopBits(StopBits._1);
         this.serialConfig.flowControl(FlowControl.NONE);
-        // this.serialLock = new Object();
         this.serialBufferSyncQueue = new SynchronousQueue<>();
     }
     
     // Protected Methods
     protected void close()
-    throws JSONCommunicationException {
+    throws ArduinoCommunicationException {
         try {
             if (this.serial.isOpen()) {
                 this.serial.discardInput();
@@ -69,7 +63,6 @@ implements ArduinoCommunication {
                 this.serial.close();
                 SerialFactory.shutdown();
             }
-            // this.isSerialLocked = false;
         }
         catch (IOException e) {
             throw new ArduinoCommunicationException("Could not close " + this.serialPort + ".", e);
@@ -80,7 +73,7 @@ implements ArduinoCommunication {
         finally { /* */ }
     }
     protected void open()
-    throws JSONCommunicationException {
+    throws ArduinoCommunicationException {
         try {
             if (!this.serial.isOpen()) {
                 this.serial.open(this.serialConfig);
@@ -90,11 +83,6 @@ implements ArduinoCommunication {
                     public void dataReceived(SerialDataEvent event) {
                         try {
                             AbstractArduinoCommunication.this.serialBufferSyncQueue.offer(event.getAsciiString());
-                            // AbstractArduinoCommunication.this.buffer = event.getAsciiString();
-                            // synchronized (AbstractArduinoCommunication.this.serialLock) {
-                                // AbstractArduinoCommunication.this.isSerialLocked = false;
-                                // AbstractArduinoCommunication.this.serialLock.notifyAll();
-                            // }
                         }
                         catch (Exception e) { /* */ } // Suppressed
                         finally { /* */ }
@@ -112,7 +100,7 @@ implements ArduinoCommunication {
         finally { /* */ }
     }
     protected JSONObject read()
-    throws JSONCommunicationException {
+    throws ArduinoCommunicationException {
         JSONObject returnData = new JSONObject();
         try {
             returnData.put("s", -1);
@@ -120,9 +108,6 @@ implements ArduinoCommunication {
             if (data.charAt(0) == '{' && !data.equals("{ }")) {
                 returnData = new JSONObject(data);
             }
-            // if (this.buffer.charAt(0) == '{' && !this.buffer.equals("{ }")) {
-                // returnData = new JSONObject(this.buffer);
-            // }
         }
         catch (JSONException e) {
             throw new ArduinoCommunicationException("Could not parse JSON in " + this.serialPort + ".", e);
@@ -156,7 +141,7 @@ implements ArduinoCommunication {
     // Public Methods (Overrided)
     @Override
     public float getRobotFloatValue(String key)
-    throws JSONCommunicationException {
+    throws ArduinoCommunicationException {
         float returnData = -1;
         try {
             returnData = this.toRobotData.getFloat(key);
