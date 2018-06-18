@@ -23,7 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 // Main
-
+// Since 2.0.0-alpha
 public abstract class AbstractHUDController extends AbstractController
                 implements HUDController {
     // Private Constant Instance/Property Fields
@@ -111,6 +111,11 @@ public abstract class AbstractHUDController extends AbstractController
                                     toBase64WebImageString());
                     // AbstractHUDController.this.buffer.add(
                     // toBase64WebImageString());
+                    
+                    
+                    
+                    
+                    
                 } catch (Exception e) {
                     /* */ } // Suppressed
                 finally {

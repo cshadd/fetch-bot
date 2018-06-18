@@ -40,7 +40,7 @@ public class HUDControllerImpl extends AbstractHUDController {
         String returnData = "";
         // return "" + this.buffer.poll();
         try {
-            returnData += this.hudBase64BufferSyncQueue.take();
+            // returnData += this.hudBase64BufferSyncQueue.take();
         } catch (Exception e) { /* */ } // Suppressed
         return returnData;
     }
