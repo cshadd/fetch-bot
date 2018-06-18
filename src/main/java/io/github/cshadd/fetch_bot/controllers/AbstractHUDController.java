@@ -4,12 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Base64;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.SynchronousQueue;
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -19,6 +13,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import io.github.cshadd.fetch_bot.io.socket.SocketCommunicationException;
+import io.github.cshadd.fetch_bot.io.socket.SocketImageStreamCommunication;
+import io.github.cshadd.fetch_bot.io.socket.SocketImageStreamCommunicationImpl;
 
 // Main
 public abstract class AbstractHUDController extends AbstractController
@@ -28,12 +25,15 @@ public abstract class AbstractHUDController extends AbstractController
     public static final int SCENE_H = 480;
     public static final int SCENE_W = 640;
     
+    // Private Final Instance/Property Fields
+    
+    private final SocketImageStreamCommunication stream;
+    
     // Protected Final Instance/Property Fields
     
-    protected final BlockingQueue<String> hudBase64BufferSyncQueue;
-    protected final HudThread             hudRunnable;
-    protected final HudSetupThread        hudSetupRunnable;
-    protected final Thread                hudThread;
+    protected final HudThread      hudRunnable;
+    protected final HudSetupThread hudSetupRunnable;
+    protected final Thread         hudThread;
     
     // Protected Instance/Property Fields
     
@@ -48,13 +48,17 @@ public abstract class AbstractHUDController extends AbstractController
     // Protected Constructors
     
     protected AbstractHUDController() {
+        this(null);
+    }
+    
+    protected AbstractHUDController(SocketImageStreamCommunication newStream) {
         super();
-        this.hudBase64BufferSyncQueue = new SynchronousQueue<>();
         this.hudSetupRunnable = new HudSetupThread();
         javax.swing.SwingUtilities.invokeLater(this.hudSetupRunnable);
         
         this.hudRunnable = new HudThread();
         this.hudThread = new Thread(this.hudRunnable);
+        this.stream = newStream;
     }
     
     // Protected Final Nested Classes
@@ -98,8 +102,7 @@ public abstract class AbstractHUDController extends AbstractController
             this.running = true;
             while (this.running) {
                 try {
-                    AbstractHUDController.this.hudBase64BufferSyncQueue.offer(
-                                    toBase64WebImageString());                
+                    writeToStream();
                 } catch (Exception e) {
                     /* */ } // Suppressed
                 finally {
@@ -200,24 +203,12 @@ public abstract class AbstractHUDController extends AbstractController
     
     // Protected Methods
     
-    protected String toBase64WebImageString() throws IOException {
+    protected void writeToStream() throws SocketCommunicationException {
         final BufferedImage img = new BufferedImage(SCENE_W, SCENE_H,
                         BufferedImage.TYPE_INT_RGB);
         final Graphics2D g2d = img.createGraphics();
-        this.hudContent.printAll(g2d);
+        AbstractHUDController.this.hudContent.printAll(g2d);
         g2d.dispose();
-        try (final ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            ImageIO.write(img, "png", os);
-            final byte[] imgBytes = os.toByteArray();
-            os.flush();
-            os.close();
-            return "data:image/png;base64," + Base64.getEncoder()
-                            .encodeToString(imgBytes);
-        } catch (IOException e) {
-            throw e;
-        } catch (Exception e) {
-            throw e;
-        } finally { /* */
-        }
+        this.stream.write(img);
     }
 }

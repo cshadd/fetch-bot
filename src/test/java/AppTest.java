@@ -24,6 +24,9 @@
  *
  * https://cshadd.github.io/fetch-bot/
  */
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.junit.Test;
 
 // Main

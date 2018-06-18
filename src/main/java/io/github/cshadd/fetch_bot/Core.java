@@ -37,6 +37,8 @@ import io.github.cshadd.fetch_bot.io.json.ArduinoCommunicationImpl;
 import io.github.cshadd.fetch_bot.io.CommunicationException;
 import io.github.cshadd.fetch_bot.io.json.WebInterfaceCommunication;
 import io.github.cshadd.fetch_bot.io.json.WebInterfaceCommunicationImpl;
+import io.github.cshadd.fetch_bot.io.socket.SocketImageStreamCommunication;
+import io.github.cshadd.fetch_bot.io.socket.SocketImageStreamCommunicationImpl;
 import io.github.cshadd.fetch_bot.util.Logger;
 import io.github.cshadd.fetch_bot.util.VersionCheck;
 import io.github.cshadd.fetch_bot.util.VersionCheckException;
@@ -88,6 +90,11 @@ public class Core implements FetchBot {
      * The Pathfind Controller.
      */
     private static PathfindController pathfindControl;
+    
+    /**
+     * The Socket Image Stream Communications.
+     */
+    private static SocketImageStreamCommunication socketImageStreamComm;
     
     /**
      * The Web Interface Communications.
@@ -733,10 +740,6 @@ public class Core implements FetchBot {
                     currentTrackStatus += "Imminent Collision!";
                 }
                 hudControl.updateStatus(currentTrackStatus);
-                // webInterfaceComm.setSourceValue("hud",
-                // hudControl.pollBufferData());
-                webInterfaceComm.setSourceValue("hud", hudControl
-                                .pullBufferData());
                 webInterfaceComm.pushSource();
                 webInterfaceComm.pushRobot();
                 arduinoComm.pushSource();
@@ -802,6 +805,7 @@ public class Core implements FetchBot {
         
         // Reset communications
         try {
+            socketImageStreamComm = new SocketImageStreamCommunicationImpl();
             webInterfaceComm.reset();
             webInterfaceComm.pushSource();
             webInterfaceComm.pushRobot();
@@ -844,7 +848,7 @@ public class Core implements FetchBot {
             /* */ }
             
         // Initiate controllers
-        hudControl = new HUDControllerImpl();
+        hudControl = new HUDControllerImpl(socketImageStreamComm);
         hudControl.openHud();
         try {
             openCVControl = new OpenCVControllerImpl(hudControl);
@@ -870,6 +874,7 @@ public class Core implements FetchBot {
             arduinoComm.setSourceValue("a", "Stop");
             arduinoComm.pushSource();
             arduinoComm.clear();
+            socketImageStreamComm.close();
             webInterfaceComm.clear();
             webInterfaceComm.pushSource();
             webInterfaceComm.pushRobot();
