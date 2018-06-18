@@ -25,7 +25,7 @@ public class HUDControllerImpl extends AbstractHUDController {
         } catch (InterruptedException e) {
             throw new HUDControllerException("Thread was interrupted.", e);
         } catch (Exception e) {
-            throw new HUDControllerException("There was an unknown issue!", e);
+            throw new HUDControllerException("Unknown issue.", e);
         } finally {
             /* */ }
     }
@@ -40,7 +40,8 @@ public class HUDControllerImpl extends AbstractHUDController {
         String returnData = "";
         try {
             // returnData += this.hudBase64BufferSyncQueue.take();
-        } catch (Exception e) { /* */ } // Suppressed
+        } catch (Exception e) {
+            /* */ } // Suppressed
         return returnData;
     }
     

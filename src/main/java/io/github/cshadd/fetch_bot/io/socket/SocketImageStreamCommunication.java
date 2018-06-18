@@ -25,8 +25,13 @@
  */
 package io.github.cshadd.fetch_bot.io.socket;
 
+import java.awt.image.BufferedImage;
+
 //Main
 
 // Since 2.0.0-alpha.1
 public abstract interface SocketImageStreamCommunication extends SocketCommunication {
-/* */ }
+    // Public Abstract Methods
+    
+    public abstract void write(BufferedImage image) throws SocketCommunicationException;
+}

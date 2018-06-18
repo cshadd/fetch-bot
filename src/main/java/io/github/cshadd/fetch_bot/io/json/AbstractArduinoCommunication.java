@@ -30,8 +30,6 @@ implements ArduinoCommunication {
     protected final BlockingQueue<String> serialBufferSyncQueue;
     protected final String serialPort;
     
-    // Protected Instance/Property Fields
-    
     // Private Instance/Property Fields
     private SerialDataEventListener serialListener;
     

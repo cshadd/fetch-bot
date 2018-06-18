@@ -28,6 +28,7 @@ implements JSONCommunication {
 
     // Protected Constructors
     protected AbstractJSONCommunication() {
+        super();
         this.toRobotData = new JSONObject();
         this.toSourceData = new JSONObject();
     }
