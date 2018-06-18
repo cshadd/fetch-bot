@@ -29,4 +29,4 @@ package io.github.cshadd.fetch_bot.io.socket;
 
 // Since 2.0.0-alpha.1
 public abstract interface SocketImageStreamCommunication extends SocketCommunication {
-}
+/* */ }

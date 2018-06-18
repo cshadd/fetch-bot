@@ -25,7 +25,7 @@
  */
 package io.github.cshadd.fetch_bot.io.json;
 
-//Main
+// Main
 
 /**
  * The Interface ArduinoCommunication. Defines what an Arduino Communication does.

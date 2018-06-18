@@ -27,8 +27,7 @@ package io.github.cshadd.fetch_bot.io.json;
 
 import io.github.cshadd.fetch_bot.io.Communication;
 
-//Main
-
+// Main
 // Since 2.0.0-alpha.1
 public abstract interface JSONCommunication extends Communication {
     // Public Abstract Methods

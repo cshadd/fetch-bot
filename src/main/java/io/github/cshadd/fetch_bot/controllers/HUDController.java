@@ -3,7 +3,7 @@ package io.github.cshadd.fetch_bot.controllers;
 import javax.swing.ImageIcon;
 
 // Main
-
+//Since 2.0.0-alpha
 public abstract interface HUDController extends Controller {
     // Public Abstract Methods
     

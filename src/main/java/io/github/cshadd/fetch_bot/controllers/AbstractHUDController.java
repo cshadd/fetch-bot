@@ -7,9 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
-// import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
-// import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.SynchronousQueue;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -23,13 +21,8 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 // Main
-// Since 2.0.0-alpha
 public abstract class AbstractHUDController extends AbstractController
                 implements HUDController {
-    // Private Constant Instance/Property Fields
-    
-    // private static final int BUFFER_CAPACITY = 3;
-    
     // Public Constant Instance/Property Fields
     
     public static final int SCENE_H = 480;
@@ -37,7 +30,6 @@ public abstract class AbstractHUDController extends AbstractController
     
     // Protected Final Instance/Property Fields
     
-    // protected final Queue<String> buffer;
     protected final BlockingQueue<String> hudBase64BufferSyncQueue;
     protected final HudThread             hudRunnable;
     protected final HudSetupThread        hudSetupRunnable;
@@ -57,7 +49,6 @@ public abstract class AbstractHUDController extends AbstractController
     
     protected AbstractHUDController() {
         super();
-        // this.buffer = new LinkedBlockingQueue<>(BUFFER_CAPACITY);
         this.hudBase64BufferSyncQueue = new SynchronousQueue<>();
         this.hudSetupRunnable = new HudSetupThread();
         javax.swing.SwingUtilities.invokeLater(this.hudSetupRunnable);
@@ -108,14 +99,7 @@ public abstract class AbstractHUDController extends AbstractController
             while (this.running) {
                 try {
                     AbstractHUDController.this.hudBase64BufferSyncQueue.offer(
-                                    toBase64WebImageString());
-                    // AbstractHUDController.this.buffer.add(
-                    // toBase64WebImageString());
-                    
-                    
-                    
-                    
-                    
+                                    toBase64WebImageString());                
                 } catch (Exception e) {
                     /* */ } // Suppressed
                 finally {

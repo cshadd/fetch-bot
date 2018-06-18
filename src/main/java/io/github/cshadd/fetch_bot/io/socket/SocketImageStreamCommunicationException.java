@@ -27,4 +27,25 @@ package io.github.cshadd.fetch_bot.io.socket;
 
 // Main
 
-public class SocketImageStreamCommunicationException extends SocketCommunicationException {}
+public class SocketImageStreamCommunicationException extends SocketCommunicationException {
+    // Private Constant Instance/Property Fields
+    
+    /**
+     * The Constant serialVersionUID.
+     */
+    private static final long serialVersionUID = 1L;
+    
+    // Public Constructors
+
+    public SocketImageStreamCommunicationException() {
+    }
+    public SocketImageStreamCommunicationException(String message) {
+        super(message);
+    }
+    public SocketImageStreamCommunicationException(String message, Throwable cause) {
+        super(message, cause);
+    }
+    public SocketImageStreamCommunicationException(Throwable cause) {
+        super(cause);
+    }
+}
