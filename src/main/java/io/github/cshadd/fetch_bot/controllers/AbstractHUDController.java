@@ -15,9 +15,20 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import io.github.cshadd.fetch_bot.io.socket.SocketCommunicationException;
 import io.github.cshadd.fetch_bot.io.socket.SocketImageStreamCommunication;
-import io.github.cshadd.fetch_bot.io.socket.SocketImageStreamCommunicationImpl;
 
 // Main
+
+/**
+ * The Class AbstractHUDController. Defines what a HUD Controller is. A HUD
+ * Controller is basically a manager for the HUD.
+ * 
+ * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
+ * @since 2.0.0-alpha
+ */
 public abstract class AbstractHUDController extends AbstractController
                 implements HUDController {
     // Public Constant Instance/Property Fields
@@ -31,8 +42,8 @@ public abstract class AbstractHUDController extends AbstractController
     
     // Protected Final Instance/Property Fields
     
-    protected final HudThread      hudRunnable;
-    protected final HudSetupThread hudSetupRunnable;
+    protected final HUDThread      hudRunnable;
+    protected final HUDSetupThread hudSetupRunnable;
     protected final Thread         hudThread;
     
     // Protected Instance/Property Fields
@@ -53,17 +64,27 @@ public abstract class AbstractHUDController extends AbstractController
     
     protected AbstractHUDController(SocketImageStreamCommunication newStream) {
         super();
-        this.hudSetupRunnable = new HudSetupThread();
+        this.hudSetupRunnable = new HUDSetupThread();
         javax.swing.SwingUtilities.invokeLater(this.hudSetupRunnable);
         
-        this.hudRunnable = new HudThread();
+        this.hudRunnable = new HUDThread();
         this.hudThread = new Thread(this.hudRunnable);
         this.stream = newStream;
     }
     
     // Protected Final Nested Classes
     
-    protected final class HudThread implements Runnable {
+    /**
+     * The Class HUDThread. A Runnable that controls the HUD.
+     * 
+     * @author Christian Shadd
+     * @author Maria Verna Aquino
+     * @author Thanh Vu
+     * @author Joseph Damian
+     * @author Giovanni Orozco
+     * @since 2.0.0
+     */
+    protected final class HUDThread implements Runnable {
         // Private Instance/Property Fields
         
         /**
@@ -74,9 +95,9 @@ public abstract class AbstractHUDController extends AbstractController
         // Public Constructors
         
         /**
-         * Instantiates a new Camera Thread.
+         * Instantiates a new HUD Thread.
          */
-        public HudThread() {
+        public HUDThread() {
             super();
             this.running = false;
         }
@@ -93,7 +114,7 @@ public abstract class AbstractHUDController extends AbstractController
         // Public Methods (Overrided)
         
         /**
-         * Runs the camera with each frame being processed.
+         * Runs the stream with each frame being processed.
          * 
          * @see java.lang.Runnable#run()
          */
@@ -111,20 +132,30 @@ public abstract class AbstractHUDController extends AbstractController
         }
     }
     
-    protected final class HudSetupThread implements Runnable {
+    /**
+     * The Class HUDSetupThread. A Runnable that controls setting up the HUD.
+     * 
+     * @author Christian Shadd
+     * @author Maria Verna Aquino
+     * @author Thanh Vu
+     * @author Joseph Damian
+     * @author Giovanni Orozco
+     * @since 2.0.0
+     */
+    protected final class HUDSetupThread implements Runnable {
         // Public Constructors
         
         /**
-         * Instantiates a new Hud Setup Thread.
+         * Instantiates a new HUD Setup Thread.
          */
-        public HudSetupThread() {
+        public HUDSetupThread() {
             super();
         }
         
         // Public Methods (Overrided)
         
         /**
-         * Runs the hud setup.
+         * Runs the setup.
          * 
          * @see java.lang.Runnable#run()
          */

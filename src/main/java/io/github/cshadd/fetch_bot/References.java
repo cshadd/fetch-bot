@@ -23,27 +23,62 @@
  * 
  * https://cshadd.github.io/fetch-bot/
  */
-package io.github.cshadd.fetch_bot.io.socket;
-
-import java.awt.image.BufferedImage;
+package io.github.cshadd.fetch_bot;
 
 // Main
 
 /**
- * The Interface SocketImageStreamCommunication. Defines what a Socket Image
- * Stream Communication does.
+ * The Class References. You must change the values in here to reflect any
+ * custom builds.
  * 
  * @author Christian Shadd
  * @author Maria Verna Aquino
  * @author Thanh Vu
  * @author Joseph Damian
  * @author Giovanni Orozco
- * @since 2.0.0-alpha
+ * @since 2.0.0-alpha.1
  */
-public abstract interface SocketImageStreamCommunication extends
-                SocketCommunication {
-    // Public Abstract Methods
+public final class References implements FetchBot {
+    // Public Constant Instance/Property Fields
     
-    public abstract void write(BufferedImage image)
-                    throws SocketCommunicationException;
+    /**
+     * The Constant APACHE_HTTP_SERVER_PATH.
+     */
+    public static final String APACHE_HTTP_SERVER_PATH = "/var/www/html/";
+    
+    /**
+     * The Constant ARDUINO_SERIAL_PORT.
+     */
+    public static final String ARDUINO_SERIAL_PORT = "/dev/ttyACM0";
+    
+    /**
+     * The Constant CAMERA_PORT.
+     */
+    public static final int CAMERA_PORT = 0;
+    
+    /**
+     * The Constant CUSTOM_PROGRAM.
+     */
+    public static final boolean CUSTOM_PROGRAM = false;
+    
+    /**
+     * The Constant HUD_STREAM_PORT.
+     */
+    public static final int HUD_STREAM_PORT = 8885;
+    
+    /**
+     * The Constant PROGRAM_LIBRARY_PATH.
+     */
+    public static final String PROGRAM_LIBRARY_PATH = "./libs/fetch-bot/";
+    
+    /**
+     * The Constant WEB_INTERFACE_FOLDER_NAME.
+     */
+    public static final String WEB_INTERFACE_FOLDER_NAME = "FetchBot";
+    
+    /**
+     * The Constant WEB_INTERFACE_PATH.
+     */
+    public static final String WEB_INTERFACE_PATH = APACHE_HTTP_SERVER_PATH
+                    + WEB_INTERFACE_FOLDER_NAME;
 }

@@ -6,6 +6,17 @@ import io.github.cshadd.fetch_bot.io.socket.SocketImageStreamCommunication;
 
 // Main
 
+/**
+ * The Class HUDControllerImpl. An HUD Controller with basic
+ * implementation.
+ * 
+ * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
+ * @since 1.0.0
+ */
 @Component("HUD")
 public class HUDControllerImpl extends AbstractHUDController {
     // Public Constructors

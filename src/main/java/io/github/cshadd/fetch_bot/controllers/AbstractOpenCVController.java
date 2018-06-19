@@ -41,6 +41,7 @@ import org.opencv.core.Size;
 import org.opencv.dnn.Dnn;
 import org.opencv.dnn.Net;
 import org.opencv.videoio.VideoCapture;
+import io.github.cshadd.fetch_bot.References;
 
 // Main
 
@@ -65,31 +66,21 @@ public abstract class AbstractOpenCVController extends AbstractController
     private static final int CONFIDENCE_LIMIT = 90;
     
     /**
-     * The Constant DEFAULT_CAMERA_PORT.
-     */
-    private static final int DEFAULT_CAMERA_PORT = 0;
-    
-    /**
-     * The Constant DEPLOY_PATH.
-     */
-    private static final String DEPLOY_PATH = "./libs/fetch-bot/";
-    
-    /**
      * The Constant DEPLOY_CAFFEMODEL_FILE.
      */
-    private static final String DEPLOY_CAFFEMODEL_FILE = DEPLOY_PATH
+    private static final String DEPLOY_CAFFEMODEL_FILE = References.PROGRAM_LIBRARY_PATH
                     + "deploy.caffemodel";
     
     /**
      * The Constant DEPLOY_PROTOTXT_TXT_FILE.
      */
-    private static final String DEPLOY_PROTOTXT_TXT_FILE = DEPLOY_PATH
+    private static final String DEPLOY_PROTOTXT_TXT_FILE = References.PROGRAM_LIBRARY_PATH
                     + "deploy.prototxt.txt";
     
     /**
      * The Constant DEPLOY_TRACK_CLASSES_FILE.
      */
-    private static final String DEPLOY_TRACK_CLASSES_FILE = DEPLOY_PATH
+    private static final String DEPLOY_TRACK_CLASSES_FILE = References.PROGRAM_LIBRARY_PATH
                     + "deploy.track.classes";
     
     /**
@@ -191,7 +182,7 @@ public abstract class AbstractOpenCVController extends AbstractController
     
     protected AbstractOpenCVController(HUDController newHud)
                     throws OpenCVControllerException {
-        this(newHud, DEFAULT_CAMERA_PORT);
+        this(newHud, References.CAMERA_PORT);
     }
     
     protected AbstractOpenCVController(HUDController newHud, int newCameraPort)
@@ -293,7 +284,7 @@ public abstract class AbstractOpenCVController extends AbstractController
                     while (this.running) {
                         if (AbstractOpenCVController.this.camera.read(
                                         AbstractOpenCVController.this.cameraFrame)) {
-                            detections(AbstractOpenCVController.this.cameraFrame);
+                            process(AbstractOpenCVController.this.cameraFrame);
                         }
                     }
                     AbstractOpenCVController.this.camera.release();
@@ -341,9 +332,8 @@ public abstract class AbstractOpenCVController extends AbstractController
     // Protected Methods
     
     /**
-     * Processes the detections from the matrix from the mat. The mat is
-     * loaded
-     * from the buffer of frames from the camera thread.
+     * Processes the detections and data from the matrix from the mat. The mat
+     * is loaded from the buffer of frames from the camera thread.
      * 
      * The process follows:<br />
      * 1. Convert the image matrix into a "blob".<br />
@@ -390,7 +380,7 @@ public abstract class AbstractOpenCVController extends AbstractController
      * @param mat
      *            the mat
      */
-    protected void detections(Mat mat) {
+    protected void process(Mat mat) {
         this.cameraBuffer = matToBufferedImage(mat);
         final ImageIcon cameraIcon = new ImageIcon(this.cameraBuffer);
         /*

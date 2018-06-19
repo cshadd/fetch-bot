@@ -28,8 +28,8 @@ package io.github.cshadd.fetch_bot.io.json;
 // Main
 
 /**
- * The Class ArduinoCommunicationException. A Communication Exception specific
- * to Arduino Communication.
+ * The Class ArduinoCommunicationException. A JSON Communication Exception
+ * specific to Arduino Communication.
  * 
  * @author Christian Shadd
  * @author Maria Verna Aquino

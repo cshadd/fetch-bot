@@ -28,7 +28,17 @@ package io.github.cshadd.fetch_bot.io.json;
 import io.github.cshadd.fetch_bot.io.Communication;
 
 // Main
-// Since 2.0.0-alpha.1
+
+/**
+ * The Interface JSONCommunication. Defines what a JSON Communication does.
+ * 
+ * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
+ * @since 2.0.0-alpha
+ */
 public abstract interface JSONCommunication extends Communication {
     // Public Abstract Methods
     

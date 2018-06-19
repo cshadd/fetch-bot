@@ -28,7 +28,7 @@ package io.github.cshadd.fetch_bot.io.json;
 // Main
 
 /**
- * The Class WebInterfaceCommunicationException. A Communication Exception
+ * The Class WebInterfaceCommunicationException. A JSON Communication Exception
  * specific to Web Interface.
  * 
  * @author Christian Shadd
@@ -38,7 +38,8 @@ package io.github.cshadd.fetch_bot.io.json;
  * @author Giovanni Orozco
  * @since 1.0.0
  */
-public class WebInterfaceCommunicationException extends JSONCommunicationException {
+public class WebInterfaceCommunicationException extends
+                JSONCommunicationException {
     // Private Constant Instance/Property Fields
     
     /**

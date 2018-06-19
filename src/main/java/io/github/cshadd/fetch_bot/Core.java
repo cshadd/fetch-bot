@@ -67,7 +67,7 @@ public class Core implements FetchBot {
     /**
      * The Constant VERSION.
      */
-    private static final String VERSION = "v2.0.0-alpha";
+    private static final String VERSION = "v2.0.0-alpha.1";
     
     // Private Static Instance/Property Fields
     
@@ -806,6 +806,7 @@ public class Core implements FetchBot {
         // Reset communications
         try {
             socketImageStreamComm = new SocketImageStreamCommunicationImpl();
+            socketImageStreamComm.open(References.HUD_STREAM_PORT);
             webInterfaceComm.reset();
             webInterfaceComm.pushSource();
             webInterfaceComm.pushRobot();

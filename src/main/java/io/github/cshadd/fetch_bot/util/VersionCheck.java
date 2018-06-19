@@ -27,6 +27,8 @@ package io.github.cshadd.fetch_bot.util;
 
 import io.github.cshadd.fetch_bot.Component;
 import io.github.cshadd.fetch_bot.FetchBot;
+import io.github.cshadd.fetch_bot.References;
+
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -118,6 +120,8 @@ public class VersionCheck implements FetchBot {
      *             if the version check failed
      */
     public static boolean verify(String version) throws VersionCheckException {
-        return (getCurrentVersion().equals(version));
+        if (References.CUSTOM_PROGRAM) { return (getCurrentVersion().equals(
+                        version)); }
+        return true;
     }
 }

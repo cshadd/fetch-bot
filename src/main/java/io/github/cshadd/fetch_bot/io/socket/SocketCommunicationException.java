@@ -29,6 +29,17 @@ import io.github.cshadd.fetch_bot.io.CommunicationException;
 
 // Main
 
+/**
+ * The Class SocketCommunicationException. A Communication Exception specific to
+ * Socket Communication.
+ * 
+ * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
+ * @since 2.0.0-alpha
+ */
 public class SocketCommunicationException extends CommunicationException {
     // Private Constant Instance/Property Fields
     
@@ -38,15 +49,18 @@ public class SocketCommunicationException extends CommunicationException {
     private static final long serialVersionUID = 1L;
     
     // Public Constructors
-
+    
     public SocketCommunicationException() {
     }
+    
     public SocketCommunicationException(String message) {
         super(message);
     }
+    
     public SocketCommunicationException(String message, Throwable cause) {
         super(message, cause);
     }
+    
     public SocketCommunicationException(Throwable cause) {
         super(cause);
     }

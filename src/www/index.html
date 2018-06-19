@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html itemtype="http://schema.org/WebPage" itemscope="" lang="en-US">
 <head>
     <meta charset="utf-8" />
@@ -15,10 +15,20 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="readCommunications.js"></script>
     <script>
+        var $hudPreloadImage = $("<img>");
+        $hudPreloadImage.on("load", function() {
+            $("#hud").attr("src", $(this).attr("src"));
+            $("#hud").fadeIn();
+        });
+        
+        $hudPreloadImage.on("error", function() {
+            $("#hud").fadeOut();
+        });
+
         setInterval(function () {
             if (data != null && data2 != null) {
                 $("#connection-offline").hide();
-                $("#hud").attr("src", data.hud);
+                $hudPreloadImage.attr("src", window.location.protocol + "//" + window.location.hostname + ":" + data.hudstreamport + "/?refresh=" + refresh);
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
                 $("#status-curr-mode").text("Current Mode: " + data.mode);
                 $("#status-curr-rawgraph").text("Current Raw Graph:\n\n" + data.rawgraph);
@@ -59,6 +69,7 @@
                     $("#connection-offline").show();
                     $("#controls-auto").hide();
                     $("#controls-manual").hide();
+                    $hudPreloadImage.attr("src", "");
                     $("#hud").attr("src", "");
                     $("#status-curr-emotion").text("Current Emotion:");
                     $("#status-curr-mode").text("Current Mode:");
@@ -76,6 +87,7 @@
                 $("#connection-offline").show();
                 $("#controls-auto").hide();
                 $("#controls-manual").hide();
+                $hudPreloadImage.attr("src", "");
                 $("#hud").attr("src", "");
                 $("#status-curr-emotion").text("Current Emotion:");
                 $("#status-curr-mode").text("Current Mode:");
@@ -130,7 +142,7 @@
             </div>
         </div>
         <div class="row">
-            <img class="logo" src="https://cshadd.github.io/fetch-bot/Logo.png" alt="Fetch Bot" />
+            <img class="logo img-responsive"" src="https://cshadd.github.io/fetch-bot/Logo.png" alt="Fetch Bot" />
             <h1 class="title">Fetch Bot Web Interface</h1>
             <h2 class="title"><a href="https://cshadd.github.io/fetch-bot" target="_blank">https://cshadd.github.io/fetch-bot</a></h2>
             <hr />
@@ -199,11 +211,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-8">
                 <div class="panel panel-primary">
                     <div class="panel-heading">HUD</div>
                     <div class="panel-body">
-                        <img id="hud" src="" alt="<Stream>" /><br />
+                        <img class="img-responsive" id="hud" src="" alt="<Stream>" /><br />
                     </div>
                 </div>
             </div>
@@ -211,8 +223,8 @@
             <div class="col-sm-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Face</div>
-                    <div class="panel-body">
-                    <iframe src="face.html"></iframe>
+                    <div class="panel-body embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="face.html"></iframe>
                     </div>
                 </div>
             </div>
@@ -220,9 +232,10 @@
         <div class="row">
             <hr />
             <a href="https://www.raspberrypi.org/" target="_blank">
-                <img src="https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png" alt="<3 Raspberry Pi" />
+                <img class="img-responsive" src="https://www.raspberrypi.org/app/uploads/2017/06/Powered-by-Raspberry-Pi-Logo_Outline-Colour-Screen-500x153.png" alt="<3 Raspberry Pi" />
             </a>
         </div>
     </main>
 </body>
 </html>
+

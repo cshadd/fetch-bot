@@ -4,17 +4,27 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-
 import io.github.cshadd.fetch_bot.io.AbstractCommunication;
 
 // Main
+
+/**
+ * The Class AbstractSocketCommunication. Defines what a Socket Communication
+ * is. A Socket Communication is basically a helper that directs data between
+ * sockets and Fetch Bot.
+ * 
+ * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
+ * @since 2.0.0-alpha
+ */
 public abstract class AbstractSocketCommunication extends AbstractCommunication
                 implements SocketCommunication {
-    // Public Constant Instance/Property Fields
+    // Private Constant Instance/Property Fields
     
-    public static final String DEFAULT_SOCKET_ADDRESS = "localhost"; // Change
-                                                                     // if
-                                                                     // needed
+    private static final String DEFAULT_SOCKET_ADDRESS = "localhost";
     
     // Protected Constant Instance/Property Fields
     
@@ -30,21 +40,6 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
     protected AbstractSocketCommunication() {
         this.serverSocket = null;
         this.socket = null;
-    }
-    
-    // Protected Methods
-    
-    protected void listen() throws SocketCommunicationException {
-        try {
-            this.socket = this.serverSocket.accept();
-        } catch (SocketException e) {
-            throw new SocketCommunicationException(
-                            "There was a problem with listening to the socket!",
-                            e);
-        } catch (Exception e) {
-            throw new SocketCommunicationException("Unknown issue.", e);
-        } finally {
-            /* */ }
     }
     
     // Public Methods (Overrided)
@@ -76,7 +71,7 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
     
     @Override
     public void open(int port) throws SocketCommunicationException {
-        this.close();
+        close();
         try {
             this.serverSocket = new ServerSocket(port, 50, InetAddress
                             .getByName(DEFAULT_SOCKET_ADDRESS));

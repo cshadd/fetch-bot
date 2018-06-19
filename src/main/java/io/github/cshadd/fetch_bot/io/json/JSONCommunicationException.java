@@ -29,6 +29,17 @@ import io.github.cshadd.fetch_bot.io.CommunicationException;
 
 // Main
 
+/**
+ * The Class WebInterfaceCommunicationException. A Communication Exception
+ * specific to JSON.
+ * 
+ * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
+ * @since 2.0.0-alpha
+ */
 public class JSONCommunicationException extends CommunicationException {
     // Private Constant Instance/Property Fields
     
@@ -38,15 +49,18 @@ public class JSONCommunicationException extends CommunicationException {
     private static final long serialVersionUID = 1L;
     
     // Public Constructors
-
+    
     public JSONCommunicationException() {
     }
+    
     public JSONCommunicationException(String message) {
         super(message);
     }
+    
     public JSONCommunicationException(String message, Throwable cause) {
         super(message, cause);
     }
+    
     public JSONCommunicationException(Throwable cause) {
         super(cause);
     }
