@@ -27,11 +27,22 @@ package io.github.cshadd.fetch_bot.io.socket;
 
 import io.github.cshadd.fetch_bot.io.Communication;
 
-//Main
-// Since 2.0.0-alpha.1
+// Main
+
+/**
+ * The Interface SocketCommunication. Defines what a Socket Communication does.
+ * 
+ * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
+ * @since 2.0.0-alpha
+ */
 public abstract interface SocketCommunication extends Communication {
     // Public Abstract Methods
     
     public abstract void close() throws SocketCommunicationException;
+    
     public abstract void open(int port) throws SocketCommunicationException;
 }

@@ -1,4 +1,5 @@
 package io.github.cshadd.fetch_bot.io.json;
+
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.SynchronousQueue;
@@ -12,31 +13,46 @@ import com.pi4j.io.serial.SerialDataEvent;
 import com.pi4j.io.serial.SerialDataEventListener;
 import com.pi4j.io.serial.SerialFactory;
 import com.pi4j.io.serial.StopBits;
+import io.github.cshadd.fetch_bot.References;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 // Main
-public abstract class AbstractArduinoCommunication
-extends AbstractJSONCommunication
-implements ArduinoCommunication {
-    // Public Constant Instance/Property Fields
-    public static final String DEFAULT_SERIAL_PORT = "/dev/ttyACM0"; // Change if needed
 
+/**
+ * The Class AbstractArduninoCommunication. Defines what an Arduino
+ * Communication is. An Arduino Communication is basically a helper that directs
+ * data between an Arduino and Fetch Bot.
+ * 
+ * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
+ * @since 1.0.0
+ */
+public abstract class AbstractArduinoCommunication extends
+                AbstractJSONCommunication implements ArduinoCommunication {
     // Private Final Instance/Property Fields
-    private final Serial serial;
+    
+    private final Serial       serial;
     private final SerialConfig serialConfig;
     
     // Protected Final Instance/Property Fields
+    
     protected final BlockingQueue<String> serialBufferSyncQueue;
-    protected final String serialPort;
+    protected final String                serialPort;
     
     // Private Instance/Property Fields
+    
     private SerialDataEventListener serialListener;
     
     // Protected Constructors
+    
     protected AbstractArduinoCommunication() {
-        this(DEFAULT_SERIAL_PORT);
+        this(References.ARDUINO_SERIAL_PORT);
     }
+    
     protected AbstractArduinoCommunication(String serialPort) {
         super();
         this.serialPort = serialPort;
@@ -52,8 +68,8 @@ implements ArduinoCommunication {
     }
     
     // Protected Methods
-    protected void close()
-    throws ArduinoCommunicationException {
+    
+    protected void close() throws ArduinoCommunicationException {
         try {
             if (this.serial.isOpen()) {
                 this.serial.discardInput();
@@ -61,44 +77,45 @@ implements ArduinoCommunication {
                 this.serial.close();
                 SerialFactory.shutdown();
             }
-        }
-        catch (IOException e) {
-            throw new ArduinoCommunicationException("Could not close " + this.serialPort + ".", e);
-        }
-        catch (Exception e) {
+        } catch (IOException e) {
+            throw new ArduinoCommunicationException("Could not close "
+                            + this.serialPort + ".", e);
+        } catch (Exception e) {
             throw new ArduinoCommunicationException("Unknown issue.", e);
-        }
-        finally { /* */ }
+        } finally {
+            /* */ }
     }
-    protected void open()
-    throws ArduinoCommunicationException {
+    
+    protected void open() throws ArduinoCommunicationException {
         try {
             if (!this.serial.isOpen()) {
                 this.serial.open(this.serialConfig);
                 this.serialListener = new SerialDataEventListener() {
                     // Public Methods (Overrided)
+                    
                     @Override
                     public void dataReceived(SerialDataEvent event) {
                         try {
-                            AbstractArduinoCommunication.this.serialBufferSyncQueue.offer(event.getAsciiString());
-                        }
-                        catch (Exception e) { /* */ } // Suppressed
-                        finally { /* */ }
+                            AbstractArduinoCommunication.this.serialBufferSyncQueue
+                                            .offer(event.getAsciiString());
+                        } catch (Exception e) {
+                            /* */ } // Suppressed
+                        finally {
+                            /* */ }
                     }
                 };
                 this.serial.addListener(this.serialListener);
             }
-        }
-        catch (IOException e) {
-            throw new ArduinoCommunicationException("Could not open " + this.serialPort + ".", e);
-        }
-        catch (Exception e) {
+        } catch (IOException e) {
+            throw new ArduinoCommunicationException("Could not open "
+                            + this.serialPort + ".", e);
+        } catch (Exception e) {
             throw new ArduinoCommunicationException("Unknown issue.", e);
-        }
-        finally { /* */ }
+        } finally {
+            /* */ }
     }
-    protected JSONObject read()
-    throws ArduinoCommunicationException {
+    
+    protected JSONObject read() throws ArduinoCommunicationException {
         JSONObject returnData = new JSONObject();
         try {
             returnData.put("s", -1);
@@ -106,51 +123,49 @@ implements ArduinoCommunication {
             if (data.charAt(0) == '{' && !data.equals("{ }")) {
                 returnData = new JSONObject(data);
             }
-        }
-        catch (JSONException e) {
-            throw new ArduinoCommunicationException("Could not parse JSON in " + this.serialPort + ".", e);
-        }
-        catch (Exception e) {
+        } catch (JSONException e) {
+            throw new ArduinoCommunicationException("Could not parse JSON in "
+                            + this.serialPort + ".", e);
+        } catch (Exception e) {
             throw new ArduinoCommunicationException("Unknown issue.", e);
-        }
-        finally { /* */ }
+        } finally {
+            /* */ }
         return returnData;
     }
-    protected void write()
-    throws JSONCommunicationException {
+    
+    protected void write() throws JSONCommunicationException {
         try {
             if (this.serial.isOpen()) {
                 this.serial.write(getSourceValue("a"));
                 this.serial.flush();
             }
-        }
-        catch (IOException e) {
-            throw new ArduinoCommunicationException("Could not write to " + this.serialPort + ".", e);
-        }
-        catch (JSONException e) {
-            throw new ArduinoCommunicationException("Could not write JSON to " + this.serialPort + ".", e);
-        }
-        catch (Exception e) {
+        } catch (IOException e) {
+            throw new ArduinoCommunicationException("Could not write to "
+                            + this.serialPort + ".", e);
+        } catch (JSONException e) {
+            throw new ArduinoCommunicationException("Could not write JSON to "
+                            + this.serialPort + ".", e);
+        } catch (Exception e) {
             throw new ArduinoCommunicationException("Unknown issue.", e);
-        }
-        finally { /* */ }
+        } finally {
+            /* */ }
     }
     
     // Public Methods (Overrided)
+    
     @Override
     public float getRobotFloatValue(String key)
-    throws ArduinoCommunicationException {
+                    throws ArduinoCommunicationException {
         float returnData = -1;
         try {
             returnData = this.toRobotData.getFloat(key);
-        }
-        catch (JSONException e) {
-            throw new ArduinoCommunicationException("Bad JSON value " + key + ".", e);
-        }
-        catch (Exception e) {
+        } catch (JSONException e) {
+            throw new ArduinoCommunicationException("Bad JSON value " + key
+                            + ".", e);
+        } catch (Exception e) {
             throw new ArduinoCommunicationException("Unknown issue.", e);
-        }
-        finally { /* */ }
+        } finally {
+            /* */ }
         return returnData;
     }
 }

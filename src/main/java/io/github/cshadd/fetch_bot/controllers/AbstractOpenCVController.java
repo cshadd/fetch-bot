@@ -41,6 +41,7 @@ import org.opencv.core.Size;
 import org.opencv.dnn.Dnn;
 import org.opencv.dnn.Net;
 import org.opencv.videoio.VideoCapture;
+import io.github.cshadd.fetch_bot.References;
 
 // Main
 
@@ -65,31 +66,21 @@ public abstract class AbstractOpenCVController extends AbstractController
     private static final int CONFIDENCE_LIMIT = 90;
     
     /**
-     * The Constant DEFAULT_CAMERA_PORT.
-     */
-    private static final int DEFAULT_CAMERA_PORT = 0;
-    
-    /**
-     * The Constant DEPLOY_PATH.
-     */
-    private static final String DEPLOY_PATH = "./libs/fetch-bot/";
-    
-    /**
      * The Constant DEPLOY_CAFFEMODEL_FILE.
      */
-    private static final String DEPLOY_CAFFEMODEL_FILE = DEPLOY_PATH
+    private static final String DEPLOY_CAFFEMODEL_FILE = References.PROGRAM_LIBRARY_PATH
                     + "deploy.caffemodel";
     
     /**
      * The Constant DEPLOY_PROTOTXT_TXT_FILE.
      */
-    private static final String DEPLOY_PROTOTXT_TXT_FILE = DEPLOY_PATH
+    private static final String DEPLOY_PROTOTXT_TXT_FILE = References.PROGRAM_LIBRARY_PATH
                     + "deploy.prototxt.txt";
     
     /**
      * The Constant DEPLOY_TRACK_CLASSES_FILE.
      */
-    private static final String DEPLOY_TRACK_CLASSES_FILE = DEPLOY_PATH
+    private static final String DEPLOY_TRACK_CLASSES_FILE = References.PROGRAM_LIBRARY_PATH
                     + "deploy.track.classes";
     
     /**
@@ -191,7 +182,7 @@ public abstract class AbstractOpenCVController extends AbstractController
     
     protected AbstractOpenCVController(HUDController newHud)
                     throws OpenCVControllerException {
-        this(newHud, DEFAULT_CAMERA_PORT);
+        this(newHud, References.CAMERA_PORT);
     }
     
     protected AbstractOpenCVController(HUDController newHud, int newCameraPort)

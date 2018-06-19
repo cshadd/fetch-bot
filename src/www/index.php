@@ -18,7 +18,7 @@
         setInterval(function () {
             if (data != null && data2 != null) {
                 $("#connection-offline").hide();
-                $("#hud").attr("src", data.hud);
+                $("#hud").attr("src", "<?php echo $_SERVER['SERVER_ADDR']; ?>" + data.hudstreamport);
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
                 $("#status-curr-mode").text("Current Mode: " + data.mode);
                 $("#status-curr-rawgraph").text("Current Raw Graph:\n\n" + data.rawgraph);
@@ -212,7 +212,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Face</div>
                     <div class="panel-body">
-                    <iframe src="face.html"></iframe>
+                        <iframe src="face.html"></iframe>
                     </div>
                 </div>
             </div>

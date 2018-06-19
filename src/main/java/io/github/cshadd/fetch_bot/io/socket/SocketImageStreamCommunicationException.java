@@ -27,7 +27,19 @@ package io.github.cshadd.fetch_bot.io.socket;
 
 // Main
 
-public class SocketImageStreamCommunicationException extends SocketCommunicationException {
+/**
+ * The Class SocketImageStreamCommunicationException. A Socket Communication
+ * Exception specific to Socket Image Stream Communication.
+ * 
+ * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
+ * @since 2.0.0-alpha
+ */
+public class SocketImageStreamCommunicationException extends
+                SocketCommunicationException {
     // Private Constant Instance/Property Fields
     
     /**
@@ -36,15 +48,19 @@ public class SocketImageStreamCommunicationException extends SocketCommunication
     private static final long serialVersionUID = 1L;
     
     // Public Constructors
-
+    
     public SocketImageStreamCommunicationException() {
     }
+    
     public SocketImageStreamCommunicationException(String message) {
         super(message);
     }
-    public SocketImageStreamCommunicationException(String message, Throwable cause) {
+    
+    public SocketImageStreamCommunicationException(String message,
+                    Throwable cause) {
         super(message, cause);
     }
+    
     public SocketImageStreamCommunicationException(Throwable cause) {
         super(cause);
     }

@@ -1,14 +1,27 @@
 package io.github.cshadd.fetch_bot.io.json;
 
 import io.github.cshadd.fetch_bot.Component;
-import io.github.cshadd.fetch_bot.io.socket.AbstractSocketCommunication;
+import io.github.cshadd.fetch_bot.References;
 import org.json.JSONObject;
 
 // Main
+
+/**
+ * The Class WebInterfaceCommunicationImpl. A Web Interface Communication with
+ * basic implementation.
+ * 
+ * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
+ * @since 1.0.0
+ */
 @Component("Communication")
 public class WebInterfaceCommunicationImpl extends
                 AbstractWebInterfaceCommunication {
     // Public Constructors
+    
     public WebInterfaceCommunicationImpl() {
         super();
     }
@@ -18,6 +31,7 @@ public class WebInterfaceCommunicationImpl extends
     }
     
     // Public Methods (Overrided)
+    
     @Override
     public void clear() throws JSONCommunicationException {
         this.toSourceData = new JSONObject();
@@ -52,8 +66,7 @@ public class WebInterfaceCommunicationImpl extends
         setRobotValue("trackclass", "None");
         
         setSourceValue("emotion", "Idle");
-        setSourceValue("hudStreamPort",
-                        AbstractSocketCommunication.DEFAULT_SOCKET_ADDRESS);
+        setSourceValue("hudstreamport", "" + References.HUD_STREAM_PORT);
         setSourceValue("mode", "Idle");
         setSourceValue("rawgraph", "");
         setSourceValue("rot", "0");

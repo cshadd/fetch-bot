@@ -7,17 +7,25 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.SocketException;
-
 import javax.imageio.ImageIO;
 
 // Main
+
+/**
+ * The Class AbstractSocketImageStreamCommunication. Defines what a Socket Image
+ * Stream Communication is. A Socket Image Stream Communication is basically a
+ * helper that directs data between image stream sockets and Fetch Bot.
+ * 
+ * @author Christian Shadd
+ * @author Maria Verna Aquino
+ * @author Thanh Vu
+ * @author Joseph Damian
+ * @author Giovanni Orozco
+ * @since 2.0.0-alpha
+ */
 public abstract class AbstractSocketImageStreamCommunication extends
                 AbstractSocketCommunication implements
                 SocketImageStreamCommunication {
-    // Public Constant Instance/Property Fields
-    
-    public static final int DEFAULT_SOCKET_PORT = 7676; // Change if needed
-    
     // Private Constant Instance/Property Fields
     
     private static final String BOUNDARY = "mjpegframe";
@@ -27,7 +35,12 @@ public abstract class AbstractSocketImageStreamCommunication extends
     public AbstractSocketImageStreamCommunication()
                     throws SocketCommunicationException {
         super();
-        open(DEFAULT_SOCKET_PORT);
+    }
+    
+    public AbstractSocketImageStreamCommunication(int port)
+                    throws SocketCommunicationException {
+        super();
+        open(port);
     }
     
     // Public Methods (Overrided)
