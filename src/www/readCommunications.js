@@ -2,12 +2,14 @@ var data = null;
 var data2 = null;
 var processing = false;
 var processing2 = false;
+var refresh = null;
 
 setInterval(function () {
+    refresh = new Date().getTime();
     if (processing != true) {
         processing = true;
         $.ajax({
-            url: "comms/toInterface.json?refresh=" + new Date().getTime(),
+            url: "comms/toInterface.json?refresh=" + refresh,
             dataType: "json",
             async: false,
             data: null,
@@ -24,7 +26,7 @@ setInterval(function () {
     if (processing2 != true) {
         processing2 = true;
         $.ajax({
-            url: "comms/toRobot.json?refresh=" + new Date().getTime(),
+            url: "comms/toRobot.json?refresh=" + refresh,
             dataType: "json",
             async: false,
             data: null,

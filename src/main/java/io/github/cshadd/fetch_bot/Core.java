@@ -805,8 +805,8 @@ public class Core implements FetchBot {
         
         // Reset communications
         try {
-            socketImageStreamComm = new SocketImageStreamCommunicationImpl(
-                            References.HUD_STREAM_PORT);
+            socketImageStreamComm = new SocketImageStreamCommunicationImpl();
+            socketImageStreamComm.open(References.HUD_STREAM_PORT);
             webInterfaceComm.reset();
             webInterfaceComm.pushSource();
             webInterfaceComm.pushRobot();

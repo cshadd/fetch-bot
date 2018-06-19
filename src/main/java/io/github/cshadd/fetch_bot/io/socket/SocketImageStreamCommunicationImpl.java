@@ -20,13 +20,7 @@ public class SocketImageStreamCommunicationImpl extends
                 AbstractSocketImageStreamCommunication {
     // Public Constructors
     
-    public SocketImageStreamCommunicationImpl()
-                    throws SocketCommunicationException {
+    public SocketImageStreamCommunicationImpl() {
         super();
-    }
-    
-    public SocketImageStreamCommunicationImpl(int port)
-                    throws SocketCommunicationException {
-        super(port);
     }
 }

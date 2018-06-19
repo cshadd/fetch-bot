@@ -64,7 +64,7 @@ public final class References implements FetchBot {
     /**
      * The Constant HUD_STREAM_PORT.
      */
-    public static final int HUD_STREAM_PORT = 8855;
+    public static final int HUD_STREAM_PORT = 8885;
     
     /**
      * The Constant PROGRAM_LIBRARY_PATH.

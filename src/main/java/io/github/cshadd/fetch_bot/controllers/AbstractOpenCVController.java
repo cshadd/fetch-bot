@@ -284,7 +284,7 @@ public abstract class AbstractOpenCVController extends AbstractController
                     while (this.running) {
                         if (AbstractOpenCVController.this.camera.read(
                                         AbstractOpenCVController.this.cameraFrame)) {
-                            detections(AbstractOpenCVController.this.cameraFrame);
+                            process(AbstractOpenCVController.this.cameraFrame);
                         }
                     }
                     AbstractOpenCVController.this.camera.release();
@@ -332,9 +332,8 @@ public abstract class AbstractOpenCVController extends AbstractController
     // Protected Methods
     
     /**
-     * Processes the detections from the matrix from the mat. The mat is
-     * loaded
-     * from the buffer of frames from the camera thread.
+     * Processes the detections and data from the matrix from the mat. The mat
+     * is loaded from the buffer of frames from the camera thread.
      * 
      * The process follows:<br />
      * 1. Convert the image matrix into a "blob".<br />
@@ -381,7 +380,7 @@ public abstract class AbstractOpenCVController extends AbstractController
      * @param mat
      *            the mat
      */
-    protected void detections(Mat mat) {
+    protected void process(Mat mat) {
         this.cameraBuffer = matToBufferedImage(mat);
         final ImageIcon cameraIcon = new ImageIcon(this.cameraBuffer);
         /*

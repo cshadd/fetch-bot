@@ -42,21 +42,6 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
         this.socket = null;
     }
     
-    // Protected Methods
-    
-    protected void listen() throws SocketCommunicationException {
-        try {
-            this.socket = this.serverSocket.accept();
-        } catch (SocketException e) {
-            throw new SocketCommunicationException(
-                            "There was a problem with listening to the socket!",
-                            e);
-        } catch (Exception e) {
-            throw new SocketCommunicationException("Unknown issue.", e);
-        } finally {
-            /* */ }
-    }
-    
     // Public Methods (Overrided)
     
     @Override
@@ -86,7 +71,7 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
     
     @Override
     public void open(int port) throws SocketCommunicationException {
-        this.close();
+        close();
         try {
             this.serverSocket = new ServerSocket(port, 50, InetAddress
                             .getByName(DEFAULT_SOCKET_ADDRESS));
