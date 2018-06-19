@@ -204,8 +204,7 @@ public abstract class AbstractOpenCVController extends AbstractController
         } catch (CvException e) {
             throw new OpenCVControllerException("Could not open camera.", e);
         } catch (Exception e) {
-            throw new OpenCVControllerException("There was an unknown issue!",
-                            e);
+            throw new OpenCVControllerException("Unknown issue.", e);
         } finally {
             /* */ }
         this.cameraFrame = new Mat();
@@ -225,8 +224,7 @@ public abstract class AbstractOpenCVController extends AbstractController
             throw new OpenCVControllerException(
                             "Could not load neural network.", e);
         } catch (Exception e) {
-            throw new OpenCVControllerException("There was an unknown issue!",
-                            e);
+            throw new OpenCVControllerException("Unknown issue.", e);
         } finally {
             /* */ }
         this.endX = 0;
@@ -462,13 +460,15 @@ public abstract class AbstractOpenCVController extends AbstractController
             }
             
         }
-        this.hud.updateBack(cameraIcon);
-        this.status = "&#187; Status: Processing<br />" + "Target: "
-                        + this.trackClass + "<br />" + "Found Target: "
-                        + this.trackClassFound + "<br />" + "Raw I/O Buffer: "
-                        + this.cameraBuffer.hashCode();
-        this.hud.updateTrackBounds(this.startX, this.startY, this.endX
-                        - this.startX, this.endY - this.startY);
-        this.hud.updateTrack(this.capturedLabel);
+        if (hud != null) {
+            this.hud.updateBack(cameraIcon);
+            this.status = "&#187; Status: Processing<br />" + "Target: "
+                            + this.trackClass + "<br />" + "Found Target: "
+                            + this.trackClassFound + "<br />"
+                            + "Raw I/O Buffer: " + this.cameraBuffer.hashCode();
+            this.hud.updateTrackBounds(this.startX, this.startY, this.endX
+                            - this.startX, this.endY - this.startY);
+            this.hud.updateTrack(this.capturedLabel);
+        }
     }
 }

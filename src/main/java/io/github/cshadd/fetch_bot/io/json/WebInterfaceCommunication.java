@@ -23,14 +23,13 @@
  * 
  * https://cshadd.github.io/fetch-bot/
  */
-package io.github.cshadd.fetch_bot.io;
-
-import io.github.cshadd.fetch_bot.FetchBot;
+package io.github.cshadd.fetch_bot.io.json;
 
 //Main
 
 /**
- * The Interface Communication. Defines what an Communication does.
+ * The Interface WebInterfaceCommunication. Defines what an Web Interface
+ * Communication does.
  * 
  * @author Christian Shadd
  * @author Maria Verna Aquino
@@ -39,5 +38,5 @@ import io.github.cshadd.fetch_bot.FetchBot;
  * @author Giovanni Orozco
  * @since 1.0.0
  */
-public abstract interface Communication extends FetchBot {
-}
+public abstract interface WebInterfaceCommunication extends JSONCommunication {
+    /* */ }

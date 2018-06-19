@@ -106,8 +106,7 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
         } catch (InterruptedException e) {
             throw new OpenCVControllerException("Thread was interrupted.", e);
         } catch (Exception e) {
-            throw new OpenCVControllerException("There was an unknown issue!",
-                            e);
+            throw new OpenCVControllerException("Unknown issue.", e);
         } finally {
             /* */ }
     }

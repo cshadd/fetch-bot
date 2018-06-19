@@ -23,14 +23,12 @@
  * 
  * https://cshadd.github.io/fetch-bot/
  */
-package io.github.cshadd.fetch_bot.io;
+package io.github.cshadd.fetch_bot.io.json;
 
-import io.github.cshadd.fetch_bot.FetchBot;
-
-//Main
+// Main
 
 /**
- * The Interface Communication. Defines what an Communication does.
+ * The Interface ArduinoCommunication. Defines what an Arduino Communication does.
  * 
  * @author Christian Shadd
  * @author Maria Verna Aquino
@@ -39,5 +37,18 @@ import io.github.cshadd.fetch_bot.FetchBot;
  * @author Giovanni Orozco
  * @since 1.0.0
  */
-public abstract interface Communication extends FetchBot {
+public abstract interface ArduinoCommunication extends JSONCommunication {
+    // Public Abstract Methods
+    
+    /**
+     * Gets the robot float value.
+     *
+     * @param key
+     *            the key
+     * @return the robot float value
+     * @throws JSONCommunicationException
+     *             if the value could not be read
+     */
+    public abstract float getRobotFloatValue(String key)
+                    throws JSONCommunicationException;
 }

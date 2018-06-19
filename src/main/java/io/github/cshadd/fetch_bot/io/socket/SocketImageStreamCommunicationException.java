@@ -23,21 +23,29 @@
  * 
  * https://cshadd.github.io/fetch-bot/
  */
-package io.github.cshadd.fetch_bot.io;
+package io.github.cshadd.fetch_bot.io.socket;
 
-import io.github.cshadd.fetch_bot.FetchBot;
+// Main
 
-//Main
+public class SocketImageStreamCommunicationException extends SocketCommunicationException {
+    // Private Constant Instance/Property Fields
+    
+    /**
+     * The Constant serialVersionUID.
+     */
+    private static final long serialVersionUID = 1L;
+    
+    // Public Constructors
 
-/**
- * The Interface Communication. Defines what an Communication does.
- * 
- * @author Christian Shadd
- * @author Maria Verna Aquino
- * @author Thanh Vu
- * @author Joseph Damian
- * @author Giovanni Orozco
- * @since 1.0.0
- */
-public abstract interface Communication extends FetchBot {
+    public SocketImageStreamCommunicationException() {
+    }
+    public SocketImageStreamCommunicationException(String message) {
+        super(message);
+    }
+    public SocketImageStreamCommunicationException(String message, Throwable cause) {
+        super(message, cause);
+    }
+    public SocketImageStreamCommunicationException(Throwable cause) {
+        super(cause);
+    }
 }

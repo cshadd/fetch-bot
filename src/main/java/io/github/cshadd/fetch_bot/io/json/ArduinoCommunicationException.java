@@ -1,9 +1,8 @@
-
 /*
  * MIT License
- *
+ * 
  * Copyright (c) 2018 Christian Shadd
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -21,19 +20,17 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
+ * 
  * https://cshadd.github.io/fetch-bot/
  */
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-import org.junit.Test;
+package io.github.cshadd.fetch_bot.io.json;
 
 // Main
 
 /**
- * The Class AppTest. This is for testing.
- *
+ * The Class ArduinoCommunicationException. A Communication Exception specific
+ * to Arduino Communication.
+ * 
  * @author Christian Shadd
  * @author Maria Verna Aquino
  * @author Thanh Vu
@@ -41,15 +38,52 @@ import org.junit.Test;
  * @author Giovanni Orozco
  * @since 1.0.0
  */
-public class AppTest {
-    // Public Static Methods
+public class ArduinoCommunicationException extends JSONCommunicationException {
+    // Private Constant Instance/Property Fields
     
     /**
-     * Test.
+     * The Constant serialVersionUID.
      */
-    @Test
-    @SuppressWarnings("static-method")
-    public void test() {
-        System.out.println("Tested.");
+    private static final long serialVersionUID = 1L;
+    
+    // Public Constructors
+    
+    /**
+     * Instantiates a new Arduino Communication Exception.
+     */
+    public ArduinoCommunicationException() {
+    }
+    
+    /**
+     * Instantiates a new Arduino Communication Exception with message.
+     *
+     * @param message
+     *            the message
+     */
+    public ArduinoCommunicationException(String message) {
+        super(message);
+    }
+    
+    /**
+     * Instantiates a new Arduino Communication Exception with message and
+     * cause.
+     *
+     * @param message
+     *            the message
+     * @param cause
+     *            the cause
+     */
+    public ArduinoCommunicationException(String message, Throwable cause) {
+        super(message, cause);
+    }
+    
+    /**
+     * Instantiates a new Arduino Communication Exception with cause.
+     *
+     * @param cause
+     *            the cause
+     */
+    public ArduinoCommunicationException(Throwable cause) {
+        super(cause);
     }
 }

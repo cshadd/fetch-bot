@@ -28,7 +28,7 @@ package io.github.cshadd.fetch_bot.util;
 import com.pi4j.util.Console;
 import io.github.cshadd.fetch_bot.Component;
 import io.github.cshadd.fetch_bot.FetchBot;
-import io.github.cshadd.fetch_bot.io.WebInterfaceCommunication;
+import io.github.cshadd.fetch_bot.io.json.WebInterfaceCommunication;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.ConsoleHandler;

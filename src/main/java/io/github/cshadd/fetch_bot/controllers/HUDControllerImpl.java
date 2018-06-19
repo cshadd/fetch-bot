@@ -2,6 +2,7 @@ package io.github.cshadd.fetch_bot.controllers;
 
 import javax.swing.ImageIcon;
 import io.github.cshadd.fetch_bot.Component;
+import io.github.cshadd.fetch_bot.io.socket.SocketImageStreamCommunication;
 
 // Main
 
@@ -11,6 +12,10 @@ public class HUDControllerImpl extends AbstractHUDController {
     
     public HUDControllerImpl() {
         super();
+    }
+    
+    public HUDControllerImpl(SocketImageStreamCommunication newStream) {
+        super(newStream);
     }
     
     // Public Methods (Overrided)
@@ -25,7 +30,7 @@ public class HUDControllerImpl extends AbstractHUDController {
         } catch (InterruptedException e) {
             throw new HUDControllerException("Thread was interrupted.", e);
         } catch (Exception e) {
-            throw new HUDControllerException("There was an unknown issue!", e);
+            throw new HUDControllerException("Unknown issue.", e);
         } finally {
             /* */ }
     }
@@ -33,16 +38,6 @@ public class HUDControllerImpl extends AbstractHUDController {
     @Override
     public void openHud() {
         this.hudThread.start();
-    }
-    
-    @Override
-    public String pullBufferData() {
-        String returnData = "";
-        // return "" + this.buffer.poll();
-        try {
-            returnData += this.hudBase64BufferSyncQueue.take();
-        } catch (Exception e) { /* */ } // Suppressed
-        return returnData;
     }
     
     @Override
