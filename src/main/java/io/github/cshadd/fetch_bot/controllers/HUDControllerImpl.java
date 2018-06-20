@@ -1,8 +1,8 @@
 package io.github.cshadd.fetch_bot.controllers;
 
+import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import io.github.cshadd.fetch_bot.Component;
-import io.github.cshadd.fetch_bot.io.socket.SocketImageStreamCommunication;
 
 // Main
 
@@ -23,10 +23,6 @@ public class HUDControllerImpl extends AbstractHUDController {
     
     public HUDControllerImpl() {
         super();
-    }
-    
-    public HUDControllerImpl(SocketImageStreamCommunication newStream) {
-        super(newStream);
     }
     
     // Public Methods (Overrided)
@@ -52,19 +48,24 @@ public class HUDControllerImpl extends AbstractHUDController {
     }
     
     @Override
+    public BufferedImage takeHUD() {
+        return hudBuffer;
+    }
+    
+    @Override
     public void updateBack(ImageIcon img) {
         this.hudLabelBack.setIcon(img);
     }
     
     @Override
-    public void updateTrack(String label) {
-        this.hudLabelTrack.setText("<html><p style='color: white;'>" + label
-                        + "</p></html>");
+    public void updateTrackBounds(int startX, int startY, int endX, int endY) {
+        this.hudLabelTrack.setBounds(startX, startY, endX, endY);
     }
     
     @Override
-    public void updateTrackBounds(int startX, int startY, int endX, int endY) {
-        this.hudLabelTrack.setBounds(startX, startY, endX, endY);
+    public void updateTrackCaptureLabel(String label) {
+        this.hudLabelTrack.setText("<html><p style='color: white;'>" + label
+                        + "</p></html>");
     }
     
     @Override

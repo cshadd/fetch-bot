@@ -28,8 +28,7 @@ package io.github.cshadd.fetch_bot;
 // Main
 
 /**
- * The Class References. You must change the values in here to reflect any
- * custom builds.
+ * The Class References. Values must be changed to reflect any custom builds.
  * 
  * @author Christian Shadd
  * @author Maria Verna Aquino

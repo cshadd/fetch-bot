@@ -24,7 +24,6 @@
  *
  * https://cshadd.github.io/fetch-bot/
  */
-
 import org.junit.Test;
 
 // Main

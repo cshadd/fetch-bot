@@ -39,19 +39,21 @@ public abstract class AbstractSocketImageStreamCommunication extends
     // Private Methods
     
     private void listen() throws IOException {
-        this.socket = this.serverSocket.accept();
+        if (this.serverSocket != null) {
+            if (!this.serverSocket.isClosed()) {
+                this.socket = this.serverSocket.accept();
+            }
+        }
     }
     
     // Public Methods (Overrided)
     
     @Override
-    public synchronized void write(BufferedImage image)
-                    throws SocketImageStreamCommunicationException {
+    public void write(BufferedImage image) throws SocketCommunicationException {
         try {
             listen();
             if (this.socket != null) {
                 if (!this.socket.isClosed()) {
-                    
                     try (final BufferedReader br = new BufferedReader(
                                     new InputStreamReader(this.socket
                                                     .getInputStream()))) {
@@ -75,7 +77,6 @@ public abstract class AbstractSocketImageStreamCommunication extends
                                 bos.write(sb.toString().getBytes());
                                 baos.reset();
                                 ImageIO.write(image, "jpg", baos);
-                                
                                 sb.delete(0, sb.length());
                                 sb.append("--").append(BOUNDARY).append(CRLF);
                                 sb.append("Content-type: image/jpeg").append(
@@ -83,17 +84,23 @@ public abstract class AbstractSocketImageStreamCommunication extends
                                 sb.append("Content-Length: ").append(baos
                                                 .size()).append(CRLF);
                                 sb.append(CRLF);
-                                
                                 bos.write(sb.toString().getBytes());
+                                System.out.println(baos.toByteArray());
                                 bos.write(baos.toByteArray());
                                 bos.write(CRLF.getBytes());
                                 bos.flush();
+                                baos.flush();
+                                bos.close();
+                                baos.close();
+                            } catch (SocketException e) {
+                                throw e;
                             } catch (IOException e) {
                                 throw e;
                             } catch (Exception e) {
                                 throw e;
                             } finally {
-                                /* */ }
+                                this.socket.close();
+                            }
                         } catch (SocketException e) {
                             throw e;
                         } catch (IOException e) {
@@ -102,14 +109,21 @@ public abstract class AbstractSocketImageStreamCommunication extends
                             throw e;
                         } finally {
                             /* */ }
+                    } catch (SocketException e) {
+                        throw e;
                     } catch (IOException e) {
                         throw e;
                     } catch (Exception e) {
                         throw e;
                     } finally {
-                    }
+                        /* */ }
                 }
             }
+        } catch (SocketException e) {
+            this.open(this.serverSocket.getLocalPort());
+            throw new SocketImageStreamCommunicationException(
+                            "There was a problem with socket, attempting to reconnect!",
+                            e);
         } catch (IOException e) {
             throw new SocketImageStreamCommunicationException(
                             "There was a problem with writing!", e);
@@ -117,6 +131,7 @@ public abstract class AbstractSocketImageStreamCommunication extends
             throw new SocketImageStreamCommunicationException("Unknown issue.",
                             e);
         } finally {
-            /* */ }
+            image.flush();
+        }
     }
 }

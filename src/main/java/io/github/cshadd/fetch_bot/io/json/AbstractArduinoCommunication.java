@@ -123,7 +123,9 @@ public abstract class AbstractArduinoCommunication extends
             if (data.charAt(0) == '{' && !data.equals("{ }")) {
                 returnData = new JSONObject(data);
             }
-        } catch (JSONException e) {
+        } catch (InterruptedException e) { /* */
+        } // Suppressed
+        catch (JSONException e) {
             throw new ArduinoCommunicationException("Could not parse JSON in "
                             + this.serialPort + ".", e);
         } catch (Exception e) {

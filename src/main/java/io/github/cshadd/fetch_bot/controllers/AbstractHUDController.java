@@ -13,8 +13,6 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import io.github.cshadd.fetch_bot.io.socket.SocketCommunicationException;
-import io.github.cshadd.fetch_bot.io.socket.SocketImageStreamCommunication;
 
 // Main
 
@@ -36,18 +34,15 @@ public abstract class AbstractHUDController extends AbstractController
     public static final int SCENE_H = 480;
     public static final int SCENE_W = 640;
     
-    // Private Final Instance/Property Fields
-    
-    private final SocketImageStreamCommunication stream;
-    
     // Protected Final Instance/Property Fields
     
-    protected final HUDThread      hudRunnable;
-    protected final HUDSetupThread hudSetupRunnable;
-    protected final Thread         hudThread;
+    protected final HUDThread                    hudRunnable;
+    protected final HUDSetupThread               hudSetupRunnable;
+    protected final Thread                       hudThread;
     
     // Protected Instance/Property Fields
     
+    protected BufferedImage hudBuffer;
     protected JComponent   hudContent;
     protected JFrame       hudFrame;
     protected JLabel       hudLabelBack;
@@ -59,17 +54,12 @@ public abstract class AbstractHUDController extends AbstractController
     // Protected Constructors
     
     protected AbstractHUDController() {
-        this(null);
-    }
-    
-    protected AbstractHUDController(SocketImageStreamCommunication newStream) {
         super();
+        this.hudBuffer = null;
         this.hudSetupRunnable = new HUDSetupThread();
         javax.swing.SwingUtilities.invokeLater(this.hudSetupRunnable);
-        
         this.hudRunnable = new HUDThread();
         this.hudThread = new Thread(this.hudRunnable);
-        this.stream = newStream;
     }
     
     // Protected Final Nested Classes
@@ -122,12 +112,16 @@ public abstract class AbstractHUDController extends AbstractController
         public void run() {
             this.running = true;
             while (this.running) {
-                try {
-                    writeToStream();
-                } catch (Exception e) {
-                    /* */ } // Suppressed
-                finally {
-                    /* */ }
+                if (AbstractHUDController.this.hudContent != null) {
+                    synchronized (this) {
+                        final BufferedImage img = new BufferedImage(SCENE_W,
+                                        SCENE_H, BufferedImage.TYPE_INT_RGB);
+                        final Graphics2D g2d = img.createGraphics();
+                        AbstractHUDController.this.hudContent.printAll(g2d);
+                        g2d.dispose();
+                        AbstractHUDController.this.hudBuffer = img;
+                    }
+                }
             }
         }
     }
@@ -230,16 +224,5 @@ public abstract class AbstractHUDController extends AbstractController
             AbstractHUDController.this.hudFrame.pack();
             AbstractHUDController.this.hudFrame.setVisible(false);
         }
-    }
-    
-    // Protected Methods
-    
-    protected void writeToStream() throws SocketCommunicationException {
-        final BufferedImage img = new BufferedImage(SCENE_W, SCENE_H,
-                        BufferedImage.TYPE_INT_RGB);
-        final Graphics2D g2d = img.createGraphics();
-        AbstractHUDController.this.hudContent.printAll(g2d);
-        g2d.dispose();
-        this.stream.write(img);
     }
 }

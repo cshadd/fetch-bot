@@ -25,6 +25,7 @@
  */
 package io.github.cshadd.fetch_bot.controllers;
 
+import javax.swing.ImageIcon;
 import io.github.cshadd.fetch_bot.Component;
 
 // Main
@@ -54,14 +55,9 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
         super();
     }
     
-    public OpenCVControllerImpl(HUDController newHud)
+    public OpenCVControllerImpl(int newCameraPort)
                     throws OpenCVControllerException {
-        super(newHud);
-    }
-    
-    public OpenCVControllerImpl(HUDController newHud, int newCameraPort)
-                    throws OpenCVControllerException {
-        super(newHud, newCameraPort);
+        super(newCameraPort);
     }
     
     // Public Methods (Overrided)
@@ -91,8 +87,23 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
     }
     
     @Override
-    public String status() {
-        return this.status;
+    public ImageIcon takeCameraImageIcon() {
+        return this.cameraImageIconBuffer;
+    }
+    
+    @Override
+    public String takeStatus() {
+        return this.cameraStatusBuffer;
+    }
+    
+    @Override
+    public int[] takeTrackBounds() {
+        return this.cameraTrackBoundBuffer;
+    }
+    
+    @Override
+    public String takeTrackCaptureLabel() {
+        return cameraTrackCaptureLabelBuffer;
     }
     
     /**
