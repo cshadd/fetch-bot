@@ -25,6 +25,8 @@
  */
 package io.github.cshadd.fetch_bot.controllers;
 
+import javax.swing.ImageIcon;
+
 // Main
 
 /**
@@ -62,7 +64,13 @@ public abstract interface OpenCVController extends Controller {
      */
     public abstract void startCamera();
     
-    public abstract String status();
+    public abstract ImageIcon takeCameraImageIcon();
+    
+    public abstract String takeStatus();
+    
+    public abstract int[] takeTrackBounds();
+    
+    public abstract String takeTrackCaptureLabel();
     
     /**
      * Stop camera.

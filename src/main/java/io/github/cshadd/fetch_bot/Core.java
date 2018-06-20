@@ -193,7 +193,6 @@ public class Core implements FetchBot {
         String currentMode = "Idle";
         String currentMove = "Stop";
         String currentTrackClass = "None";
-        String currentTrackStatus = "";
         boolean tracked = false;
         int currentUltrasonicSensor = -1;
         while (true) {
@@ -734,12 +733,19 @@ public class Core implements FetchBot {
                     webInterfaceComm.setRobotValue("mode", "Idle");
                 }
                 
-                currentTrackStatus = "Fetch Bot " + VERSION + "<br />"
-                                + openCVControl.status() + "<br />";
+                String currentTrackStatus = "Fetch Bot " + VERSION
+                                + "<br />&#187; Status: Processing<br />"
+                                + openCVControl.takeStatus() + "<br />";
                 if (currentUltrasonicSensor <= SENSOR_LIMIT) {
                     currentTrackStatus += "Imminent Collision!";
                 }
+                
+                hudControl.updateBack(openCVControl.takeCameraImageIcon());
+                final int[] trackBounds = openCVControl.takeTrackBounds();
+                hudControl.updateTrackBounds(trackBounds[0], trackBounds[1], trackBounds[2], trackBounds[3]);
+                hudControl.updateTrackCaptureLabel(openCVControl.takeTrackCaptureLabel());
                 hudControl.updateStatus(currentTrackStatus);
+                socketImageStreamComm.write(hudControl.takeHUD());
                 webInterfaceComm.pushSource();
                 webInterfaceComm.pushRobot();
                 arduinoComm.pushSource();
@@ -799,19 +805,21 @@ public class Core implements FetchBot {
         
         // Initiate communications
         arduinoComm = new ArduinoCommunicationImpl();
+        socketImageStreamComm = new SocketImageStreamCommunicationImpl();
         webInterfaceComm = new WebInterfaceCommunicationImpl();
         Logger.clear();
         Logger.setWebInterfaceCommunications(webInterfaceComm);
         
         // Reset communications
         try {
-            socketImageStreamComm = new SocketImageStreamCommunicationImpl();
+
+            arduinoComm.reset();
+            arduinoComm.pushSource();
             socketImageStreamComm.open(References.HUD_STREAM_PORT);
             webInterfaceComm.reset();
             webInterfaceComm.pushSource();
             webInterfaceComm.pushRobot();
-            arduinoComm.reset();
-            arduinoComm.pushSource();
+
         } catch (CommunicationException e) {
             Logger.error(e, "There was an issue with Communication!");
         } catch (Exception e) {
@@ -849,10 +857,10 @@ public class Core implements FetchBot {
             /* */ }
             
         // Initiate controllers
-        hudControl = new HUDControllerImpl(socketImageStreamComm);
+        hudControl = new HUDControllerImpl();
         hudControl.openHud();
         try {
-            openCVControl = new OpenCVControllerImpl(hudControl);
+            openCVControl = new OpenCVControllerImpl();
         } catch (ControllerException e) {
             Logger.error(e, "There was an issue with Controller!");
         } catch (Exception e) {

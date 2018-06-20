@@ -1,5 +1,6 @@
 package io.github.cshadd.fetch_bot.controllers;
 
+import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
 // Main
@@ -21,12 +22,14 @@ public abstract interface HUDController extends Controller {
     
     public abstract void openHud();
     
-    public abstract void updateBack(ImageIcon img);
+    public abstract BufferedImage takeHUD();
     
-    public abstract void updateTrack(String label);
+    public abstract void updateBack(ImageIcon img);
     
     public abstract void updateTrackBounds(int startX, int startY, int endX,
                     int endY);
+    
+    public abstract void updateTrackCaptureLabel(String label);
     
     public abstract void updateStatus(String status);
 }
