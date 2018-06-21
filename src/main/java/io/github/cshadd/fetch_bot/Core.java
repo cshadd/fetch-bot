@@ -205,7 +205,7 @@ public class Core implements FetchBot {
      * @author Giovanni Orozco
      * @since 2.0.0-alpha
      */
-    private enum CommandLineArgument implements FetchBot {
+    private enum CommandLineArgument {
         // Public Constant Instance/Property Fields
         
         /**
