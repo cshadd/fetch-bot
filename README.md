@@ -252,7 +252,7 @@ https://cshadd.github.io/fetch-bot/
 See [here](CONTRIBUTING.md).
 
 ## Versioning
-We use [SemVer](http://semver.org/) for versioning. For the versions avalible, see the [tags on this repository](https://github.com/cshadd/fetch-bot/tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/cshadd/fetch-bot/tags).
 
 ## Owners/Authors/Developers/Contributors
 * Project Owner, Main Author, Lead Developer - [Christian Shadd](https://github.com/cshadd)
