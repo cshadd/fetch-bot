@@ -48,15 +48,11 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
     public void close() throws SocketCommunicationException {
         try {
             if (this.serverSocket != null) {
-                if (this.serverSocket.isBound()) {
-                    this.serverSocket.close();
-                }
+                this.serverSocket.close();
             }
             
             if (this.socket != null) {
-                if (this.socket.isBound()) {
-                    this.socket.close();
-                }
+                this.socket.close();
             }
         } catch (SocketException e) {
             throw new SocketCommunicationException("Could not close socket!",
@@ -71,10 +67,11 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
     
     @Override
     public void open(int port) throws SocketCommunicationException {
-        close();
         try {
-            this.serverSocket = new ServerSocket(port, 50, InetAddress
-                            .getByName(DEFAULT_SOCKET_ADDRESS));
+            if (this.serverSocket == null) {
+                this.serverSocket = new ServerSocket(port, 50, InetAddress
+                                .getByName(DEFAULT_SOCKET_ADDRESS));
+            }
         } catch (SocketException e) {
             throw new SocketCommunicationException("Could not open socket!", e);
         } catch (Exception e) {

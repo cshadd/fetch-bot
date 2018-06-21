@@ -35,8 +35,9 @@ public class HUDControllerImpl extends AbstractHUDController {
             this.hudRunnable.terminate();
             this.hudThread.join();
         } catch (InterruptedException e) {
-            throw new HUDControllerException("Thread was interrupted.", e);
-        } catch (Exception e) {
+            /* */
+        } // Suppressed
+        catch (Exception e) {
             throw new HUDControllerException("Unknown issue.", e);
         } finally {
             /* */ }

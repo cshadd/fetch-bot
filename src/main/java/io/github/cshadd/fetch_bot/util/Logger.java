@@ -122,9 +122,7 @@ public class Logger implements FetchBot {
      *             If the log file could not be read
      */
     private static String read() throws IOException {
-        File input = new File(LOG_FILE);
-        String returnData = FileUtils.readFileToString(input, "UTF-8");
-        return returnData;
+        return FileUtils.readFileToString(new File(LOG_FILE), "UTF-8");
     }
     
     /**
@@ -202,9 +200,7 @@ public class Logger implements FetchBot {
     public static void assign() {
         webInterfaceComm = null;
         try {
-            close();
-            File input = new File(LOG_FILE);
-            FileUtils.deleteQuietly(input);
+            FileUtils.deleteQuietly(new File(LOG_FILE));
             javaLoggerHandler = new FileHandler(LOG_FILE);
             javaLoggerHandler.setFormatter(javaLoggerHandlerFormatter);
             javaLogger.addHandler(javaLoggerHandler);
@@ -224,7 +220,6 @@ public class Logger implements FetchBot {
     public static void clear() {
         CONSOLE.clearScreen();
         CONSOLE.title("--- Fetch Bot ---", WEBSITE);
-        assign();
     }
     
     /**

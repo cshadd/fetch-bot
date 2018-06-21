@@ -146,15 +146,15 @@ public abstract class AbstractOpenCVController extends AbstractController
     /**
      * Instantiates a new Abstract OpenCV Controller.
      *
-     * @throws OpenCVControllerException
+     * @throws ControllerException
      *             if OpenCV could not load
      */
-    protected AbstractOpenCVController() throws OpenCVControllerException {
+    protected AbstractOpenCVController() throws ControllerException {
         this(References.CAMERA_PORT);
     }
     
     protected AbstractOpenCVController(int newCameraPort)
-                    throws OpenCVControllerException {
+                    throws ControllerException {
         super();
         try {
             this.camera = new VideoCapture(newCameraPort);
@@ -172,6 +172,11 @@ public abstract class AbstractOpenCVController extends AbstractController
         this.cameraTrackBoundBuffer = initialTrackBounds;
         this.cameraTrackCaptureLabelBuffer = "";
         try {
+            if (!new File(DEPLOY_CAFFEMODEL_FILE).exists() || !new File(
+                            DEPLOY_PROTOTXT_TXT_FILE).exists() || !new File(
+                                            DEPLOY_TRACK_CLASSES_FILE)
+                                                            .exists()) { throw new CvException(
+                                                                            "Missing neural network files."); }
             this.net = Dnn.readNetFromCaffe(DEPLOY_PROTOTXT_TXT_FILE,
                             DEPLOY_CAFFEMODEL_FILE);
             final File trackClassesInput = new File(DEPLOY_TRACK_CLASSES_FILE);

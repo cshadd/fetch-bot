@@ -120,8 +120,6 @@ public class VersionCheck implements FetchBot {
      *             if the version check failed
      */
     public static boolean verify(String version) throws VersionCheckException {
-        if (References.CUSTOM_PROGRAM) { return (getCurrentVersion().equals(
-                        version)); }
-        return true;
+        return (getCurrentVersion().equals(version));
     }
 }

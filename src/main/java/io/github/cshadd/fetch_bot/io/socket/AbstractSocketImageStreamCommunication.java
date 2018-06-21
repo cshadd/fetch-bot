@@ -85,7 +85,6 @@ public abstract class AbstractSocketImageStreamCommunication extends
                                                 .size()).append(CRLF);
                                 sb.append(CRLF);
                                 bos.write(sb.toString().getBytes());
-                                System.out.println(baos.toByteArray());
                                 bos.write(baos.toByteArray());
                                 bos.write(CRLF.getBytes());
                                 bos.flush();
@@ -120,10 +119,12 @@ public abstract class AbstractSocketImageStreamCommunication extends
                 }
             }
         } catch (SocketException e) {
-            this.open(this.serverSocket.getLocalPort());
+            final int oldPort = this.serverSocket.getLocalPort();
+            this.close();
+            this.open(oldPort);
             throw new SocketImageStreamCommunicationException(
-                            "There was a problem with socket, attempting to reconnect!",
-                            e);
+                            "There was a problem with socket, attempting to reconnect on "
+                                            + oldPort + "!", e);
         } catch (IOException e) {
             throw new SocketImageStreamCommunicationException(
                             "There was a problem with writing!", e);

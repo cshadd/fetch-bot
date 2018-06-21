@@ -69,37 +69,52 @@ public class Core implements FetchBot {
      */
     private static final String VERSION = "v2.0.0-alpha.1";
     
-    // Private Static Instance/Property Fields
+    // Protected Static Instance/Property Fields
     
     /**
      * The Arduino Communications.
      */
-    private static ArduinoCommunication arduinoComm;
+    protected static ArduinoCommunication arduinoComm;
+    
+    /**
+     * The current track status.
+     */
+    protected static String currentTrackStatus;
     
     /**
      * The Hud Controller.
      */
-    private static HUDController hudControl;
+    protected static HUDController hudControl;
+    
+    /**
+     * The HUD socket thread.
+     */
+    protected static Thread hudSocketThread;
+    
+    /**
+     * The HUD socket runnable thread.
+     */
+    protected static HUDSocketThread hudSocketRunnable;
     
     /**
      * The OpenCV Controller.
      */
-    private static OpenCVController openCVControl;
+    protected static OpenCVController openCVControl;
     
     /**
      * The Pathfind Controller.
      */
-    private static PathfindController pathfindControl;
+    protected static PathfindController pathfindControl;
     
     /**
      * The Socket Image Stream Communications.
      */
-    private static SocketImageStreamCommunication socketImageStreamComm;
+    protected static SocketImageStreamCommunication socketImageStreamComm;
     
     /**
      * The Web Interface Communications.
      */
-    private static WebInterfaceCommunication webInterfaceComm;
+    protected static WebInterfaceCommunication webInterfaceComm;
     
     // Public Constructors
     
@@ -107,6 +122,75 @@ public class Core implements FetchBot {
      * Instantiates a new Core.
      */
     public Core() {
+    }
+    
+    // Private Static Final Nested Classes
+    
+    /**
+     * The Class HUDSocketThread. A Runnable that controls the HUD Socket.
+     * 
+     * @author Christian Shadd
+     * @author Maria Verna Aquino
+     * @author Thanh Vu
+     * @author Joseph Damian
+     * @author Giovanni Orozco
+     * @since 2.0.0-alpha.1
+     */
+    private static final class HUDSocketThread implements Runnable {
+        // Private Instance/Property Fields
+        
+        /**
+         * The running state.
+         */
+        private volatile boolean running;
+        
+        // Public Constructors
+        
+        /**
+         * Instantiates a new HUD Socket Thread.
+         */
+        public HUDSocketThread() {
+            super();
+            this.running = false;
+        }
+        
+        // Public Methods
+        
+        /**
+         * Terminate the thread.
+         */
+        public void terminate() {
+            this.running = false;
+        }
+        
+        // Public Methods (Overrided)
+        
+        /**
+         * Runs the HUD Socket.
+         * 
+         * @see java.lang.Runnable#run()
+         */
+        @Override
+        public void run() {
+            this.running = true;
+            while (this.running) {
+                hudControl.updateBack(openCVControl.takeCameraImageIcon());
+                final int[] trackBounds = openCVControl.takeTrackBounds();
+                hudControl.updateTrackBounds(trackBounds[0], trackBounds[1],
+                                trackBounds[2], trackBounds[3]);
+                hudControl.updateTrackCaptureLabel(openCVControl
+                                .takeTrackCaptureLabel());
+                hudControl.updateStatus(currentTrackStatus);
+                try {
+                    socketImageStreamComm.write(hudControl.takeHUD());
+                } catch (CommunicationException e) {
+                    Logger.error(e, "There was an issue with Communication!");
+                } catch (Exception e) {
+                    Logger.error(e, "There was an unknown issue!");
+                } finally {
+                    /* */ }
+            }
+        }
     }
     
     // Private Nested Classes
@@ -195,12 +279,17 @@ public class Core implements FetchBot {
         String currentTrackClass = "None";
         boolean tracked = false;
         int currentUltrasonicSensor = -1;
+        
+        currentTrackStatus = "";
+        
         while (true) {
             try {
                 // Pull data from communications
+                Logger.debug("Pulling.");
                 webInterfaceComm.pullSource();
                 webInterfaceComm.pullRobot();
                 arduinoComm.pullRobot();
+                Logger.debug("Finished pulling.");
                 
                 // Sensors
                 final float rawUltrasonicSensor = arduinoComm
@@ -733,22 +822,18 @@ public class Core implements FetchBot {
                     webInterfaceComm.setRobotValue("mode", "Idle");
                 }
                 
-                String currentTrackStatus = "Fetch Bot " + VERSION
+                currentTrackStatus = "Fetch Bot " + VERSION
                                 + "<br />&#187; Status: Processing<br />"
                                 + openCVControl.takeStatus() + "<br />";
                 if (currentUltrasonicSensor <= SENSOR_LIMIT) {
                     currentTrackStatus += "Imminent Collision!";
                 }
                 
-                hudControl.updateBack(openCVControl.takeCameraImageIcon());
-                final int[] trackBounds = openCVControl.takeTrackBounds();
-                hudControl.updateTrackBounds(trackBounds[0], trackBounds[1], trackBounds[2], trackBounds[3]);
-                hudControl.updateTrackCaptureLabel(openCVControl.takeTrackCaptureLabel());
-                hudControl.updateStatus(currentTrackStatus);
-                socketImageStreamComm.write(hudControl.takeHUD());
+                Logger.debug("Pushing.");
                 webInterfaceComm.pushSource();
                 webInterfaceComm.pushRobot();
                 arduinoComm.pushSource();
+                Logger.debug("Finished pushing.");
             } catch (CommunicationException e) {
                 Logger.error(e, "There was an issue with Communication!");
             } catch (Exception e) {
@@ -776,7 +861,13 @@ public class Core implements FetchBot {
             try {
                 cLArg = CommandLineArgument.valueOf(args[0]);
             } catch (IllegalArgumentException e) {
-                throw e;
+                Logger.close();
+                Logger.assign();
+                Logger.fatalError(e, "Bad command line, try using HElP.");
+                Logger.info("Core - Fetch Bot terminating prematurely! Log file: "
+                                + Logger.LOG_FILE + ".");
+                Logger.close();
+                System.exit(1);
             } catch (Exception e) {
                 throw e;
             } finally {
@@ -792,11 +883,13 @@ public class Core implements FetchBot {
             for (CommandLineArgument arg : CommandLineArgument.values()) {
                 help += "\t" + arg + "\t\t" + arg.getDescription() + "\n";
             }
+            Logger.close();
             Logger.assign();
             Logger.info(help + "\n\n");
             Logger.close();
             System.exit(0);
         } else if (cLArg == CommandLineArgument.V) {
+            Logger.close();
             Logger.assign();
             Logger.info("\n\n" + VERSION + "\n\n");
             Logger.close();
@@ -807,19 +900,23 @@ public class Core implements FetchBot {
         arduinoComm = new ArduinoCommunicationImpl();
         socketImageStreamComm = new SocketImageStreamCommunicationImpl();
         webInterfaceComm = new WebInterfaceCommunicationImpl();
+        Logger.close();
+        Logger.assign();
         Logger.clear();
         Logger.setWebInterfaceCommunications(webInterfaceComm);
         
         // Reset communications
         try {
-
             arduinoComm.reset();
             arduinoComm.pushSource();
             socketImageStreamComm.open(References.HUD_STREAM_PORT);
             webInterfaceComm.reset();
             webInterfaceComm.pushSource();
             webInterfaceComm.pushRobot();
-
+            Logger.debug("Connected to Arduino serial on "
+                            + References.HUD_STREAM_PORT + ".");
+            Logger.debug("Connected to Web Interface on "
+                            + References.WEB_INTERFACE_PATH + ".");
         } catch (CommunicationException e) {
             Logger.error(e, "There was an issue with Communication!");
         } catch (Exception e) {
@@ -843,14 +940,14 @@ public class Core implements FetchBot {
         boolean versionOk = false;
         try {
             versionOk = VersionCheck.verify(VERSION);
-            if (!versionOk) {
+            if (!versionOk && !References.CUSTOM_BUILD) {
                 Logger.warn("VersionCheck - Version mismatch [this: " + VERSION
                                 + "; current: " + VersionCheck
                                                 .getCurrentVersion()
                                 + "], this version might be outdated!");
             }
         } catch (VersionCheckException e) {
-            Logger.warn(e, "There was an issue with VersionCheck!");
+            Logger.error(e, "There was an issue with VersionCheck!");
         } catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         } finally {
@@ -861,14 +958,19 @@ public class Core implements FetchBot {
         hudControl.openHud();
         try {
             openCVControl = new OpenCVControllerImpl();
+            openCVControl.startCamera();
         } catch (ControllerException e) {
             Logger.error(e, "There was an issue with Controller!");
         } catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         } finally {
             /* */ }
-        openCVControl.startCamera();
+            
         pathfindControl = new PathfindControllerImpl();
+        
+        hudSocketRunnable = new HUDSocketThread();
+        hudSocketThread = new Thread(hudSocketRunnable);
+        hudSocketThread.start();
     }
     
     /**
@@ -879,6 +981,9 @@ public class Core implements FetchBot {
                         + ".");
         try {
             hudControl.closeHud();
+            hudSocketRunnable.terminate();
+            hudSocketThread.join();
+            
             openCVControl.stopCamera();
             arduinoComm.setSourceValue("a", "Stop");
             arduinoComm.pushSource();
@@ -908,9 +1013,9 @@ public class Core implements FetchBot {
     public static final void delayThread(long millis) {
         try {
             Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            Logger.warn(e, "Thread was interrupted!");
-        } catch (Exception e) {
+        } catch (@SuppressWarnings("unused") InterruptedException e) {
+            /* */ } // Suppressed
+        catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         } finally {
             /* */ }
@@ -932,14 +1037,8 @@ public class Core implements FetchBot {
         try {
             // Setup
             setup(args);
-        } catch (IllegalArgumentException e) {
-            Logger.assign();
-            Logger.fatalError(e, "Bad command line, try using HElP.");
-            Logger.info("Core - Fetch Bot terminating prematurely! Log file: "
-                            + Logger.LOG_FILE + ".");
-            Logger.close();
-            System.exit(1);
         } catch (UnsatisfiedLinkError e) {
+            Logger.close();
             Logger.assign();
             Logger.fatalError(e, "Native library failed to load!");
             Logger.info("Core - Fetch Bot terminating prematurely! Log file: "
@@ -947,8 +1046,9 @@ public class Core implements FetchBot {
             Logger.close();
             System.exit(1);
         } catch (Exception e) {
+            Logger.close();
             Logger.assign();
-            Logger.fatalError(e, "There was an unknown issue!");
+            Logger.fatalError(e, "Unknown issue.");
             Logger.info("Core - Fetch Bot terminating prematurely! Log file: "
                             + Logger.LOG_FILE + ".");
             Logger.close();
