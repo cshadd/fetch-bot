@@ -23,60 +23,66 @@
  * 
  * https://cshadd.github.io/fetch-bot/
  */
-package io.github.cshadd.fetch_bot.controllers;
-
-import javax.swing.ImageIcon;
+package io.github.cshadd.fetch_bot;
 
 // Main
 
 /**
- * The Interface OpenCVController. Defines what an OpenCV Controller does.
+ * The Class References. Values must be changed to reflect any custom builds.
  * 
  * @author Christian Shadd
  * @author Maria Verna Aquino
  * @author Thanh Vu
  * @author Joseph Damian
  * @author Giovanni Orozco
- * @since 1.0.0
+ * @since 2.0.0-alpha.1
  */
-public abstract interface OpenCVController extends Controller {
-    // Public Abstract Property Accessor Methods
-    
-    // Public Abstract Methods
+public final class References implements FetchBot {
+    // Public Constant Instance/Property Fields
     
     /**
-     * Assign track class.
-     *
-     * @param newTrackClass
-     *            the new track class
+     * The Constant APACHE_HTTP_SERVER_PATH.
      */
-    public abstract void assignTrackClass(String newTrackClass);
+    public static final String APACHE_HTTP_SERVER_PATH = "/var/www/html/";
     
     /**
-     * Checks if track class is found.
-     *
-     * @return true, if track class is found
+     * The Constant ARDUINO_SERIAL_PORT.
      */
-    public abstract boolean isTrackClassFound();
+    public static final String ARDUINO_SERIAL_PORT = "/dev/ttyACM0";
     
     /**
-     * Start camera.
+     * The Constant CAMERA_PORT.
      */
-    public abstract void startCamera();
-    
-    public abstract ImageIcon takeCameraImageIcon();
-    
-    public abstract String takeStatus();
-    
-    public abstract int[] takeTrackBounds();
-    
-    public abstract String takeTrackCaptureLabel();
+    public static final int CAMERA_PORT = 0;
     
     /**
-     * Stop camera.
-     *
-     * @throws OpenCVControllerException
-     *             if the thread was interrupted during termination
+     * The Constant CUSTOM_BUILD.
      */
-    public abstract void stopCamera() throws OpenCVControllerException;
+    public static final boolean CUSTOM_BUILD = false;
+    
+    /**
+     * The Constant HUD_STREAM_HOST.
+     */
+    public static final String HUD_STREAM_HOST = "localhost";
+    
+    /**
+     * The Constant HUD_STREAM_PORT.
+     */
+    public static final int HUD_STREAM_PORT = 8885;
+    
+    /**
+     * The Constant PROGRAM_LIBRARY_PATH.
+     */
+    public static final String PROGRAM_LIBRARY_PATH = "./libs/fetch-bot/";
+    
+    /**
+     * The Constant WEB_INTERFACE_FOLDER_NAME.
+     */
+    public static final String WEB_INTERFACE_FOLDER_NAME = "FetchBot";
+    
+    /**
+     * The Constant WEB_INTERFACE_PATH.
+     */
+    public static final String WEB_INTERFACE_PATH = APACHE_HTTP_SERVER_PATH
+                    + WEB_INTERFACE_FOLDER_NAME;
 }

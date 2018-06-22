@@ -23,21 +23,45 @@
  * 
  * https://cshadd.github.io/fetch-bot/
  */
-package io.github.cshadd.fetch_bot.io;
+package io.github.cshadd.fetch_bot.io.json;
 
-import io.github.cshadd.fetch_bot.FetchBot;
+import io.github.cshadd.fetch_bot.io.CommunicationException;
 
-//Main
+// Main
 
 /**
- * The Interface Communication. Defines what an Communication does.
+ * The Class WebInterfaceCommunicationException. A Communication Exception
+ * specific to JSON.
  * 
  * @author Christian Shadd
  * @author Maria Verna Aquino
  * @author Thanh Vu
  * @author Joseph Damian
  * @author Giovanni Orozco
- * @since 1.0.0
+ * @since 2.0.0-alpha
  */
-public abstract interface Communication extends FetchBot {
+public class JSONCommunicationException extends CommunicationException {
+    // Private Constant Instance/Property Fields
+    
+    /**
+     * The Constant serialVersionUID.
+     */
+    private static final long serialVersionUID = 1L;
+    
+    // Public Constructors
+    
+    public JSONCommunicationException() {
+    }
+    
+    public JSONCommunicationException(String message) {
+        super(message);
+    }
+    
+    public JSONCommunicationException(String message, Throwable cause) {
+        super(message, cause);
+    }
+    
+    public JSONCommunicationException(Throwable cause) {
+        super(cause);
+    }
 }

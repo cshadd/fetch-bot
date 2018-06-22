@@ -23,14 +23,13 @@
  * 
  * https://cshadd.github.io/fetch-bot/
  */
-package io.github.cshadd.fetch_bot.controllers;
-
-import javax.swing.ImageIcon;
+package io.github.cshadd.fetch_bot.io.json;
 
 // Main
 
 /**
- * The Interface OpenCVController. Defines what an OpenCV Controller does.
+ * The Class WebInterfaceCommunicationException. A JSON Communication Exception
+ * specific to Web Interface.
  * 
  * @author Christian Shadd
  * @author Maria Verna Aquino
@@ -39,44 +38,53 @@ import javax.swing.ImageIcon;
  * @author Giovanni Orozco
  * @since 1.0.0
  */
-public abstract interface OpenCVController extends Controller {
-    // Public Abstract Property Accessor Methods
-    
-    // Public Abstract Methods
+public class WebInterfaceCommunicationException extends
+                JSONCommunicationException {
+    // Private Constant Instance/Property Fields
     
     /**
-     * Assign track class.
+     * The Constant serialVersionUID.
+     */
+    private static final long serialVersionUID = 1L;
+    
+    // Public Constructors
+    
+    /**
+     * Instantiates a new Web Interface Communication Exception.
+     */
+    public WebInterfaceCommunicationException() {
+    }
+    
+    /**
+     * Instantiates a new Web Interface Communication Exception with message.
      *
-     * @param newTrackClass
-     *            the new track class
+     * @param message
+     *            the message
      */
-    public abstract void assignTrackClass(String newTrackClass);
+    public WebInterfaceCommunicationException(String message) {
+        super(message);
+    }
     
     /**
-     * Checks if track class is found.
+     * Instantiates a new Web Interface Communication Exception with message and
+     * cause.
      *
-     * @return true, if track class is found
+     * @param message
+     *            the message
+     * @param cause
+     *            the cause
      */
-    public abstract boolean isTrackClassFound();
+    public WebInterfaceCommunicationException(String message, Throwable cause) {
+        super(message, cause);
+    }
     
     /**
-     * Start camera.
-     */
-    public abstract void startCamera();
-    
-    public abstract ImageIcon takeCameraImageIcon();
-    
-    public abstract String takeStatus();
-    
-    public abstract int[] takeTrackBounds();
-    
-    public abstract String takeTrackCaptureLabel();
-    
-    /**
-     * Stop camera.
+     * Instantiates a new Web Interface Communication Exception with cause.
      *
-     * @throws OpenCVControllerException
-     *             if the thread was interrupted during termination
+     * @param cause
+     *            the cause
      */
-    public abstract void stopCamera() throws OpenCVControllerException;
+    public WebInterfaceCommunicationException(Throwable cause) {
+        super(cause);
+    }
 }

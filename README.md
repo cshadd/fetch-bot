@@ -128,7 +128,7 @@ mvn clean
 ```
 in a Bash terminal.
 
-You may now make any changes to the Java project that you desire. Once you are done it is time to compile the project.
+You may now make any changes to the Java project that you desire. You may want to update the code in ``<PROJECT DIRECTORY>/src/main/java/io/github/cshadd/fetch_bot/References.java`` Once you are done it is time to compile the project.
 
 Execute
 ```bash
@@ -172,7 +172,7 @@ sudo chmod -R 776 <LOCATION OF APACHE HTTP SERVER FOLDER>/<DESIRED LOCATION OF W
 in a Bash terminal.
 
 ### Training
-The project must be trained with a neural network. We use Caffe to train the project.
+The project must be trained with a neural network. We use Caffe to train the project and have a preloaded training model for you to use.
 The folder for the training data is ``<PROJECT DIRECTORY>/src/neural-network/``.
 Tutorials on training is beyond the scope of this project.
 
@@ -252,7 +252,7 @@ https://cshadd.github.io/fetch-bot/
 See [here](CONTRIBUTING.md).
 
 ## Versioning
-We use [SemVer](http://semver.org/) for versioning. For the versions avalible, see the [tags on this repository](https://github.com/cshadd/fetch-bot/tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/cshadd/fetch-bot/tags).
 
 ## Owners/Authors/Developers/Contributors
 * Project Owner, Main Author, Lead Developer - [Christian Shadd](https://github.com/cshadd)

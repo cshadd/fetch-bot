@@ -23,21 +23,27 @@
  * 
  * https://cshadd.github.io/fetch-bot/
  */
-package io.github.cshadd.fetch_bot.io;
+package io.github.cshadd.fetch_bot.io.socket;
 
-import io.github.cshadd.fetch_bot.FetchBot;
+import java.awt.image.BufferedImage;
 
-//Main
+// Main
 
 /**
- * The Interface Communication. Defines what an Communication does.
+ * The Interface SocketImageStreamCommunication. Defines what a Socket Image
+ * Stream Communication does.
  * 
  * @author Christian Shadd
  * @author Maria Verna Aquino
  * @author Thanh Vu
  * @author Joseph Damian
  * @author Giovanni Orozco
- * @since 1.0.0
+ * @since 2.0.0-alpha
  */
-public abstract interface Communication extends FetchBot {
+public abstract interface SocketImageStreamCommunication extends
+                SocketCommunication {
+    // Public Abstract Methods
+    
+    public abstract void write(BufferedImage image)
+                    throws SocketCommunicationException;
 }

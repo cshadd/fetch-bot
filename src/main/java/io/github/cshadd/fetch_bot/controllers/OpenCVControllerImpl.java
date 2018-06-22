@@ -25,6 +25,7 @@
  */
 package io.github.cshadd.fetch_bot.controllers;
 
+import javax.swing.ImageIcon;
 import io.github.cshadd.fetch_bot.Component;
 
 // Main
@@ -47,21 +48,15 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
     /**
      * Instantiates a new Open CV Controller Impl.
      *
-     * @throws OpenCVControllerException
+     * @throws ControllerException
      *             if OpenCV could not load
      */
-    public OpenCVControllerImpl() throws OpenCVControllerException {
+    public OpenCVControllerImpl() throws ControllerException {
         super();
     }
     
-    public OpenCVControllerImpl(HUDController newHud)
-                    throws OpenCVControllerException {
-        super(newHud);
-    }
-    
-    public OpenCVControllerImpl(HUDController newHud, int newCameraPort)
-                    throws OpenCVControllerException {
-        super(newHud, newCameraPort);
+    public OpenCVControllerImpl(int newCameraPort) throws ControllerException {
+        super(newCameraPort);
     }
     
     // Public Methods (Overrided)
@@ -91,8 +86,23 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
     }
     
     @Override
-    public String status() {
-        return this.status;
+    public ImageIcon takeCameraImageIcon() {
+        return this.cameraImageIconBuffer;
+    }
+    
+    @Override
+    public String takeStatus() {
+        return this.cameraStatusBuffer;
+    }
+    
+    @Override
+    public int[] takeTrackBounds() {
+        return this.cameraTrackBoundBuffer;
+    }
+    
+    @Override
+    public String takeTrackCaptureLabel() {
+        return cameraTrackCaptureLabelBuffer;
     }
     
     /**
@@ -104,10 +114,9 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
             this.cameraRunnable.terminate();
             this.cameraThread.join();
         } catch (InterruptedException e) {
-            throw new OpenCVControllerException("Thread was interrupted.", e);
-        } catch (Exception e) {
-            throw new OpenCVControllerException("There was an unknown issue!",
-                            e);
+            /* */ } // Suppressed
+        catch (Exception e) {
+            throw new OpenCVControllerException("Unknown issue.", e);
         } finally {
             /* */ }
     }

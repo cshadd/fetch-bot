@@ -23,21 +23,26 @@
  * 
  * https://cshadd.github.io/fetch-bot/
  */
-package io.github.cshadd.fetch_bot.io;
+package io.github.cshadd.fetch_bot.io.socket;
 
-import io.github.cshadd.fetch_bot.FetchBot;
+import io.github.cshadd.fetch_bot.io.Communication;
 
-//Main
+// Main
 
 /**
- * The Interface Communication. Defines what an Communication does.
+ * The Interface SocketCommunication. Defines what a Socket Communication does.
  * 
  * @author Christian Shadd
  * @author Maria Verna Aquino
  * @author Thanh Vu
  * @author Joseph Damian
  * @author Giovanni Orozco
- * @since 1.0.0
+ * @since 2.0.0-alpha
  */
-public abstract interface Communication extends FetchBot {
+public abstract interface SocketCommunication extends Communication {
+    // Public Abstract Methods
+    
+    public abstract void close() throws SocketCommunicationException;
+    public abstract void listen() throws SocketCommunicationException;
+    public abstract void open() throws SocketCommunicationException;
 }
