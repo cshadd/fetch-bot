@@ -33,13 +33,14 @@ public abstract class AbstractSocketImageStreamCommunication extends
     // Public Constructors
     
     private AbstractSocketImageStreamCommunication() {
-        this(0);
+        this("", 0);
     }
     
     // Private Constructors
     
-    public AbstractSocketImageStreamCommunication(int socketPort) {
-        super(socketPort);
+    public AbstractSocketImageStreamCommunication(String socketHost,
+                    int socketPort) {
+        super(socketHost, socketPort);
     }
 
     // Public Methods (Overrided)

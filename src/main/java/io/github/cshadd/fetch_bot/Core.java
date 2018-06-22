@@ -901,7 +901,7 @@ public class Core implements FetchBot {
         arduinoComm = new ArduinoCommunicationImpl(
                         References.ARDUINO_SERIAL_PORT);
         socketImageStreamComm = new SocketImageStreamCommunicationImpl(
-                        References.HUD_STREAM_PORT);
+                        References.HUD_STREAM_HOST, References.HUD_STREAM_PORT);
         webInterfaceComm = new WebInterfaceCommunicationImpl(
                         References.WEB_INTERFACE_PATH);
         Logger.close();
@@ -919,6 +919,7 @@ public class Core implements FetchBot {
             socketImageStreamComm.open();
             socketImageStreamComm.listen();
             Logger.debug("Connected to HUD socket on "
+                            + References.HUD_STREAM_HOST + ":"
                             + References.HUD_STREAM_PORT + ".");
             webInterfaceComm.reset();
             webInterfaceComm.pushSource();

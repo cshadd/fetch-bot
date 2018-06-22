@@ -21,12 +21,13 @@ public class SocketImageStreamCommunicationImpl extends
     // Private Constructors
     
     private SocketImageStreamCommunicationImpl() {
-        this(0);
+        this("", 0);
     }
     
     // Public Constructors
     
-    public SocketImageStreamCommunicationImpl(int socketPort) {
-        super(socketPort);
+    public SocketImageStreamCommunicationImpl(String socketHost,
+                    int socketPort) {
+        super(socketHost, socketPort);
     }
 }
