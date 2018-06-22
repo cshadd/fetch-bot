@@ -63,7 +63,7 @@ public final class References implements FetchBot {
     /**
      * The Constant HUD_STREAM_HOST.
      */
-    public static final String HUD_STREAM_HOST = "localhost";
+    public static final String HUD_STREAM_HOST = "192.168.1.2";
     
     /**
      * The Constant HUD_STREAM_PORT.
