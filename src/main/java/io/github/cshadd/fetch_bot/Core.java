@@ -186,6 +186,7 @@ public class Core implements FetchBot {
                     socketImageStreamComm.write(hudControl.takeHUD());
                     Logger.debug("Stream sent.");
                 } catch (Exception e) {
+                    e.printStackTrace();
                     /* */
                 } // Suppressed
                 finally {
@@ -989,11 +990,11 @@ public class Core implements FetchBot {
      */
     private static void terminate() {
         try {
-            hudControl.closeHud();
-            Logger.debug("Closed HUD.");
             hudSocketRunnable.terminate();
             hudSocketThread.join();
             Logger.debug("Stopped HUD Socket Thread.");
+            hudControl.closeHud();
+            Logger.debug("Closed HUD.");
             openCVControl.stopCamera();
             Logger.debug("Stopped Camera.");
             arduinoComm.setSourceValue("a", "Stop");
