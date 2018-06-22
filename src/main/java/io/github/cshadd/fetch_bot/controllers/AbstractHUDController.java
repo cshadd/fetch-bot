@@ -113,14 +113,12 @@ public abstract class AbstractHUDController extends AbstractController
             this.running = true;
             while (this.running) {
                 if (AbstractHUDController.this.hudContent != null) {
-                    synchronized (this) {
-                        final BufferedImage img = new BufferedImage(SCENE_W,
+                    final BufferedImage img = new BufferedImage(SCENE_W,
                                         SCENE_H, BufferedImage.TYPE_INT_RGB);
-                        final Graphics2D g2d = img.createGraphics();
-                        AbstractHUDController.this.hudContent.printAll(g2d);
-                        g2d.dispose();
-                        AbstractHUDController.this.hudBuffer = img;
-                    }
+                    final Graphics2D g2d = img.createGraphics();
+                    AbstractHUDController.this.hudContent.printAll(g2d);
+                    g2d.dispose();
+                    AbstractHUDController.this.hudBuffer = img;
                 }
             }
         }

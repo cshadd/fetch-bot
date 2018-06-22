@@ -174,7 +174,6 @@ public class Core implements FetchBot {
         public void run() {
             this.running = true;
             while (this.running) {
-                Logger.debug("Stream sent.");
                 hudControl.updateBack(openCVControl.takeCameraImageIcon());
                 final int[] trackBounds = openCVControl.takeTrackBounds();
                 hudControl.updateTrackBounds(trackBounds[0], trackBounds[1],
@@ -182,13 +181,14 @@ public class Core implements FetchBot {
                 hudControl.updateTrackCaptureLabel(openCVControl
                                 .takeTrackCaptureLabel());
                 hudControl.updateStatus(currentTrackStatus);
+                Logger.debug("HUD updated.");
                 try {
                     socketImageStreamComm.write(hudControl.takeHUD());
-                } catch (CommunicationException e) {
-                    Logger.error(e, "There was an issue with Communication!");
+                    Logger.debug("Stream sent.");
                 } catch (Exception e) {
-                    Logger.error(e, "There was an unknown issue!");
-                } finally {
+                    /* */
+                } // Suppressed
+                finally {
                     /* */ }
             }
         }
@@ -934,8 +934,7 @@ public class Core implements FetchBot {
             Logger.error(e, "There was an unknown issue!");
         } finally {
             /* */ }
-
-
+            
         try {
             webInterfaceComm.pushSource();
         } catch (CommunicationException e) {
@@ -1008,8 +1007,8 @@ public class Core implements FetchBot {
             webInterfaceComm.pushSource();
             webInterfaceComm.pushRobot();
             Logger.debug("Disconnected Web Interface Communication.");
-            Logger.info("Core - Fetch Bot terminating! Log file: " + Logger.LOG_FILE
-                            + ".");
+            Logger.info("Core - Fetch Bot terminating! Log file: "
+                            + Logger.LOG_FILE + ".");
         } catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         } finally {
