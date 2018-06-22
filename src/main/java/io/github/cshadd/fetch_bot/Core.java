@@ -917,6 +917,7 @@ public class Core implements FetchBot {
             Logger.debug("Connected to Arduino serial on "
                             + References.ARDUINO_SERIAL_PORT + ".");
             socketImageStreamComm.open();
+            socketImageStreamComm.listen();
             Logger.debug("Connected to HUD socket on "
                             + References.HUD_STREAM_HOST + ":"
                             + References.HUD_STREAM_PORT + ".");

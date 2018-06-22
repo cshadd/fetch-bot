@@ -1,9 +1,12 @@
 package io.github.cshadd.fetch_bot.io.socket;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
+
 import io.github.cshadd.fetch_bot.io.AbstractCommunication;
 
 // Main
@@ -78,12 +81,32 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
     }
     
     @Override
+    public void listen() throws SocketCommunicationException {
+        if (this.serverSocket != null) {
+            if (!this.serverSocket.isClosed()) {
+                try {
+                    this.socket = this.serverSocket.accept();
+                } catch (IOException e) {
+                    throw new SocketCommunicationException(
+                                    "Could not listen to socket!", e);
+                } catch (Exception e) {
+                    throw new SocketCommunicationException("Unknown issue.", e);
+                } finally {
+                }
+            }
+        }
+    }
+    
+    @Override
     public void open() throws SocketCommunicationException {
         try {
             if (this.serverSocket == null) {
+                System.out.println(InetAddress.getByName(this.socketHost));
                 this.serverSocket = new ServerSocket(this.socketPort, 50,
                                 InetAddress.getByName(this.socketHost));
             }
+        } catch (UnknownHostException e) {
+            throw new SocketCommunicationException("Could not open socket!", e);
         } catch (SocketException e) {
             throw new SocketCommunicationException("Could not open socket!", e);
         } catch (Exception e) {
