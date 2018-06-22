@@ -32,8 +32,15 @@ public abstract class AbstractSocketImageStreamCommunication extends
     
     // Public Constructors
     
-    public AbstractSocketImageStreamCommunication() {
-        super();
+    private AbstractSocketImageStreamCommunication() {
+        this("", 0);
+    }
+    
+    // Private Constructors
+    
+    public AbstractSocketImageStreamCommunication(String socketHost,
+                    int socketPort) {
+        super(socketHost, socketPort);
     }
     
     // Private Methods
@@ -119,12 +126,11 @@ public abstract class AbstractSocketImageStreamCommunication extends
                 }
             }
         } catch (SocketException e) {
-            final int oldPort = this.serverSocket.getLocalPort();
             this.close();
-            this.open(oldPort);
+            this.open();
             throw new SocketImageStreamCommunicationException(
-                            "There was a problem with socket, attempting to reconnect on "
-                                            + oldPort + "!", e);
+                            "There was a problem with socket, attempting to reconnect!",
+                            e);
         } catch (IOException e) {
             throw new SocketImageStreamCommunicationException(
                             "There was a problem with writing!", e);

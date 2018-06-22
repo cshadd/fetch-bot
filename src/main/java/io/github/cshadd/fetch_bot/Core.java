@@ -174,6 +174,7 @@ public class Core implements FetchBot {
         public void run() {
             this.running = true;
             while (this.running) {
+                Logger.debug("Stream sent.");
                 hudControl.updateBack(openCVControl.takeCameraImageIcon());
                 final int[] trackBounds = openCVControl.takeTrackBounds();
                 hudControl.updateTrackBounds(trackBounds[0], trackBounds[1],
@@ -897,9 +898,12 @@ public class Core implements FetchBot {
         }
         
         // Initiate communications
-        arduinoComm = new ArduinoCommunicationImpl();
-        socketImageStreamComm = new SocketImageStreamCommunicationImpl();
-        webInterfaceComm = new WebInterfaceCommunicationImpl();
+        arduinoComm = new ArduinoCommunicationImpl(
+                        References.ARDUINO_SERIAL_PORT);
+        socketImageStreamComm = new SocketImageStreamCommunicationImpl(
+                        References.HUD_STREAM_HOST, References.HUD_STREAM_PORT);
+        webInterfaceComm = new WebInterfaceCommunicationImpl(
+                        References.WEB_INTERFACE_PATH);
         Logger.close();
         Logger.assign();
         Logger.clear();
@@ -909,11 +913,14 @@ public class Core implements FetchBot {
         try {
             arduinoComm.reset();
             arduinoComm.pushSource();
-            socketImageStreamComm.open(References.HUD_STREAM_PORT);
+            socketImageStreamComm.open();
             webInterfaceComm.reset();
             webInterfaceComm.pushSource();
             webInterfaceComm.pushRobot();
             Logger.debug("Connected to Arduino serial on "
+                            + References.ARDUINO_SERIAL_PORT + ".");
+            Logger.debug("Connected to HUD socket on "
+                            + References.HUD_STREAM_HOST + ":"
                             + References.HUD_STREAM_PORT + ".");
             Logger.debug("Connected to Web Interface on "
                             + References.WEB_INTERFACE_PATH + ".");

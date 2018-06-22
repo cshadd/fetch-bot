@@ -18,11 +18,13 @@ import org.json.JSONObject;
  */
 @Component("Communication")
 public class ArduinoCommunicationImpl extends AbstractArduinoCommunication {
-    // Public Constructors
+    // Private Constructors
     
-    public ArduinoCommunicationImpl() {
-        super();
+    private ArduinoCommunicationImpl() {
+        this(null);
     }
+    
+    // Public Constructors
     
     public ArduinoCommunicationImpl(String serialPort) {
         super(serialPort);

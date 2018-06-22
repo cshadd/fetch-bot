@@ -50,12 +50,14 @@ public abstract class AbstractArduinoCommunication extends
     // Private Instance/Property Fields
     
     private SerialDataEventListener serialListener;
+
+    // Private Constructors
+
+    private AbstractArduinoCommunication() {
+        this(null);
+    }
     
     // Protected Constructors
-    
-    protected AbstractArduinoCommunication() {
-        this(References.ARDUINO_SERIAL_PORT);
-    }
     
     protected AbstractArduinoCommunication(String serialPort) {
         super();
@@ -123,8 +125,7 @@ public abstract class AbstractArduinoCommunication extends
         JSONObject returnData = new JSONObject();
         try {
             returnData.put("s", -1);
-            final String data = this.serialBufferSyncQueue.poll(1,
-                            TimeUnit.SECONDS);
+            final String data = this.serialBufferSyncQueue.poll(5, TimeUnit.SECONDS);
             if (data != null) {
                 if (data.charAt(0) == '{' && !data.equals("{ }")) {
                     returnData = new JSONObject(data);
@@ -144,7 +145,6 @@ public abstract class AbstractArduinoCommunication extends
     
     protected void write() throws ArduinoCommunicationException {
         try {
-            System.out.println("AAADSFAS");
             if (this.serial.isOpen()) {
                 this.serial.write(getSourceValue("a"));
                 this.serial.flush();

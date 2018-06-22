@@ -20,11 +20,13 @@ import org.json.JSONObject;
 @Component("Communication")
 public class WebInterfaceCommunicationImpl extends
                 AbstractWebInterfaceCommunication {
-    // Public Constructors
+    // Private Constructors
     
-    public WebInterfaceCommunicationImpl() {
-        super();
+    private WebInterfaceCommunicationImpl() {
+        this(null);
     }
+    
+    // Public Constructors
     
     public WebInterfaceCommunicationImpl(String commPath) {
         super(commPath);

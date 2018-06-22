@@ -37,15 +37,17 @@ public abstract class AbstractWebInterfaceCommunication extends
     
     protected final String commPath;
     
-    // Protected Constructors
+    // Private Constructors
     
-    protected AbstractWebInterfaceCommunication() {
-        this(DEFAULT_WEB_COM_PATH);
+    private AbstractWebInterfaceCommunication() {
+        this(null);
     }
+    
+    // Protected Constructors
     
     protected AbstractWebInterfaceCommunication(String commPath) {
         super();
-        this.commPath = DEFAULT_WEB_COM_PATH;
+        this.commPath = commPath;
     }
     
     // Protected Methods

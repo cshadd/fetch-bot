@@ -61,6 +61,11 @@ public final class References implements FetchBot {
     public static final boolean CUSTOM_BUILD = false;
     
     /**
+     * The Constant HUD_STREAM_HOST.
+     */
+    public static final String HUD_STREAM_HOST = "localhost";
+    
+    /**
      * The Constant HUD_STREAM_PORT.
      */
     public static final int HUD_STREAM_PORT = 8885;

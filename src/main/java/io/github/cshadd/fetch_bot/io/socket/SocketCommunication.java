@@ -43,5 +43,5 @@ public abstract interface SocketCommunication extends Communication {
     // Public Abstract Methods
     
     public abstract void close() throws SocketCommunicationException;
-    public abstract void open(int port) throws SocketCommunicationException;
+    public abstract void open() throws SocketCommunicationException;
 }

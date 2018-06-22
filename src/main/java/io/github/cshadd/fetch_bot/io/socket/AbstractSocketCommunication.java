@@ -24,22 +24,34 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
                 implements SocketCommunication {
     // Private Constant Instance/Property Fields
     
-    private static final String DEFAULT_SOCKET_ADDRESS = "localhost";
-    
     // Protected Constant Instance/Property Fields
     
     protected static final String CRLF = "\r\n";
     
     // Protected Instance/Property Fields
     
+    protected final String socketHost;
+    protected final int    socketPort;
+    
+    // Protected Instance/Property Fields
+    
     protected ServerSocket serverSocket;
     protected Socket       socket;
     
+    // Private Constructors
+    
+    private AbstractSocketCommunication() {
+        this("", 0);
+    }
+    
     // Protected Constructors
     
-    protected AbstractSocketCommunication() {
+    protected AbstractSocketCommunication(String socketHost, int socketPort) {
+        super();
         this.serverSocket = null;
         this.socket = null;
+        this.socketHost = socketHost;
+        this.socketPort = socketPort;
     }
     
     // Public Methods (Overrided)
@@ -66,11 +78,11 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
     }
     
     @Override
-    public void open(int port) throws SocketCommunicationException {
+    public void open() throws SocketCommunicationException {
         try {
             if (this.serverSocket == null) {
-                this.serverSocket = new ServerSocket(port, 50, InetAddress
-                                .getByName(DEFAULT_SOCKET_ADDRESS));
+                this.serverSocket = new ServerSocket(this.socketPort, 50,
+                                InetAddress.getByName(this.socketHost));
             }
         } catch (SocketException e) {
             throw new SocketCommunicationException("Could not open socket!", e);
