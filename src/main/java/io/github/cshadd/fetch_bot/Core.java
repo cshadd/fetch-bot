@@ -840,7 +840,7 @@ public class Core implements FetchBot {
             } catch (Exception e) {
                 Logger.error(e, "There was an unknown issue!");
             } finally {
-                delayThread(2000);
+                delayThread(1000);
             }
         }
     }

@@ -16,36 +16,26 @@
     <script src="readCommunications.js"></script>
     <script>
         var hudReady = true;
+        var jsonReady = true;
         var $hudPreloadImage = $("<img>");
         $hudPreloadImage.on("load", function() {
-            if (data != null && data2 != null) {
-                $("#hud").attr("src", $(this).attr("src"));
-                $("#hud").fadeIn();
-                hudReady = true;
-            }
+            $("#hud").attr("src", $(this).attr("src"));
+            $("#hud").fadeIn();
+            hudReady = true;
         });
         
         $hudPreloadImage.on("error", function() {
             $("#hud").fadeOut();
+            hudReady = true;
         });
-        
-        setInterval(function () {
-            if (data != null && data2 != null) {
-                if (hudReady) {
-                    hudReady = false;
-                    $hudPreloadImage.attr("src", window.location.protocol + "//" + window.location.hostname + ":" + data.hudstreamport + "/?refresh=" + refresh);
-                }
-            }
-            else {
-                hudReady = true;
-                $hudPreloadImage.attr("src", "");
-                $("#hud").attr("src", "");
-            }
-        }, 1000);
 
         setInterval(function () {
             if (data != null && data2 != null) {
                 $("#connection-offline").hide();
+                if (hudReady == true) {
+                    hudReady = false;
+                    $hudPreloadImage.attr("src", window.location.protocol + "//" + window.location.hostname + ":" + data.hudstreamport + "/?refresh=" + refresh);
+                }
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
                 $("#status-curr-mode").text("Current Mode: " + data.mode);
                 $("#status-curr-rawgraph").text("Current Raw Graph:\n\n" + data.rawgraph);
@@ -86,6 +76,9 @@
                     $("#connection-offline").show();
                     $("#controls-auto").hide();
                     $("#controls-manual").hide();
+                    hudReady = true;
+                    $hudPreloadImage.attr("src", "");
+                    $("#hud").attr("src", "");
                     $("#status-curr-emotion").text("Current Emotion:");
                     $("#status-curr-mode").text("Current Mode:");
                     $("#status-curr-rot").text("Current Rotation:");
@@ -102,6 +95,9 @@
                 $("#connection-offline").show();
                 $("#controls-auto").hide();
                 $("#controls-manual").hide();
+                hudReady = true;
+                $hudPreloadImage.attr("src", "");
+                $("#hud").attr("src", "");
                 $("#status-curr-emotion").text("Current Emotion:");
                 $("#status-curr-mode").text("Current Mode:");
                 $("#status-curr-rot").text("Current Rotation:");
@@ -109,37 +105,48 @@
                 $("#status-curr-ultrasonic").text("Current Ultrasonic Sensor:");
                 $("#status-curr-verbose").text("Current Verbose:");
             }
-            console.log("toInterface: " + data);
-            console.log("toRobot: " + data2);
+            console.log("toInterface: " + JSON.stringify(data));
+            console.log("toRobot: " + JSON.stringify(data2));
         }, 2000);
 
         function sendToRobot() {
-            $.ajax({
-                type: "POST",
-                url: "processRobot.php",
-                dataType: "json",
-                async: false,
-                data: {
-                    data: JSON.stringify(data2)
-                },
-                success: function () { }
-            });
+            if (jsonReady == true) {
+                jsonReady = false;
+                $.ajax({
+                    type: "POST",
+                    url: "processRobot.php",
+                    dataType: "json",
+                    async: false,
+                    data: {
+                        data: JSON.stringify(data2)
+                    },
+                    success: function () {
+                        jsonReady = true;
+                    }
+                });
+            }
         }
 
         function setMode(mode) {
-            data2.mode = mode;
-            sendToRobot();
+            if (jsonReady == true) {
+                data2.mode = mode;
+                sendToRobot();
+            }
         }
 
         function setMove(direction) {
-            data2.move = direction;
-            sendToRobot();
+            if (jsonReady == true) {
+                data2.move = direction;
+                sendToRobot();
+            }
         }
 
-        function setObjectClass(){
-            data2.trackclass = $("#txt-trackclass").val();
-            $("#txt-trackclass").val("");
-            sendToRobot();
+        function setObjectClass() {
+            if (jsonReady == true) {
+                data2.trackclass = $("#txt-trackclass").val();
+                $("#txt-trackclass").val("");
+                sendToRobot();
+            }
         }
 
     </script>
