@@ -33,7 +33,6 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
     
     // Protected Instance/Property Fields
     
-    protected final String socketHost;
     protected final int    socketPort;
     
     // Protected Instance/Property Fields
@@ -44,16 +43,15 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
     // Private Constructors
     
     private AbstractSocketCommunication() {
-        this("", 0);
+        this(0);
     }
     
     // Protected Constructors
     
-    protected AbstractSocketCommunication(String socketHost, int socketPort) {
+    protected AbstractSocketCommunication(int socketPort) {
         super();
         this.serverSocket = null;
         this.socket = null;
-        this.socketHost = socketHost;
         this.socketPort = socketPort;
     }
     
@@ -101,9 +99,7 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
     public void open() throws SocketCommunicationException {
         try {
             if (this.serverSocket == null) {
-                System.out.println(InetAddress.getByName(this.socketHost));
-                this.serverSocket = new ServerSocket(this.socketPort, 50,
-                                InetAddress.getByName(this.socketHost));
+                this.serverSocket = new ServerSocket(this.socketPort);
             }
         } catch (UnknownHostException e) {
             throw new SocketCommunicationException("Could not open socket!", e);

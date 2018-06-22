@@ -900,8 +900,7 @@ public class Core implements FetchBot {
         // Initiate communications
         arduinoComm = new ArduinoCommunicationImpl(
                         References.ARDUINO_SERIAL_PORT);
-        socketImageStreamComm = new SocketImageStreamCommunicationImpl(
-                        References.HUD_STREAM_HOST, References.HUD_STREAM_PORT);
+        socketImageStreamComm = new SocketImageStreamCommunicationImpl(References.HUD_STREAM_PORT);
         webInterfaceComm = new WebInterfaceCommunicationImpl(
                         References.WEB_INTERFACE_PATH);
         Logger.close();
