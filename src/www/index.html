@@ -15,28 +15,22 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="readCommunications.js"></script>
     <script>
-        var hudReady = true;
         var jsonReady = true;
         
         var $hudPreloadImage = $("<img>");
         $hudPreloadImage.on("load", function() {
             $("#hud").attr("src", $(this).attr("src"));
             $("#hud").fadeIn();
-            hudReady = true;
         });
         
         $hudPreloadImage.on("error", function() {
             $("#hud").fadeOut();
-            hudReady = true;
         });
 
         setInterval(function () {
             if (data != null && data2 != null) {
                 $("#connection-offline").hide();
-                if (hudReady == true) {
-                    hudReady = false;
-                    $hudPreloadImage.attr("src", window.location.protocol + "//" + window.location.hostname + ":" + data.hudstreamport + "/?refresh=" + refresh);
-                }
+                $hudPreloadImage.attr("src", window.location.protocol + "//" + window.location.hostname + ":" + data.hudstreamport + "/?refresh=" + refresh);
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
                 $("#status-curr-mode").text("Current Mode: " + data.mode);
                 $("#status-curr-rawgraph").text("Current Raw Graph:\n\n" + data.rawgraph);
