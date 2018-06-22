@@ -2,8 +2,6 @@ package io.github.cshadd.fetch_bot.controllers;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -53,7 +51,6 @@ public abstract class AbstractHUDController extends AbstractController
     protected AbstractHUDController() {
         super();
         this.hudSetupRunnable = new HUDSetupThread();
-        javax.swing.SwingUtilities.invokeLater(this.hudSetupRunnable);
     }
     
     // Protected Final Nested Classes

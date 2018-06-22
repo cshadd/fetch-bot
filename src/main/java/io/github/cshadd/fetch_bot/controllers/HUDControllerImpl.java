@@ -36,7 +36,7 @@ public class HUDControllerImpl extends AbstractHUDController {
     
     @Override
     public void openHud() {
-        this.hudFrame.setEnabled(true);
+        javax.swing.SwingUtilities.invokeLater(this.hudSetupRunnable);
     }
     
     @Override
