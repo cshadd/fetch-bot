@@ -43,6 +43,14 @@ public abstract interface JSONCommunication extends Communication {
     // Public Abstract Methods
 
     /**
+     * Clears JSON.
+     *
+     * @throws JSONCommunicationException
+     *             if the reset request failed
+     */
+    public abstract void clear() throws JSONCommunicationException;
+    
+    /**
      * Gets the robot value.
      *
      * @param key

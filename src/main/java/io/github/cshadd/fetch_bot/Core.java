@@ -925,16 +925,17 @@ public class Core implements FetchBot {
             webInterfaceComm.pushRobot();
             Logger.debug("Connected to Web Interface on "
                             + References.WEB_INTERFACE_PATH + ".");
+            Logger.info("Core - Fetch Bot " + VERSION + " started as profile "
+                            + cLArg.toString() + "!");
+            webInterfaceComm.pushSource();
         } catch (CommunicationException e) {
             Logger.error(e, "There was an issue with Communication!");
         } catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         } finally {
             /* */ }
-            
-        // Startup logging
-        Logger.info("Core - Fetch Bot " + VERSION + " started as profile "
-                        + cLArg.toString() + "!");
+
+
         try {
             webInterfaceComm.pushSource();
         } catch (CommunicationException e) {

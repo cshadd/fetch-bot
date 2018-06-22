@@ -29,11 +29,16 @@ public abstract class AbstractJSONCommunication extends AbstractCommunication
     
     protected AbstractJSONCommunication() {
         super();
-        this.toRobotData = new JSONObject();
-        this.toSourceData = new JSONObject();
+        clear();
     }
     
     // Public Methods (Overrided)
+    
+    @Override
+    public void clear() {
+        this.toRobotData = new JSONObject();
+        this.toSourceData = new JSONObject();
+    }
     
     @Override
     public String getRobotValue(String key) throws JSONCommunicationException {
