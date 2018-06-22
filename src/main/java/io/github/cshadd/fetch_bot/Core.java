@@ -196,8 +196,8 @@ public class Core implements FetchBot {
                     /* */
                 } // Suppressed
                 finally {
-                    /* */ }
-                delayThread(500);
+                    delayThread(500);
+                }
             }
         }
     }
@@ -840,7 +840,6 @@ public class Core implements FetchBot {
             } catch (Exception e) {
                 Logger.error(e, "There was an unknown issue!");
             } finally {
-                // Delay for safety
                 delayThread(2000);
             }
         }

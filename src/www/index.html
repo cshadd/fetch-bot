@@ -15,10 +15,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="readCommunications.js"></script>
     <script>
+        var hudReady = true;
         var $hudPreloadImage = $("<img>");
         $hudPreloadImage.on("load", function() {
-            $("#hud").attr("src", $(this).attr("src"));
-            $("#hud").fadeIn();
+            if (data != null && data2 != null) {
+                $("#hud").attr("src", $(this).attr("src"));
+                $("#hud").fadeIn();
+                hudReady = true;
+            }
         });
         
         $hudPreloadImage.on("error", function() {
@@ -27,13 +31,13 @@
         
         setInterval(function () {
             if (data != null && data2 != null) {
-                $hudPreloadImage.attr("src", window.location.protocol + "//" + window.location.hostname + ":" + data.hudstreamport + "/?refresh=" + refresh);
-                else {
-                    $hudPreloadImage.attr("src", "");
-                    $("#hud").attr("src", "");
+                if (hudReady) {
+                    hudReady = false;
+                    $hudPreloadImage.attr("src", window.location.protocol + "//" + window.location.hostname + ":" + data.hudstreamport + "/?refresh=" + refresh);
                 }
             }
             else {
+                hudReady = true;
                 $hudPreloadImage.attr("src", "");
                 $("#hud").attr("src", "");
             }
