@@ -52,8 +52,12 @@ public abstract class AbstractWebInterfaceCommunication extends
         JSONObject returnData = null;
         try {
             final File input = new File(this.commPath + filePath);
-            returnData = new JSONObject(FileUtils.readFileToString(input,
-                            "UTF-8"));
+            final String data = FileUtils.readFileToString(input, "UTF-8");
+            if (data != null) {
+                if (data.charAt(0) == '{' && !data.equals("{ }")) {
+                    returnData = new JSONObject(data);
+                }
+            }
         } catch (IOException e) {
             throw new WebInterfaceCommunicationException("Could not read "
                             + filePath + ".", e);

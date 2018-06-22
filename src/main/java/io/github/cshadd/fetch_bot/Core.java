@@ -917,7 +917,6 @@ public class Core implements FetchBot {
             Logger.debug("Connected to Arduino serial on "
                             + References.ARDUINO_SERIAL_PORT + ".");
             socketImageStreamComm.open();
-            socketImageStreamComm.listen();
             Logger.debug("Connected to HUD socket on "
                             + References.HUD_STREAM_HOST + ":"
                             + References.HUD_STREAM_PORT + ".");
@@ -926,8 +925,6 @@ public class Core implements FetchBot {
             webInterfaceComm.pushRobot();
             Logger.debug("Connected to Web Interface on "
                             + References.WEB_INTERFACE_PATH + ".");
-            Logger.info("Core - Fetch Bot " + VERSION + " started as profile "
-                            + cLArg.toString() + "!");
             webInterfaceComm.pushSource();
         } catch (CommunicationException e) {
             Logger.error(e, "There was an issue with Communication!");
@@ -935,7 +932,9 @@ public class Core implements FetchBot {
             Logger.error(e, "There was an unknown issue!");
         } finally {
             /* */ }
-            
+        
+        Logger.info("Core - Fetch Bot " + VERSION + " started as profile "
+                        + cLArg.toString() + "!");
         try {
             webInterfaceComm.pushSource();
         } catch (CommunicationException e) {
