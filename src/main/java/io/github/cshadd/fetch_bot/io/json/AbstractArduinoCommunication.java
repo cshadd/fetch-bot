@@ -50,9 +50,9 @@ public abstract class AbstractArduinoCommunication extends
     // Private Instance/Property Fields
     
     private SerialDataEventListener serialListener;
-
+    
     // Private Constructors
-
+    
     private AbstractArduinoCommunication() {
         this(null);
     }
@@ -75,57 +75,11 @@ public abstract class AbstractArduinoCommunication extends
     
     // Protected Methods
     
-    protected void close() throws ArduinoCommunicationException {
-        try {
-            if (this.serial.isOpen()) {
-                this.serial.discardInput();
-                this.serial.removeListener(this.serialListener);
-                this.serial.close();
-                SerialFactory.shutdown();
-            }
-        } catch (IOException e) {
-            throw new ArduinoCommunicationException("Could not close "
-                            + this.serialPort + ".", e);
-        } catch (Exception e) {
-            throw new ArduinoCommunicationException("Unknown issue.", e);
-        } finally {
-            /* */ }
-    }
-    
-    protected void open() throws ArduinoCommunicationException {
-        try {
-            if (!this.serial.isOpen()) {
-                this.serial.open(this.serialConfig);
-                this.serialListener = new SerialDataEventListener() {
-                    // Public Methods (Overrided)
-                    
-                    @Override
-                    public void dataReceived(SerialDataEvent event) {
-                        try {
-                            AbstractArduinoCommunication.this.serialBufferSyncQueue
-                                            .offer(event.getAsciiString());
-                        } catch (Exception e) {
-                            /* */ } // Suppressed
-                        finally {
-                            /* */ }
-                    }
-                };
-                this.serial.addListener(this.serialListener);
-            }
-        } catch (IOException e) {
-            throw new ArduinoCommunicationException("Could not open "
-                            + this.serialPort + ".", e);
-        } catch (Exception e) {
-            throw new ArduinoCommunicationException("Unknown issue.", e);
-        } finally {
-            /* */ }
-    }
-    
     protected JSONObject read() throws ArduinoCommunicationException {
         JSONObject returnData = new JSONObject();
         try {
             returnData.put("s", -1);
-            final String data = this.serialBufferSyncQueue.poll(5, TimeUnit.SECONDS);
+            final String data = this.serialBufferSyncQueue.take();
             if (data != null) {
                 if (data.charAt(0) == '{' && !data.equals("{ }")) {
                     returnData = new JSONObject(data);
@@ -164,6 +118,24 @@ public abstract class AbstractArduinoCommunication extends
     // Public Methods (Overrided)
     
     @Override
+    public void close() throws ArduinoCommunicationException {
+        try {
+            if (this.serial.isOpen()) {
+                this.serial.discardInput();
+                this.serial.removeListener(this.serialListener);
+                this.serial.close();
+                SerialFactory.shutdown();
+            }
+        } catch (IOException e) {
+            throw new ArduinoCommunicationException("Could not close "
+                            + this.serialPort + ".", e);
+        } catch (Exception e) {
+            throw new ArduinoCommunicationException("Unknown issue.", e);
+        } finally {
+            /* */ }
+    }
+    
+    @Override
     public float getRobotFloatValue(String key)
                     throws ArduinoCommunicationException {
         float returnData = -1;
@@ -177,5 +149,35 @@ public abstract class AbstractArduinoCommunication extends
         } finally {
             /* */ }
         return returnData;
+    }
+    
+    @Override
+    public void open() throws ArduinoCommunicationException {
+        try {
+            if (!this.serial.isOpen()) {
+                this.serial.open(this.serialConfig);
+                this.serialListener = new SerialDataEventListener() {
+                    // Public Methods (Overrided)
+                    
+                    @Override
+                    public void dataReceived(SerialDataEvent event) {
+                        try {
+                            AbstractArduinoCommunication.this.serialBufferSyncQueue
+                                            .offer(event.getAsciiString());
+                        } catch (Exception e) {
+                            /* */ } // Suppressed
+                        finally {
+                            /* */ }
+                    }
+                };
+                this.serial.addListener(this.serialListener);
+            }
+        } catch (IOException e) {
+            throw new ArduinoCommunicationException("Could not open "
+                            + this.serialPort + ".", e);
+        } catch (Exception e) {
+            throw new ArduinoCommunicationException("Unknown issue.", e);
+        } finally {
+            /* */ }
     }
 }

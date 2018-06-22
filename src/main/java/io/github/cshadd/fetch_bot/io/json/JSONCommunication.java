@@ -41,15 +41,7 @@ import io.github.cshadd.fetch_bot.io.Communication;
  */
 public abstract interface JSONCommunication extends Communication {
     // Public Abstract Methods
-    
-    /**
-     * Clear.
-     *
-     * @throws JSONCommunicationException
-     *             if the clear request failed
-     */
-    public abstract void clear() throws JSONCommunicationException;
-    
+
     /**
      * Gets the robot value.
      *
@@ -107,7 +99,7 @@ public abstract interface JSONCommunication extends Communication {
     public abstract void pushSource() throws JSONCommunicationException;
     
     /**
-     * Reset.
+     * Resets JSON.
      *
      * @throws JSONCommunicationException
      *             if the reset request failed

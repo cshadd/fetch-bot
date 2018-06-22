@@ -35,12 +35,6 @@ public class WebInterfaceCommunicationImpl extends
     // Public Methods (Overrided)
     
     @Override
-    public void clear() throws JSONCommunicationException {
-        this.toSourceData = new JSONObject();
-        this.toRobotData = new JSONObject();
-    }
-    
-    @Override
     public void pullRobot() throws JSONCommunicationException {
         this.toRobotData = read(TOROBOT_JSON_FILE);
     }
@@ -62,7 +56,6 @@ public class WebInterfaceCommunicationImpl extends
     
     @Override
     public void reset() throws JSONCommunicationException {
-        clear();
         setRobotValue("mode", "Idle");
         setRobotValue("move", "Stop");
         setRobotValue("trackclass", "None");

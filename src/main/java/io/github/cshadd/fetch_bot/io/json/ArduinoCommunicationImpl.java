@@ -31,14 +31,7 @@ public class ArduinoCommunicationImpl extends AbstractArduinoCommunication {
     }
     
     // Public Methods (Overrided)
-    
-    @Override
-    public void clear() throws JSONCommunicationException {
-        close();
-        this.toSourceData = new JSONObject();
-        this.toRobotData = new JSONObject();
-    }
-    
+
     @Override
     public void pullRobot() throws JSONCommunicationException {
         this.toRobotData = read();
@@ -51,8 +44,6 @@ public class ArduinoCommunicationImpl extends AbstractArduinoCommunication {
     
     @Override
     public void reset() throws JSONCommunicationException {
-        clear();
-        open();
         setRobotValue("s", "-1");
         
         setSourceValue("a", "Stop");

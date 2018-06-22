@@ -911,17 +911,18 @@ public class Core implements FetchBot {
         
         // Reset communications
         try {
+            arduinoComm.open();
             arduinoComm.reset();
             arduinoComm.pushSource();
-            socketImageStreamComm.open();
-            webInterfaceComm.reset();
-            webInterfaceComm.pushSource();
-            webInterfaceComm.pushRobot();
             Logger.debug("Connected to Arduino serial on "
                             + References.ARDUINO_SERIAL_PORT + ".");
+            socketImageStreamComm.open();
             Logger.debug("Connected to HUD socket on "
                             + References.HUD_STREAM_HOST + ":"
                             + References.HUD_STREAM_PORT + ".");
+            webInterfaceComm.reset();
+            webInterfaceComm.pushSource();
+            webInterfaceComm.pushRobot();
             Logger.debug("Connected to Web Interface on "
                             + References.WEB_INTERFACE_PATH + ".");
         } catch (CommunicationException e) {
@@ -963,9 +964,11 @@ public class Core implements FetchBot {
         // Initiate controllers
         hudControl = new HUDControllerImpl();
         hudControl.openHud();
+        Logger.debug("Opened HUD.");
         try {
             openCVControl = new OpenCVControllerImpl();
             openCVControl.startCamera();
+            Logger.debug("Started Camera.");
         } catch (ControllerException e) {
             Logger.error(e, "There was an issue with Controller!");
         } catch (Exception e) {
@@ -974,33 +977,38 @@ public class Core implements FetchBot {
             /* */ }
             
         pathfindControl = new PathfindControllerImpl();
-        
+        Logger.debug("Pathfinding online.");
         hudSocketRunnable = new HUDSocketThread();
         hudSocketThread = new Thread(hudSocketRunnable);
         hudSocketThread.start();
+        Logger.debug("Started HUD Socket Thread.");
     }
     
     /**
      * Terminates the application.
      */
     private static void terminate() {
-        Logger.info("Core - Fetch Bot terminating! Log file: " + Logger.LOG_FILE
-                        + ".");
         try {
             hudControl.closeHud();
+            Logger.debug("Closed HUD.");
             hudSocketRunnable.terminate();
             hudSocketThread.join();
-            
+            Logger.debug("Stopped HUD Socket Thread.");
             openCVControl.stopCamera();
+            Logger.debug("Stopped Camera.");
             arduinoComm.setSourceValue("a", "Stop");
             arduinoComm.pushSource();
             arduinoComm.clear();
+            arduinoComm.close();
+            Logger.debug("Disconnected Arduino Serial Communication.");
             socketImageStreamComm.close();
+            Logger.debug("Closed Socket Image Stream.");
             webInterfaceComm.clear();
             webInterfaceComm.pushSource();
             webInterfaceComm.pushRobot();
-        } catch (CommunicationException e) {
-            Logger.error(e, "There was an issue with Communication!");
+            Logger.debug("Disconnected Web Interface Communication.");
+            Logger.info("Core - Fetch Bot terminating! Log file: " + Logger.LOG_FILE
+                            + ".");
         } catch (Exception e) {
             Logger.error(e, "There was an unknown issue!");
         } finally {
