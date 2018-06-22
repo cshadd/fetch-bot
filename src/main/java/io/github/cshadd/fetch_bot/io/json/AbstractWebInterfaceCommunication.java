@@ -23,11 +23,6 @@ import io.github.cshadd.fetch_bot.References;
  */
 public abstract class AbstractWebInterfaceCommunication extends
                 AbstractJSONCommunication implements WebInterfaceCommunication {
-    // Private Constant Instance/Property Fields
-    
-    private static final String DEFAULT_WEB_COM_PATH = References.WEB_INTERFACE_PATH
-                    + "/comms/";
-    
     // Protected Constant Instance/Property Fields
     
     protected static final String TOROBOT_JSON_FILE        = "toRobot.json";
@@ -45,9 +40,9 @@ public abstract class AbstractWebInterfaceCommunication extends
     
     // Protected Constructors
     
-    protected AbstractWebInterfaceCommunication(String commPath) {
+    protected AbstractWebInterfaceCommunication(String interfacePath) {
         super();
-        this.commPath = commPath;
+        this.commPath = interfacePath + "/comms/";
     }
     
     // Protected Methods
