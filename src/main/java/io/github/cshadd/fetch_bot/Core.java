@@ -182,6 +182,7 @@ public class Core implements FetchBot {
                                 .takeTrackCaptureLabel());
                 hudControl.updateStatus(currentTrackStatus);
                 Logger.debug("HUD updated.");
+                delayThread(500);
                 try {
                     socketImageStreamComm.write(hudControl.takeHUD());
                     Logger.debug("Stream sent.");
@@ -841,7 +842,7 @@ public class Core implements FetchBot {
                 Logger.error(e, "There was an unknown issue!");
             } finally {
                 // Delay for safety
-                delayThread(1000);
+                delayThread(2000);
             }
         }
     }
