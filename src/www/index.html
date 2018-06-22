@@ -24,11 +24,24 @@
         $hudPreloadImage.on("error", function() {
             $("#hud").fadeOut();
         });
+        
+        setInterval(function () {
+            if (data != null && data2 != null) {
+                $hudPreloadImage.attr("src", window.location.protocol + "//" + window.location.hostname + ":" + data.hudstreamport + "/?refresh=" + refresh);
+                else {
+                    $hudPreloadImage.attr("src", "");
+                    $("#hud").attr("src", "");
+                }
+            }
+            else {
+                $hudPreloadImage.attr("src", "");
+                $("#hud").attr("src", "");
+            }
+        }, 1000);
 
         setInterval(function () {
             if (data != null && data2 != null) {
                 $("#connection-offline").hide();
-                $hudPreloadImage.attr("src", window.location.protocol + "//" + window.location.hostname + ":" + data.hudstreamport + "/?refresh=" + refresh);
                 $("#status-curr-emotion").text("Current Emotion: " + data.emotion);
                 $("#status-curr-mode").text("Current Mode: " + data.mode);
                 $("#status-curr-rawgraph").text("Current Raw Graph:\n\n" + data.rawgraph);
@@ -69,8 +82,6 @@
                     $("#connection-offline").show();
                     $("#controls-auto").hide();
                     $("#controls-manual").hide();
-                    $hudPreloadImage.attr("src", "");
-                    $("#hud").attr("src", "");
                     $("#status-curr-emotion").text("Current Emotion:");
                     $("#status-curr-mode").text("Current Mode:");
                     $("#status-curr-rot").text("Current Rotation:");
@@ -87,8 +98,6 @@
                 $("#connection-offline").show();
                 $("#controls-auto").hide();
                 $("#controls-manual").hide();
-                $hudPreloadImage.attr("src", "");
-                $("#hud").attr("src", "");
                 $("#status-curr-emotion").text("Current Emotion:");
                 $("#status-curr-mode").text("Current Mode:");
                 $("#status-curr-rot").text("Current Rotation:");
@@ -96,7 +105,9 @@
                 $("#status-curr-ultrasonic").text("Current Ultrasonic Sensor:");
                 $("#status-curr-verbose").text("Current Verbose:");
             }
-        }, 1000);
+            Console.log("toInterface: " + data);
+            Console.log("toRobot: " + data2);
+        }, 2000);
 
         function sendToRobot() {
             $.ajax({

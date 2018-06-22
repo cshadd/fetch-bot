@@ -75,7 +75,7 @@ public abstract class AbstractArduinoCommunication extends
     
     // Protected Methods
     
-    protected synchronized JSONObject read() throws ArduinoCommunicationException {
+    protected JSONObject read() throws ArduinoCommunicationException {
         JSONObject returnData = new JSONObject();
         try {
             returnData.put("s", -1);
@@ -97,7 +97,7 @@ public abstract class AbstractArduinoCommunication extends
         return returnData;
     }
     
-    protected synchronized void write() throws ArduinoCommunicationException {
+    protected void write() throws ArduinoCommunicationException {
         try {
             if (this.serial.isOpen()) {
                 this.serial.write(getSourceValue("a"));

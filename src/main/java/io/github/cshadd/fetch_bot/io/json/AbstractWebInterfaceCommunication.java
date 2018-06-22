@@ -47,7 +47,7 @@ public abstract class AbstractWebInterfaceCommunication extends
     
     // Protected Methods
     
-    protected synchronized JSONObject read(String filePath)
+    protected JSONObject read(String filePath)
                     throws WebInterfaceCommunicationException {
         JSONObject returnData = new JSONObject();
         try {
@@ -71,7 +71,7 @@ public abstract class AbstractWebInterfaceCommunication extends
         return returnData;
     }
     
-    protected synchronized void write(JSONObject json, String filePath)
+    protected void write(JSONObject json, String filePath)
                     throws WebInterfaceCommunicationException {
         try {
             final File input = new File(this.commPath + filePath);

@@ -174,16 +174,22 @@ public class Core implements FetchBot {
         public void run() {
             this.running = true;
             while (this.running) {
-                hudControl.updateBack(openCVControl.takeCameraImageIcon());
-                final int[] trackBounds = openCVControl.takeTrackBounds();
-                hudControl.updateTrackBounds(trackBounds[0], trackBounds[1],
-                                trackBounds[2], trackBounds[3]);
-                hudControl.updateTrackCaptureLabel(openCVControl
-                                .takeTrackCaptureLabel());
-                hudControl.updateStatus(currentTrackStatus);
-                Logger.debug("HUD updated.");
-                delayThread(500);
                 try {
+                    hudControl.updateBack(openCVControl.takeCameraImageIcon());
+                    final int[] trackBounds = openCVControl.takeTrackBounds();
+                    hudControl.updateTrackBounds(trackBounds[0], trackBounds[1],
+                                    trackBounds[2], trackBounds[3]);
+                    hudControl.updateTrackCaptureLabel(openCVControl
+                                    .takeTrackCaptureLabel());
+                    currentTrackStatus = "Fetch Bot " + VERSION
+                                    + "<br />&#187; Status: Processing<br />"
+                                    + openCVControl.takeStatus() + "<br />";
+                    if ((int) arduinoComm.getRobotFloatValue(
+                                    "s") <= SENSOR_LIMIT) {
+                        currentTrackStatus += "Imminent Collision!";
+                    }
+                    hudControl.updateStatus(currentTrackStatus);
+                    Logger.debug("HUD updated.");
                     socketImageStreamComm.write(hudControl.takeHUD());
                     Logger.debug("Stream sent.");
                 } catch (@SuppressWarnings("unused") Exception e) {
@@ -191,6 +197,7 @@ public class Core implements FetchBot {
                 } // Suppressed
                 finally {
                     /* */ }
+                delayThread(500);
             }
         }
     }
@@ -823,14 +830,6 @@ public class Core implements FetchBot {
                                     + "] is invalid, setting to [mode: Idle].");
                     webInterfaceComm.setRobotValue("mode", "Idle");
                 }
-                
-                currentTrackStatus = "Fetch Bot " + VERSION
-                                + "<br />&#187; Status: Processing<br />"
-                                + openCVControl.takeStatus() + "<br />";
-                if (currentUltrasonicSensor <= SENSOR_LIMIT) {
-                    currentTrackStatus += "Imminent Collision!";
-                }
-                
                 Logger.debug("Pushing.");
                 webInterfaceComm.pushSource();
                 webInterfaceComm.pushRobot();
@@ -933,7 +932,7 @@ public class Core implements FetchBot {
             Logger.error(e, "There was an unknown issue!");
         } finally {
             /* */ }
-        
+            
         Logger.info("Core - Fetch Bot " + VERSION + " started as profile "
                         + cLArg.toString() + "!");
         try {
