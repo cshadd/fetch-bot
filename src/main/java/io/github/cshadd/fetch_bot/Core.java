@@ -82,7 +82,7 @@ public class Core implements FetchBot {
     protected static String currentTrackStatus;
     
     /**
-     * The Hud Controller.
+     * The HUD Controller.
      */
     protected static HUDController hudControl;
     
