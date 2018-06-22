@@ -20,18 +20,26 @@ import org.json.JSONObject;
  */
 public abstract class AbstractJSONCommunication extends AbstractCommunication
                 implements JSONCommunication {
-    // Protected Final Instance/Property Fields
+    // Protected Instance/Property Fields
+    
     protected JSONObject toRobotData;
     protected JSONObject toSourceData;
     
     // Protected Constructors
+    
     protected AbstractJSONCommunication() {
         super();
+        clear();
+    }
+    
+    // Public Methods (Overrided)
+    
+    @Override
+    public void clear() {
         this.toRobotData = new JSONObject();
         this.toSourceData = new JSONObject();
     }
     
-    // Public Methods (Overrided)
     @Override
     public String getRobotValue(String key) throws JSONCommunicationException {
         String returnData = null;

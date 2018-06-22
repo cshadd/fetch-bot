@@ -1,5 +1,6 @@
 package io.github.cshadd.fetch_bot.controllers;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import io.github.cshadd.fetch_bot.Component;
@@ -31,25 +32,21 @@ public class HUDControllerImpl extends AbstractHUDController {
     public void closeHud() throws HUDControllerException {
         this.hudFrame.setEnabled(false);
         this.hudFrame.dispose();
-        try {
-            this.hudRunnable.terminate();
-            this.hudThread.join();
-        } catch (InterruptedException e) {
-            throw new HUDControllerException("Thread was interrupted.", e);
-        } catch (Exception e) {
-            throw new HUDControllerException("Unknown issue.", e);
-        } finally {
-            /* */ }
     }
     
     @Override
     public void openHud() {
-        this.hudThread.start();
+        javax.swing.SwingUtilities.invokeLater(this.hudSetupRunnable);
     }
     
     @Override
     public BufferedImage takeHUD() {
-        return hudBuffer;
+        final BufferedImage img = new BufferedImage(SCENE_W, SCENE_H,
+                        BufferedImage.TYPE_INT_RGB);
+        final Graphics2D g2d = img.createGraphics();
+        this.hudContent.printAll(g2d);
+        g2d.dispose();
+        return img;
     }
     
     @Override

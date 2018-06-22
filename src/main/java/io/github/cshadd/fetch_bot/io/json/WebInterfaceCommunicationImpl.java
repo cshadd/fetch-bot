@@ -20,23 +20,19 @@ import org.json.JSONObject;
 @Component("Communication")
 public class WebInterfaceCommunicationImpl extends
                 AbstractWebInterfaceCommunication {
-    // Public Constructors
+    // Private Constructors
     
-    public WebInterfaceCommunicationImpl() {
-        super();
+    private WebInterfaceCommunicationImpl() {
+        this(null);
     }
+    
+    // Public Constructors
     
     public WebInterfaceCommunicationImpl(String commPath) {
         super(commPath);
     }
     
     // Public Methods (Overrided)
-    
-    @Override
-    public void clear() throws JSONCommunicationException {
-        this.toSourceData = new JSONObject();
-        this.toRobotData = new JSONObject();
-    }
     
     @Override
     public void pullRobot() throws JSONCommunicationException {
@@ -60,7 +56,6 @@ public class WebInterfaceCommunicationImpl extends
     
     @Override
     public void reset() throws JSONCommunicationException {
-        clear();
         setRobotValue("mode", "Idle");
         setRobotValue("move", "Stop");
         setRobotValue("trackclass", "None");

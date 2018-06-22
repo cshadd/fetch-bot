@@ -23,11 +23,6 @@ import io.github.cshadd.fetch_bot.References;
  */
 public abstract class AbstractWebInterfaceCommunication extends
                 AbstractJSONCommunication implements WebInterfaceCommunication {
-    // Private Constant Instance/Property Fields
-    
-    private static final String DEFAULT_WEB_COM_PATH = References.WEB_INTERFACE_PATH
-                    + "/comms/";
-    
     // Protected Constant Instance/Property Fields
     
     protected static final String TOROBOT_JSON_FILE        = "toRobot.json";
@@ -37,26 +32,32 @@ public abstract class AbstractWebInterfaceCommunication extends
     
     protected final String commPath;
     
-    // Protected Constructors
+    // Private Constructors
     
-    protected AbstractWebInterfaceCommunication() {
-        this(DEFAULT_WEB_COM_PATH);
+    private AbstractWebInterfaceCommunication() {
+        this(null);
     }
     
-    protected AbstractWebInterfaceCommunication(String commPath) {
+    // Protected Constructors
+    
+    protected AbstractWebInterfaceCommunication(String interfacePath) {
         super();
-        this.commPath = DEFAULT_WEB_COM_PATH;
+        this.commPath = interfacePath + "/comms/";
     }
     
     // Protected Methods
     
     protected JSONObject read(String filePath)
                     throws WebInterfaceCommunicationException {
-        JSONObject returnData = null;
+        JSONObject returnData = new JSONObject();
         try {
             final File input = new File(this.commPath + filePath);
-            returnData = new JSONObject(FileUtils.readFileToString(input,
-                            "UTF-8"));
+            final String data = FileUtils.readFileToString(input, "UTF-8");
+            if (data != null) {
+                if (data.charAt(0) == '{' && !data.equals("{ }")) {
+                    returnData = new JSONObject(data);
+                }
+            }
         } catch (IOException e) {
             throw new WebInterfaceCommunicationException("Could not read "
                             + filePath + ".", e);

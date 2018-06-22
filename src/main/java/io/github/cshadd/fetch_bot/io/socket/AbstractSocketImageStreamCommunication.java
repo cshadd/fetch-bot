@@ -32,20 +32,17 @@ public abstract class AbstractSocketImageStreamCommunication extends
     
     // Public Constructors
     
-    public AbstractSocketImageStreamCommunication() {
-        super();
+    private AbstractSocketImageStreamCommunication() {
+        this("", 0);
     }
     
-    // Private Methods
+    // Private Constructors
     
-    private void listen() throws IOException {
-        if (this.serverSocket != null) {
-            if (!this.serverSocket.isClosed()) {
-                this.socket = this.serverSocket.accept();
-            }
-        }
+    public AbstractSocketImageStreamCommunication(String socketHost,
+                    int socketPort) {
+        super(socketHost, socketPort);
     }
-    
+
     // Public Methods (Overrided)
     
     @Override
@@ -85,7 +82,6 @@ public abstract class AbstractSocketImageStreamCommunication extends
                                                 .size()).append(CRLF);
                                 sb.append(CRLF);
                                 bos.write(sb.toString().getBytes());
-                                System.out.println(baos.toByteArray());
                                 bos.write(baos.toByteArray());
                                 bos.write(CRLF.getBytes());
                                 bos.flush();
@@ -120,7 +116,8 @@ public abstract class AbstractSocketImageStreamCommunication extends
                 }
             }
         } catch (SocketException e) {
-            this.open(this.serverSocket.getLocalPort());
+            this.close();
+            this.open();
             throw new SocketImageStreamCommunicationException(
                             "There was a problem with socket, attempting to reconnect!",
                             e);

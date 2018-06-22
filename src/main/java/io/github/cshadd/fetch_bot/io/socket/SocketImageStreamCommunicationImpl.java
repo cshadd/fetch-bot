@@ -13,14 +13,21 @@ import io.github.cshadd.fetch_bot.Component;
  * @author Thanh Vu
  * @author Joseph Damian
  * @author Giovanni Orozco
- * @since 1.0.0
+ * @since 2.0.0-alpha
  */
 @Component("Communication")
 public class SocketImageStreamCommunicationImpl extends
                 AbstractSocketImageStreamCommunication {
+    // Private Constructors
+    
+    private SocketImageStreamCommunicationImpl() {
+        this("", 0);
+    }
+    
     // Public Constructors
     
-    public SocketImageStreamCommunicationImpl() {
-        super();
+    public SocketImageStreamCommunicationImpl(String socketHost,
+                    int socketPort) {
+        super(socketHost, socketPort);
     }
 }

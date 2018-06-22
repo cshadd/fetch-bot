@@ -15,6 +15,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="readCommunications.js"></script>
     <script>
+        var jsonReady = true;
+        
         var $hudPreloadImage = $("<img>");
         $hudPreloadImage.on("load", function() {
             $("#hud").attr("src", $(this).attr("src"));
@@ -69,6 +71,7 @@
                     $("#connection-offline").show();
                     $("#controls-auto").hide();
                     $("#controls-manual").hide();
+                    hudReady = true;
                     $hudPreloadImage.attr("src", "");
                     $("#hud").attr("src", "");
                     $("#status-curr-emotion").text("Current Emotion:");
@@ -87,6 +90,7 @@
                 $("#connection-offline").show();
                 $("#controls-auto").hide();
                 $("#controls-manual").hide();
+                hudReady = true;
                 $hudPreloadImage.attr("src", "");
                 $("#hud").attr("src", "");
                 $("#status-curr-emotion").text("Current Emotion:");
@@ -96,35 +100,48 @@
                 $("#status-curr-ultrasonic").text("Current Ultrasonic Sensor:");
                 $("#status-curr-verbose").text("Current Verbose:");
             }
-        }, 1000);
+            console.log("JSON Ready: " + jsonReady);
+            console.log("toInterface: " + JSON.stringify(data));
+            console.log("toRobot: " + JSON.stringify(data2));
+        }, 2000);
 
         function sendToRobot() {
-            $.ajax({
-                type: "POST",
-                url: "processRobot.php",
-                dataType: "json",
-                async: false,
-                data: {
-                    data: JSON.stringify(data2)
-                },
-                success: function () { }
-            });
+            if (jsonReady == true) {
+                jsonReady = false;
+                $.ajax({
+                    type: "POST",
+                    url: "processRobot.php",
+                    dataType: "json",
+                    async: false,
+                    data: {
+                        data: JSON.stringify(data2)
+                    },
+                    success: function () { }
+                });
+                jsonReady = true;
+            }
         }
 
         function setMode(mode) {
-            data2.mode = mode;
-            sendToRobot();
+            if (jsonReady == true) {
+                data2.mode = mode;
+                sendToRobot();
+            }
         }
 
         function setMove(direction) {
-            data2.move = direction;
-            sendToRobot();
+            if (jsonReady == true) {
+                data2.move = direction;
+                sendToRobot();
+            }
         }
 
-        function setObjectClass(){
-            data2.trackclass = $("#txt-trackclass").val();
-            $("#txt-trackclass").val("");
-            sendToRobot();
+        function setObjectClass() {
+            if (jsonReady == true) {
+                data2.trackclass = $("#txt-trackclass").val();
+                $("#txt-trackclass").val("");
+                sendToRobot();
+            }
         }
 
     </script>

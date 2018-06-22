@@ -48,15 +48,14 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
     /**
      * Instantiates a new Open CV Controller Impl.
      *
-     * @throws OpenCVControllerException
+     * @throws ControllerException
      *             if OpenCV could not load
      */
-    public OpenCVControllerImpl() throws OpenCVControllerException {
+    public OpenCVControllerImpl() throws ControllerException {
         super();
     }
     
-    public OpenCVControllerImpl(int newCameraPort)
-                    throws OpenCVControllerException {
+    public OpenCVControllerImpl(int newCameraPort) throws ControllerException {
         super(newCameraPort);
     }
     
@@ -115,8 +114,8 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
             this.cameraRunnable.terminate();
             this.cameraThread.join();
         } catch (InterruptedException e) {
-            throw new OpenCVControllerException("Thread was interrupted.", e);
-        } catch (Exception e) {
+            /* */ } // Suppressed
+        catch (Exception e) {
             throw new OpenCVControllerException("Unknown issue.", e);
         } finally {
             /* */ }

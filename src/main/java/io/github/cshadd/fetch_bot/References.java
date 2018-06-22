@@ -56,9 +56,14 @@ public final class References implements FetchBot {
     public static final int CAMERA_PORT = 0;
     
     /**
-     * The Constant CUSTOM_PROGRAM.
+     * The Constant CUSTOM_BUILD.
      */
-    public static final boolean CUSTOM_PROGRAM = false;
+    public static final boolean CUSTOM_BUILD = false;
+    
+    /**
+     * The Constant HUD_STREAM_HOST.
+     */
+    public static final String HUD_STREAM_HOST = "localhost";
     
     /**
      * The Constant HUD_STREAM_PORT.

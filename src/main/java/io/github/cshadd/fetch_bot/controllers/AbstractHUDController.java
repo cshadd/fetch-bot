@@ -2,8 +2,6 @@ package io.github.cshadd.fetch_bot.controllers;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -36,13 +34,10 @@ public abstract class AbstractHUDController extends AbstractController
     
     // Protected Final Instance/Property Fields
     
-    protected final HUDThread                    hudRunnable;
     protected final HUDSetupThread               hudSetupRunnable;
-    protected final Thread                       hudThread;
     
     // Protected Instance/Property Fields
     
-    protected BufferedImage hudBuffer;
     protected JComponent   hudContent;
     protected JFrame       hudFrame;
     protected JLabel       hudLabelBack;
@@ -55,76 +50,10 @@ public abstract class AbstractHUDController extends AbstractController
     
     protected AbstractHUDController() {
         super();
-        this.hudBuffer = null;
         this.hudSetupRunnable = new HUDSetupThread();
-        javax.swing.SwingUtilities.invokeLater(this.hudSetupRunnable);
-        this.hudRunnable = new HUDThread();
-        this.hudThread = new Thread(this.hudRunnable);
     }
     
     // Protected Final Nested Classes
-    
-    /**
-     * The Class HUDThread. A Runnable that controls the HUD.
-     * 
-     * @author Christian Shadd
-     * @author Maria Verna Aquino
-     * @author Thanh Vu
-     * @author Joseph Damian
-     * @author Giovanni Orozco
-     * @since 2.0.0
-     */
-    protected final class HUDThread implements Runnable {
-        // Private Instance/Property Fields
-        
-        /**
-         * The running state.
-         */
-        private volatile boolean running;
-        
-        // Public Constructors
-        
-        /**
-         * Instantiates a new HUD Thread.
-         */
-        public HUDThread() {
-            super();
-            this.running = false;
-        }
-        
-        // Public Methods
-        
-        /**
-         * Terminate the thread.
-         */
-        public void terminate() {
-            this.running = false;
-        }
-        
-        // Public Methods (Overrided)
-        
-        /**
-         * Runs the stream with each frame being processed.
-         * 
-         * @see java.lang.Runnable#run()
-         */
-        @Override
-        public void run() {
-            this.running = true;
-            while (this.running) {
-                if (AbstractHUDController.this.hudContent != null) {
-                    synchronized (this) {
-                        final BufferedImage img = new BufferedImage(SCENE_W,
-                                        SCENE_H, BufferedImage.TYPE_INT_RGB);
-                        final Graphics2D g2d = img.createGraphics();
-                        AbstractHUDController.this.hudContent.printAll(g2d);
-                        g2d.dispose();
-                        AbstractHUDController.this.hudBuffer = img;
-                    }
-                }
-            }
-        }
-    }
     
     /**
      * The Class HUDSetupThread. A Runnable that controls setting up the HUD.
