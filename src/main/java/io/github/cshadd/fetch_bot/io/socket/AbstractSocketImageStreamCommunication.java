@@ -92,6 +92,7 @@ public abstract class AbstractSocketImageStreamCommunication extends
                                                 .size()).append(CRLF);
                                 sb.append(CRLF);
                                 bos.write(sb.toString().getBytes());
+                                System.out.println(baos.toByteArray());
                                 bos.write(baos.toByteArray());
                                 bos.write(CRLF.getBytes());
                                 bos.flush();
@@ -128,13 +129,16 @@ public abstract class AbstractSocketImageStreamCommunication extends
         } catch (SocketException e) {
             this.close();
             this.open();
+            e.printStackTrace();
             throw new SocketImageStreamCommunicationException(
                             "There was a problem with socket, attempting to reconnect!",
                             e);
         } catch (IOException e) {
+            e.printStackTrace();
             throw new SocketImageStreamCommunicationException(
                             "There was a problem with writing!", e);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new SocketImageStreamCommunicationException("Unknown issue.",
                             e);
         } finally {

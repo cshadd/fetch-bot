@@ -186,7 +186,6 @@ public class Core implements FetchBot {
                     socketImageStreamComm.write(hudControl.takeHUD());
                     Logger.debug("Stream sent.");
                 } catch (Exception e) {
-                    e.printStackTrace();
                     /* */
                 } // Suppressed
                 finally {
