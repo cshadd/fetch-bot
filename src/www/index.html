@@ -17,6 +17,7 @@
     <script>
         var hudReady = true;
         var jsonReady = true;
+        
         var $hudPreloadImage = $("<img>");
         $hudPreloadImage.on("load", function() {
             $("#hud").attr("src", $(this).attr("src"));
@@ -105,6 +106,7 @@
                 $("#status-curr-ultrasonic").text("Current Ultrasonic Sensor:");
                 $("#status-curr-verbose").text("Current Verbose:");
             }
+            console.log("JSON Ready: " + jsonReady);
             console.log("toInterface: " + JSON.stringify(data));
             console.log("toRobot: " + JSON.stringify(data2));
         }, 2000);
