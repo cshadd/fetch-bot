@@ -196,7 +196,6 @@ public class Core implements FetchBot {
                     /* */
                 } // Suppressed
                 finally {
-                    delayThread(500);
                 }
             }
         }
