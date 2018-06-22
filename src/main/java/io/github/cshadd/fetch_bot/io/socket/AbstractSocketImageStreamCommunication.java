@@ -48,7 +48,9 @@ public abstract class AbstractSocketImageStreamCommunication extends
     private void listen() throws IOException {
         if (this.serverSocket != null) {
             if (!this.serverSocket.isClosed()) {
+                System.out.println("LISTENING!!!");
                 this.socket = this.serverSocket.accept();
+                System.out.println("LISTENING!!!2222");
             }
         }
     }
@@ -64,9 +66,11 @@ public abstract class AbstractSocketImageStreamCommunication extends
                     try (final BufferedReader br = new BufferedReader(
                                     new InputStreamReader(this.socket
                                                     .getInputStream()))) {
+                        System.out.println("LISTENING!!!3333");
                         while (br.ready()) {
                             br.readLine();
                         }
+                        System.out.println("LISTENING!!!44444");
                         try (final BufferedOutputStream bos = new BufferedOutputStream(
                                         this.socket.getOutputStream())) {
                             try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -83,7 +87,9 @@ public abstract class AbstractSocketImageStreamCommunication extends
                                 sb.append(CRLF);
                                 bos.write(sb.toString().getBytes());
                                 baos.reset();
+                                System.out.println("LISTENING!!!555555");
                                 ImageIO.write(image, "jpg", baos);
+                                System.out.println("LISTENING!!!67666634");
                                 sb.delete(0, sb.length());
                                 sb.append("--").append(BOUNDARY).append(CRLF);
                                 sb.append("Content-type: image/jpeg").append(
