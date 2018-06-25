@@ -164,7 +164,7 @@ public abstract class AbstractArduinoCommunication extends
                         try {
                             AbstractArduinoCommunication.this.serialBufferSyncQueue
                                             .offer(event.getAsciiString());
-                        } catch (Exception e) {
+                        } catch (@SuppressWarnings("unused") Exception e) {
                             /* */ } // Suppressed
                         finally {
                             /* */ }

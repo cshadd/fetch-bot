@@ -42,13 +42,13 @@ public abstract class AbstractSocketImageStreamCommunication extends
                     int socketPort) {
         super(socketHost, socketPort);
     }
-
+    
     // Public Methods (Overrided)
     
     @Override
-    public void write(BufferedImage image) throws SocketCommunicationException {
+    public void write(BufferedImage image)
+                    throws SocketImageStreamCommunicationException {
         try {
-            listen();
             if (this.socket != null) {
                 if (!this.socket.isClosed()) {
                     try (final BufferedReader br = new BufferedReader(
@@ -116,14 +116,11 @@ public abstract class AbstractSocketImageStreamCommunication extends
                 }
             }
         } catch (SocketException e) {
-            this.close();
-            this.open();
             throw new SocketImageStreamCommunicationException(
-                            "There was a problem with socket, attempting to reconnect!",
-                            e);
+                            "There was a problem with socket.", e);
         } catch (IOException e) {
             throw new SocketImageStreamCommunicationException(
-                            "There was a problem with writing!", e);
+                            "There was a problem with writing to socket.", e);
         } catch (Exception e) {
             throw new SocketImageStreamCommunicationException("Unknown issue.",
                             e);

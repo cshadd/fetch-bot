@@ -51,11 +51,12 @@ public class OpenCVControllerImpl extends AbstractOpenCVController {
      * @throws ControllerException
      *             if OpenCV could not load
      */
-    public OpenCVControllerImpl() throws ControllerException {
+    public OpenCVControllerImpl() throws OpenCVControllerException {
         super();
     }
     
-    public OpenCVControllerImpl(int newCameraPort) throws ControllerException {
+    public OpenCVControllerImpl(int newCameraPort)
+                    throws OpenCVControllerException {
         super(newCameraPort);
     }
     
