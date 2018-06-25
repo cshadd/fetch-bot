@@ -1,7 +1,6 @@
 package io.github.cshadd.fetch_bot.io.json;
 
 import io.github.cshadd.fetch_bot.Component;
-import org.json.JSONObject;
 
 // Main
 
@@ -33,20 +32,26 @@ public class ArduinoCommunicationImpl extends AbstractArduinoCommunication {
     // Public Methods (Overrided)
 
     @Override
-    public void pullRobot() throws JSONCommunicationException {
+    public void pullRobot() throws ArduinoCommunicationException {
         this.toRobotData = read();
     }
     
     @Override
-    public void pushSource() throws JSONCommunicationException {
+    public void pushSource() throws ArduinoCommunicationException {
         write();
     }
     
     @Override
-    public void reset() throws JSONCommunicationException {
-        setRobotValue("s", "-1");
-        
-        setSourceValue("a", "Stop");
+    public void reset() throws ArduinoCommunicationException {
+        try {
+            setRobotValue("s", "-1");
+            
+            setSourceValue("a", "Stop");
+        } catch (JSONCommunicationException e) {
+            throw new ArduinoCommunicationException("Could not reset Arduino JSON.", e);
+        } catch (Exception e) {
+            throw new ArduinoCommunicationException("Unknown issue.", e);            
+        }
     }
     
     @Override

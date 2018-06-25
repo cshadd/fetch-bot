@@ -41,7 +41,7 @@ package io.github.cshadd.fetch_bot.io.json;
 public abstract interface ArduinoCommunication extends JSONCommunication {
     // Public Abstract Methods
     
-    public abstract void close() throws JSONCommunicationException;
+    public abstract void close() throws ArduinoCommunicationException;
     
     /**
      * Gets the robot float value.
@@ -49,11 +49,11 @@ public abstract interface ArduinoCommunication extends JSONCommunication {
      * @param key
      *            the key
      * @return the robot float value
-     * @throws JSONCommunicationException
-     *             if the value could not be read
+     * @throws ArduinoCommunicationException
+     *             if the value could not be read from Arduino
      */
     public abstract float getRobotFloatValue(String key)
-                    throws JSONCommunicationException;
+                    throws ArduinoCommunicationException;
     
-    public abstract void open() throws JSONCommunicationException;
+    public abstract void open() throws ArduinoCommunicationException;
 }

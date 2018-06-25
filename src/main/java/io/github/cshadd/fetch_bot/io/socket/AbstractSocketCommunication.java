@@ -70,7 +70,7 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
                 this.socket.close();
             }
         } catch (SocketException e) {
-            throw new SocketCommunicationException("Could not close socket!",
+            throw new SocketCommunicationException("Could not close socket.",
                             e);
         } catch (Exception e) {
             throw new SocketCommunicationException("Unknown issue.", e);
@@ -88,11 +88,11 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
                     this.socket = this.serverSocket.accept();
                 } catch (IOException e) {
                     throw new SocketCommunicationException(
-                                    "Could not listen to socket!", e);
+                                    "Could not listen to socket.", e);
                 } catch (Exception e) {
                     throw new SocketCommunicationException("Unknown issue.", e);
                 } finally {
-                }
+                    /* */ }
             }
         }
     }
@@ -105,9 +105,10 @@ public abstract class AbstractSocketCommunication extends AbstractCommunication
                                 InetAddress.getByName(this.socketHost));
             }
         } catch (UnknownHostException e) {
-            throw new SocketCommunicationException("Could not open socket!", e);
+            throw new SocketCommunicationException(
+                            "Could not open socket at host.", e);
         } catch (SocketException e) {
-            throw new SocketCommunicationException("Could not open socket!", e);
+            throw new SocketCommunicationException("Could not open socket.", e);
         } catch (Exception e) {
             throw new SocketCommunicationException("Unknown issue.", e);
         } finally {

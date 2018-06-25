@@ -67,7 +67,7 @@ public class Core implements FetchBot {
     /**
      * The Constant VERSION.
      */
-    private static final String VERSION = "v2.0.0-alpha.1";
+    private static final String VERSION = "v2.0.0-alpha.2";
     
     // Protected Static Instance/Property Fields
     
@@ -174,29 +174,42 @@ public class Core implements FetchBot {
         public void run() {
             this.running = true;
             while (this.running) {
+                hudControl.updateBack(openCVControl.takeCameraImageIcon());
+                final int[] trackBounds = openCVControl.takeTrackBounds();
+                hudControl.updateTrackBounds(trackBounds[0], trackBounds[1],
+                                trackBounds[2], trackBounds[3]);
+                hudControl.updateTrackCaptureLabel(openCVControl
+                                .takeTrackCaptureLabel());
+                currentTrackStatus = "Fetch Bot " + VERSION
+                                + "<br />&#187; Status: Processing<br />"
+                                + openCVControl.takeStatus() + "<br />";
                 try {
-                    hudControl.updateBack(openCVControl.takeCameraImageIcon());
-                    final int[] trackBounds = openCVControl.takeTrackBounds();
-                    hudControl.updateTrackBounds(trackBounds[0], trackBounds[1],
-                                    trackBounds[2], trackBounds[3]);
-                    hudControl.updateTrackCaptureLabel(openCVControl
-                                    .takeTrackCaptureLabel());
-                    currentTrackStatus = "Fetch Bot " + VERSION
-                                    + "<br />&#187; Status: Processing<br />"
-                                    + openCVControl.takeStatus() + "<br />";
                     if ((int) arduinoComm.getRobotFloatValue(
                                     "s") <= SENSOR_LIMIT) {
                         currentTrackStatus += "Imminent Collision!";
                     }
-                    hudControl.updateStatus(currentTrackStatus);
-                    Logger.debug("HUD updated.");
-                    socketImageStreamComm.write(hudControl.takeHUD());
-                    Logger.debug("Stream sent.");
-                } catch (@SuppressWarnings("unused") Exception e) {
+                } catch (@SuppressWarnings("unused") CommunicationException e) {
                     /* */
                 } // Suppressed
                 finally {
-                }
+                    /* */ }
+                hudControl.updateStatus(currentTrackStatus);
+                Logger.debug("HUD updated.");
+                try {
+                    socketImageStreamComm.listen();
+                    socketImageStreamComm.write(hudControl.takeHUD());
+                    Logger.debug("Stream sent.");
+                } catch (@SuppressWarnings("unused") Exception e) {
+                    try {
+                        // Reconnect socket on error.
+                        socketImageStreamComm.close();
+                        socketImageStreamComm.open();
+                    } catch (@SuppressWarnings("unused") Exception e2) {
+                        /* */ } // Suppressed
+                    /* */
+                } // Suppressed
+                finally {
+                    /* */ }
             }
         }
     }

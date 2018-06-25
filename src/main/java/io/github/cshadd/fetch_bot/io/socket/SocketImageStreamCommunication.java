@@ -45,5 +45,5 @@ public abstract interface SocketImageStreamCommunication extends
     // Public Abstract Methods
     
     public abstract void write(BufferedImage image)
-                    throws SocketCommunicationException;
+                    throws SocketImageStreamCommunicationException;
 }

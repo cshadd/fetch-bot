@@ -146,15 +146,15 @@ public abstract class AbstractOpenCVController extends AbstractController
     /**
      * Instantiates a new Abstract OpenCV Controller.
      *
-     * @throws ControllerException
+     * @throws OpenCVControllerException
      *             if OpenCV could not load
      */
-    protected AbstractOpenCVController() throws ControllerException {
+    protected AbstractOpenCVController() throws OpenCVControllerException {
         this(References.CAMERA_PORT);
     }
     
     protected AbstractOpenCVController(int newCameraPort)
-                    throws ControllerException {
+                    throws OpenCVControllerException {
         super();
         try {
             this.camera = new VideoCapture(newCameraPort);
