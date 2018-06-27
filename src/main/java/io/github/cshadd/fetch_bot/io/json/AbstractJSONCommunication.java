@@ -42,9 +42,8 @@ public abstract class AbstractJSONCommunication extends AbstractCommunication
     
     @Override
     public String getRobotValue(String key) throws JSONCommunicationException {
-        String returnData = null;
         try {
-            returnData = this.toRobotData.getString(key);
+            return this.toRobotData.getString(key);
         } catch (JSONException e) {
             throw new JSONCommunicationException("Bad JSON value " + key + ".",
                             e);
@@ -52,14 +51,12 @@ public abstract class AbstractJSONCommunication extends AbstractCommunication
             throw new JSONCommunicationException("Unknown issue.", e);
         } finally {
             /* */ }
-        return returnData;
     }
     
     @Override
     public String getSourceValue(String key) throws JSONCommunicationException {
-        String returnData = null;
         try {
-            returnData = this.toSourceData.getString(key);
+            return this.toSourceData.getString(key);
         } catch (JSONException e) {
             throw new JSONCommunicationException("Bad JSON value " + key + ".",
                             e);
@@ -67,7 +64,6 @@ public abstract class AbstractJSONCommunication extends AbstractCommunication
             throw new JSONCommunicationException("Unknown issue.", e);
         } finally {
             /* */ }
-        return returnData;
     }
     
     @Override

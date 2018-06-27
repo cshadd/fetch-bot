@@ -325,16 +325,10 @@ public abstract class AbstractPathfindController extends AbstractController
                 final int distance = (int) Math.sqrt(((this.x - otherX)
                                 * (this.x - otherX)) + ((this.y - otherY)
                                                 * (this.y - otherY)));
-                int returnData = 0;
-                
                 if (distance < 0) {
-                    returnData = -1;
-                } else if (distance > 0) {
-                    returnData = 1;
-                } else {
-                    returnData = 0;
-                }
-                return returnData;
+                    return -1;
+                } else if (distance > 0) { return 1; }
+                return 0;
             }
             
             /**
@@ -522,12 +516,9 @@ public abstract class AbstractPathfindController extends AbstractController
          */
         public boolean isCoordVisited(CartesianCoordinate c) {
             final CartesianCoordinate coord = fetchCoord(c);
-            boolean returnData = false;
             final Vertex v = vertex(coord);
-            if (v != null) {
-                returnData = v.isVisited();
-            }
-            return returnData;
+            if (v != null) { return v.isVisited(); }
+            return false;
         }
         
         /**

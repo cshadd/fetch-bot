@@ -49,13 +49,12 @@ public abstract class AbstractWebInterfaceCommunication extends
     
     protected JSONObject read(String filePath)
                     throws WebInterfaceCommunicationException {
-        JSONObject returnData = new JSONObject();
         try {
             final File input = new File(this.commPath + filePath);
             final String data = FileUtils.readFileToString(input, "UTF-8");
             if (data != null) {
                 if (data.charAt(0) == '{' && !data.equals("{ }")) {
-                    returnData = new JSONObject(data);
+                    return new JSONObject(data);
                 }
             }
         } catch (IOException e) {
@@ -68,7 +67,7 @@ public abstract class AbstractWebInterfaceCommunication extends
             throw new WebInterfaceCommunicationException("Unknown issue.", e);
         } finally {
             /* */ }
-        return returnData;
+        return new JSONObject();
     }
     
     protected void write(JSONObject json, String filePath)
