@@ -138,9 +138,8 @@ public abstract class AbstractArduinoCommunication extends
     @Override
     public float getRobotFloatValue(String key)
                     throws ArduinoCommunicationException {
-        float returnData = -1;
         try {
-            returnData = this.toRobotData.getFloat(key);
+            return this.toRobotData.getFloat(key);
         } catch (JSONException e) {
             throw new ArduinoCommunicationException("Bad JSON value " + key
                             + ".", e);
@@ -148,7 +147,6 @@ public abstract class AbstractArduinoCommunication extends
             throw new ArduinoCommunicationException("Unknown issue.", e);
         } finally {
             /* */ }
-        return returnData;
     }
     
     @Override

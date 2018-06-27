@@ -86,16 +86,12 @@ public class VersionCheck implements FetchBot {
      *             if the version check failed
      */
     public static String getCurrentVersion() throws VersionCheckException {
-        String returnData = "v0.0.0";
         JSONArray api = null;
         JSONObject apiData = null;
-        try {
-            try (final InputStream in = new URL(API_URL).openStream()) {
-                api = new JSONArray(IOUtils.toString(in, "UTF-8"));
-                apiData = api.getJSONObject(API_OBJECT_ID);
-                returnData = apiData.getString(API_VERSION_TAG);
-            } finally {
-                /* */ }
+        try (final InputStream in = new URL(API_URL).openStream()) {
+            api = new JSONArray(IOUtils.toString(in, "UTF-8"));
+            apiData = api.getJSONObject(API_OBJECT_ID);
+            return apiData.getString(API_VERSION_TAG);
         } catch (IOException e) {
             throw new VersionCheckException("Could not read " + API_URL + ".",
                             e);
@@ -106,7 +102,6 @@ public class VersionCheck implements FetchBot {
             throw new VersionCheckException("Unknown issue.", e);
         } finally {
             /* */ }
-        return returnData;
     }
     
     /**
