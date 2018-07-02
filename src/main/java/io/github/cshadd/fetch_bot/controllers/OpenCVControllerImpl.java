@@ -25,8 +25,8 @@
  */
 package io.github.cshadd.fetch_bot.controllers;
 
-import javax.swing.ImageIcon;
 import io.github.cshadd.fetch_bot.Component;
+import javax.swing.ImageIcon;
 
 // Main
 

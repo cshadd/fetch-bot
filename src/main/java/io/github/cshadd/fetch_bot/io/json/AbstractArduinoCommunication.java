@@ -1,10 +1,5 @@
 package io.github.cshadd.fetch_bot.io.json;
 
-import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.TimeUnit;
-
 import com.pi4j.io.serial.Baud;
 import com.pi4j.io.serial.DataBits;
 import com.pi4j.io.serial.FlowControl;
@@ -15,9 +10,9 @@ import com.pi4j.io.serial.SerialDataEvent;
 import com.pi4j.io.serial.SerialDataEventListener;
 import com.pi4j.io.serial.SerialFactory;
 import com.pi4j.io.serial.StopBits;
-import io.github.cshadd.fetch_bot.References;
-import io.github.cshadd.fetch_bot.util.Logger;
-
+import java.io.IOException;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.SynchronousQueue;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,6 +57,7 @@ public abstract class AbstractArduinoCommunication extends
     protected AbstractArduinoCommunication(String serialPort) {
         super();
         this.serialPort = serialPort;
+        this.serialBufferSyncQueue = new SynchronousQueue<>();
         this.serial = SerialFactory.createInstance();
         this.serialConfig = new SerialConfig();
         this.serialConfig.device(this.serialPort);
@@ -70,7 +66,6 @@ public abstract class AbstractArduinoCommunication extends
         this.serialConfig.parity(Parity.NONE);
         this.serialConfig.stopBits(StopBits._1);
         this.serialConfig.flowControl(FlowControl.NONE);
-        this.serialBufferSyncQueue = new SynchronousQueue<>();
     }
     
     // Protected Methods

@@ -1,11 +1,10 @@
 package io.github.cshadd.fetch_bot.io.json;
 
-import java.io.File;
-import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-import io.github.cshadd.fetch_bot.References;
+import java.io.File;
+import java.io.IOException;
 
 // Main
 

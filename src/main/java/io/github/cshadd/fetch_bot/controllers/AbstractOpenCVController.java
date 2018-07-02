@@ -25,6 +25,7 @@
  */
 package io.github.cshadd.fetch_bot.controllers;
 
+import io.github.cshadd.fetch_bot.References;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
@@ -41,7 +42,6 @@ import org.opencv.core.Size;
 import org.opencv.dnn.Dnn;
 import org.opencv.dnn.Net;
 import org.opencv.videoio.VideoCapture;
-import io.github.cshadd.fetch_bot.References;
 
 // Main
 

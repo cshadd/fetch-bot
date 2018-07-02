@@ -1,9 +1,9 @@
 package io.github.cshadd.fetch_bot.controllers;
 
+import io.github.cshadd.fetch_bot.Component;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
-import io.github.cshadd.fetch_bot.Component;
 
 // Main
 

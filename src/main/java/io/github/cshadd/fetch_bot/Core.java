@@ -67,7 +67,7 @@ public class Core implements FetchBot {
     /**
      * The Constant VERSION.
      */
-    private static final String VERSION = "v2.0.0-alpha.3";
+    private static final String VERSION = "v2.0.0-alpha.4";
     
     // Protected Static Instance/Property Fields
     
@@ -188,7 +188,7 @@ public class Core implements FetchBot {
                                     "s") <= SENSOR_LIMIT) {
                         currentTrackStatus += "Imminent Collision!";
                     }
-                } catch (@SuppressWarnings("unused") CommunicationException e) {
+                } catch (@SuppressWarnings("unused") Exception e) {
                     /* */
                 } // Suppressed
                 finally {
