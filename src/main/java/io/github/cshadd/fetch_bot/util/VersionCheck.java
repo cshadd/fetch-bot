@@ -27,8 +27,6 @@ package io.github.cshadd.fetch_bot.util;
 
 import io.github.cshadd.fetch_bot.Component;
 import io.github.cshadd.fetch_bot.FetchBot;
-import io.github.cshadd.fetch_bot.References;
-
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.URL;
