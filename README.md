@@ -254,12 +254,12 @@ See [here](CONTRIBUTING.md).
 ## Versioning
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/cshadd/fetch-bot/tags).
 
-## Owners/Authors/Developers/Contributors
-* Project Owner, Main Author, Lead Developer - [Christian Shadd](https://github.com/cshadd)
-* Author, Hardware Developer, Documentation - [Maria Verna Aquino](https://github.com/anrev09)
-* Author, Hardware Developer - [Thanh Vu](https://github.com/Vu-Thanh)
-* Author, Hardware Developer, Software Developer - [Joseph Damian](https://github.com/walterk4)
-* Author, Software Developer - [Giovanni Orozco](https://github.com/gio-oro)
+## Host/Owners/Developers/Contributors
+* Host, Project Owner, Lead Hardware Developer, Lead Software Developer - [Christian Shadd](https://github.com/cshadd)
+* Project Owner, Lead Software Developer - [Maria Verna Aquino](https://github.com/anrev09)
+* Project Owner, Hardware Developer - [Thanh Vu](https://github.com/Vu-Thanh)
+* Project Owner, Lead Hardware Developer, Software Developer - [Joseph Damian](https://github.com/walterk4)
+* Project Owner, Hardware Developer - [Giovanni Orozco](https://github.com/gio-oro)
 
 And the [contributers](https://github.com/cshadd/fetch-bot/graphs/contributors).
 
